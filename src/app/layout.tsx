@@ -1,11 +1,13 @@
-import Footer from "@/app/_components/footer";
+import "./globals.css";
+
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import "./globals.css";
+import Footer from "@/app/_components/footer";
+import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
+
 import { Analytics } from "./_components/analytics";
 
 const inter = Inter({ subsets: ["latin"] });
