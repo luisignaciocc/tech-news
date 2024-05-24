@@ -1,9 +1,12 @@
 import Footer from "@/app/_components/footer";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import "./globals.css";
+import { Analytics } from "./_components/analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <GoogleTagManager gtmId="GTM-WKN32H7F" />
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -56,9 +60,12 @@ export default function RootLayout({
         <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
       </head>
       <body className={inter.className}>
+        <Analytics />
+        <SpeedInsights />
         <div className="min-h-screen">{children}</div>
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-0NYZMYCD8C" />
     </html>
   );
 }
