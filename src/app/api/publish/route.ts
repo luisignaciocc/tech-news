@@ -14,7 +14,11 @@ export async function GET() {
 
   const base64data = Buffer.from(markdownString).toString("base64");
 
-  const { data } = await octokit.request(
+  const {
+    data,
+  }: {
+    data: OctokitResponse;
+  } = await octokit.request(
     "PUT /repos/luisignaciocc/tech-news/contents/_posts/" + fileTitle,
     {
       owner: "luisignaciocc",
@@ -33,6 +37,59 @@ export async function GET() {
   );
 
   return NextResponse.json({ data });
+}
+
+interface OctokitResponse {
+  content: {
+    name: string;
+    path: string;
+    sha: string;
+    size: number;
+    url: string;
+    html_url: string;
+    git_url: string;
+    download_url: string;
+    type: "file";
+    _links: {
+      self: string;
+      git: string;
+      html: string;
+    };
+  };
+  commit: {
+    sha: string;
+    node_id: string;
+    url: string;
+    html_url: string;
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    committer: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    tree: {
+      sha: string;
+      url: string;
+    };
+    message: string;
+    parents: [
+      {
+        sha: string;
+        url: string;
+        html_url: string;
+      },
+    ];
+    verification: {
+      verified: boolean;
+      reason: string;
+      signature: string | null;
+      payload: string | null;
+    };
+  };
 }
 
 const markdownString = `
