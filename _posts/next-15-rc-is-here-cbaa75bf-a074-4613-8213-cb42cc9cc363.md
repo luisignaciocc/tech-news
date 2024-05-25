@@ -1,13 +1,13 @@
 ---
 title: "Next 15 RC is Here"
 excerpt: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Praesent elementum facilisis leo vel fringilla est ullamcorper eget. At imperdiet dui accumsan sit amet nulla facilities morbi tempus."
-coverImage: "/api/og?title=Next%2015%20RC%20is%20Here"
+coverImage: "/api/og"
 date: "2024-05-25T05:35:07.322Z"
 author:
   name: Luis Cabezas
   picture: "/assets/blog/authors/joe.jpeg"
 ogImage:
-  url: "/api/og?title=Next%2015%20RC%20is%20Here"
+  url: "/api/og"
 ---
 
 # Lorem Ipsum Title
