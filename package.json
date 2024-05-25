@@ -20,6 +20,7 @@
     "date-fns": "^3.6.0",
     "gray-matter": "^4.0.3",
     "next": "14.2.3",
+    "octokit": "^4.0.2",
     "openai": "^4.47.1",
     "prisma": "^5.14.0",
     "react": "^18",
@@ -27,12 +28,14 @@
     "remark": "^15.0.1",
     "remark-html": "^16.0.1",
     "sharp": "^0.33.4",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "@typescript-eslint/parser": "^7.10.0",
     "autoprefixer": "^10.0.1",
