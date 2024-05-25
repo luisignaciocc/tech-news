@@ -22,8 +22,8 @@ export async function GET() {
       path: "_posts",
       message: "Publish new post",
       committer: {
-        name: "Luis Cabezas",
-        email: "luisignacioccp@gmail.com",
+        name: "Tech News Bot",
+        email: "bot@luisignacio.cc",
       },
       content: base64data,
       headers: {
