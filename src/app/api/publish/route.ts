@@ -7,6 +7,7 @@ const octokit = new Octokit({
 });
 
 export async function GET() {
+  return NextResponse.json({ status: true });
   const postTitle = "Next 15 RC is Here";
 
   const fileTitle =
