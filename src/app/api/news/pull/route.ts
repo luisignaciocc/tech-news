@@ -20,7 +20,13 @@ interface NewsResult {
   };
 }
 
-export async function POST(_request: Request) {
+export async function POST(request: Request) {
+  const apikey = request.headers.get("x-api-key");
+
+  if (apikey !== process.env.API_KEY) {
+    return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
+  }
+
   try {
     const prisma = new PrismaClient();
 
