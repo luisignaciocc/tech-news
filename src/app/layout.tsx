@@ -6,17 +6,16 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import Footer from "@/app/_components/footer";
-import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
 
 import { Analytics } from "./_components/analytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: `Next.js Blog Example with ${CMS_NAME}`,
-  description: `A statically generated blog example using Next.js and ${CMS_NAME}.`,
+  title: `NotiTec | Noticiero de tecnología generado por IA`,
+  description: `Un noticiero digital de tecnología con contenido generado automáticamente.`,
   openGraph: {
-    images: [HOME_OG_IMAGE_URL],
+    images: ["/api/og?title=NotiTec"],
   },
 };
 

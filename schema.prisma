@@ -50,14 +50,16 @@ model NewsSource {
 
 model Post {
   id            String   @id @default(cuid())
+  slug          String   @unique
   title         String
-  body          String
-  excerpt       String
-  urlImage      String   
-  createdAt     DateTime @default(now())
-  publishedAt   DateTime
-  authorId      String
+  content       String
+  date          DateTime
+  coverImage    String
   author        Author   @relation(fields: [authorId], references: [id])
+  authorId      String
+  excerpt       String
+  ogImage       String
+  preview       Boolean  @default(false)
 }
 
 model Author {

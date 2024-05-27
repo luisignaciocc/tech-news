@@ -1,29 +1,52 @@
-import fs from "fs";
-import matter from "gray-matter";
-import { join } from "path";
+import { PrismaClient } from "@prisma/client";
 
 import { Post } from "@/interfaces/post";
 
-const postsDirectory = join(process.cwd(), "_posts");
+const prisma = new PrismaClient();
 
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
+export const getPostSlugs = async (): Promise<string[]> => {
+  const posts = await prisma.post.findMany({
+    select: {
+      slug: true,
+    },
+  });
+
+  return posts.map((post) => post.slug);
+};
+
+export async function getPostBySlug(slug: string) {
+  return prisma.post.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      author: true,
+    },
+  });
 }
 
-export function getPostBySlug(slug: string) {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
+export async function getAllPosts(): Promise<Post[]> {
+  const posts = await prisma.post.findMany({
+    orderBy: {
+      date: "desc",
+    },
+    include: {
+      author: true,
+    },
+  });
 
-  return { ...data, slug: realSlug, content } as Post;
-}
-
-export function getAllPosts(): Post[] {
-  const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-  return posts;
+  return posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    date: post.date.toISOString(),
+    slug: post.slug,
+    author: {
+      name: post.author.name,
+      picture: post.author.picture,
+    },
+    coverImage: post.coverImage,
+    excerpt: post.excerpt,
+    ogImage: post.ogImage,
+    content: post.content,
+  }));
 }
