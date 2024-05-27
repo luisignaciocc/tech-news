@@ -4,14 +4,12 @@ import { Post } from "@/interfaces/post";
 
 const prisma = new PrismaClient();
 
-export const getPostSlugs = async (): Promise<string[]> => {
-  const posts = await prisma.post.findMany({
+export const getPostSlugs = async () => {
+  return prisma.post.findMany({
     select: {
       slug: true,
     },
   });
-
-  return posts.map((post) => post.slug);
 };
 
 export async function getPostBySlug(slug: string) {

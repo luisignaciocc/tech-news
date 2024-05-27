@@ -5,7 +5,7 @@ import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
-import { getAllPosts, getPostBySlug } from "@/lib/api";
+import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 
 export default async function Post({ params }: Params) {
@@ -59,9 +59,9 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const posts = await getAllPosts();
+  const slugs = await getPostSlugs();
 
-  return posts.map((post) => ({
-    slug: post.slug,
+  return slugs.map(({ slug }) => ({
+    slug,
   }));
 }
