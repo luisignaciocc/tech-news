@@ -47,3 +47,13 @@ model NewsSource {
     isActive     Boolean  @default(true)
     news         News[]
 }
+
+model Post {
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(255)
+  body          String
+  excerpt       String
+  urlImage      String   @db.VarChar(255)
+  date          DateTime @db.Timestamp(3)
+ publishedAt    DateTime
+}
