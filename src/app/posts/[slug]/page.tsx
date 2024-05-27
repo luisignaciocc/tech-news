@@ -44,8 +44,7 @@ type Params = {
     slug: string;
   };
 };
-
-export async function generateMetadata({ params }: Params): Metadata {
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const posts = await getAllPosts();
   const post = posts.find((p) => p.slug === params.slug);
 
@@ -59,7 +58,7 @@ export async function generateMetadata({ params }: Params): Metadata {
     title,
     openGraph: {
       title,
-      images: [post.ogImage.url],
+      images: [post.ogImage],
     },
   };
 }

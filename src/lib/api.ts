@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function getAllPosts(): Promise<Post[]> {
   const posts = await prisma.post.findMany({
     orderBy: {
-      publishedAt: "desc",
+      date: "desc",
     },
     include: {
       author: true,
@@ -17,13 +17,15 @@ export async function getAllPosts(): Promise<Post[]> {
   return posts.map((post) => ({
     id: post.id,
     title: post.title,
-    date: post.publishedAt.toISOString(),
-    slug: post.id,
+    date: post.date.toISOString(),
+    slug: post.slug,
     author: {
       name: post.author.name,
       picture: post.author.picture,
     },
-    coverImage: post.urlImage,
+    coverImage: post.coverImage,
     excerpt: post.excerpt,
+    ogImage: post.ogImage,
+    content: post.content,
   }));
 }
