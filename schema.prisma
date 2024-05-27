@@ -37,7 +37,6 @@ model News {
     searchQuery          String?
     vectorized           Boolean                      @default(false)
     embedding            Unsupported("vector(1536)")?
-    similarity           Float?
 }
 
 model NewsSource {
