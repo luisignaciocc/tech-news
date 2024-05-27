@@ -23,3 +23,13 @@ jobs:
           curl --request POST \
           --url 'https://news.bocono-labs.com/api/news/parse' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  embed:
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - name: Generate Embedings for the News
+        run: |
+          curl --request POST \
+          --url 'https://news.bocono-labs.com/api/news/embed' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'

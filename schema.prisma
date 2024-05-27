@@ -35,6 +35,8 @@ model News {
     sourceId             Int?
     source               NewsSource?                  @relation(fields: [sourceId], references: [id])
     searchQuery          String?
+    vectorized           Boolean                      @default(false)
+    embedding            Unsupported("vector(1536)")?
 }
 
 model NewsSource {
