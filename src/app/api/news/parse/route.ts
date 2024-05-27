@@ -3,7 +3,13 @@ import { PrismaClient } from "@prisma/client";
 import { JSDOM } from "jsdom";
 import { NextResponse } from "next/server";
 
-export async function POST(_request: Request): Promise<NextResponse> {
+export async function POST(request: Request): Promise<NextResponse> {
+  const apiKey = request.headers.get("x-api-key");
+
+  if (apiKey !== process.env.API_KEY) {
+    return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
+  }
+
   try {
     const prisma = new PrismaClient();
 
