@@ -10,6 +10,6 @@ jobs:
     steps:
       - name: Pull the News from the Brave Search API
         run: |
-          curl --request GET \
+          curl --request POST \
           --url 'https://news.bocono-labs.com/api/news/pull' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
