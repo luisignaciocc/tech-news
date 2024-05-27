@@ -15,3 +15,13 @@ model PostView {
     slug      String
     visitedAt DateTime @default(now())
 }
+
+model News {
+    id                  String @id @default(cuid())
+    title               String
+    url                 String @unique
+    sourceUrl           String
+    thumbnailUrl        String
+    publishedAt         DateTime
+    createdAt           DateTime @default(now())
+}
