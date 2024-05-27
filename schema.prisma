@@ -47,3 +47,22 @@ model NewsSource {
     isActive     Boolean  @default(true)
     news         News[]
 }
+
+model Post {
+  id            String   @id @default(cuid())
+  title         String
+  body          String
+  excerpt       String
+  urlImage      String   
+  createdAt     DateTime @default(now())
+  publishedAt   DateTime
+  authorId      String
+  author        Author   @relation(fields: [authorId], references: [id])
+}
+
+model Author {
+  id      String     @id @default(cuid())
+  name    String
+  picture String
+  posts   Post[]
+}
