@@ -12,7 +12,7 @@ This project is an automated tech news blog built with Next.js. It fetches news 
 ## Technologies Used
 
 - **Next.js**: Framework for building the blog.
-- **Brave Search API**: For fetching relevant news articles and images.
+- [**Brave Search API**](https://api.search.brave.com/): For fetching relevant news articles and images. We have 2,000 monthly requests and 1 per second in the free tier. So we can pull news every 30 minutes for free
 - **Mozilla Readability**: For parsing and cleaning up news content.
 - **OpenAI Embeddings Model**: For classifying the news articles.
 
