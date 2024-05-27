@@ -6,7 +6,7 @@ const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN,
 });
 
-export async function GET() {
+export async function POST() {
   return NextResponse.json({ status: true });
   const postTitle = "Next 15 RC is Here";
 
