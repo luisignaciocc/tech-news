@@ -1,29 +1,29 @@
-import fs from "fs";
-import matter from "gray-matter";
-import { join } from "path";
+import { PrismaClient } from "@prisma/client";
 
 import { Post } from "@/interfaces/post";
 
-const postsDirectory = join(process.cwd(), "_posts");
+const prisma = new PrismaClient();
 
-export function getPostSlugs() {
-  return fs.readdirSync(postsDirectory);
-}
+export async function getAllPosts(): Promise<Post[]> {
+  const posts = await prisma.post.findMany({
+    orderBy: {
+      publishedAt: "desc",
+    },
+    include: {
+      author: true,
+    },
+  });
 
-export function getPostBySlug(slug: string) {
-  const realSlug = slug.replace(/\.md$/, "");
-  const fullPath = join(postsDirectory, `${realSlug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { data, content } = matter(fileContents);
-
-  return { ...data, slug: realSlug, content } as Post;
-}
-
-export function getAllPosts(): Post[] {
-  const slugs = getPostSlugs();
-  const posts = slugs
-    .map((slug) => getPostBySlug(slug))
-    // sort posts by date in descending order
-    .sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
-  return posts;
+  return posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    date: post.publishedAt.toISOString(),
+    slug: post.id,
+    author: {
+      name: post.author.name,
+      picture: post.author.picture,
+    },
+    coverImage: post.urlImage,
+    excerpt: post.excerpt,
+  }));
 }
