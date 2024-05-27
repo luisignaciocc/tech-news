@@ -6,13 +6,12 @@ import Container from "@/app/_components/container";
 import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
-import { getAllPosts } from "@/lib/api";
+import { getAllPosts, getPostBySlug } from "@/lib/api";
 import { CMS_NAME } from "@/lib/constants";
 import markdownToHtml from "@/lib/markdownToHtml";
 
 export default async function Post({ params }: Params) {
-  const posts = await getAllPosts();
-  const post = posts.find((p) => p.slug === params.slug);
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     return notFound();
@@ -45,8 +44,7 @@ type Params = {
   };
 };
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const posts = await getAllPosts();
-  const post = posts.find((p) => p.slug === params.slug);
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     return notFound();

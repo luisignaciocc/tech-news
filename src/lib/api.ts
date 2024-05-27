@@ -4,6 +4,27 @@ import { Post } from "@/interfaces/post";
 
 const prisma = new PrismaClient();
 
+export const getPostSlugs = async (): Promise<string[]> => {
+  const posts = await prisma.post.findMany({
+    select: {
+      slug: true,
+    },
+  });
+
+  return posts.map((post) => post.slug);
+};
+
+export async function getPostBySlug(slug: string) {
+  return prisma.post.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      author: true,
+    },
+  });
+}
+
 export async function getAllPosts(): Promise<Post[]> {
   const posts = await prisma.post.findMany({
     orderBy: {
