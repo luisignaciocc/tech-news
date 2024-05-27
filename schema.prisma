@@ -24,6 +24,14 @@ model News {
     thumbnailUrl         String
     publishedAt          DateTime
     createdAt            DateTime @default(now())
+    parsed               Boolean                      @default(false)
+    valid                Boolean                      @default(true)
+    body                 String?
+    byline               String?
+    lang                 String?
+    length               Int?
+    excerpt              String?
+    siteName             String?
     sourceId             Int?
     source               NewsSource?                  @relation(fields: [sourceId], references: [id])
     searchQuery          String?
