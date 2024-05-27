@@ -1,7 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 
-import { Post } from "@/interfaces/post";
-
 const prisma = new PrismaClient();
 
 export const getPostSlugs = async () => {
@@ -23,7 +21,7 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
-export async function getAllPosts(): Promise<Post[]> {
+export async function getAllPosts() {
   const posts = await prisma.post.findMany({
     orderBy: {
       date: "desc",
@@ -48,3 +46,6 @@ export async function getAllPosts(): Promise<Post[]> {
     content: post.content,
   }));
 }
+
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
+export type Post = ThenArg<ReturnType<typeof getAllPosts>>[number];

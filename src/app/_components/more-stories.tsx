@@ -1,4 +1,4 @@
-import { Post } from "@/interfaces/post";
+import { Post } from "@/lib/api";
 
 import { PostPreview } from "./post-preview";
 
