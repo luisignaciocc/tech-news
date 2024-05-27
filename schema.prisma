@@ -17,11 +17,23 @@ model PostView {
 }
 
 model News {
-    id                  String @id @default(cuid())
-    title               String
-    url                 String @unique
-    sourceUrl           String
-    thumbnailUrl        String
-    publishedAt         DateTime
-    createdAt           DateTime @default(now())
+    id                   String @id @default(cuid())
+    title                String
+    url                  String @unique
+    sourceUrl            String
+    thumbnailUrl         String
+    publishedAt          DateTime
+    createdAt            DateTime @default(now())
+    sourceId             Int?
+    source               NewsSource?                  @relation(fields: [sourceId], references: [id])
+    searchQuery          String?
+}
+
+model NewsSource {
+    id           Int      @id @default(autoincrement())
+    name         String   @unique
+    url          String   @unique
+    lastUpdateAt DateTime @default(now())
+    isActive     Boolean  @default(true)
+    news         News[]
 }
