@@ -1,0 +1,15 @@
+name: Process News
+
+on:
+  schedule:
+    - cron: "*/20 * * * *"
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull the News from the Brave Search API
+        run: |
+          curl --request POST \
+          --url 'https://news.bocono-labs.com/api/news/pull' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
