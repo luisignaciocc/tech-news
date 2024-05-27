@@ -13,3 +13,13 @@ jobs:
           curl --request POST \
           --url 'https://news.bocono-labs.com/api/news/pull' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  parse:
+    runs-on: ubuntu-latest
+    needs: pull
+    steps:
+      - name: Parse the News using Readability
+        run: |
+          curl --request GET \
+          --url 'https://news.bocono-labs.com/api/news/parse' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
