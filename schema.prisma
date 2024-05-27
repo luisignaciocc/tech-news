@@ -25,7 +25,7 @@ model News {
     publishedAt          DateTime
     createdAt            DateTime @default(now())
     parsed               Boolean                      @default(false)
-    isDeleted            Boolean                      @default(false)
+    valid                Boolean                      @default(false)
     body                 String?
     byline               String?
     lang                 String?
