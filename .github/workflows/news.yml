@@ -20,6 +20,6 @@ jobs:
     steps:
       - name: Parse the News using Readability
         run: |
-          curl --request GET \
+          curl --request POST \
           --url 'https://news.bocono-labs.com/api/news/parse' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
