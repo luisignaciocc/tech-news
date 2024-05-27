@@ -49,11 +49,20 @@ model NewsSource {
 }
 
 model Post {
-  id            Int      @id @default(autoincrement())
-  title         String   @db.VarChar(255)
+  id            String   @id @default(cuid())
+  title         String
   body          String
   excerpt       String
-  urlImage      String   @db.VarChar(255)
-  date          DateTime @db.Timestamp(3)
- publishedAt    DateTime
+  urlImage      String   
+  createdAt     DateTime @default(now())
+  publishedAt   DateTime
+  authorId      String
+  author        Author   @relation(fields: [authorId], references: [id])
+}
+
+model Author {
+  id      String     @id @default(cuid())
+  name    String
+  picture String
+  posts   Post[]
 }
