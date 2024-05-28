@@ -37,6 +37,7 @@ model News {
     searchQuery  String?
     vectorized   Boolean                      @default(false)
     embedding    Unsupported("vector(1536)")?
+    posts        Post[]
 }
 
 model NewsSource {
@@ -59,6 +60,8 @@ model Post {
     authorId    String
     excerpt     String?
     publishedAt DateTime?
+    newId       String?
+    new         News?     @relation(fields: [newId], references: [id])
 }
 
 model Author {

@@ -1,0 +1,15 @@
+name: Generate Publication
+
+on:
+  schedule:
+    - cron: "0 9-19 * * *"
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate the publication from a new
+        run: |
+          curl --request POST \
+          --url 'https://news.bocono-labs.com/api/publication/generate' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
