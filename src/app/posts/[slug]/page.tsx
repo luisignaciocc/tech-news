@@ -49,12 +49,15 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   }
 
   const title = `${post.title}`;
+  const description = post.excerpt;
+  const urlEncodedTitle = encodeURIComponent(title);
 
   return {
     title,
+    description,
     openGraph: {
       title,
-      images: [post.ogImage],
+      images: [{ url: "/api/og?title=" + urlEncodedTitle }],
     },
   };
 }
