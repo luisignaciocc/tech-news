@@ -1,4 +1,4 @@
-import Container from "@/app/_components/container";
+import Container from "@/components/container";
 import { cn } from "@/lib/utils";
 
 type Props = {

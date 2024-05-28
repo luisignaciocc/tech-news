@@ -1,8 +1,9 @@
-import Container from "@/app/_components/container";
-import { HeroPost } from "@/app/_components/hero-post";
-import { Intro } from "@/app/_components/intro";
-import { MoreStories } from "@/app/_components/more-stories";
+import Container from "@/components/container";
 import { getAllPosts } from "@/lib/api";
+
+import { HeroPost } from "./components/hero-post";
+import { Intro } from "./components/intro";
+import { MoreStories } from "./components/more-stories";
 
 export default async function Index() {
   const allPosts = await getAllPosts();
