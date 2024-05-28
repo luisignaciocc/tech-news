@@ -11,6 +11,7 @@ import Footer from "./components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://news.bocono-labs.com"),
   title: `NotiTec | Noticiero de tecnología generado por IA`,
   description: `Un noticiero digital de tecnología con contenido generado automáticamente.`,
   openGraph: {

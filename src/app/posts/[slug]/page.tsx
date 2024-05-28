@@ -53,6 +53,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const urlEncodedTitle = encodeURIComponent(title);
 
   return {
+    metadataBase: new URL("https://news.bocono-labs.com"),
     title,
     description,
     openGraph: {
