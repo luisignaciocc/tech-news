@@ -21,7 +21,7 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
-export const getAllPosts = async (page: number = 1) => {
+export const getAllPosts = async (page: number) => {
   const limit = 10;
   const offset = (page - 1) * limit;
 
