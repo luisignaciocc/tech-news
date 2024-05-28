@@ -59,7 +59,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         UPDATE "News"
         SET 
             embedding = ${embedding}::vector,
-            vectorized = true,
+            vectorized = true
         WHERE id = ${parse.id};
       `;
     }
