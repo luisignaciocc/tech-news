@@ -56,7 +56,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         {
           role: "system",
           content:
-            "Eres un asistente que convierte noticias en artículos en español, en formato markdown. El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, omitiendo cualquier mención directa de la fuente específica.",
+            "Eres un asistente que convierte noticias en artículos en español, en formato markdown. El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, omitiendo cualquier mención directa de la fuente específica y excluyendo cualquier 'call to action' como seguir cuentas en redes sociales o suscribirse a newsletters.",
         },
         {
           role: "user",
