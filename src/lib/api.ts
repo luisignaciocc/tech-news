@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { GetStaticProps } from "next";
 
 const prisma = new PrismaClient();
 
@@ -23,7 +22,7 @@ export async function getPostBySlug(slug: string) {
 }
 
 export const getAllPosts = async (page: number = 1) => {
-  const limit = 6;
+  const limit = 10;
   const offset = (page - 1) * limit;
 
   const posts = await prisma.post.findMany({
@@ -55,15 +54,3 @@ export const getAllPosts = async (page: number = 1) => {
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
 export type Post = ThenArg<ReturnType<typeof getAllPosts>>[number];
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const page = parseInt(context.params?.page as string) || 1;
-  const posts = await getAllPosts(page);
-
-  return {
-    props: {
-      posts,
-      currentPage: page,
-    },
-  };
-};
