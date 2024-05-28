@@ -48,7 +48,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: "No article found" }, { status: 404 });
     }
 
-    const bodyPrompt = `Give an article in Spanish from the following news: ${article.body}. The article should be formatted in markdown, without the title.`;
+    const bodyPrompt = `Give me an article in Spanish from the following text, (The article should be formatted in markdown, without the title.): ${article.body}.`;
 
     const bodyCompletion = await openai.chat.completions.create({
       messages: [{ role: "user", content: bodyPrompt }],
@@ -62,7 +62,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
 
     const titlePrompt = `Give me a title in spanish for the following text: ${body}`;
-    const excerptPrompt = `Give me an excerpt in spanish for the following article: ${body}`;
+    const excerptPrompt = `Give me a short excerpt in spanish for the following article: ${body}`;
 
     const [titleCompletion, excerptCompletion] = await Promise.all([
       openai.chat.completions.create({
