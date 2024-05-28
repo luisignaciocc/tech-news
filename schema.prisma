@@ -17,26 +17,26 @@ model PostView {
 }
 
 model News {
-    id                   String @id @default(cuid())
-    title                String
-    url                  String @unique
-    sourceUrl            String
-    thumbnailUrl         String
-    publishedAt          DateTime
-    createdAt            DateTime @default(now())
-    parsed               Boolean                      @default(false)
-    valid                Boolean                      @default(true)
-    body                 String?
-    byline               String?
-    lang                 String?
-    length               Int?
-    excerpt              String?
-    siteName             String?
-    sourceId             Int?
-    source               NewsSource?                  @relation(fields: [sourceId], references: [id])
-    searchQuery          String?
-    vectorized           Boolean                      @default(false)
-    embedding            Unsupported("vector(1536)")?
+    id           String                       @id @default(cuid())
+    title        String
+    url          String                       @unique
+    sourceUrl    String
+    thumbnailUrl String
+    publishedAt  DateTime
+    createdAt    DateTime                     @default(now())
+    parsed       Boolean                      @default(false)
+    valid        Boolean                      @default(true)
+    body         String?
+    byline       String?
+    lang         String?
+    length       Int?
+    excerpt      String?
+    siteName     String?
+    sourceId     Int?
+    source       NewsSource?                  @relation(fields: [sourceId], references: [id])
+    searchQuery  String?
+    vectorized   Boolean                      @default(false)
+    embedding    Unsupported("vector(1536)")?
 }
 
 model NewsSource {
@@ -49,22 +49,21 @@ model NewsSource {
 }
 
 model Post {
-  id            String   @id @default(cuid())
-  slug          String   @unique
-  title         String
-  content       String
-  date          DateTime
-  coverImage    String
-  author        Author   @relation(fields: [authorId], references: [id])
-  authorId      String
-  excerpt       String
-  ogImage       String
-  preview       Boolean  @default(false)
+    id          String    @id @default(cuid())
+    slug        String    @unique
+    title       String
+    content     String
+    createdAt   DateTime  @default(now())
+    coverImage  String?
+    author      Author    @relation(fields: [authorId], references: [id])
+    authorId    String
+    excerpt     String?
+    publishedAt DateTime?
 }
 
 model Author {
-  id      String     @id @default(cuid())
-  name    String
-  picture String
-  posts   Post[]
+    id      String @id @default(cuid())
+    name    String
+    picture String
+    posts   Post[]
 }

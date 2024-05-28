@@ -24,7 +24,7 @@ export async function getPostBySlug(slug: string) {
 export async function getAllPosts() {
   const posts = await prisma.post.findMany({
     orderBy: {
-      date: "desc",
+      createdAt: "desc",
     },
     include: {
       author: true,
@@ -34,7 +34,7 @@ export async function getAllPosts() {
   return posts.map((post) => ({
     id: post.id,
     title: post.title,
-    date: post.date.toISOString(),
+    date: post.createdAt.toISOString(),
     slug: post.slug,
     author: {
       name: post.author.name,
@@ -42,7 +42,7 @@ export async function getAllPosts() {
     },
     coverImage: post.coverImage,
     excerpt: post.excerpt,
-    ogImage: post.ogImage,
+    ogImage: "/api/og?title=" + encodeURIComponent(post.title),
     content: post.content,
   }));
 }
