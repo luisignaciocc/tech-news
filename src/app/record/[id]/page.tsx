@@ -1,4 +1,5 @@
 import { MoreStories } from "@/app/components/more-stories";
+import PageNavigation from "@/app/components/PageNavigation";
 import Container from "@/components/container";
 import { getAllPosts } from "@/lib/api";
 
@@ -16,6 +17,7 @@ export default async function RecordPage({
     <main>
       <Container>
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        <PageNavigation params={{ id: pageId }} />
       </Container>
     </main>
   );

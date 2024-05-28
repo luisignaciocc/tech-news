@@ -1,23 +1,33 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-export function PageNavigation({ currentPage }: { currentPage: number }) {
+export default function PageNavigation({ params }: { params: { id: string } }) {
+  const pageId = params.id;
+  const page = parseInt(pageId);
   const router = useRouter();
 
-  const handlePageChange = (page: number) => {
-    router.push(`/${page > 1 ? page : ""}`);
+  const handlePageChange = (newPage: number) => {
+    router.push(`/record/${newPage > 1 ? newPage : ""}`);
   };
 
   return (
     <div>
-      {currentPage > 1 && (
-        <button onClick={() => handlePageChange(currentPage - 1)}>
-          Anterior
+      <div className="flex justify-between mb-5">
+        {page > 1 && (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handlePageChange(page - 1)}
+          >
+            Anterior
+          </button>
+        )}
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          onClick={() => handlePageChange(page + 1)}
+        >
+          Siguiente
         </button>
-      )}
-      <button onClick={() => handlePageChange(currentPage + 1)}>
-        Siguiente
-      </button>
+      </div>
     </div>
   );
 }
