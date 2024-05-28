@@ -4,7 +4,7 @@ export function Intro() {
       <h1 className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight md:pr-8">
         NotiTec.
       </h1>
-      <h4 className="text-center md:text-left text-lg mt-5 md:pl-8">
+      <h2 className="text-center md:text-left text-lg mt-5 md:pl-8">
         Un noticiero digital de tecnología con contenido generado
         automáticamente. Hecho por{" "}
         <a
@@ -14,7 +14,7 @@ export function Intro() {
           Bocono-Labs
         </a>
         .
-      </h4>
+      </h2>
     </section>
   );
 }
