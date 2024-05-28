@@ -51,10 +51,18 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: "No article found" }, { status: 404 });
     }
 
-    const bodyPrompt = `Give me an article in Spanish from the following text, (The article should be formatted in markdown, without the title.): ${article.body}.`;
-
     const bodyCompletion = await openai.chat.completions.create({
-      messages: [{ role: "user", content: bodyPrompt }],
+      messages: [
+        {
+          role: "system",
+          content:
+            "Eres un asistente que convierte noticias en artículos en español, en formato markdown. El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, omitiendo cualquier mención directa de la fuente específica.",
+        },
+        {
+          role: "user",
+          content: `Reescribe la siguiente noticia en un artículo de formato markdown: ${article.body}`,
+        },
+      ],
       model: "gpt-3.5-turbo",
     });
 
@@ -64,16 +72,33 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
 
-    const titlePrompt = `Give me a title in spanish for the following text: ${body}`;
-    const excerptPrompt = `Give me a short excerpt in spanish for the following article: ${body}`;
-
     const [titleCompletion, excerptCompletion] = await Promise.all([
       openai.chat.completions.create({
-        messages: [{ role: "user", content: titlePrompt }],
+        messages: [
+          {
+            role: "system",
+            content:
+              "Eres un asistente que reescribe títulos de noticias en español, omitiendo cualquier mención de la fuente y reestructurando el título con otras palabras.",
+          },
+          {
+            role: "user",
+            content: `Reescribe el siguiente título en español: ${article.title}`,
+          },
+        ],
         model: "gpt-3.5-turbo",
       }),
       openai.chat.completions.create({
-        messages: [{ role: "user", content: excerptPrompt }],
+        messages: [
+          {
+            role: "system",
+            content:
+              "Eres un asistente que reescribe resúmenes de noticias en español, omitiendo cualquier mención de la fuente y reestructurando el contenido con otras palabras.",
+          },
+          {
+            role: "user",
+            content: `Reescribe el siguiente resumen en español: ${article.excerpt}`,
+          },
+        ],
         model: "gpt-3.5-turbo",
       }),
     ]);
