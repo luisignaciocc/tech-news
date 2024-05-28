@@ -1,6 +1,5 @@
-import cn from "classnames";
-
 import Container from "@/app/_components/container";
+import { cn } from "@/lib/utils";
 
 type Props = {
   text: string;
