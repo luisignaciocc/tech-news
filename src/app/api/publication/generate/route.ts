@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -105,6 +106,8 @@ export async function POST(request: Request): Promise<NextResponse> {
         },
       },
     });
+
+    revalidatePath(`/`);
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
