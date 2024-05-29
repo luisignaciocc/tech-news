@@ -2,22 +2,19 @@
 import { useRouter } from "next/navigation";
 
 interface PageNavigationProps {
-  params: {
-    id: string;
-  };
+  currentPage: string;
   hasMorePosts: boolean;
 }
 
 export default function PageNavigation({
-  params,
+  currentPage,
   hasMorePosts,
 }: PageNavigationProps) {
-  const pageId = params.id;
-  const page = parseInt(pageId);
+  const page = parseInt(currentPage);
   const router = useRouter();
 
   const handlePageChange = (newPage: number) => {
-    if (pageId === "") {
+    if (currentPage === "") {
       router.push(`/record/2`);
     } else if (newPage > 1) {
       router.push(`/record/${newPage}`);

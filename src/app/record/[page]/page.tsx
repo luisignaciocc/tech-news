@@ -8,16 +8,17 @@ export default async function RecordPage({
 }: {
   params: { page: string };
 }) {
-  const pageId = params.page;
-  const page = parseInt(pageId);
-  const { posts, count } = await getPosts({ page, perPage: 10 });
-  const hasMorePosts = page * 10 < count;
+  const currentPage = params.page;
+  const page = parseInt(currentPage);
+  const perPage = 10;
+  const { posts, count } = await getPosts({ page, perPage });
+  const hasMorePosts = page * perPage < count;
 
   return (
     <main>
       <Container>
         {posts.length > 0 && <MoreStories posts={posts} />}
-        <PageNavigation params={{ id: pageId }} hasMorePosts={hasMorePosts} />
+        <PageNavigation currentPage={currentPage} hasMorePosts={hasMorePosts} />
       </Container>
     </main>
   );
