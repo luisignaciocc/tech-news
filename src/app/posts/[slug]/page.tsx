@@ -58,7 +58,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     description,
     openGraph: {
       title,
-      images: [{ url: "/api/og?title=" + urlEncodedTitle }],
+      images: [{ url: post.coverImage || "/api/og?title=" + urlEncodedTitle }],
     },
   };
 }
