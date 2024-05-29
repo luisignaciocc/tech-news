@@ -43,3 +43,12 @@ jobs:
           curl --request POST \
           --url 'https://news.bocono-labs.com/api/news/get-image' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear the Not Generated News
+        run: |
+          curl --request POST \
+          --url 'https://news.bocono-labs.com/api/news/clean' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
