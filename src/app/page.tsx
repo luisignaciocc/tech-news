@@ -9,10 +9,10 @@ import PageNavigation from "./components/PageNavigation";
 export default async function Index({
   params,
 }: {
-  params?: { page?: string; perPage?: string };
+  params?: { page?: string };
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
-  const perPage = params?.perPage ? parseInt(params.perPage) : 10;
+  const perPage = 10;
   const { posts, count } = await getPosts({ page, perPage });
 
   const heroPost = posts[0];
@@ -35,9 +35,7 @@ export default async function Index({
         {hasMorePosts && (
           <div className="flex justify-end mb-5">
             <PageNavigation
-              params={{
-                id: page.toString(),
-              }}
+              currentPage={page.toString()}
               hasMorePosts={hasMorePosts}
             />
           </div>
