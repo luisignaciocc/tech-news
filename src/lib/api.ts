@@ -57,20 +57,7 @@ export const getPosts = async (params?: {
   ]);
 
   return {
-    posts: posts.map((post) => ({
-      id: post.id,
-      title: post.title,
-      date: post.createdAt.toISOString(),
-      slug: post.slug,
-      author: {
-        name: post.author.name,
-        picture: post.author.picture,
-      },
-      coverImage: post.coverImage,
-      excerpt: post.excerpt,
-      ogImage: "/api/og?title=" + encodeURIComponent(post.title),
-      content: post.content,
-    })),
+    posts,
     count,
   };
 };

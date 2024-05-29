@@ -7,7 +7,7 @@ import DateFormatter from "@/components/date-formatter";
 type Props = {
   title: string;
   coverImage: string | null;
-  date: string;
+  date: Date;
   excerpt: string | null;
   author: {
     name: string;
@@ -41,7 +41,7 @@ export function HeroPost({
             </Link>
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
-            <DateFormatter dateString={date} />
+            <DateFormatter date={date} />
           </div>
         </div>
         <div>
