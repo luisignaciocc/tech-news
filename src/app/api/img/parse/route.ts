@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 
-export async function POST(_request: Request): Promise<NextResponse> {
+export async function GET(_request: Request): Promise<NextResponse> {
   try {
     const prisma = new PrismaClient();
 
