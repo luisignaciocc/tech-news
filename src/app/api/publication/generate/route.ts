@@ -39,6 +39,12 @@ export async function POST(request: Request): Promise<NextResponse> {
           title: true,
           body: true,
           excerpt: true,
+          images: {
+            select: {
+              url: true,
+            },
+            take: 1,
+          },
         },
       }),
       prisma.author.findFirst({
@@ -132,6 +138,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             id: article.id,
           },
         },
+        coverImage: article.images[0].url,
       },
     });
 
