@@ -29,26 +29,55 @@ export async function POST(_request: Request): Promise<NextResponse> {
             return {
               url: item.url,
               sourceId: item.sourceId,
-              images: [],
+              mainImage: null,
             };
           }
           const html = await response.text();
           const $ = cheerio.load(html);
 
-          const images = $("img")
-            .map((i, el) => $(el).attr("src"))
-            .get();
+          //   const mainImage = $("img")
+          //     .map((i, el) => $(el).attr("src"))
+          //     .get();
+
+          let mainImage: string[] | null | undefined;
+          const ogImage = $('meta[property="og:image"]').attr("content");
+          if (ogImage) {
+            mainImage = [ogImage];
+          } else {
+            const twitterImage = $('meta[name="twitter:image"]').attr(
+              "content",
+            );
+            if (twitterImage) {
+              mainImage = [twitterImage];
+            } else {
+              const excludedExtensions = [".csv"];
+              const images = $("img")
+                .map((i, el) => $(el).attr("src"))
+                .get()
+                .filter(
+                  (src) =>
+                    src &&
+                    src.startsWith("https") &&
+                    !excludedExtensions.some((ext) => src.endsWith(ext)),
+                );
+              if (images.length > 0) {
+                mainImage = images;
+              } else {
+                mainImage = null;
+              }
+            }
+          }
 
           return {
             url: item.url,
             sourceId: item.sourceId,
-            images,
+            mainImage,
           };
         } catch (error) {
           return {
             url: item.url,
             sourceId: item.sourceId,
-            images: [],
+            mainImage: null,
           };
         }
       }),
