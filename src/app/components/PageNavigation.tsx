@@ -1,5 +1,6 @@
-"use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 
 interface PageNavigationProps {
   currentPage: string;
@@ -11,36 +12,24 @@ export default function PageNavigation({
   hasMorePosts,
 }: PageNavigationProps) {
   const page = parseInt(currentPage);
-  const router = useRouter();
-
-  const handlePageChange = (newPage: number) => {
-    if (currentPage === "") {
-      router.push(`/record/2`);
-    } else if (newPage > 1) {
-      router.push(`/record/${newPage}`);
-    } else {
-      router.push("/");
-    }
-  };
 
   return (
     <div>
       <div className="flex justify-between mb-5">
         {page > 1 && (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handlePageChange(page - 1)}
-          >
-            Anterior
-          </button>
+          <Link href={page > 2 ? `/record/${page - 1}` : "/"}>
+            <Button>Anterior</Button>
+          </Link>
         )}
-        {hasMorePosts && (
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => handlePageChange(page + 1)}
-          >
-            Siguiente
-          </button>
+        <Link href="/">
+          <Button>Inicio</Button>
+        </Link>
+        {hasMorePosts ? (
+          <Link href={`/record/${page + 1}`}>
+            <Button>Siguiente</Button>
+          </Link>
+        ) : (
+          <Button disabled>Siguiente</Button>
         )}
       </div>
     </div>

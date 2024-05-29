@@ -1,11 +1,13 @@
+import Link from "next/link";
+
 import Container from "@/components/container";
+import { Button } from "@/components/ui/button";
 import { getPosts } from "@/lib/api";
 import { PER_PAGE } from "@/lib/utils";
 
 import { HeroPost } from "./components/hero-post";
 import { Intro } from "./components/intro";
 import { MoreStories } from "./components/more-stories";
-import PageNavigation from "./components/PageNavigation";
 
 export default async function Index({
   params,
@@ -35,10 +37,9 @@ export default async function Index({
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         {hasMorePosts && (
           <div className="flex justify-end mb-5">
-            <PageNavigation
-              currentPage={page.toString()}
-              hasMorePosts={hasMorePosts}
-            />
+            <Link href="/record/2">
+              <Button>Siguiente</Button>
+            </Link>
           </div>
         )}
       </Container>
