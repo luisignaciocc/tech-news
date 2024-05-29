@@ -7,7 +7,11 @@ export default function PageNavigation({ params }: { params: { id: string } }) {
   const router = useRouter();
 
   const handlePageChange = (newPage: number) => {
-    router.push(`/record/${newPage > 1 ? newPage : ""}`);
+    if (newPage > 1) {
+      router.push(`/record/${newPage}`);
+    } else {
+      router.push("/");
+    }
   };
 
   return (
