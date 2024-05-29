@@ -28,7 +28,10 @@ export default async function Index({
         <Intro />
         <HeroPost
           title={heroPost.title}
-          coverImage={heroPost.coverImage}
+          // coverImage={heroPost.coverImage}
+          coverImage={
+            "/api/preview-image?title=" + encodeURIComponent(heroPost.title)
+          }
           date={heroPost.createdAt}
           author={heroPost.author}
           slug={heroPost.slug}
