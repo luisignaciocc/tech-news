@@ -19,48 +19,51 @@ This project is an automated tech news blog built with Next.js. It fetches news 
 ## Installation
 
 1. Clone the repository:
-    ```bash
-    git clone https://github.com/luisignaciocc/tech-news
-    cd tech-news
-    ```
+
+   ```bash
+   git clone https://github.com/luisignaciocc/tech-news
+   cd tech-news
+   ```
 
 2. Install dependencies:
-    ```bash
-    pnpm install
-    ```
+
+   ```bash
+   pnpm install
+   ```
 
 3. Configure environment variables in a `.env` file:
-    ```env
-    POSTGRES_DATABASE=""
-    POSTGRES_HOST=""
-    POSTGRES_PASSWORD=""
-    POSTGRES_PRISMA_URL=""
-    POSTGRES_URL=""
-    POSTGRES_URL_NON_POOLING=""
-    POSTGRES_URL_NO_SSL=""
-    POSTGRES_USER=""
-    
-    OPENAI_API_KEY=""
-    
-    CLOUDINARY_CLOUD_NAME=""
-    CLOUDINARY_API_KEY=""
-    CLOUDINARY_API_SECRET=""
-    CLOUDINARY_URL=""
-    
-    BRAVE_SEARCH_API_KEY=""
-    
-    API_KEY=""
-    ```
+
+   ```env
+   POSTGRES_DATABASE=""
+   POSTGRES_HOST=""
+   POSTGRES_PASSWORD=""
+   POSTGRES_PRISMA_URL=""
+   POSTGRES_URL=""
+   POSTGRES_URL_NON_POOLING=""
+   POSTGRES_URL_NO_SSL=""
+   POSTGRES_USER=""
+
+   OPENAI_API_KEY=""
+
+   CLOUDINARY_CLOUD_NAME=""
+   CLOUDINARY_API_KEY=""
+   CLOUDINARY_API_SECRET=""
+   CLOUDINARY_URL=""
+
+   BRAVE_SEARCH_API_KEY=""
+
+   API_KEY=""
+   ```
 
 ## Usage
 
 1. Start the development server:
-    ```bash
-    npm run dev
-    ```
+
+   ```bash
+   npm run dev
+   ```
 
 2. Access the blog in your browser at `http://localhost:3000`.
-
 
 ## Functionalities
 

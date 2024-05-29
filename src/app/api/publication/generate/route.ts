@@ -140,12 +140,12 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
-        { status: 500 }
+        { status: 500 },
       );
     } else {
       return NextResponse.json(
         { error: "Error al hacer la solicitud a la API" },
-        { status: 500 }
+        { status: 500 },
       );
     }
   }
