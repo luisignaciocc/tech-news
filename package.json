@@ -8,7 +8,9 @@
     "format": "prettier --write .",
     "type-check": "tsc --pretty --noEmit",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@mozilla/readability": "^0.5.0",

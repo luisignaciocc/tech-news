@@ -38,6 +38,7 @@ model News {
     vectorized   Boolean                      @default(false)
     embedding    Unsupported("vector(1536)")?
     posts        Post[]
+    images       NewsImage[]
 }
 
 model NewsSource {
@@ -47,6 +48,13 @@ model NewsSource {
     lastUpdateAt DateTime @default(now())
     isActive     Boolean  @default(true)
     news         News[]
+}
+
+model NewsImage {
+    id     String @id @default(cuid())
+    url    String
+    newsId String
+    news   News   @relation(fields: [newsId], references: [id])
 }
 
 model Post {
