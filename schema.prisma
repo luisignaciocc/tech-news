@@ -54,7 +54,7 @@ model NewsImage {
     id     String @id @default(cuid())
     url    String
     newsId String
-    news   News   @relation(fields: [newsId], references: [id])
+    news   News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
 }
 
 model Post {
@@ -69,7 +69,7 @@ model Post {
     excerpt     String?
     publishedAt DateTime?
     newId       String?
-    new         News?     @relation(fields: [newId], references: [id])
+    new         News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
 }
 
 model Author {
