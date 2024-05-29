@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import Container from "@/components/container";
+import { Button } from "@/components/ui/button";
 import { getPosts } from "@/lib/api";
 import { PER_PAGE } from "@/lib/utils";
 
@@ -36,11 +37,8 @@ export default async function Index({
         {morePosts.length > 0 && <MoreStories posts={morePosts} />}
         {hasMorePosts && (
           <div className="flex justify-end mb-5">
-            <Link
-              href="/record/2"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Siguiente
+            <Link href="/record/2">
+              <Button>Siguiente</Button>
             </Link>
           </div>
         )}

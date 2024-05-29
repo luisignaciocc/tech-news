@@ -1,4 +1,7 @@
 import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
+
 interface PageNavigationProps {
   currentPage: string;
   hasMorePosts: boolean;
@@ -15,17 +18,18 @@ export default function PageNavigation({
       <div className="flex justify-between mb-5">
         {page > 1 && (
           <Link href={page > 2 ? `/record/${page - 1}` : "/"}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Anterior
-            </button>
+            <Button>Anterior</Button>
           </Link>
         )}
-        {hasMorePosts && (
+        <Link href="/">
+          <Button>Inicio</Button>
+        </Link>
+        {hasMorePosts ? (
           <Link href={`/record/${page + 1}`}>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Siguiente
-            </button>
+            <Button>Siguiente</Button>
           </Link>
+        ) : (
+          <Button disabled>Siguiente</Button>
         )}
       </div>
     </div>
