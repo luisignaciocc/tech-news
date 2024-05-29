@@ -27,6 +27,9 @@ export async function POST(request: Request): Promise<NextResponse> {
           posts: {
             none: {},
           },
+          images: {
+            some: {},
+          },
         },
         orderBy: {
           createdAt: "desc",
