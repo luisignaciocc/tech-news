@@ -1,6 +1,21 @@
 import { PrismaClient } from "@prisma/client";
 
+import { PER_PAGE } from "./utils";
+
 const prisma = new PrismaClient();
+
+export const getPostPages = async () => {
+  const perPage = PER_PAGE;
+  const totalPosts = await prisma.post.count();
+
+  const numberOfPages = Math.ceil(totalPosts / perPage) - 1; // -1 to exclude the first page, which is the index page
+
+  return Array.from({ length: numberOfPages }, (_, i) => ({
+    params: {
+      page: (i + 2).toString(),
+    },
+  }));
+};
 
 export const getPostSlugs = async () => {
   return prisma.post.findMany({
@@ -25,7 +40,7 @@ export const getPosts = async (params?: {
   page?: number;
   perPage?: number;
 }) => {
-  const limit = params?.perPage || 10;
+  const limit = params?.perPage || PER_PAGE;
   const offset = ((params?.page || 1) - 1) * limit;
   const [posts, count] = await Promise.all([
     prisma.post.findMany({

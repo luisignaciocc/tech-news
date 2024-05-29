@@ -1,5 +1,6 @@
 import Container from "@/components/container";
 import { getPosts } from "@/lib/api";
+import { PER_PAGE } from "@/lib/utils";
 
 import { HeroPost } from "./components/hero-post";
 import { Intro } from "./components/intro";
@@ -12,7 +13,7 @@ export default async function Index({
   params?: { page?: string };
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
-  const perPage = 10;
+  const perPage = PER_PAGE;
   const { posts, count } = await getPosts({ page, perPage });
 
   const heroPost = posts[0];

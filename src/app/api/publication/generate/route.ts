@@ -133,6 +133,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     revalidatePath(`/`);
+    revalidatePath(`/record/[page]/page`, "page");
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
