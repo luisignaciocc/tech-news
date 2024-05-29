@@ -14,9 +14,7 @@ export default function PageNavigation({
   const router = useRouter();
 
   const handlePageChange = (newPage: number) => {
-    if (currentPage === "") {
-      router.push(`/record/2`);
-    } else if (newPage > 1) {
+    if (newPage > 1) {
       router.push(`/record/${newPage}`);
     } else {
       router.push("/");
