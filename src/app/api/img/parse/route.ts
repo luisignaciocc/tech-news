@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 
 export async function POST(_request: Request): Promise<NextResponse> {
