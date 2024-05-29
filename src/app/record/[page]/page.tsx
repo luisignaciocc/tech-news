@@ -6,9 +6,9 @@ import { getAllPosts } from "@/lib/api";
 export default async function RecordPage({
   params,
 }: {
-  params: { id: string };
+  params: { page: string };
 }) {
-  const pageId = params.id;
+  const pageId = params.page;
   const page = parseInt(pageId);
   const { posts, hasMorePosts } = await getAllPosts(page);
   const morePosts = posts.slice(1);
