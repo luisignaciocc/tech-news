@@ -18,9 +18,6 @@ export async function POST(_request: Request): Promise<NextResponse> {
       select: {
         url: true,
         sourceId: true,
-        parsed: true,
-        valid: true,
-        createdAt: true,
       },
     });
 
@@ -63,13 +60,11 @@ export async function POST(_request: Request): Promise<NextResponse> {
     );
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.error("Error al buscar noticias e imágenes:", error);
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
         { status: 500 },
       );
     } else {
-      console.error("Error al buscar noticias e imágenes:", error);
       return NextResponse.json(
         { error: "Error al hacer la solicitud a la API" },
         { status: 500 },
