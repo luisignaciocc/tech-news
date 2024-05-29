@@ -21,26 +21,25 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
-export const getAllPosts = async (page: number) => {
-  const limit = 10;
-  const offset = (page - 1) * limit;
-
-  const totalPostCount = await prisma.post.count();
-  const totalPages = Math.ceil(totalPostCount / limit);
-  const currentPage = page;
-
-  const posts = await prisma.post.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      author: true,
-    },
-    skip: offset,
-    take: limit,
-  });
-
-  const hasMorePosts = currentPage < totalPages;
+export const getPosts = async (params?: {
+  page?: number;
+  perPage?: number;
+}) => {
+  const limit = params?.perPage || 10;
+  const offset = ((params?.page || 1) - 1) * limit;
+  const [posts, count] = await Promise.all([
+    prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        author: true,
+      },
+      skip: offset,
+      take: limit,
+    }),
+    prisma.post.count(),
+  ]);
 
   return {
     posts: posts.map((post) => ({
@@ -57,10 +56,10 @@ export const getAllPosts = async (page: number) => {
       ogImage: "/api/og?title=" + encodeURIComponent(post.title),
       content: post.content,
     })),
-    hasMorePosts,
+    count,
   };
 };
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
-type PostsData = ThenArg<ReturnType<typeof getAllPosts>>;
+type PostsData = ThenArg<ReturnType<typeof getPosts>>;
 export type Post = PostsData["posts"][number];

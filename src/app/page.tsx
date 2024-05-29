@@ -1,5 +1,5 @@
 import Container from "@/components/container";
-import { getAllPosts } from "@/lib/api";
+import { getPosts } from "@/lib/api";
 
 import { HeroPost } from "./components/hero-post";
 import { Intro } from "./components/intro";
@@ -9,13 +9,15 @@ import PageNavigation from "./components/PageNavigation";
 export default async function Index({
   params,
 }: {
-  params?: { page?: string };
+  params?: { page?: string; perPage?: string };
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
-  const { posts, hasMorePosts } = await getAllPosts(page);
+  const perPage = params?.perPage ? parseInt(params.perPage) : 10;
+  const { posts, count } = await getPosts({ page, perPage });
 
   const heroPost = posts[0];
   const morePosts = posts.slice(1);
+  const hasMorePosts = page * perPage < count;
 
   return (
     <main>

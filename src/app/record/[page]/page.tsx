@@ -1,7 +1,7 @@
 import { MoreStories } from "@/app/components/more-stories";
 import PageNavigation from "@/app/components/PageNavigation";
 import Container from "@/components/container";
-import { getAllPosts } from "@/lib/api";
+import { getPosts } from "@/lib/api";
 
 export default async function RecordPage({
   params,
@@ -10,7 +10,8 @@ export default async function RecordPage({
 }) {
   const pageId = params.page;
   const page = parseInt(pageId);
-  const { posts, hasMorePosts } = await getAllPosts(page);
+  const { posts, count } = await getPosts({ page, perPage: 10 });
+  const hasMorePosts = page * 10 < count;
 
   return (
     <main>
