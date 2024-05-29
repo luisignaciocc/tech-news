@@ -2,7 +2,7 @@ name: Generate Publication
 
 on:
   schedule:
-    - cron: "0 9-19 * * *"
+    - cron: "0 5-18 * * *"
 
 jobs:
   pull:
