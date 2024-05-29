@@ -12,7 +12,7 @@ export default async function Index({
   params?: { page?: string };
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
-  const { posts, hasMorePosts } = await fetchData({ params });
+  const { posts, hasMorePosts } = await getAllPosts(page);
 
   const heroPost = posts[0];
   const morePosts = posts.slice(1);
@@ -43,10 +43,4 @@ export default async function Index({
       </Container>
     </main>
   );
-}
-export async function fetchData({ params }: { params?: { page?: string } }) {
-  const page = params?.page ? parseInt(params.page) : 1;
-  const postsData = await getAllPosts(page);
-
-  return postsData;
 }
