@@ -6,42 +6,47 @@ import { Intro } from "./components/intro";
 import { MoreStories } from "./components/more-stories";
 import PageNavigation from "./components/PageNavigation";
 
-export default function Index({ params }: { params?: { page?: string } }) {
+export default async function Index({
+  params,
+}: {
+  params?: { page?: string };
+}) {
   const page = params?.page ? parseInt(params.page) : 1;
-  const allPostsPromise = getAllPosts(page);
+  const { posts, hasMorePosts } = await fetchData({ params });
+
+  const heroPost = posts[0];
+  const morePosts = posts.slice(1);
 
   return (
     <main>
       <Container>
         <Intro />
-        {allPostsPromise.then((allPosts) => {
-          const heroPost = allPosts[0];
-          const morePosts = allPosts.slice(1);
-          return (
-            <>
-              <HeroPost
-                title={heroPost.title}
-                coverImage={heroPost.coverImage}
-                date={heroPost.date}
-                author={heroPost.author}
-                slug={heroPost.slug}
-                excerpt={heroPost.excerpt}
-              />
-              {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-              <div className="flex justify-end mb-5">
-                <PageNavigation params={{ id: page.toString() }} />
-              </div>
-            </>
-          );
-        })}
+        <HeroPost
+          title={heroPost.title}
+          coverImage={heroPost.coverImage}
+          date={heroPost.date}
+          author={heroPost.author}
+          slug={heroPost.slug}
+          excerpt={heroPost.excerpt}
+        />
+        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        {hasMorePosts && (
+          <div className="flex justify-end mb-5">
+            <PageNavigation
+              params={{
+                id: page.toString(),
+              }}
+              hasMorePosts={hasMorePosts}
+            />
+          </div>
+        )}
       </Container>
     </main>
   );
 }
 export async function fetchData({ params }: { params?: { page?: string } }) {
   const page = params?.page ? parseInt(params.page) : 1;
-  const allPosts = await getAllPosts(page);
-  return {
-    posts: allPosts,
-  };
+  const postsData = await getAllPosts(page);
+
+  return postsData;
 }

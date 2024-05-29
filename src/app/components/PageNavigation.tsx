@@ -1,7 +1,17 @@
 "use client";
 import { useRouter } from "next/navigation";
 
-export default function PageNavigation({ params }: { params: { id: string } }) {
+interface PageNavigationProps {
+  params: {
+    id: string;
+  };
+  hasMorePosts: boolean;
+}
+
+export default function PageNavigation({
+  params,
+  hasMorePosts,
+}: PageNavigationProps) {
   const pageId = params.id;
   const page = parseInt(pageId);
   const router = useRouter();
@@ -27,12 +37,14 @@ export default function PageNavigation({ params }: { params: { id: string } }) {
             Anterior
           </button>
         )}
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => handlePageChange(page + 1)}
-        >
-          Siguiente
-        </button>
+        {hasMorePosts && (
+          <button
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => handlePageChange(page + 1)}
+          >
+            Siguiente
+          </button>
+        )}
       </div>
     </div>
   );

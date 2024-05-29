@@ -25,6 +25,10 @@ export const getAllPosts = async (page: number) => {
   const limit = 10;
   const offset = (page - 1) * limit;
 
+  const totalPostCount = await prisma.post.count();
+  const totalPages = Math.ceil(totalPostCount / limit);
+  const currentPage = page;
+
   const posts = await prisma.post.findMany({
     orderBy: {
       createdAt: "desc",
@@ -36,21 +40,27 @@ export const getAllPosts = async (page: number) => {
     take: limit,
   });
 
-  return posts.map((post) => ({
-    id: post.id,
-    title: post.title,
-    date: post.createdAt.toISOString(),
-    slug: post.slug,
-    author: {
-      name: post.author.name,
-      picture: post.author.picture,
-    },
-    coverImage: post.coverImage,
-    excerpt: post.excerpt,
-    ogImage: "/api/og?title=" + encodeURIComponent(post.title),
-    content: post.content,
-  }));
+  const hasMorePosts = currentPage < totalPages;
+
+  return {
+    posts: posts.map((post) => ({
+      id: post.id,
+      title: post.title,
+      date: post.createdAt.toISOString(),
+      slug: post.slug,
+      author: {
+        name: post.author.name,
+        picture: post.author.picture,
+      },
+      coverImage: post.coverImage,
+      excerpt: post.excerpt,
+      ogImage: "/api/og?title=" + encodeURIComponent(post.title),
+      content: post.content,
+    })),
+    hasMorePosts,
+  };
 };
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : T;
-export type Post = ThenArg<ReturnType<typeof getAllPosts>>[number];
+type PostsData = ThenArg<ReturnType<typeof getAllPosts>>;
+export type Post = PostsData["posts"][number];
