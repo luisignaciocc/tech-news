@@ -11,12 +11,11 @@ export default async function RecordPage({
   const pageId = params.page;
   const page = parseInt(pageId);
   const { posts, hasMorePosts } = await getAllPosts(page);
-  const morePosts = posts.slice(1);
 
   return (
     <main>
       <Container>
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
+        {posts.length > 0 && <MoreStories posts={posts} />}
         <PageNavigation params={{ id: pageId }} hasMorePosts={hasMorePosts} />
       </Container>
     </main>
