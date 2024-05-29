@@ -1,11 +1,10 @@
-import Link from "next/link";
-
 import Container from "@/components/container";
 import { getAllPosts } from "@/lib/api";
 
 import { HeroPost } from "./components/hero-post";
 import { Intro } from "./components/intro";
 import { MoreStories } from "./components/more-stories";
+import PageNavigation from "./components/PageNavigation";
 
 export default function Index({ params }: { params?: { page?: string } }) {
   const page = params?.page ? parseInt(params.page) : 1;
@@ -30,11 +29,7 @@ export default function Index({ params }: { params?: { page?: string } }) {
               />
               {morePosts.length > 0 && <MoreStories posts={morePosts} />}
               <div className="flex justify-end mb-5">
-                <Link href={`/record/${page + 1}`}>
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Siguiente
-                  </button>
-                </Link>
+                <PageNavigation params={{ id: page.toString() }} />
               </div>
             </>
           );
