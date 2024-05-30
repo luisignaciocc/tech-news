@@ -6,7 +6,7 @@ on:
 
 jobs:
   pull:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Pull the News from the Brave Search API
         run: |
@@ -15,7 +15,7 @@ jobs:
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   parse:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: pull
     steps:
       - name: Parse the News using Readability
@@ -25,7 +25,7 @@ jobs:
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   embed:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: parse
     steps:
       - name: Generate Embedings for the News
@@ -35,17 +35,17 @@ jobs:
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   get_images:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: parse
     steps:
-      - name: Get Preview Imagesfor the News
+      - name: Get Preview Images for the News
         run: |
           curl --request POST \
           --url 'https://news.bocono-labs.com/api/news/get-image' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   clean:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Clear the Not Generated News
         run: |
