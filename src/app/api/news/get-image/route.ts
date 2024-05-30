@@ -73,17 +73,22 @@ export async function POST(request: Request): Promise<NextResponse> {
             if (twitterImage) {
               images = [twitterImage];
             } else {
-              const imgs = $("img")
-                .map((_i, el) => $(el).attr("src"))
-                .get()
-                .filter(
-                  (src) =>
-                    src &&
-                    src.startsWith("https") &&
-                    !imagesFilter.some((sub) => src.includes(sub)),
-                );
-              if (imgs.length > 0) {
-                images = imgs;
+              const wpPostImage = $(".wp-post-image").attr("src");
+              if (wpPostImage) {
+                images = [wpPostImage];
+              } else {
+                const imgs = $("img")
+                  .map((_i, el) => $(el).attr("src"))
+                  .get()
+                  .filter(
+                    (src) =>
+                      src &&
+                      src.startsWith("https") &&
+                      !imagesFilter.some((sub) => src.includes(sub)),
+                  );
+                if (imgs.length > 0) {
+                  images = imgs;
+                }
               }
             }
           }
