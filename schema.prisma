@@ -36,6 +36,7 @@ model News {
     source       NewsSource?                  @relation(fields: [sourceId], references: [id])
     searchQuery  String?
     vectorized   Boolean                      @default(false)
+    filtered     Boolean                      @default(false)
     embedding    Unsupported("vector(1536)")?
     posts        Post[]
     images       NewsImage[]

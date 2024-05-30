@@ -36,7 +36,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const news = await prisma.news.findMany({
       where: {
-        parsed: true,
+        filtered: true,
         valid: true,
         images: {
           none: {},
@@ -57,6 +57,14 @@ export async function POST(request: Request): Promise<NextResponse> {
         try {
           const response = await fetch(item.url);
           if (!response.ok) {
+            await prisma.news.update({
+              where: {
+                id: item.id,
+              },
+              data: {
+                valid: false,
+              },
+            });
             return false;
           }
           const html = await response.text();
@@ -94,6 +102,14 @@ export async function POST(request: Request): Promise<NextResponse> {
           }
 
           if (!images) {
+            await prisma.news.update({
+              where: {
+                id: item.id,
+              },
+              data: {
+                valid: false,
+              },
+            });
             return false;
           }
 
@@ -122,6 +138,14 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
+          await prisma.news.update({
+            where: {
+              id: item.id,
+            },
+            data: {
+              valid: false,
+            },
+          });
           return false;
         }
       }),

@@ -34,9 +34,19 @@ jobs:
           --url 'https://news.bocono-labs.com/api/news/embed' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  get_images:
+  filter:
     runs-on: self-hosted
     needs: parse
+    steps:
+      - name: Filter the Unrelevant News
+        run: |
+          curl --request POST \
+          --url 'https://news.bocono-labs.com/api/news/filter' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  get_images:
+    runs-on: self-hosted
+    needs: filter
     steps:
       - name: Get Preview Images for the News
         run: |
