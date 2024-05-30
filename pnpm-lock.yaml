@@ -91,7 +91,7 @@ importers:
         version: 9.0.1
     devDependencies:
       '@types/jsdom':
-        specifier: ^21.1.6
+        specifier: ^21.1.7
         version: 21.1.7
       '@types/node':
         specifier: ^20.12.13
