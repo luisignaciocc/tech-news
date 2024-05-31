@@ -34,8 +34,8 @@ export const defaultMetadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: SITE_NAME,
-    description: SITE_NAME,
+    title: SITE_SHORT_NAME,
+    description: SITE_DESCRIPTION,
     siteName: SITE_SHORT_NAME,
     images: [
       {
@@ -45,6 +45,8 @@ export const defaultMetadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    title: SITE_SHORT_NAME,
+    description: SITE_DESCRIPTION,
     site: SITE_HANDLER,
     creator: PERSONAL_HANDLER,
     images: `${SITE_URL}/og.png`,
