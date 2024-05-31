@@ -29,8 +29,8 @@ export default function Register() {
       },
     });
 
-    const resJSON = await res.json();
-    console.log(resJSON);
+    // const resJSON = await res.json();
+    await res.json();
   });
 
   return (
