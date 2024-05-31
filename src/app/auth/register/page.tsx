@@ -1,10 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { FieldError, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+import { registerUser } from "./actions";
 
 interface FormData {
   username: string;
@@ -17,20 +20,37 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = handleSubmit(async (data) => {
-    const res = await fetch("/api/admin/register", {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+  const router = useRouter();
 
-    // const resJSON = await res.json();
-    await res.json();
+  const onSubmit = handleSubmit(async (data) => {
+    if (data.password != data.confirmPassword) {
+      setError("confirmPassword", { message: "Passwords do not match" });
+      return;
+    }
+
+    try {
+      const newUser = await registerUser({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
+
+      if (newUser) {
+        router.push("/auth/login");
+      } else {
+        setError("root", { message: "Unknown error" });
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setError("root", { message: error.message });
+      } else {
+        setError("root", { message: "Unknown error" });
+      }
+    }
   });
 
   return (
@@ -104,6 +124,7 @@ export default function Register() {
               </span>
             </div>
           )}
+
           <Button type="submit" style={{ marginTop: "1rem" }}>
             Register
           </Button>
