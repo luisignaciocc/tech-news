@@ -28,7 +28,9 @@ export default async function RecordPage({
 export async function generateStaticParams() {
   const slugs = await getPostSlugs();
 
-  return slugs.map(({ slug }) => ({
-    slug,
+  const pages = Math.ceil(slugs.length / PER_PAGE) - 1; // -1 because the first page is handled by the index page
+
+  return Array.from({ length: pages }).map((_, index) => ({
+    params: { page: (index + 2).toString() },
   }));
 }
