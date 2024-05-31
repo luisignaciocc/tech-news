@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   }
 
   const title = `${post.title}`;
-  const description = post.excerpt;
+  const description = post.excerpt || "Las últimas noticias de tecnología";
 
   return {
     metadataBase: new URL("https://news.bocono-labs.com"),
@@ -57,10 +57,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     description,
     openGraph: {
       title,
+      description,
       images: [{ url: `/posts/${params.slug}/opengraph-image.png` }],
     },
     twitter: {
       title,
+      card: "summary_large_image",
+      description,
       images: [{ url: `/posts/${params.slug}/twitter-image.png` }],
     },
   };
