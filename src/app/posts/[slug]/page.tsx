@@ -50,7 +50,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
 
   const title = `${post.title}`;
   const description = post.excerpt;
-  const urlEncodedTitle = encodeURIComponent(title);
 
   return {
     metadataBase: new URL("https://news.bocono-labs.com"),
@@ -58,7 +57,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     description,
     openGraph: {
       title,
-      images: [{ url: post.coverImage || "/api/og?title=" + urlEncodedTitle }],
+      images: [{ url: `/posts/${params.slug}/opengraph-image.png` }],
+    },
+    twitter: {
+      title,
+      images: [{ url: `/posts/${params.slug}/twitter-image.png` }],
     },
   };
 }
