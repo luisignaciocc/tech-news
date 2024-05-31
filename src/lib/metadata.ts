@@ -4,11 +4,18 @@ export const SITE_SHORT_NAME = `Tecnobuc`;
 export const SITE_ONELINER = `Noticiero de tecnología generado por IA`;
 export const SITE_NAME = `${SITE_SHORT_NAME} | ${SITE_ONELINER}`;
 export const SITE_DESCRIPTION = `Un noticiero digital de tecnología con contenido generado automáticamente.`;
-export const SITE_URL = `https://news.bocono-labs.com`;
 export const SITE_AUTHOR = `Bocono Labs`;
 export const SITE_AUTHOR_URL = `https://bocono-labs.com`;
 export const SITE_HANDLER = `@tecnobuc`;
 export const PERSONAL_HANDLER = `@luisignaciocc`;
+export const SITE_URL =
+  process.env.VERCEL_ENV === "production"
+    ? process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : `https://news.bocono-labs.com`
+    : process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : `http://localhost:3000`;
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),
