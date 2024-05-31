@@ -20,7 +20,7 @@ export async function registerUser(data: RegisterData) {
     });
 
     if (usernameFound) {
-      throw new Error("User already exists");
+      return { success: false, message: "User already exists" };
     }
 
     const emailFound = await prisma.users.findUnique({
@@ -30,7 +30,7 @@ export async function registerUser(data: RegisterData) {
     });
 
     if (emailFound) {
-      throw new Error("Email already exists");
+      return { success: false, message: "Email already exists" };
     }
 
     const hashedPassword = await bcrypt.hash(data.password, 10);

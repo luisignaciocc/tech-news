@@ -1,8 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 
+import { AlertDestructive, AlertSuccess } from "@/app/components/Alerts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,6 +28,9 @@ export default function Register() {
 
   const router = useRouter();
 
+  const [alertMessage, setAlertMessage] = useState<string | null>(null);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
   const onSubmit = handleSubmit(async (data) => {
     if (data.password != data.confirmPassword) {
       setError("confirmPassword", { message: "Passwords do not match" });
@@ -33,23 +38,23 @@ export default function Register() {
     }
 
     try {
-      const newUser = await registerUser({
+      const response = await registerUser({
         username: data.username,
         email: data.email,
         password: data.password,
       });
 
-      if (newUser) {
-        router.push("/auth/login");
+      if (response.success) {
+        setShowSuccessAlert(true);
+        setAlertMessage(null);
+        setTimeout(() => {
+          router.push("/auth/login");
+        }, 5000);
       } else {
-        setError("root", { message: "Unknown error" });
+        setAlertMessage(response.message || "Unknown error");
       }
     } catch (error) {
-      if (error instanceof Error) {
-        setError("root", { message: error.message });
-      } else {
-        setError("root", { message: "Unknown error" });
-      }
+      setAlertMessage("An unexpected error occurred. Please try again later.");
     }
   });
 
@@ -57,6 +62,15 @@ export default function Register() {
     <div className="flex items-center justify-center h-screen bg-neutral-50">
       <div className="bg-white rounded-lg shadow-md p-8 w-96">
         <h1 className="text-black-200 font-bold text-4xl mb-3">Register</h1>
+        {alertMessage && !showSuccessAlert && (
+          <AlertDestructive title="Error" message={alertMessage} />
+        )}
+        {showSuccessAlert && (
+          <AlertSuccess
+            title="Registration Successful"
+            message="You will be redirected to the login page in 5 seconds."
+          />
+        )}
         <form onSubmit={onSubmit} className="space-y-1">
           <Label htmlFor="username">Your username</Label>
           <Input
