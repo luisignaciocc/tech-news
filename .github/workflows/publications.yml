@@ -5,7 +5,7 @@ on:
     - cron: "*/15 15-23,0,1 * * *"
 
 jobs:
-  pull:
+  blog:
     runs-on: self-hosted
     steps:
       - name: Generate the publication from a new
