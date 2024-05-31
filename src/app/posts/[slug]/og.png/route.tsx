@@ -4,22 +4,11 @@ import { ImageResponse } from "next/og";
 
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 
-export const alt = "Bocono Labs";
-export const size = {
-  width: 1200,
-  height: 630,
-};
-
-export const contentType = "image/png";
-
-type Params = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function Image({ params: { slug } }: Params) {
-  const post = await getPostBySlug(slug);
+export async function GET(
+  req: Request,
+  { params }: { params: { slug: string } },
+) {
+  const post = await getPostBySlug(params.slug);
 
   if (!post) {
     return notFound();
@@ -82,7 +71,7 @@ export default async function Image({ params: { slug } }: Params) {
         </div>
         {post.coverImage && (
           <img
-            alt={alt}
+            alt={post.title}
             height={200}
             src={post.coverImage}
             style={{
@@ -99,7 +88,8 @@ export default async function Image({ params: { slug } }: Params) {
       headers: {
         "Cache-Control": "s-maxage=3600",
       },
-      ...size,
+      width: 1200,
+      height: 630,
     },
   );
 }

@@ -58,13 +58,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      images: [{ url: `/posts/${params.slug}/opengraph-image.png` }],
+      images: [{ url: `/posts/${params.slug}/og.png` }],
     },
     twitter: {
       title,
       card: "summary_large_image",
       description,
-      images: [{ url: `/posts/${params.slug}/twitter-image.png` }],
+      images: [{ url: `/posts/${params.slug}/og.png` }],
     },
   };
 }
