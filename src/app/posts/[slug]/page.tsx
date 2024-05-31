@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import Container from "@/components/container";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
+import { defaultMetadata, SITE_DESCRIPTION } from "@/lib/metadata";
 
 import Header from "./components/header";
 import { PostBody } from "./components/post-body";
@@ -48,11 +49,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     return notFound();
   }
 
-  const title = `${post.title}`;
-  const description = post.excerpt || "Las últimas noticias de tecnología";
+  const title = `${post.title} | Tecnobuc`;
+  const description = post.excerpt || SITE_DESCRIPTION;
 
   return {
-    metadataBase: new URL("https://news.bocono-labs.com"),
+    ...defaultMetadata,
     title,
     description,
     openGraph: {

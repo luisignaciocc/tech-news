@@ -1,10 +1,10 @@
 import { MetadataRoute } from "next";
 
 import { getPostSlugs } from "@/lib/api";
-import { SITE_URL } from "@/lib/constants";
+import { SITE_URL } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
-// Google's limit is 50,000 URLs per sitemap
 
+// Google's limit is 50,000 URLs per sitemap
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getPostSlugs();
 

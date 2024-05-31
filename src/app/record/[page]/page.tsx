@@ -2,6 +2,11 @@ import { MoreStories } from "@/app/components/more-stories";
 import PageNavigation from "@/app/components/PageNavigation";
 import Container from "@/components/container";
 import { getPosts, getPostSlugs } from "@/lib/api";
+import {
+  defaultMetadata,
+  SITE_DESCRIPTION,
+  SITE_SHORT_NAME,
+} from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
 export default async function RecordPage({
@@ -33,4 +38,17 @@ export async function generateStaticParams() {
   return Array.from({ length: pages }).map((_, index) => ({
     params: { page: (index + 2).toString() },
   }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { page: string };
+}) {
+  const currentPage = params.page;
+  return {
+    ...defaultMetadata,
+    title: `${SITE_SHORT_NAME} | Página ${currentPage}`,
+    description: `Archivo | ${SITE_DESCRIPTION}`,
+  };
 }
