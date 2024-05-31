@@ -13,3 +13,12 @@ jobs:
           curl --request POST \
           --url 'https://news.bocono-labs.com/api/publication/generate' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  twitter:
+    runs-on: self-hosted
+    steps:
+      - name: Generate a twitter post from an article
+        run: |
+          curl --request POST \
+          --url 'https://news.bocono-labs.com/api/publication/twitter' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
