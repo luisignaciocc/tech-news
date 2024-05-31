@@ -4,7 +4,12 @@ import { notFound } from "next/navigation";
 import Container from "@/components/container";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
-import { defaultMetadata, SITE_DESCRIPTION } from "@/lib/metadata";
+import {
+  defaultMetadata,
+  SITE_DESCRIPTION,
+  SITE_SHORT_NAME,
+  SITE_URL,
+} from "@/lib/metadata";
 
 import Header from "./components/header";
 import { PostBody } from "./components/post-body";
@@ -59,6 +64,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     openGraph: {
       title,
       description,
+      siteName: SITE_SHORT_NAME,
+      url: new URL(SITE_URL),
       images: [{ url: `/posts/${params.slug}/og.png` }],
     },
     twitter: {
