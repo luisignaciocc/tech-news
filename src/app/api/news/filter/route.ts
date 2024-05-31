@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const maxDuration = 60;
 
 const _SIMILARITY_THRESHOLD = 0.8;
-const bannedWords = ["wordle", "quordle", "nyt"];
+const bannedWords = ["wordle", "quordle", "nyt", "review"];
 
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
