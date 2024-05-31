@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
+import { SITE_URL } from "@/lib/metadata";
 
 export async function GET(
   req: Request,
@@ -53,7 +54,7 @@ export async function GET(
               lineHeight: 0.6,
             }}
           >
-            news.bocono-labs.com
+            {SITE_URL}
           </span>
         </div>
         <div
