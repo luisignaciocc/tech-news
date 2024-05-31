@@ -16,6 +16,8 @@ export function Intro() {
         <a
           href={SITE_AUTHOR_URL}
           className="underline hover:text-blue-600 duration-200 transition-colors"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           {SITE_AUTHOR}
         </a>
