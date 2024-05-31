@@ -20,7 +20,18 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormData>();
 
-  const onSubmit = handleSubmit((data) => {});
+  const onSubmit = handleSubmit(async (data) => {
+    const res = await fetch("/api/admin/register", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const resJSON = await res.json();
+    console.log(resJSON);
+  });
 
   return (
     <div className="flex items-center justify-center h-screen bg-neutral-50">
