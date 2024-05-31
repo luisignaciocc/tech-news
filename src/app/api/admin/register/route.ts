@@ -11,7 +11,8 @@ interface RegisterData {
 export async function POST(request: NextRequest) {
   const data: RegisterData = await request.json();
 
-  console.log(data);
-
-  return NextResponse.json({ message: "Registering..." });
+  return NextResponse.json({
+    data: data,
+    message: "Registering...",
+  });
 }
