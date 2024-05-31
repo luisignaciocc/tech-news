@@ -79,3 +79,11 @@ model Author {
     picture String
     posts   Post[]
 }
+
+model Users {
+    id          String @id @default(cuid())
+    username    String @unique
+    email       String @unique
+    password    String
+    createdAt   DateTime @default(now())
+}
