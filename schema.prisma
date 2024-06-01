@@ -59,20 +59,21 @@ model NewsImage {
 }
 
 model Post {
-    id              String    @id @default(cuid())
-    slug            String    @unique
-    title           String
-    content         String
-    createdAt       DateTime  @default(now())
-    coverImage      String?
-    author          Author    @relation(fields: [authorId], references: [id])
-    authorId        String
-    excerpt         String?
-    publishedAt     DateTime?
-    newId           String?
-    postedToTwitter Boolean   @default(false)
-    tweetId         String?
-    new             News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
+    id               String    @id @default(cuid())
+    slug             String    @unique
+    title            String
+    content          String
+    createdAt        DateTime  @default(now())
+    coverImage       String?
+    author           Author    @relation(fields: [authorId], references: [id])
+    authorId         String
+    excerpt          String?
+    publishedAt      DateTime?
+    newId            String?
+    postedToTwitter  Boolean   @default(false)
+    postedToLinkedin Boolean   @default(false)
+    tweetId          String?
+    new              News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
 }
 
 model Author {

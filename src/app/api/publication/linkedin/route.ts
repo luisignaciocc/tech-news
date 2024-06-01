@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+import { SITE_URL } from "@/lib/metadata";
+
 export const maxDuration = 60;
 
 const prisma = new PrismaClient();
@@ -16,10 +18,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     const [article] = await Promise.all([
       prisma.post.findFirst({
         where: {
-          id: "clwrntpfe00004nttn8umjm1j",
+          postedToLinkedin: false,
         },
         orderBy: {
-          createdAt: "asc",
+          createdAt: "desc",
         },
         select: {
           id: true,
@@ -38,8 +40,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET;
     const ACESS_TOKEN = process.env.LINKEDIN_ACCESS_TOKEN;
     const ORGANIZATION_ID = "104021039";
-    // const postUrl = `${SITE_URL}/posts/${article.slug}`;
-    const postUrl = `https://news.bocono-labs.com/posts/${article.slug}`;
+    const postUrl = `${SITE_URL}/posts/${article.slug}`;
 
     if (!CLIENT_ID || !CLIENT_SECRET || !ACESS_TOKEN) {
       return NextResponse.json(
@@ -81,6 +82,15 @@ export async function POST(request: Request): Promise<NextResponse> {
       const error = await res.json();
       return NextResponse.json({ error }, { status: 500 });
     }
+
+    await prisma.post.update({
+      where: {
+        id: article.id,
+      },
+      data: {
+        postedToLinkedin: true,
+      },
+    });
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
