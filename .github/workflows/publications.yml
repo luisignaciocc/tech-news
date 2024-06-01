@@ -43,3 +43,13 @@ jobs:
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/instagram' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  facebook:
+    runs-on: self-hosted
+    needs: blog
+    steps:
+      - name: Generate a linkedin post from an article
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/publication/facebook' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'

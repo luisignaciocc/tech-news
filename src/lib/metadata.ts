@@ -15,7 +15,8 @@ export const SITE_URL =
       : `https://www.tecnobuc.com`
     : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : `http://localhost:3000`;
+      : // : `http://localhost:3000`;
+        `https://www.tecnobuc.com`;
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),

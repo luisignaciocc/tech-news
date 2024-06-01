@@ -18,11 +18,11 @@ export async function POST(request: Request) {
   }
 
   try {
-    const access_token = process.env.FACEBOOK_LONG_LIVE_TOKEN;
-    const igUserId = process.env.IG_PAGE_ID;
+    const access_token = process.env.FACEBOOK_PAGE_TOKEN;
+    const pageId = process.env.FB_PAGE_ID;
     const apiVersion = process.env.FACEBOOK_API_VERSION;
 
-    if (!access_token || !igUserId || !apiVersion) {
+    if (!access_token || !pageId || !apiVersion) {
       return NextResponse.json({
         ok: false,
         message: "No se encontró un token de acceso válido.",
@@ -31,41 +31,33 @@ export async function POST(request: Request) {
 
     const lastPost = await prisma.post.findFirst({
       where: {
-        postedToInstagram: false,
+        postedToFacebook: false,
       },
       orderBy: {
         createdAt: "desc",
       },
       select: {
         id: true,
-        title: true,
-        coverImage: true,
         content: true,
+        slug: true,
       },
     });
 
     if (!lastPost) {
       return NextResponse.json({
         ok: false,
-        message:
-          "No se encontró una noticia válida para generar la descripción.",
+        message: "No se encontró una noticia válida para publicar.",
       });
     }
-
-    const titleUrlEncoded = encodeURIComponent(lastPost.title);
-    const coverImageUrlEncoded = encodeURIComponent(
-      lastPost.coverImage || `${SITE_URL}/icon.png`,
-    );
-    const imageUrl = `${SITE_URL}/api/publication/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
 
     const completion = await openai.chat.completions.create({
       messages: [
         {
           role: "system",
           content: `
-            Eres un asistente que crea resúmenes concisos y atractivos para publicaciones en Instagram. 
+            Eres un asistente que crea resúmenes concisos y atractivos para publicaciones en Faceboof. 
             Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
-            La cuenta de Instagram es un sitio de noticias de tecnología llamado Tecnobuc.
+            La cuenta de Facebook es un sitio de noticias de tecnología llamado Tecnobuc.
           `,
         },
         {
@@ -74,7 +66,7 @@ export async function POST(request: Request) {
             Aquí tienes un artículo sobre tecnología:
             ${lastPost.content}
             
-            Por favor, proporciona un resumen adecuado para una publicación en Instagram.
+            Por favor, proporciona un resumen adecuado para una publicación en Facebook.
           `,
         },
       ],
@@ -82,55 +74,36 @@ export async function POST(request: Request) {
     });
 
     const summary = completion.choices[0].message.content;
+    const postUrl = `${SITE_URL}/posts/${lastPost.slug}`;
 
     const res = await fetch(
-      `https://graph.facebook.com/v19.0/${igUserId}/media`,
+      `https://graph.facebook.com/${apiVersion}/${pageId}/feed?access_token=${access_token}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: new URLSearchParams({
-          image_url: imageUrl || "",
-          caption: summary || "",
-          access_token,
+        body: JSON.stringify({
+          message: summary,
+          link: postUrl,
+          published: "true",
         }),
       },
     );
 
     const {
-      id: creation_id,
+      id,
     }: {
       id: string;
     } = await res.json();
-
-    const res2 = await fetch(
-      `https://graph.facebook.com/${apiVersion}/${igUserId}/media_publish`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          creation_id,
-          access_token,
-        }),
-      },
-    );
-
-    const {
-      id: media_id,
-    }: {
-      id: string;
-    } = await res2.json();
 
     await prisma.post.update({
       where: {
         id: lastPost.id,
       },
       data: {
-        postedToInstagram: true,
-        instagramMediaId: media_id,
+        postedToFacebook: true,
+        facebookPostId: id,
       },
     });
 

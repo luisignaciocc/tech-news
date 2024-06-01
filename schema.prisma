@@ -75,6 +75,8 @@ model Post {
     postedToLinkedin  Boolean   @default(false)
     postedToInstagram Boolean   @default(false)
     instagramMediaId  String?
+    postedToFacebook  Boolean   @default(false)
+    facebookPostId    String?
     new               News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
 }
 
