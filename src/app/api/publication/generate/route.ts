@@ -32,13 +32,14 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
         },
         orderBy: {
-          createdAt: "desc",
+          publishedAt: "desc",
         },
         select: {
           id: true,
           title: true,
           body: true,
           excerpt: true,
+          publishedAt: true,
           images: {
             select: {
               url: true,
@@ -139,6 +140,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
         },
         coverImage: article.images[0].url,
+        createdAt: article.publishedAt,
       },
     });
 
