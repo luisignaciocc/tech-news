@@ -11,7 +11,7 @@ jobs:
       - name: Generate the publication from a new
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/generate' \
+          --url 'https://www.tecnobuc.com/api/publication/blog' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   twitter:
@@ -28,8 +28,18 @@ jobs:
     runs-on: self-hosted
     needs: blog
     steps:
-      - name: Generate a twitter post from an article
+      - name: Generate a linkedin post from an article
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/linkedin' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  instagram:
+    runs-on: self-hosted
+    needs: blog
+    steps:
+      - name: Generate a linkedin post from an article
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/publication/instagram' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
