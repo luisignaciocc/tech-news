@@ -26,7 +26,7 @@ jobs:
 
   linkedin:
     runs-on: self-hosted
-    needs: blog
+    needs: twitter
     steps:
       - name: Generate a linkedin post from an article
         run: |
@@ -36,7 +36,7 @@ jobs:
 
   instagram:
     runs-on: self-hosted
-    needs: blog
+    needs: linkedin
     steps:
       - name: Generate a linkedin post from an article
         run: |
@@ -46,7 +46,7 @@ jobs:
 
   facebook:
     runs-on: self-hosted
-    needs: blog
+    needs: instagram
     steps:
       - name: Generate a linkedin post from an article
         run: |
