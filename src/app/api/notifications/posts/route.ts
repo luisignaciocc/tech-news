@@ -24,9 +24,12 @@ export async function POST(request: Request): Promise<NextResponse> {
         select: {
           slug: true,
           postedToFacebook: true,
+          facebookPostId: true,
           postedToInstagram: true,
+          instagramMediaId: true,
           postedToLinkedin: true,
           postedToTwitter: true,
+          tweetId: true,
           createdAt: true,
         },
         take: 4,
@@ -60,10 +63,10 @@ export async function POST(request: Request): Promise<NextResponse> {
       text += "\n\n";
       text += `${postUrl}`;
       text += "\n";
-      text += `Facebook ${article.postedToFacebook ? "✅" : "❌"}\n`;
-      text += `Instagram ${article.postedToInstagram ? "✅" : "❌"}\n`;
+      text += `Facebook ${article.postedToFacebook && article.facebookPostId ? "✅" : "❌"}\n`;
+      text += `Instagram ${article.postedToInstagram && article.instagramMediaId ? "✅" : "❌"}\n`;
       text += `Linkedin ${article.postedToLinkedin ? "✅" : "❌"}\n`;
-      text += `Twitter ${article.postedToTwitter ? "✅" : "❌"}`;
+      text += `Twitter ${article.postedToTwitter && article.tweetId ? "✅" : "❌"}`;
     }
 
     const encodedText = encodeURIComponent(text);
