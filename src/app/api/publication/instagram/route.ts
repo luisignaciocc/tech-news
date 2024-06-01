@@ -10,7 +10,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   const apiKey = request.headers.get("x-api-key");
 
   if (apiKey !== process.env.API_KEY) {
