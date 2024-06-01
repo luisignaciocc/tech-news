@@ -140,7 +140,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
         },
         coverImage: article.images[0].url,
-        createdAt: article.publishedAt,
+        publishedAt: article.publishedAt,
       },
     });
 
