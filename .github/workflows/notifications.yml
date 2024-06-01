@@ -1,0 +1,15 @@
+name: Send daily status
+
+on:
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  whatsapp:
+    runs-on: self-hosted
+    steps:
+      - name: Send a notification to the last posts statuses
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/notifications/posts' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'

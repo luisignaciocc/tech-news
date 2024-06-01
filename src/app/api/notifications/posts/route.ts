@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+import { formatDistance } from "date-fns";
+import { es } from "date-fns/locale";
 import { NextResponse } from "next/server";
 
 import { SITE_URL } from "@/lib/metadata";
@@ -13,24 +15,26 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   try {
-    const [article] = await Promise.all([
-      prisma.post.findFirst({
+    const [articles] = await Promise.all([
+      prisma.post.findMany({
+        where: {},
         orderBy: {
           createdAt: "desc",
         },
         select: {
-          title: true,
           slug: true,
           postedToFacebook: true,
           postedToInstagram: true,
           postedToLinkedin: true,
           postedToTwitter: true,
+          createdAt: true,
         },
+        take: 10,
       }),
     ]);
 
-    if (!article) {
-      return NextResponse.json({ error: "No article found" }, { status: 404 });
+    if (!articles.length) {
+      return NextResponse.json({ error: "No articles found" }, { status: 404 });
     }
 
     const API_KEY = process.env.CALLMEBOT_API_KEY;
@@ -43,13 +47,24 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
-    const postUrl = `${SITE_URL}/posts/${article.slug}`;
-    const text = `*Nuevo artículo publicado* 🚀
-${article.title} ${postUrl}
-Publicado en Facebook ${article.postedToFacebook ? "✅" : "❌"}
-Publicado en Instagram ${article.postedToInstagram ? "✅" : "❌"}
-Publicado en Linkedin ${article.postedToLinkedin ? "✅" : "❌"}
-Publicado en Twitter ${article.postedToTwitter ? "✅" : "❌"}`;
+    let text = "*Últimos artículos publicados* 🚀";
+    text += "\n";
+    text = `Última publicación: ${formatDistance(
+      new Date(articles[0].createdAt),
+      new Date(),
+      { addSuffix: true, locale: es },
+    )}`;
+
+    for (const article of articles) {
+      const postUrl = `${SITE_URL}/posts/${article.slug}`;
+      text += "\n\n";
+      text += `${postUrl}`;
+      text += "\n";
+      text += `Facebook ${article.postedToFacebook ? "✅" : "❌"}\n`;
+      text += `Instagram ${article.postedToInstagram ? "✅" : "❌"}\n`;
+      text += `Linkedin ${article.postedToLinkedin ? "✅" : "❌"}\n`;
+      text += `Twitter ${article.postedToTwitter ? "✅" : "❌"}`;
+    }
 
     const encodedText = encodeURIComponent(text);
 
