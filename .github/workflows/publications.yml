@@ -26,9 +26,9 @@ jobs:
 
   linkedin:
     runs-on: self-hosted
-    needs: twitter
+    needs: blog
     steps:
-      - name: Generate a linkedin post from an article
+      - name: Generate a twitter post from an article
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/linkedin' \
@@ -36,9 +36,9 @@ jobs:
 
   instagram:
     runs-on: self-hosted
-    needs: linkedin
+    needs: blog
     steps:
-      - name: Generate a linkedin post from an article
+      - name: Generate an instagram post from an article
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/instagram' \
@@ -46,9 +46,9 @@ jobs:
 
   facebook:
     runs-on: self-hosted
-    needs: instagram
+    needs: blog
     steps:
-      - name: Generate a linkedin post from an article
+      - name: Generate a facebook post from an article
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/facebook' \

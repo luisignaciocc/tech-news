@@ -93,6 +93,15 @@ export async function POST(request: Request) {
       },
     );
 
+    if (!res.ok) {
+      const error = await res.json();
+      console.error(error);
+      return NextResponse.json(
+        { error: "Error al hacer la solicitud a la API" },
+        { status: 500 },
+      );
+    }
+
     const {
       id,
     }: {

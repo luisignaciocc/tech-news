@@ -90,6 +90,13 @@ export async function POST(request: Request): Promise<NextResponse> {
       }),
     });
 
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: "Error al hacer la solicitud a la API" },
+        { status: 500 },
+      );
+    }
+
     const { data } = await response.json();
 
     await prisma.post.update({
