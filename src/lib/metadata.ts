@@ -12,7 +12,7 @@ export const SITE_URL =
   process.env.VERCEL_ENV === "production"
     ? process.env.VERCEL_PROJECT_PRODUCTION_URL
       ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-      : `https://news.bocono-labs.com`
+      : `https://www.tecnobuc.com`
     : process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
       : `http://localhost:3000`;

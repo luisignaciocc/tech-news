@@ -11,7 +11,7 @@ jobs:
       - name: Generate the publication from a new
         run: |
           curl --request POST \
-          --url 'https://news.bocono-labs.com/api/publication/generate' \
+          --url 'https://www.tecnobuc.com/api/publication/generate' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   twitter:
@@ -21,7 +21,7 @@ jobs:
       - name: Generate a twitter post from an article
         run: |
           curl --request POST \
-          --url 'https://news.bocono-labs.com/api/publication/twitter' \
+          --url 'https://www.tecnobuc.com/api/publication/twitter' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   linkedin:
@@ -31,5 +31,5 @@ jobs:
       - name: Generate a twitter post from an article
         run: |
           curl --request POST \
-          --url 'https://news.bocono-labs.com/api/publication/linkedin' \
+          --url 'https://www.tecnobuc.com/api/publication/linkedin' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
