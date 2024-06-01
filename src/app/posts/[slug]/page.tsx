@@ -4,7 +4,13 @@ import { notFound } from "next/navigation";
 import Container from "@/components/container";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
-import { SITE_DESCRIPTION, SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
+import {
+  PERSONAL_HANDLER,
+  SITE_DESCRIPTION,
+  SITE_HANDLER,
+  SITE_SHORT_NAME,
+  SITE_URL,
+} from "@/lib/metadata";
 
 import Header from "./components/header";
 import { PostBody } from "./components/post-body";
@@ -57,10 +63,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     title,
     description,
     openGraph: {
+      type: "website",
+      url: new URL(`${SITE_URL}/posts/${params.slug}`),
       title,
       description,
       siteName: SITE_SHORT_NAME,
-      url: new URL(`${SITE_URL}/posts/${params.slug}`),
       images: [
         { url: `/posts/${params.slug}/og.png`, width: 1200, height: 630 },
       ],
@@ -69,6 +76,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       title,
       card: "summary_large_image",
       description,
+      site: SITE_HANDLER,
+      creator: PERSONAL_HANDLER,
       images: [
         { url: `/posts/${params.slug}/og.png`, width: 1200, height: 630 },
       ],
