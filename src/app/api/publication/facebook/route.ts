@@ -4,6 +4,8 @@ import OpenAI from "openai";
 
 import { SITE_URL } from "@/lib/metadata";
 
+export const maxDuration = 60;
+
 const prisma = new PrismaClient();
 
 const openai = new OpenAI({
