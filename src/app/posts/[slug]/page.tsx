@@ -4,12 +4,7 @@ import { notFound } from "next/navigation";
 import Container from "@/components/container";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
-import {
-  defaultMetadata,
-  SITE_DESCRIPTION,
-  SITE_SHORT_NAME,
-  SITE_URL,
-} from "@/lib/metadata";
+import { SITE_DESCRIPTION, SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
 
 import Header from "./components/header";
 import { PostBody } from "./components/post-body";
@@ -58,21 +53,25 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const description = post.excerpt || SITE_DESCRIPTION;
 
   return {
-    ...defaultMetadata,
+    metadataBase: new URL(SITE_URL),
     title,
     description,
     openGraph: {
       title,
       description,
       siteName: SITE_SHORT_NAME,
-      url: new URL(SITE_URL),
-      images: [{ url: `/posts/${params.slug}/og.png` }],
+      url: new URL(`${SITE_URL}/posts/${params.slug}`),
+      images: [
+        { url: `/posts/${params.slug}/og.png`, width: 1200, height: 630 },
+      ],
     },
     twitter: {
       title,
       card: "summary_large_image",
       description,
-      images: [{ url: `/posts/${params.slug}/og.png` }],
+      images: [
+        { url: `/posts/${params.slug}/og.png`, width: 1200, height: 630 },
+      ],
     },
   };
 }
