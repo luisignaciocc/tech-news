@@ -52,7 +52,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     let text = "*Últimos artículos publicados* 🚀";
     text += "\n";
-    text = `Última publicación: ${formatDistance(
+    text += `Última publicación: ${formatDistance(
       new Date(articles[0].createdAt),
       new Date(),
       { addSuffix: true, locale: es },
