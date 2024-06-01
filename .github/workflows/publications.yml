@@ -28,7 +28,7 @@ jobs:
     runs-on: self-hosted
     needs: blog
     steps:
-      - name: Generate a twitter post from an article
+      - name: Generate a linkedin post from an article
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/linkedin' \
@@ -52,4 +52,14 @@ jobs:
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/publication/facebook' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  whatsapp:
+    runs-on: self-hosted
+    needs: [twitter, linkedin, instagram, facebook]
+    steps:
+      - name: Send a notification when all publications are ready
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/publication/whatsapp' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
