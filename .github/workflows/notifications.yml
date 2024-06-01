@@ -2,7 +2,7 @@ name: Send daily status
 
 on:
   schedule:
-    - cron: "0 12 * * *"
+    - cron: "15 18,21,0 * * *"
 
 jobs:
   whatsapp:

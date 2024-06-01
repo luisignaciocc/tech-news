@@ -29,7 +29,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           postedToTwitter: true,
           createdAt: true,
         },
-        take: 10,
+        take: 4,
       }),
     ]);
 
