@@ -7,7 +7,7 @@ import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
-const imagesFilter = [".svg"];
+const imagesFilter = [".svg", ".webp"];
 
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
