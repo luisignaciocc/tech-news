@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import OAuth from "oauth-1.0a";
 
 import { SITE_URL } from "@/lib/metadata";
+import { notifyProblem } from "@/lib/utils";
 
 const prisma = new PrismaClient();
 
@@ -91,13 +92,17 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     if (!response.ok) {
+      const error = await response.json();
+      await notifyProblem("Publishing a new post to Twitter", error);
       return NextResponse.json(
         { error: "Error al hacer la solicitud a la API" },
         { status: 500 },
       );
     }
 
-    const { data } = await response.json();
+    const {
+      data: { id },
+    } = await response.json();
 
     await prisma.post.update({
       where: {
@@ -105,12 +110,13 @@ export async function POST(request: Request): Promise<NextResponse> {
       },
       data: {
         postedToTwitter: true,
-        tweetId: data.id,
+        tweetId: id,
       },
     });
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
+    await notifyProblem("Publishing a new post to Twitter");
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

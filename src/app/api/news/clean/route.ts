@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+import { notifyProblem } from "@/lib/utils";
+
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
 
@@ -24,6 +26,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
+    await notifyProblem("Error cleaning news", error);
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

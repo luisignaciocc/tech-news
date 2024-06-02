@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
+import { notifyProblem } from "@/lib/utils";
+
 interface NewsResult {
   type: string;
   title: string;
@@ -65,6 +67,12 @@ export async function POST(request: Request) {
       cache: "no-store",
     });
 
+    if (!response.ok) {
+      const error = await response.json();
+      await notifyProblem("Pulling news from Brave Search", error);
+      return NextResponse.json({ error: error }, { status: 500 });
+    }
+
     const { results }: { results: NewsResult[] } = await response.json();
 
     const oneDaysAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
@@ -111,6 +119,7 @@ export async function POST(request: Request) {
     }
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
+    await notifyProblem("Pulling news from Brave Search");
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
+import { notifyProblem } from "@/lib/utils";
+
 export const maxDuration = 60;
 
 const openai = new OpenAI({
@@ -66,6 +68,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
+    await notifyProblem("Error vectorizing news", error);
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

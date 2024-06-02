@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 import { SITE_URL } from "@/lib/metadata";
+import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
@@ -85,6 +86,11 @@ export async function POST(request: Request) {
 
     const summary = completion.choices[0].message.content;
 
+    if (!summary) {
+      await notifyProblem("Generating a summary for a new post on Instagram");
+      return NextResponse.json({ error: "No summary found" }, { status: 404 });
+    }
+
     const res = await fetch(
       `https://graph.facebook.com/v19.0/${igUserId}/media`,
       {
@@ -99,6 +105,12 @@ export async function POST(request: Request) {
         }),
       },
     );
+
+    if (!res.ok) {
+      const error = await res.json();
+      await notifyProblem("Creating a new media on Instagram", error);
+      return NextResponse.json({ error }, { status: 500 });
+    }
 
     const {
       id: creation_id,
@@ -138,6 +150,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
+    await notifyProblem("Publishing a new post to Instagram");
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

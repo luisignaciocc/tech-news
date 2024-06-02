@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 import { SITE_URL } from "@/lib/metadata";
+import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
@@ -80,6 +81,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     if (!res.ok) {
       const error = await res.json();
+      await notifyProblem("Publishing a new post to LinkedIn", error);
       return NextResponse.json({ error }, { status: 500 });
     }
 
@@ -94,6 +96,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
+    await notifyProblem("Publishing a new post to LinkedIn");
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

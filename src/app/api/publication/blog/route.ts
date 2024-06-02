@@ -3,6 +3,8 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
+import { notifyProblem } from "@/lib/utils";
+
 export const maxDuration = 60;
 
 const prisma = new PrismaClient();
@@ -79,6 +81,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const body = bodyCompletion.choices[0].message.content;
 
     if (!body) {
+      await notifyProblem("retrieving the body of the article from OpenAI");
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
 
@@ -149,6 +152,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
+    await notifyProblem("Publishing a new post to the blog", error);
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

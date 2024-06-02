@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 import { SITE_URL } from "@/lib/metadata";
+import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
@@ -78,6 +79,11 @@ export async function POST(request: Request) {
     const summary = completion.choices[0].message.content;
     const postUrl = `${SITE_URL}/posts/${lastPost.slug}`;
 
+    if (!summary) {
+      await notifyProblem("Generating a summary for a new post on Facebook");
+      return NextResponse.json({ error: "No summary found" }, { status: 404 });
+    }
+
     const res = await fetch(
       `https://graph.facebook.com/${apiVersion}/${pageId}/feed?access_token=${access_token}`,
       {
@@ -95,7 +101,7 @@ export async function POST(request: Request) {
 
     if (!res.ok) {
       const error = await res.json();
-      console.error(error);
+      await notifyProblem("Publishing a new post to Facebook", error);
       return NextResponse.json(
         { error: "Error al hacer la solicitud a la API" },
         { status: 500 },
@@ -120,6 +126,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
+    await notifyProblem("Publishing a new post to Facebook");
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
