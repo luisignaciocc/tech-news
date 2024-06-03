@@ -11,5 +11,5 @@ jobs:
       - name: Send a notification to the last posts statuses
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/notifications/posts' \
+          --url 'https://www.tecnobuc.com/api/notifications/whatsapp' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
