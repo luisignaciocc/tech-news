@@ -4,6 +4,7 @@ import { NextApiHandler } from "next";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { Session } from "next-auth";
 
 const prisma = new PrismaClient();
 
@@ -47,6 +48,18 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    jwt: ({ token, user }) => {
+      if (user) {
+        token.user = user;
+      }
+      return Promise.resolve(token);
+    },
+    session: async ({ session, token }) => {
+      session.user = token.user as Session["user"];
+      return Promise.resolve(session);
+    },
+  },
 };
 
 const handler: NextApiHandler = (req, res) => NextAuth(req, res, authOptions);
