@@ -15,11 +15,10 @@ const authOptions: NextAuthOptions = {
           placeholder: "********",
         },
       },
-      authorize(credentials, req) {
+      authorize(credentials) {
         if (!credentials || !credentials.email || !credentials.password) {
           return null;
         }
-        console.log(credentials);
         return {
           id: "user123",
           name: "John Doe",
