@@ -3,7 +3,8 @@
 import { NextResponse } from "next/server";
 import TelegramBot from "node-telegram-bot-api";
 
-const GROUP_CHAT_ID = -4283664751;
+const _GROUP_CHAT_ID = -4283664751;
+const _PERSONAL_CHAT_ID = 735341022;
 
 export async function POST(req: Request): Promise<NextResponse> {
   try {
@@ -68,7 +69,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
     } else {
       await bot.sendMessage(
-        GROUP_CHAT_ID,
+        _GROUP_CHAT_ID,
         `${JSON.stringify(body, null, 2)}*`,
         { parse_mode: "Markdown" },
       );
