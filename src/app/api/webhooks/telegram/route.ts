@@ -27,11 +27,15 @@ export async function POST(req: Request): Promise<NextResponse> {
       text,
     } = body.message;
 
-    const messageResponse = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
+    const messageResponse = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻\n\n${JSON.stringify(
+      body,
+      null,
+      2,
+    )}`;
 
     await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
 
-    return NextResponse.json({ success: true, body }, { status: 200 });
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json(
