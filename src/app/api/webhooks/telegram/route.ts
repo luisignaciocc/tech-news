@@ -16,22 +16,22 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     const bot = new TelegramBot(TOKEN);
 
-    const { message } = await req.json();
+    const body = await req.json();
 
-    if (!message) {
+    if (!body?.message) {
       return NextResponse.json({ error: "No message found" }, { status: 400 });
     }
 
     const {
       chat: { id },
       text,
-    } = message;
+    } = body.message;
 
     const messageResponse = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
 
     await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true, body }, { status: 200 });
   } catch (error: unknown) {
     if (error instanceof Error) {
       return NextResponse.json(
