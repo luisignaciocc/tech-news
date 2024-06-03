@@ -1,13 +1,14 @@
 "use client";
 
-import { useSession, SessionProvider } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import ButtonAuth from "../components/ButtonAuth";
+import SessionAuthProvider from "../context/SessionAuthProvider";
 
 function AdminPage() {
   return (
-    <SessionProvider>
+    <SessionAuthProvider>
       <AdminPageContent />
-    </SessionProvider>
+    </SessionAuthProvider>
   );
 }
 
