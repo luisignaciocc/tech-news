@@ -1,3 +1,5 @@
+// curl -X POST https://api.telegram.org/bot<YOUR-BOT-TOKEN>/setWebhook -H "Content-type: application/json" -d '{"url": "https://project-name.username.vercel.app/api/webhook"}'
+
 import { NextResponse } from "next/server";
 import TelegramBot from "node-telegram-bot-api";
 
