@@ -1,7 +1,11 @@
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 import { NextApiHandler } from "next";
 import { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
+
+const prisma = new PrismaClient();
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -15,14 +19,30 @@ const authOptions: NextAuthOptions = {
           placeholder: "********",
         },
       },
-      authorize(credentials) {
+      async authorize(credentials) {
         if (!credentials || !credentials.email || !credentials.password) {
           return null;
         }
+
+        const userFound = await prisma.users.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        });
+
+        if (!userFound) return null;
+
+        const matchPassword = await bcrypt.compare(
+          credentials?.password,
+          userFound.password,
+        );
+
+        if (!matchPassword) return null;
+
         return {
-          id: "user123",
-          name: "John Doe",
-          email: credentials.email,
+          id: userFound.id,
+          name: userFound.username,
+          email: userFound.email,
         };
       },
     }),
