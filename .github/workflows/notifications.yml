@@ -8,8 +8,8 @@ jobs:
   whatsapp:
     runs-on: self-hosted
     steps:
-      - name: Send a notification to the last posts statuses
+      - name: Send a notification about the last posts published
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/notifications/whatsapp' \
+          --url 'https://www.tecnobuc.com/api/notifications/last-published' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
