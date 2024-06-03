@@ -3,6 +3,8 @@
 import { NextResponse } from "next/server";
 import TelegramBot from "node-telegram-bot-api";
 
+const GROUP_CHAT_ID = -4283664751;
+
 export async function POST(req: Request): Promise<NextResponse> {
   try {
     const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
@@ -16,7 +18,40 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     const bot = new TelegramBot(TOKEN);
 
-    const body = await req.json();
+    const body: {
+      updateid: number;
+      message: {
+        messageid: number;
+        from: {
+          id: number;
+          isbot: boolean;
+          firstname: string;
+          username: string;
+          languagecode: string;
+        };
+        senderchat?: {
+          id: number;
+          title: string;
+          type: "supergroup";
+        };
+        chat: {
+          id: number;
+          title: string;
+          type: "group" | "supergroup";
+          allmembersareadministrators: boolean;
+        };
+        date: number;
+        groupchatcreated: boolean;
+        newchatphoto?: {
+          file_id: string;
+          file_unique_id: string;
+          file_size: number;
+          width: number;
+          height: number;
+        }[];
+        text?: string;
+      };
+    } = await req.json();
 
     if (!body?.message) {
       return NextResponse.json({ error: "No message found" }, { status: 400 });
@@ -25,15 +60,19 @@ export async function POST(req: Request): Promise<NextResponse> {
     const {
       chat: { id },
       text,
+      from: { username },
     } = body.message;
 
-    const messageResponse = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻\n\n${JSON.stringify(
-      body,
-      null,
-      2,
-    )}`;
-
-    await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
+    if (text && username === "luisignaciocc") {
+      const messageResponse = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
+      await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
+    } else {
+      await bot.sendMessage(
+        GROUP_CHAT_ID,
+        `${JSON.stringify(body, null, 2)}*`,
+        { parse_mode: "Markdown" },
+      );
+    }
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
