@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 import TelegramBot from "node-telegram-bot-api";
 
 const _GROUP_CHAT_ID = -4283664751;
+const _BOT_ID = 7206845707;
 const _PERSONAL_CHAT_ID = 735341022;
 
 export async function POST(req: Request): Promise<NextResponse> {
@@ -12,7 +13,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     if (!TOKEN) {
       return NextResponse.json(
-        { error: "No whatsapp API keys found" },
+        { error: "No telegram API keys found" },
         { status: 404 },
       );
     }
@@ -69,7 +70,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
     } else {
       await bot.sendMessage(
-        _GROUP_CHAT_ID,
+        _PERSONAL_CHAT_ID,
         `${JSON.stringify(body, null, 2)}*`,
         { parse_mode: "Markdown" },
       );
