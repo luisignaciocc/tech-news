@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 
-import { AlertDestructive, AlertSuccess } from "@/app/components/Alerts";
+import { AlertDestructive, AlertSuccess } from "@/app/components/alerts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

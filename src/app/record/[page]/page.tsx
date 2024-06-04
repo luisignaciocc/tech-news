@@ -1,5 +1,5 @@
 import { MoreStories } from "@/app/components/more-stories";
-import PageNavigation from "@/app/components/PageNavigation";
+import PageNavigation from "@/app/components/page-navigation";
 import Container from "@/components/container";
 import { getPosts, getPostSlugs } from "@/lib/api";
 import {
