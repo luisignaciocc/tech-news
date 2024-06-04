@@ -38,7 +38,7 @@ export async function registerUser(data: RegisterData) {
     await prisma.users.create({
       data: {
         username: data.username,
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: hashedPassword,
       },
     });
