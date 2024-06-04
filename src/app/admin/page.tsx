@@ -2,8 +2,8 @@
 
 import { useSession } from "next-auth/react";
 
-import ButtonAuth from "../components/ButtonAuth";
-import SessionAuthProvider from "../context/SessionAuthProvider";
+import ButtonAuth from "../components/button-auth";
+import SessionAuthProvider from "../components/session-auth-provider";
 
 function AdminPage() {
   return (
