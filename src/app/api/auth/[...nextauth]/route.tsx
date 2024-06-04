@@ -25,9 +25,12 @@ const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const userFound = await prisma.users.findUnique({
+        const userFound = await prisma.users.findFirst({
           where: {
-            email: credentials?.email.toLowerCase(),
+            email: {
+              equals: credentials?.email,
+              mode: "insensitive",
+            },
           },
         });
 

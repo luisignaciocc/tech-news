@@ -23,9 +23,12 @@ export async function registerUser(data: RegisterData) {
       return { success: false, message: "User already exists" };
     }
 
-    const emailFound = await prisma.users.findUnique({
+    const emailFound = await prisma.users.findFirst({
       where: {
-        email: data.email,
+        email: {
+          equals: data.email,
+          mode: "insensitive",
+        },
       },
     });
 
@@ -38,7 +41,7 @@ export async function registerUser(data: RegisterData) {
     await prisma.users.create({
       data: {
         username: data.username,
-        email: data.email.toLowerCase(),
+        email: data.email,
         password: hashedPassword,
       },
     });
