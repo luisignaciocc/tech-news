@@ -4,7 +4,7 @@ import { parseString } from "xml2js";
 
 import { notifyProblem } from "@/lib/utils";
 
-export async function POST(request: Request) {
+export async function POST(_request: Request) {
   try {
     const prisma = new PrismaClient();
 
@@ -46,7 +46,8 @@ export async function POST(request: Request) {
         if (err) {
           reject(err);
         } else {
-          resolve(NextResponse.json(data));
+          const newsItems = data.rss.channel[0].item;
+          resolve(NextResponse.json(newsItems));
         }
       });
     }).catch((err) => {
