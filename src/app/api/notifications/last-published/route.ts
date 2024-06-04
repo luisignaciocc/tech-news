@@ -2,10 +2,13 @@ import { PrismaClient } from "@prisma/client";
 import { formatDistance } from "date-fns";
 import { es } from "date-fns/locale";
 import { NextResponse } from "next/server";
+import TelegramBot from "node-telegram-bot-api";
 
 import { SITE_URL } from "@/lib/metadata";
 
 const prisma = new PrismaClient();
+
+const _CHANNEL_ID = -1002155916238;
 
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
@@ -50,6 +53,17 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
+    const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+
+    if (!TOKEN) {
+      return NextResponse.json(
+        { error: "No telegram API keys found" },
+        { status: 404 },
+      );
+    }
+
+    const bot = new TelegramBot(TOKEN);
+
     let text = "*Últimos artículos publicados* 🚀";
     text += "\n";
     text += `Última publicación: ${formatDistance(
@@ -71,9 +85,12 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const encodedText = encodeURIComponent(text);
 
-    const endpointURL = `https://api.callmebot.com/whatsapp.php?phone=${PHONE}&text=${encodedText}&apikey=${API_KEY}`;
-
-    const response = await fetch(endpointURL);
+    const [response] = await Promise.all([
+      fetch(
+        `https://api.callmebot.com/whatsapp.php?phone=${PHONE}&text=${encodedText}&apikey=${API_KEY}`,
+      ),
+      bot.sendMessage(_CHANNEL_ID, text, { parse_mode: "Markdown" }),
+    ]);
 
     if (!response.ok) {
       return NextResponse.json(
