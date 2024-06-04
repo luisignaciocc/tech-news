@@ -95,25 +95,30 @@ export async function POST(request: Request) {
     });
 
     const newsItems = data.rss.channel[0].item;
-    const links = newsItems.map((item: { link: string[] }) => item.link[0]);
+    const articleData = newsItems.map((item: RssItem) => ({
+      title: item.title,
+      link: item.link[0],
+      guid: item.guid.content,
+      pubDate: item.pubDate,
+      description: item.description,
+      source: item.source.url,
+      dataNAu: null,
+    }));
 
-    const articleData: { link: string; dataNAu: string | null }[] = [];
-
-    for (const link of links) {
+    for (const article of articleData) {
       try {
-        const response = await fetch(link);
+        const response = await fetch(article.link);
         const responseText = await response.text();
 
         const doc = new JSDOM(responseText).window.document;
         const reader = new Readability(doc);
-        const article = reader.parse();
+        const parsedArticle = reader.parse();
 
         const container = doc.createElement("div");
 
-        if (article && article.content) {
-          container.innerHTML = article.content;
+        if (parsedArticle && parsedArticle.content) {
+          container.innerHTML = parsedArticle.content;
         } else {
-          articleData.push({ link, dataNAu: null });
           continue;
         }
 
@@ -121,9 +126,9 @@ export async function POST(request: Request) {
           .querySelector("[data-n-au]")
           ?.getAttribute("data-n-au");
 
-        articleData.push({ link, dataNAu });
+        article.dataNAu = dataNAu;
       } catch (error) {
-        articleData.push({ link, dataNAu: null });
+        article.dataNAu = null;
       }
     }
 
