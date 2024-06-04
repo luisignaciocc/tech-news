@@ -57,7 +57,6 @@ This project is an automated tech news blog built with Next.js. It fetches news 
    GITHUB_TOKEN=""
 
    NEXTAUTH_SECRET=""
-   JWT_SECRET=""
    ```
 
 ## Migrations
