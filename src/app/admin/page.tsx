@@ -1,6 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+
 import ButtonAuth from "../components/ButtonAuth";
 import SessionAuthProvider from "../context/SessionAuthProvider";
 

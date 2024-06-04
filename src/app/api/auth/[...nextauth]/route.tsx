@@ -2,9 +2,9 @@ import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { NextApiHandler } from "next";
 import { NextAuthOptions } from "next-auth";
+import { Session } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { Session } from "next-auth";
 
 const prisma = new PrismaClient();
 
