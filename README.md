@@ -53,6 +53,29 @@ This project is an automated tech news blog built with Next.js. It fetches news 
    BRAVE_SEARCH_API_KEY=""
 
    API_KEY=""
+
+   GITHUB_TOKEN=""
+
+   NEXTAUTH_SECRET=""
+   JWT_SECRET=""
+   ```
+
+## Migrations
+
+1. To generate migrations in case you want to make any changes to the database, whether creating, editing or deleting columns or tables, you must modify the schema.prisma file that is at the root of the project, here you must create the model of the new table if you want to create a new table in the database, if you want to modify the existing tables you can make the necessary modifications to the models that you can find in this file, we remind you that this project uses Prisma to interact with the database so the changes must be in accordance with this framework.
+
+   After making the changes, you must save them and execute the following command by opening a terminal in the root folder of the project:
+
+   ```bash
+   npx prisma migrate dev --name name_of_migration
+   ```
+
+   Be sure to replace "name_of_migration" with the name you want to give your migration, this way the changes will be generated immediately in the database.
+
+2. If you have a database that is in production and someone else made changes to said database, you must make those changes effective in your local directory, but you must use the following command:
+
+   ```bash
+   npx prisma generate
    ```
 
 ## Usage
