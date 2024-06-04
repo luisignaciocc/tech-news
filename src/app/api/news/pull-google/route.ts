@@ -1,8 +1,45 @@
+import { Readability } from "@mozilla/readability";
 import { PrismaClient } from "@prisma/client";
+import { JSDOM } from "jsdom";
 import { NextResponse } from "next/server";
 import { parseString } from "xml2js";
 
 import { notifyProblem } from "@/lib/utils";
+
+interface RssChannel {
+  generator: string;
+  title: string;
+  link: string;
+  language: string;
+  webMaster: string;
+  copyright: string;
+  lastBuildDate: string;
+  description: string;
+  item: RssItem[];
+}
+
+interface RssItem {
+  title: string;
+  link: string[];
+  guid: {
+    isPermaLink: boolean;
+    content: string;
+  };
+  pubDate: string;
+  description: string;
+  source: {
+    url: string;
+    content: string;
+  };
+}
+
+interface RssResponse {
+  rss: {
+    "@xmlns:media": string;
+    "@version": string;
+    channel: RssChannel[];
+  };
+}
 
 export async function POST(_request: Request) {
   try {
@@ -24,7 +61,7 @@ export async function POST(_request: Request) {
 
     if (!oldestNewsSource) {
       return NextResponse.json(
-        { error: "No se encontró una fuente de noticias valida" },
+        { error: "No valid news source found" },
         { status: 404 },
       );
     }
@@ -41,24 +78,55 @@ export async function POST(_request: Request) {
 
     const xmlData = await response.text();
 
-    return new Promise((resolve, reject) => {
+    const data = await new Promise<RssResponse>((resolve, reject) => {
       parseString(xmlData, (err, data) => {
         if (err) {
           reject(err);
         } else {
-          const newsItems = data.rss.channel[0].item;
-          resolve(NextResponse.json(newsItems));
+          resolve(data);
         }
       });
-    }).catch((err) => {
-      return NextResponse.json(
-        { error: `Error procesando datos XML: ${err}` },
-        { status: 500 },
-      );
     });
+
+    const newsItems = data.rss.channel[0].item;
+    const links = newsItems.map((item: { link: string[] }) => item.link[0]);
+
+    const articleData: { link: string; dataNAu: string | null }[] = [];
+
+    for (const link of links) {
+      try {
+        const response = await fetch(link);
+        const responseText = await response.text();
+
+        const doc = new JSDOM(responseText).window.document;
+        const reader = new Readability(doc);
+        const article = reader.parse();
+
+        const container = doc.createElement("div");
+
+        if (article && article.content) {
+          container.innerHTML = article.content;
+        } else {
+          articleData.push({ link, dataNAu: null });
+          continue;
+        }
+
+        const dataNAu = container
+          .querySelector("[data-n-au]")
+          ?.getAttribute("data-n-au");
+
+        articleData.push({ link, dataNAu });
+      } catch (error) {
+        articleData.push({ link, dataNAu: null });
+      }
+    }
+
+    return NextResponse.json(articleData);
   } catch (error) {
     return NextResponse.json(
-      { error: `Error al realizar solicitud a la API: ${error}` },
+      {
+        error: `Error when making API request: ${error}`,
+      },
       { status: 500 },
     );
   }
