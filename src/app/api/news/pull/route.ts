@@ -80,7 +80,6 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const error = "Error al obtener el listado de noticias";
-      await notifyProblem("Pulling news from Brave Search", error);
       return NextResponse.json({ error: error }, { status: 500 });
     }
 
