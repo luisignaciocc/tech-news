@@ -27,11 +27,27 @@ export async function POST(req: Request): Promise<NextResponse> {
       const data = callbackQuery.data;
       const message = callbackQuery.message;
 
-      if (data === "accept") {
+      const [type, action] = data.split(":");
+
+      if (type !== "approve") {
+        await bot.sendMessage(
+          _PERSONAL_CHAT_ID,
+          `*${JSON.stringify(body, null, 2)}*`,
+          { parse_mode: "Markdown" },
+        );
+      }
+
+      if (action === "accept") {
         await bot.sendMessage(message.chat.id, "Has aceptado.");
-      } else if (data === "cancel") {
+      } else if (action === "cancel") {
         await bot.sendMessage(message.chat.id, "Has cancelado.");
       }
+
+      await bot.editMessageText(`RESPONDIDO: ${message.text}`, {
+        chat_id: message.chat.id,
+        message_id: message.message_id,
+        parse_mode: "Markdown",
+      });
 
       await bot.editMessageReplyMarkup(
         { inline_keyboard: [] },
@@ -68,11 +84,11 @@ export async function POST(req: Request): Promise<NextResponse> {
             [
               {
                 text: "Aceptar",
-                callback_data: "accept",
+                callback_data: "approve:accept",
               },
               {
                 text: "Cancelar",
-                callback_data: "cancel",
+                callback_data: "approve:cancel",
               },
             ],
           ],
