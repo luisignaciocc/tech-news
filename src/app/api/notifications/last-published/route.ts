@@ -32,6 +32,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           instagramMediaId: true,
           postedToLinkedin: true,
           postedToTwitter: true,
+          linkedinPostId: true,
           tweetId: true,
           createdAt: true,
         },
@@ -79,7 +80,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       text += "\n";
       text += `Facebook ${article.postedToFacebook && article.facebookPostId ? "✅" : "❌"}\n`;
       text += `Instagram ${article.postedToInstagram && article.instagramMediaId ? "✅" : "❌"}\n`;
-      text += `Linkedin ${article.postedToLinkedin ? "✅" : "❌"}\n`;
+      text += `Linkedin ${article.postedToLinkedin && article.linkedinPostId ? "✅" : "❌"}\n`;
       text += `Twitter ${article.postedToTwitter && article.tweetId ? "✅" : "❌"}`;
     }
 
