@@ -6,6 +6,8 @@ import { parseString } from "xml2js";
 
 import { notifyProblem } from "@/lib/utils";
 
+export const maxDuration = 60;
+
 interface RssChannel {
   generator: string;
   title: string;
@@ -15,7 +17,7 @@ interface RssChannel {
   copyright: string;
   lastBuildDate: string;
   description: string;
-  item: RssItem[];
+  item: RssItem[] | null;
 }
 
 interface RssItem {
@@ -48,35 +50,44 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
   }
 
+  const prisma = new PrismaClient();
+
+  const oldestNewsSource = await prisma.newsSource.findFirst({
+    where: {
+      isActive: true,
+    },
+    orderBy: {
+      lastUpdateAt: "asc",
+    },
+    select: {
+      id: true,
+      url: true,
+      lastUpdateAt: true,
+      name: true,
+    },
+  });
+
+  if (!oldestNewsSource) {
+    return NextResponse.json(
+      { error: "No valid news source found" },
+      { status: 404 },
+    );
+  }
+
   try {
-    const prisma = new PrismaClient();
-
-    const oldestNewsSource = await prisma.newsSource.findFirst({
-      where: {
-        isActive: true,
-      },
-      orderBy: {
-        lastUpdateAt: "asc",
-      },
-      select: {
-        id: true,
-        url: true,
-        lastUpdateAt: true,
-      },
-    });
-
-    if (!oldestNewsSource) {
-      return NextResponse.json(
-        { error: "No valid news source found" },
-        { status: 404 },
-      );
-    }
-
     const searchQuery = `site:${oldestNewsSource.url}+when:2d&hl=en-IN&gl=IN&ceid=IN:en`;
 
     const url = `https://news.google.com/rss/search?q=${searchQuery}`;
 
-    const response = await fetch(url);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 4000);
+
+    const response = await fetch(url, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
 
     if (!response.ok) {
       const error = "Error al obtener el listado de noticias";
@@ -96,6 +107,23 @@ export async function POST(request: Request) {
     });
 
     const newsItems = data.rss.channel[0].item;
+
+    if (!newsItems) {
+      await prisma.newsSource.update({
+        where: {
+          id: oldestNewsSource.id,
+        },
+        data: {
+          lastUpdateAt: new Date(),
+          isActive: false,
+        },
+      });
+      return NextResponse.json(
+        { error: "No news items found on " + oldestNewsSource.name },
+        { status: 404 },
+      );
+    }
+
     const articleData = newsItems.map((item: RssItem) => ({
       title: item.title,
       link: item.link[0],
@@ -108,14 +136,16 @@ export async function POST(request: Request) {
 
     for (const article of articleData) {
       try {
-        const response = await fetch(article.link);
+        const response = await fetch(article.link, {
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
 
         if (!response.ok) {
           continue;
         }
 
         const responseText = await response.text();
-
         const doc = new JSDOM(responseText).window.document;
         const reader = new Readability(doc);
         const parsedArticle = reader.parse();
@@ -159,25 +189,35 @@ export async function POST(request: Request) {
             continue;
           }
         }
-
-        if (oldestNewsSource) {
-          await prisma.newsSource.update({
-            where: {
-              id: oldestNewsSource.id,
-            },
-            data: {
-              lastUpdateAt: new Date(),
-            },
-          });
-        }
       } catch (error) {
-        article.dataNAu = null;
+        console.error(error);
+        continue;
       }
     }
 
+    await prisma.newsSource.update({
+      where: {
+        id: oldestNewsSource.id,
+      },
+      data: {
+        lastUpdateAt: new Date(),
+      },
+    });
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    await notifyProblem("Pulling news from Google News");
+    await prisma.newsSource.update({
+      where: {
+        id: oldestNewsSource.id,
+      },
+      data: {
+        lastUpdateAt: new Date(),
+      },
+    });
+    await notifyProblem(
+      `Pulling news from Google News, view log for more info: ${oldestNewsSource.name}`,
+      error,
+    );
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },

@@ -96,7 +96,7 @@ export async function GET(
 }
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
+  const slugs = await getPostSlugs({ limit: 100 });
 
   return slugs.map(({ slug }) => ({
     slug,

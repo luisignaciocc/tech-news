@@ -5,6 +5,7 @@ import TelegramBot from "node-telegram-bot-api";
 
 const _GROUP_CHAT_ID = -4283664751;
 const _BOT_ID = 7206845707;
+export const TELEGRAM_CHANNEL_ID = -1002155916238;
 export const TELEGRAM_PERSONAL_CHAT_ID = 735341022;
 
 const allowedUsers = ["luisignaciocc"];

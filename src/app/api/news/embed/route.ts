@@ -29,7 +29,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       orderBy: {
         createdAt: "desc",
       },
-      take: 10,
+      take: 20,
       select: {
         id: true,
         body: true,
@@ -49,21 +49,33 @@ export async function POST(request: Request): Promise<NextResponse> {
         continue;
       }
 
-      const embeddingsData = await openai.embeddings.create({
-        model: "text-embedding-3-small",
-        input: parse.body,
-        encoding_format: "float",
-      });
+      try {
+        const embeddingsData = await openai.embeddings.create({
+          model: "text-embedding-3-small",
+          input: parse.body,
+          encoding_format: "float",
+        });
 
-      const embedding = embeddingsData.data[0].embedding;
+        const embedding = embeddingsData.data[0].embedding;
 
-      await prisma.$executeRaw`
+        await prisma.$executeRaw`
         UPDATE "News"
         SET 
             embedding = ${embedding}::vector,
             vectorized = true
         WHERE id = ${parse.id};
       `;
+      } catch (error: unknown) {
+        await prisma.news.update({
+          where: {
+            id: parse.id,
+          },
+          data: {
+            deletedAt: new Date(),
+          },
+        });
+        continue;
+      }
     }
 
     return NextResponse.json({ success: true }, { status: 200 });

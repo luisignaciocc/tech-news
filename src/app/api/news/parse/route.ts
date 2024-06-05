@@ -5,6 +5,8 @@ import { NextResponse } from "next/server";
 
 import { notifyProblem } from "@/lib/utils";
 
+export const maxDuration = 60;
+
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
 
@@ -23,7 +25,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       orderBy: {
         createdAt: "desc",
       },
-      take: 10,
+      take: 20,
       select: {
         url: true,
         parsed: true,
@@ -87,20 +89,16 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
-          if (error instanceof Error && error.name === "AbortError") {
-            await prisma.news.update({
-              where: {
-                url: item.url,
-              },
-              data: {
-                deletedAt: new Date(),
-              },
-            });
+          await prisma.news.update({
+            where: {
+              url: item.url,
+            },
+            data: {
+              deletedAt: new Date(),
+            },
+          });
 
-            return false;
-          } else {
-            throw error;
-          }
+          return false;
         }
       }),
     );

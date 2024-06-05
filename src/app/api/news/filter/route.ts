@@ -25,11 +25,12 @@ export async function POST(request: Request): Promise<NextResponse> {
         vectorized: true,
         filtered: false,
         deletedAt: null,
+        sentToApproval: false,
       },
       orderBy: {
         createdAt: "desc",
       },
-      take: 10,
+      take: 20,
       select: {
         id: true,
         title: true,
@@ -92,27 +93,37 @@ export async function POST(request: Request): Promise<NextResponse> {
             });
           } else {
             const bot = new TelegramBot(TOKEN);
-            await bot.sendMessage(
-              TELEGRAM_PERSONAL_CHAT_ID,
-              `❔ ${article.title}`,
-              {
-                parse_mode: "Markdown",
-                reply_markup: {
-                  inline_keyboard: [
-                    [
-                      {
-                        text: "Aprovar",
-                        callback_data: `approve:accept:${article.id}`,
-                      },
-                      {
-                        text: "Eliminar",
-                        callback_data: `approve:delete:${article.id}`,
-                      },
+            await Promise.all([
+              bot.sendMessage(
+                TELEGRAM_PERSONAL_CHAT_ID,
+                `❔ ${article.title}`,
+                {
+                  parse_mode: "Markdown",
+                  reply_markup: {
+                    inline_keyboard: [
+                      [
+                        {
+                          text: "Aprovar",
+                          callback_data: `approve:accept:${article.id}`,
+                        },
+                        {
+                          text: "Eliminar",
+                          callback_data: `approve:delete:${article.id}`,
+                        },
+                      ],
                     ],
-                  ],
+                  },
                 },
-              },
-            );
+              ),
+              prisma.news.update({
+                where: {
+                  id: article.id,
+                },
+                data: {
+                  sentToApproval: true,
+                },
+              }),
+            ]);
           }
         }
       }

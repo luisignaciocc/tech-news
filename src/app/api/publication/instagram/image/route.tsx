@@ -2,7 +2,6 @@
 import { ImageResponse } from "next/og";
 import { NextResponse } from "next/server";
 
-import { getPostSlugs } from "@/lib/api";
 import { SITE_NAME, SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
 
 export async function GET(request: Request) {
@@ -104,12 +103,4 @@ export async function GET(request: Request) {
       height: 630,
     },
   );
-}
-
-export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-
-  return slugs.map(({ slug }) => ({
-    slug,
-  }));
 }
