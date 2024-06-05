@@ -72,14 +72,14 @@ export async function POST(request: Request) {
       );
     }
 
-    const searchQuery = `site:${oldestNewsSource.url}`;
+    const searchQuery = `site:${oldestNewsSource.url}+when:2d&hl=en-IN&gl=IN&ceid=IN:en`;
 
-    const url = `https://news.google.com/rss/search?q=${searchQuery}+when:2d&hl=en-IN&gl=IN&ceid=IN:en`;
+    const url = `https://news.google.com/rss/search?q=${searchQuery}`;
 
     const response = await fetch(url);
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = "Error al obtener el listado de noticias";
       await notifyProblem("Pulling news from Brave Search", error);
       return NextResponse.json({ error: error }, { status: 500 });
     }
@@ -110,6 +110,13 @@ export async function POST(request: Request) {
     for (const article of articleData) {
       try {
         const response = await fetch(article.link);
+
+        if (!response.ok) {
+          const error = await response.json();
+          await notifyProblem("Pulling news from Brave Search", error);
+          return NextResponse.json({ error: error }, { status: 500 });
+        }
+
         const responseText = await response.text();
 
         const doc = new JSDOM(responseText).window.document;
