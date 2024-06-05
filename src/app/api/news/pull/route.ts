@@ -124,15 +124,21 @@ export async function POST(request: Request) {
       );
     }
 
-    const articleData = newsItems.map((item: RssItem) => ({
-      title: item.title,
-      link: item.link[0],
-      guid: item.guid.content,
-      pubDate: item.pubDate,
-      description: item.description,
-      source: item.source.url,
-      dataNAu: null,
-    }));
+    const oneDaysAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const articleData = newsItems
+      .map((item: RssItem) => ({
+        title: item.title,
+        link: item.link[0],
+        guid: item.guid.content,
+        pubDate: item.pubDate,
+        description: item.description,
+        source: item.source.url,
+        dataNAu: null,
+      }))
+      .filter((item) => {
+        const pageAge = new Date(item.pubDate);
+        return pageAge >= oneDaysAgo;
+      });
 
     for (const article of articleData) {
       try {
