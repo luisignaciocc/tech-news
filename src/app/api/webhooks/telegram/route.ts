@@ -43,12 +43,6 @@ export async function POST(req: Request): Promise<NextResponse> {
         await bot.sendMessage(message.chat.id, "Has cancelado.");
       }
 
-      await bot.editMessageText(`RESPONDIDO: ${message.text}`, {
-        chat_id: message.chat.id,
-        message_id: message.message_id,
-        parse_mode: "Markdown",
-      });
-
       await bot.editMessageReplyMarkup(
         { inline_keyboard: [] },
         {
