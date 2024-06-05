@@ -26,3 +26,14 @@ export async function notifyProblem(type: string, error?: unknown) {
     )}&apikey=${API_KEY}`,
   );
 }
+
+export function toBase62(num: number) {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  while (num > 0) {
+    result = chars[num % 62] + result;
+    num = Math.floor(num / 62);
+  }
+  return result;
+}
