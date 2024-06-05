@@ -85,12 +85,15 @@ export async function POST(request: Request): Promise<NextResponse> {
       return NextResponse.json({ error }, { status: 500 });
     }
 
+    const postId = res.headers.get("x-restli-id");
+
     await prisma.post.update({
       where: {
         id: article.id,
       },
       data: {
         postedToLinkedin: true,
+        linkedinPostId: postId,
       },
     });
 

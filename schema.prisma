@@ -21,7 +21,7 @@ model News {
     title        String
     url          String                       @unique
     sourceUrl    String
-    thumbnailUrl String
+    thumbnailUrl String?
     publishedAt  DateTime
     createdAt    DateTime                     @default(now())
     parsed       Boolean                      @default(false)
@@ -73,6 +73,7 @@ model Post {
     postedToTwitter   Boolean   @default(false)
     tweetId           String?
     postedToLinkedin  Boolean   @default(false)
+    linkedinPostId    String?
     postedToInstagram Boolean   @default(false)
     instagramMediaId  String?
     postedToFacebook  Boolean   @default(false)
