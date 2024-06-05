@@ -5,9 +5,9 @@ import { getPosts } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
-import { HeroPost } from "../components/hero-post";
-import { Intro } from "../components/intro";
-import { MoreStories } from "../components/more-stories";
+import { HeroPost } from "./components/hero-post";
+import { Intro } from "./components/intro";
+import { MoreStories } from "./components/more-stories";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",

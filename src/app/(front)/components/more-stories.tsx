@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { Post } from "@/lib/api";
 
-import { PostPreview } from "./post-preview";
+import { PostPreview } from "../../components/post-preview";
 
 type Props = {
   posts: Post[];
