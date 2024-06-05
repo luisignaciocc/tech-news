@@ -1,31 +1,50 @@
+import { Readability } from "@mozilla/readability";
 import { PrismaClient } from "@prisma/client";
+import { JSDOM } from "jsdom";
 import { NextResponse } from "next/server";
+import { parseString } from "xml2js";
 
 import { notifyProblem } from "@/lib/utils";
 
-interface NewsResult {
-  type: string;
+interface RssChannel {
+  generator: string;
   title: string;
-  url: string;
+  link: string;
+  language: string;
+  webMaster: string;
+  copyright: string;
+  lastBuildDate: string;
   description: string;
-  age: string;
-  page_age: string;
-  meta_url: {
-    scheme: string;
-    netloc: string;
-    hostname: string;
-    favicon: string;
-    path: string;
+  item: RssItem[];
+}
+
+interface RssItem {
+  title: string;
+  link: string[];
+  guid: {
+    isPermaLink: boolean;
+    content: string;
   };
-  thumbnail: {
-    src: string;
+  pubDate: string;
+  description: string;
+  source: {
+    url: string;
+    content: string;
+  };
+}
+
+interface RssResponse {
+  rss: {
+    "@xmlns:media": string;
+    "@version": string;
+    channel: RssChannel[];
   };
 }
 
 export async function POST(request: Request) {
-  const apikey = request.headers.get("x-api-key");
+  const apiKey = request.headers.get("x-api-key");
 
-  if (apikey !== process.env.API_KEY) {
+  if (apiKey !== process.env.API_KEY) {
     return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
   }
 
@@ -46,80 +65,119 @@ export async function POST(request: Request) {
       },
     });
 
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const randomIndex = Math.floor(Math.random() * alphabet.length);
-    const keyword = alphabet[randomIndex];
+    if (!oldestNewsSource) {
+      return NextResponse.json(
+        { error: "No valid news source found" },
+        { status: 404 },
+      );
+    }
 
-    const searchQuery = oldestNewsSource
-      ? `${keyword} site:${oldestNewsSource.url}`
-      : `${keyword}`;
+    const searchQuery = `site:${oldestNewsSource.url}+when:2d&hl=en-IN&gl=IN&ceid=IN:en`;
 
-    const url =
-      "https://api.search.brave.com/res/v1/news/search?q=" + searchQuery;
+    const url = `https://news.google.com/rss/search?q=${searchQuery}`;
 
-    const headers: HeadersInit = {
-      "Content-Type": "application/json",
-      "X-Subscription-Token": process.env.BRAVE_SEARCH_API_KEY || "",
-    };
-
-    const response = await fetch(url, {
-      headers: headers,
-      cache: "no-store",
-    });
+    const response = await fetch(url);
 
     if (!response.ok) {
-      const error = await response.json();
-      await notifyProblem("Pulling news from Brave Search", error);
+      const error = "Error al obtener el listado de noticias";
       return NextResponse.json({ error: error }, { status: 500 });
     }
 
-    const { results }: { results: NewsResult[] } = await response.json();
+    const xmlData = await response.text();
 
-    const oneDaysAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const data = await new Promise<RssResponse>((resolve, reject) => {
+      parseString(xmlData, (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(data);
+        }
+      });
+    });
 
-    for (const result of results) {
-      const pageAge = new Date(result.page_age);
+    const newsItems = data.rss.channel[0].item;
+    const articleData = newsItems.map((item: RssItem) => ({
+      title: item.title,
+      link: item.link[0],
+      guid: item.guid.content,
+      pubDate: item.pubDate,
+      description: item.description,
+      source: item.source.url,
+      dataNAu: null,
+    }));
 
-      if (pageAge >= oneDaysAgo) {
-        try {
-          const existingNews = await prisma.news.findUnique({
-            where: {
-              url: result.url,
-            },
-          });
+    for (const article of articleData) {
+      try {
+        const response = await fetch(article.link);
 
-          if (!existingNews) {
-            await prisma.news.create({
-              data: {
-                title: result.title,
-                url: result.url,
-                sourceUrl: result.meta_url.hostname,
-                thumbnailUrl: result.thumbnail.src,
-                publishedAt: pageAge,
-                sourceId: oldestNewsSource ? oldestNewsSource.id : null,
-                searchQuery: searchQuery,
-              },
-            });
-          }
-        } catch (error) {
+        if (!response.ok) {
           continue;
         }
+
+        const responseText = await response.text();
+
+        const doc = new JSDOM(responseText).window.document;
+        const reader = new Readability(doc);
+        const parsedArticle = reader.parse();
+
+        const container = doc.createElement("div");
+
+        if (parsedArticle && parsedArticle.content) {
+          container.innerHTML = parsedArticle.content;
+        } else {
+          continue;
+        }
+
+        const dataNAu = container
+          .querySelector("[data-n-au]")
+          ?.getAttribute("data-n-au");
+
+        article.dataNAu = dataNAu;
+
+        if (article.dataNAu) {
+          try {
+            const existingNews = await prisma.news.findUnique({
+              where: {
+                url: article.dataNAu,
+              },
+            });
+
+            if (!existingNews) {
+              await prisma.news.create({
+                data: {
+                  title: String(article.title),
+                  url: article.dataNAu,
+                  sourceUrl: article.link,
+                  publishedAt: new Date(article.pubDate).toISOString(),
+                  sourceId: oldestNewsSource ? oldestNewsSource.id : null,
+                  searchQuery: searchQuery,
+                },
+              });
+            }
+          } catch (error) {
+            console.error(error);
+            continue;
+          }
+        }
+
+        if (oldestNewsSource) {
+          await prisma.newsSource.update({
+            where: {
+              id: oldestNewsSource.id,
+            },
+            data: {
+              lastUpdateAt: new Date(),
+            },
+          });
+        }
+      } catch (error) {
+        article.dataNAu = null;
       }
     }
 
-    if (oldestNewsSource) {
-      await prisma.newsSource.update({
-        where: {
-          id: oldestNewsSource.id,
-        },
-        data: {
-          lastUpdateAt: new Date(),
-        },
-      });
-    }
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
-    await notifyProblem("Pulling news from Brave Search");
+    await notifyProblem("Pulling news from Google News");
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
