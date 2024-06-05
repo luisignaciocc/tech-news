@@ -1,5 +1,4 @@
-import { FaCheckCircle } from "react-icons/fa";
-import { HiMiniBellAlert } from "react-icons/hi2";
+import { FaCheckCircle, FaCross } from "react-icons/fa";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
@@ -16,7 +15,7 @@ interface AlertDemoProps {
 export function AlertDestructive({ title, message }: AlertDestructiveProps) {
   return (
     <Alert variant="destructive">
-      <HiMiniBellAlert className="h-4 w-4" />
+      <FaCross className="h-4 w-4" />
       <AlertTitle>{title}</AlertTitle>
       <AlertDescription>{message}</AlertDescription>
     </Alert>

@@ -1,7 +1,8 @@
-import { PostTitle } from "@/app/components/post-title";
 import Avatar from "@/components/avatar";
 import CoverImage from "@/components/cover-image";
 import DateFormatter from "@/components/date-formatter";
+
+import { PostTitle } from "./post-title";
 
 type Props = {
   title: string;
