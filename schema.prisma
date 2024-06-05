@@ -21,7 +21,7 @@ model News {
     title        String
     url          String                       @unique
     sourceUrl    String
-    thumbnailUrl String
+    thumbnailUrl String?
     publishedAt  DateTime
     createdAt    DateTime                     @default(now())
     parsed       Boolean                      @default(false)
