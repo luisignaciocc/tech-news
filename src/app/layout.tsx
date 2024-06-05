@@ -9,7 +9,6 @@ import Script from "next/script";
 import { SITE_URL } from "@/lib/metadata";
 
 import { Analytics } from "./components/analytics";
-import Footer from "./components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,7 +41,6 @@ export default function RootLayout({
         <Analytics />
         <SpeedInsights />
         <div className="min-h-screen">{children}</div>
-        <Footer />
       </body>
       <GoogleAnalytics gaId="G-0NYZMYCD8C" />
     </html>
