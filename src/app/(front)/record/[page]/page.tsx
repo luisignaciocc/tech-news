@@ -1,5 +1,4 @@
-import { MoreStories } from "@/app/components/more-stories";
-import PageNavigation from "@/app/components/page-navigation";
+import { MoreStories } from "@/app/(front)/components/more-stories";
 import Container from "@/components/container";
 import { getPosts, getPostSlugs } from "@/lib/api";
 import {
@@ -8,6 +7,8 @@ import {
   SITE_SHORT_NAME,
 } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
+
+import PageNavigation from "./components/page-navigation";
 
 export default async function RecordPage({
   params,
