@@ -17,11 +17,12 @@ export const getPostPages = async () => {
   }));
 };
 
-export const getPostSlugs = async () => {
+export const getPostSlugs = async (params?: { limit?: number }) => {
   return prisma.post.findMany({
     select: {
       slug: true,
     },
+    take: params?.limit,
   });
 };
 
