@@ -111,9 +111,7 @@ export async function POST(request: Request) {
         const response = await fetch(article.link);
 
         if (!response.ok) {
-          const error = await response.json();
-          await notifyProblem("Pulling news from Brave Search", error);
-          return NextResponse.json({ error: error }, { status: 500 });
+          continue;
         }
 
         const responseText = await response.text();
