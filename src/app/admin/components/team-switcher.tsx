@@ -7,12 +7,8 @@ import {
 } from "@radix-ui/react-icons";
 import * as React from "react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/app/admin/components/ui/avatar";
-import { Button } from "@/app/admin/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -21,7 +17,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/app/admin/components/ui/command";
+} from "@/components/ui/command";
 import {
   Dialog,
   DialogContent,
@@ -30,21 +26,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/admin/components/ui/dialog";
-import { Input } from "@/app/admin/components/ui/input";
-import { Label } from "@/app/admin/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/admin/components/ui/popover";
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/admin/components/ui/select";
+} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
 const groups = [
