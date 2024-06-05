@@ -24,7 +24,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       where: {
         vectorized: true,
         filtered: false,
-        valid: true,
+        deletedAt: null,
       },
       orderBy: {
         createdAt: "desc",
@@ -58,7 +58,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     `;
 
       if (similarNews[0].similarity > _SIMILARITY_THRESHOLD) {
-        await prisma.news.delete({
+        await prisma.news.update({
+          data: {
+            deletedAt: new Date(),
+          },
           where: {
             id: article.id,
           },
@@ -67,7 +70,10 @@ export async function POST(request: Request): Promise<NextResponse> {
         if (
           bannedWords.some((word) => article.title.toLowerCase().includes(word))
         ) {
-          await prisma.news.delete({
+          await prisma.news.update({
+            data: {
+              deletedAt: new Date(),
+            },
             where: {
               id: article.id,
             },

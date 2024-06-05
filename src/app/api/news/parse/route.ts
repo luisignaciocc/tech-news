@@ -18,7 +18,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const news = await prisma.news.findMany({
       where: {
         parsed: false,
-        valid: true,
+        deletedAt: null,
       },
       orderBy: {
         createdAt: "desc",
@@ -27,7 +27,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       select: {
         url: true,
         parsed: true,
-        valid: true,
         createdAt: true,
       },
     });
@@ -59,7 +58,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 url: item.url,
               },
               data: {
-                valid: false,
+                deletedAt: new Date(),
               },
             });
 
@@ -94,7 +93,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 url: item.url,
               },
               data: {
-                valid: false,
+                deletedAt: new Date(),
               },
             });
 

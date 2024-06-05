@@ -70,7 +70,10 @@ export const webhook = async (req: Request) => {
           parse_mode: "Markdown",
         });
       } else if (action === "delete") {
-        await prisma.news.delete({
+        await prisma.news.update({
+          data: {
+            deletedAt: new Date(),
+          },
           where: {
             id: id,
           },
