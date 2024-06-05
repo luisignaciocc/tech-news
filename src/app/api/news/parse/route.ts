@@ -5,6 +5,8 @@ import { NextResponse } from "next/server";
 
 import { notifyProblem } from "@/lib/utils";
 
+export const maxDuration = 60;
+
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
 

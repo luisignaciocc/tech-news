@@ -177,6 +177,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
+    console.error(error);
     await notifyProblem("Pulling news from Google News");
     if (error instanceof Error) {
       return NextResponse.json(

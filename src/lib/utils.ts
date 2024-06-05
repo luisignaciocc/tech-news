@@ -8,8 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export async function notifyProblem(type: string, error?: unknown) {
-  const API_KEY = process.env.CALLMEBOT_API_KEY_IMPORTANT;
-  const PHONE = process.env.WHATSAPP_PHONE_IMPORTANT;
+  const API_KEY = process.env.CALLMEBOT_API_KEY;
+  const PHONE = process.env.WHATSAPP_PHONE;
 
   if (!API_KEY || !PHONE) {
     console.error("No whatsapp API keys found");
