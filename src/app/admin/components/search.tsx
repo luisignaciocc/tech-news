@@ -1,4 +1,4 @@
-import { Input } from "@/app/components/ui/input";
+import { Input } from "@/app/admin/components/ui/input";
 
 export function Search() {
   return (

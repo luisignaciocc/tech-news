@@ -11,8 +11,8 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/app/components/ui/avatar";
-import { Button } from "@/app/components/ui/button";
+} from "@/app/admin/components/ui/avatar";
+import { Button } from "@/app/admin/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -21,7 +21,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/app/components/ui/command";
+} from "@/app/admin/components/ui/command";
 import {
   Dialog,
   DialogContent,
@@ -30,22 +30,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/ui/dialog";
-import { Input } from "@/app/components/ui/input";
-import { Label } from "@/app/components/ui/label";
+} from "@/app/admin/components/ui/dialog";
+import { Input } from "@/app/admin/components/ui/input";
+import { Label } from "@/app/admin/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/components/ui/popover";
+} from "@/app/admin/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/ui/select";
-import { cn } from "@/lib/shadcn/utils";
+} from "@/app/admin/components/ui/select";
+import { cn } from "@/lib/utils";
 
 const groups = [
   {

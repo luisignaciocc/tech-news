@@ -4,14 +4,14 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { addDays, format } from "date-fns";
 import * as React from "react";
 
-import { Button } from "@/app/components/ui/button";
-import { Calendar } from "@/app/components/ui/calendar";
+import { Button } from "@/app/admin/components/ui/button";
+import { Calendar } from "@/app/admin/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/components/ui/popover";
-import { cn } from "@/lib/shadcn/utils";
+} from "@/app/admin/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 type DateRange = {
   from: Date | undefined;
