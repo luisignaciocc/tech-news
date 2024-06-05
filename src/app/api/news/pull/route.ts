@@ -6,6 +6,8 @@ import { parseString } from "xml2js";
 
 import { notifyProblem } from "@/lib/utils";
 
+export const maxDuration = 60;
+
 interface RssChannel {
   generator: string;
   title: string;
@@ -15,7 +17,7 @@ interface RssChannel {
   copyright: string;
   lastBuildDate: string;
   description: string;
-  item: RssItem[];
+  item: RssItem[] | null;
 }
 
 interface RssItem {
@@ -97,6 +99,23 @@ export async function POST(request: Request) {
     });
 
     const newsItems = data.rss.channel[0].item;
+
+    if (!newsItems) {
+      await prisma.newsSource.update({
+        where: {
+          id: oldestNewsSource.id,
+        },
+        data: {
+          lastUpdateAt: new Date(),
+          isActive: false,
+        },
+      });
+      return NextResponse.json(
+        { error: "No news items found on " + oldestNewsSource.name },
+        { status: 404 },
+      );
+    }
+
     const articleData = newsItems.map((item: RssItem) => ({
       title: item.title,
       link: item.link[0],
@@ -185,10 +204,9 @@ export async function POST(request: Request) {
         lastUpdateAt: new Date(),
       },
     });
-    console.error(error);
     await notifyProblem(
-      "Pulling news from Google News, view log for more info: ",
-      oldestNewsSource.name,
+      `Pulling news from Google News, view log for more info: ${oldestNewsSource.name}`,
+      error,
     );
     if (error instanceof Error) {
       return NextResponse.json(
