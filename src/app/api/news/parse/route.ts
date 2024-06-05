@@ -89,20 +89,16 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
-          if (error instanceof Error && error.name === "AbortError") {
-            await prisma.news.update({
-              where: {
-                url: item.url,
-              },
-              data: {
-                deletedAt: new Date(),
-              },
-            });
+          await prisma.news.update({
+            where: {
+              url: item.url,
+            },
+            data: {
+              deletedAt: new Date(),
+            },
+          });
 
-            return false;
-          } else {
-            throw error;
-          }
+          return false;
         }
       }),
     );
