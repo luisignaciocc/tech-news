@@ -25,7 +25,6 @@ model News {
     publishedAt  DateTime
     createdAt    DateTime                     @default(now())
     parsed       Boolean                      @default(false)
-    valid        Boolean                      @default(true)
     body         String?
     byline       String?
     lang         String?
@@ -40,6 +39,7 @@ model News {
     embedding    Unsupported("vector(1536)")?
     posts        Post[]
     images       NewsImage[]
+    deletedAt    DateTime?
 }
 
 model NewsSource {

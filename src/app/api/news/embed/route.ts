@@ -24,7 +24,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       where: {
         parsed: true,
         vectorized: false,
-        valid: true,
+        deletedAt: null,
       },
       orderBy: {
         createdAt: "desc",
@@ -43,7 +43,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             id: parse.id,
           },
           data: {
-            valid: false,
+            deletedAt: new Date(),
           },
         });
         continue;
