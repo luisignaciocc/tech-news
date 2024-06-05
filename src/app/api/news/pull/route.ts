@@ -48,30 +48,31 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
   }
 
+  const prisma = new PrismaClient();
+
+  const oldestNewsSource = await prisma.newsSource.findFirst({
+    where: {
+      isActive: true,
+    },
+    orderBy: {
+      lastUpdateAt: "asc",
+    },
+    select: {
+      id: true,
+      url: true,
+      lastUpdateAt: true,
+      name: true,
+    },
+  });
+
+  if (!oldestNewsSource) {
+    return NextResponse.json(
+      { error: "No valid news source found" },
+      { status: 404 },
+    );
+  }
+
   try {
-    const prisma = new PrismaClient();
-
-    const oldestNewsSource = await prisma.newsSource.findFirst({
-      where: {
-        isActive: true,
-      },
-      orderBy: {
-        lastUpdateAt: "asc",
-      },
-      select: {
-        id: true,
-        url: true,
-        lastUpdateAt: true,
-      },
-    });
-
-    if (!oldestNewsSource) {
-      return NextResponse.json(
-        { error: "No valid news source found" },
-        { status: 404 },
-      );
-    }
-
     const searchQuery = `site:${oldestNewsSource.url}+when:2d&hl=en-IN&gl=IN&ceid=IN:en`;
 
     const url = `https://news.google.com/rss/search?q=${searchQuery}`;
@@ -159,26 +160,36 @@ export async function POST(request: Request) {
             continue;
           }
         }
-
-        if (oldestNewsSource) {
-          await prisma.newsSource.update({
-            where: {
-              id: oldestNewsSource.id,
-            },
-            data: {
-              lastUpdateAt: new Date(),
-            },
-          });
-        }
       } catch (error) {
-        article.dataNAu = null;
+        console.error(error);
+        continue;
       }
     }
 
+    await prisma.newsSource.update({
+      where: {
+        id: oldestNewsSource.id,
+      },
+      data: {
+        lastUpdateAt: new Date(),
+      },
+    });
+
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
+    await prisma.newsSource.update({
+      where: {
+        id: oldestNewsSource.id,
+      },
+      data: {
+        lastUpdateAt: new Date(),
+      },
+    });
     console.error(error);
-    await notifyProblem("Pulling news from Google News");
+    await notifyProblem(
+      "Pulling news from Google News, view log for more info: ",
+      oldestNewsSource.name,
+    );
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
