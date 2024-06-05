@@ -17,30 +17,30 @@ model PostView {
 }
 
 model News {
-    id           String                       @id @default(cuid())
-    title        String
-    url          String                       @unique
-    sourceUrl    String
-    thumbnailUrl String?
-    publishedAt  DateTime
-    createdAt    DateTime                     @default(now())
-    parsed       Boolean                      @default(false)
-    body         String?
-    byline       String?
-    lang         String?
-    length       Int?
-    excerpt      String?
-    siteName     String?
-    sourceId     Int?
-    source       NewsSource?                  @relation(fields: [sourceId], references: [id])
-    searchQuery  String?
-    vectorized   Boolean                      @default(false)
-    filtered     Boolean                      @default(false)
-    embedding    Unsupported("vector(1536)")?
-    posts        Post[]
-    images       NewsImage[]
-    deletedAt    DateTime?
-    sentToApproval Boolean                     @default(false)
+    id             String                       @id @default(cuid())
+    title          String
+    url            String                       @unique
+    sourceUrl      String
+    thumbnailUrl   String?
+    publishedAt    DateTime
+    createdAt      DateTime                     @default(now())
+    parsed         Boolean                      @default(false)
+    body           String?
+    byline         String?
+    lang           String?
+    length         Int?
+    excerpt        String?
+    siteName       String?
+    sourceId       Int?
+    source         NewsSource?                  @relation(fields: [sourceId], references: [id])
+    searchQuery    String?
+    vectorized     Boolean                      @default(false)
+    filtered       Boolean                      @default(false)
+    embedding      Unsupported("vector(1536)")?
+    posts          Post[]
+    images         NewsImage[]
+    deletedAt      DateTime?
+    sentToApproval Boolean                      @default(false)
 }
 
 model NewsSource {
