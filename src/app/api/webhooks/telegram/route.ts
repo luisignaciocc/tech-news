@@ -98,6 +98,7 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
+    console.error(error);
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
