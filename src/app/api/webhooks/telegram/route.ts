@@ -33,6 +33,14 @@ export async function POST(req: Request): Promise<NextResponse> {
         await bot.sendMessage(message.chat.id, "Has cancelado.");
       }
 
+      await bot.editMessageReplyMarkup(
+        { inline_keyboard: [] },
+        {
+          chat_id: message.chat.id,
+          message_id: message.message_id,
+        },
+      );
+
       await bot.answerCallbackQuery(callbackQuery.id);
       return NextResponse.json({ success: true }, { status: 200 });
     }
