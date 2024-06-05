@@ -67,8 +67,23 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     if (text && username === "luisignaciocc") {
       const messageResponse = `✅ Thanks for your message: *"${text}"*\nHave a great day! 👋🏻`;
-      await bot.sendMessage(id, messageResponse, { parse_mode: "Markdown" });
-      await bot.sendPoll(id, "Do you like this message?", ["Yes", "No"]);
+      await bot.sendMessage(id, messageResponse, {
+        parse_mode: "Markdown",
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "Aceptar",
+                callback_data: "accept",
+              },
+              {
+                text: "Cancelar",
+                callback_data: "cancel",
+              },
+            ],
+          ],
+        },
+      });
     } else {
       await bot.sendMessage(
         _PERSONAL_CHAT_ID,
