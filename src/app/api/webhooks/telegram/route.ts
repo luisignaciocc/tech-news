@@ -37,12 +37,6 @@ export async function POST(req: Request): Promise<NextResponse> {
         );
       }
 
-      if (action === "accept") {
-        await bot.sendMessage(message.chat.id, "Has aceptado.");
-      } else if (action === "cancel") {
-        await bot.sendMessage(message.chat.id, "Has cancelado.");
-      }
-
       await bot.editMessageReplyMarkup(
         { inline_keyboard: [] },
         {
@@ -50,6 +44,12 @@ export async function POST(req: Request): Promise<NextResponse> {
           message_id: message.message_id,
         },
       );
+
+      if (action === "accept") {
+        await bot.sendMessage(message.chat.id, "Has aceptado.");
+      } else if (action === "cancel") {
+        await bot.sendMessage(message.chat.id, "Has cancelado.");
+      }
 
       await bot.answerCallbackQuery(callbackQuery.id);
       return NextResponse.json({ success: true }, { status: 200 });
