@@ -56,7 +56,11 @@ export async function POST(req: Request): Promise<NextResponse> {
     } = await req.json();
 
     if (!body?.message) {
-      return NextResponse.json({ error: "No message found" }, { status: 400 });
+      await bot.sendMessage(
+        _PERSONAL_CHAT_ID,
+        `${JSON.stringify(body, null, 2)}*`,
+        { parse_mode: "Markdown" },
+      );
     }
 
     const {
