@@ -73,6 +73,7 @@ model Post {
     postedToTwitter   Boolean   @default(false)
     tweetId           String?
     postedToLinkedin  Boolean   @default(false)
+    linkedinPostId    String?
     postedToInstagram Boolean   @default(false)
     instagramMediaId  String?
     postedToFacebook  Boolean   @default(false)
