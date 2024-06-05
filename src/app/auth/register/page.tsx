@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 
@@ -31,6 +31,8 @@ export default function Register() {
   const [alertMessage, setAlertMessage] = useState<string | null>(null);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
+  return notFound();
+
   const onSubmit = handleSubmit(async (data) => {
     if (data.password != data.confirmPassword) {
       setError("confirmPassword", { message: "Passwords do not match" });
@@ -47,9 +49,7 @@ export default function Register() {
       if (response.success) {
         setShowSuccessAlert(true);
         setAlertMessage(null);
-        setTimeout(() => {
-          router.push("/auth/login");
-        }, 5000);
+        router.push("/");
       } else {
         setAlertMessage(response.message || "Unknown error");
       }
@@ -63,12 +63,12 @@ export default function Register() {
       <div className="bg-white rounded-lg shadow-md p-8 w-96">
         <h1 className="text-black-200 font-bold text-4xl mb-3">Register</h1>
         {alertMessage && !showSuccessAlert && (
-          <AlertDestructive title="Error" message={alertMessage} />
+          <AlertDestructive title="Error" message={alertMessage || ""} />
         )}
         {showSuccessAlert && (
           <AlertSuccess
             title="Registration Successful"
-            message="You will be redirected to the login page in 5 seconds."
+            message="You will be redirected to the main page."
           />
         )}
         <form onSubmit={onSubmit} className="space-y-1">
