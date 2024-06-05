@@ -1,5 +1,4 @@
 import Footer from "../components/footer";
-import RootLayout from "../layout";
 
 export default function GroupedLayout({
   children,
@@ -7,11 +6,9 @@ export default function GroupedLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <RootLayout>
-      <div className="min-h-screen">
-        {children}
-        <Footer />
-      </div>
-    </RootLayout>
+    <div className="min-h-screen">
+      {children}
+      <Footer />
+    </div>
   );
 }
