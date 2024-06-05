@@ -29,7 +29,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       orderBy: {
         createdAt: "desc",
       },
-      take: 10,
+      take: 20,
       select: {
         id: true,
         title: true,
