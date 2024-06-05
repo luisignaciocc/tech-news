@@ -3,24 +3,24 @@ import Image from "next/image";
 
 import { CalendarDateRangePicker } from "@/app/components/date-range-picker";
 import { MainNav } from "@/app/components/main-nav";
-import { Button } from "@/app/components/new-york/ui/button";
+import { Overview } from "@/app/components/overview";
+import { RecentSales } from "@/app/components/recent-sales";
+import { Search } from "@/app/components/search";
+import TeamSwitcher from "@/app/components/team-switcher";
+import { Button } from "@/app/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/app/components/new-york/ui/card";
+} from "@/app/components/ui/card";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/app/components/new-york/ui/tabs";
-import { Overview } from "@/app/components/overview";
-import { RecentSales } from "@/app/components/recent-sales";
-import { Search } from "@/app/components/search";
-import TeamSwitcher from "@/app/components/team-switcher";
+} from "@/app/components/ui/tabs";
 import { UserNav } from "@/app/components/user-nav";
 
 export const metadata: Metadata = {

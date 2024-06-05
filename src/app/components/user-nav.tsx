@@ -2,8 +2,8 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/app/components/new-york/ui/avatar";
-import { Button } from "@/app/components/new-york/ui/button";
+} from "@/app/components/ui/avatar";
+import { Button } from "@/app/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/app/components/new-york/ui/dropdown-menu";
+} from "@/app/components/ui/dropdown-menu";
 
 export function UserNav() {
   return (

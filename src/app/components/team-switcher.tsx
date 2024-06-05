@@ -11,8 +11,8 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/app/components/new-york/ui/avatar";
-import { Button } from "@/app/components/new-york/ui/button";
+} from "@/app/components/ui/avatar";
+import { Button } from "@/app/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -21,7 +21,7 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/app/components/new-york/ui/command";
+} from "@/app/components/ui/command";
 import {
   Dialog,
   DialogContent,
@@ -30,21 +30,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/app/components/new-york/ui/dialog";
-import { Input } from "@/app/components/new-york/ui/input";
-import { Label } from "@/app/components/new-york/ui/label";
+} from "@/app/components/ui/dialog";
+import { Input } from "@/app/components/ui/input";
+import { Label } from "@/app/components/ui/label";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/app/components/new-york/ui/popover";
+} from "@/app/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/app/components/new-york/ui/select";
+} from "@/app/components/ui/select";
 import { cn } from "@/lib/shadcn/utils";
 
 const groups = [
