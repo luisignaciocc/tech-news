@@ -40,7 +40,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Analytics />
         <SpeedInsights />
-        <div className="min-h-screen">{children}</div>
+        {children}
       </body>
       <GoogleAnalytics gaId="G-0NYZMYCD8C" />
     </html>
