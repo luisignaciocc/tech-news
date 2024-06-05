@@ -20,40 +20,22 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     const bot = new TelegramBot(TOKEN);
 
-    const body: {
-      updateid: number;
-      message: {
-        messageid: number;
-        from: {
-          id: number;
-          isbot: boolean;
-          firstname: string;
-          username: string;
-          languagecode: string;
-        };
-        senderchat?: {
-          id: number;
-          title: string;
-          type: "supergroup";
-        };
-        chat: {
-          id: number;
-          title: string;
-          type: "group" | "supergroup";
-          allmembersareadministrators: boolean;
-        };
-        date: number;
-        groupchatcreated: boolean;
-        newchatphoto?: {
-          file_id: string;
-          file_unique_id: string;
-          file_size: number;
-          width: number;
-          height: number;
-        }[];
-        text?: string;
-      };
-    } = await req.json();
+    const body = await req.json();
+
+    if (body.callback_query) {
+      const callbackQuery = body.callback_query;
+      const data = callbackQuery.data;
+      const message = callbackQuery.message;
+
+      if (data === "accept") {
+        await bot.sendMessage(message.chat.id, "Has aceptado.");
+      } else if (data === "cancel") {
+        await bot.sendMessage(message.chat.id, "Has cancelado.");
+      }
+
+      await bot.answerCallbackQuery(callbackQuery.id);
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
 
     if (!body?.message) {
       await bot.sendMessage(
