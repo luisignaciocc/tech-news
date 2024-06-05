@@ -2,7 +2,7 @@ name: Process News
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/15 * * * *"
 
 jobs:
   pull:
