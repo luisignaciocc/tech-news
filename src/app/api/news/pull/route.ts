@@ -79,7 +79,15 @@ export async function POST(request: Request) {
 
     const url = `https://news.google.com/rss/search?q=${searchQuery}`;
 
-    const response = await fetch(url);
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 4000);
+
+    const response = await fetch(url, {
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
 
     if (!response.ok) {
       const error = "Error al obtener el listado de noticias";
@@ -128,14 +136,16 @@ export async function POST(request: Request) {
 
     for (const article of articleData) {
       try {
-        const response = await fetch(article.link);
+        const response = await fetch(article.link, {
+          signal: controller.signal,
+        });
+        clearTimeout(timeout);
 
         if (!response.ok) {
           continue;
         }
 
         const responseText = await response.text();
-
         const doc = new JSDOM(responseText).window.document;
         const reader = new Readability(doc);
         const parsedArticle = reader.parse();
