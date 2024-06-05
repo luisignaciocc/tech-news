@@ -36,7 +36,7 @@ jobs:
 
   filter:
     runs-on: self-hosted
-    needs: parse
+    needs: embed
     steps:
       - name: Filter the Unrelevant News
         run: |
