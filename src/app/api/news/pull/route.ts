@@ -148,9 +148,9 @@ export async function POST(request: Request) {
             if (!existingNews) {
               await prisma.news.create({
                 data: {
-                  title: article.title,
+                  title: String(article.title),
                   url: article.dataNAu,
-                  sourceUrl: article.source,
+                  sourceUrl: article.link,
                   publishedAt: new Date(article.pubDate).toISOString(),
                   sourceId: oldestNewsSource ? oldestNewsSource.id : null,
                   searchQuery: searchQuery,
@@ -158,6 +158,7 @@ export async function POST(request: Request) {
               });
             }
           } catch (error) {
+            console.error(error);
             continue;
           }
         }
