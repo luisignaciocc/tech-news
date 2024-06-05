@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import TelegramBot from "node-telegram-bot-api";
 
+import { TELEGRAM_PERSONAL_CHAT_ID } from "@/lib/telegram";
 import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
@@ -71,14 +73,41 @@ export async function POST(request: Request): Promise<NextResponse> {
             },
           });
         } else {
-          await prisma.news.update({
-            where: {
-              id: article.id,
-            },
-            data: {
-              filtered: true,
-            },
-          });
+          const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+
+          if (!TOKEN) {
+            await prisma.news.update({
+              where: {
+                id: article.id,
+              },
+              data: {
+                filtered: true,
+              },
+            });
+          } else {
+            const bot = new TelegramBot(TOKEN);
+            await bot.sendMessage(
+              TELEGRAM_PERSONAL_CHAT_ID,
+              `❔ ${article.title}`,
+              {
+                parse_mode: "Markdown",
+                reply_markup: {
+                  inline_keyboard: [
+                    [
+                      {
+                        text: "Aprovar",
+                        callback_data: `approve:accept:${article.id}`,
+                      },
+                      {
+                        text: "Eliminar",
+                        callback_data: `approve:delete:${article.id}`,
+                      },
+                    ],
+                  ],
+                },
+              },
+            );
+          }
         }
       }
     }
