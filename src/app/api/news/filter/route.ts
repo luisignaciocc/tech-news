@@ -27,7 +27,9 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const news = await prisma.news.findMany({
       where: {
-        vectorized: true,
+        coverImage: {
+          not: null,
+        },
         filtered: false,
         deletedAt: null,
         sentToApproval: false,

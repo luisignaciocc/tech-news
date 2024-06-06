@@ -24,13 +24,13 @@ export async function POST(request: Request): Promise<NextResponse> {
     const [article, author] = await Promise.all([
       prisma.news.findFirst({
         where: {
-          parsed: true,
+          filtered: true,
           deletedAt: null,
+          coverImage: {
+            not: null,
+          },
           posts: {
             none: {},
-          },
-          images: {
-            some: {},
           },
         },
         orderBy: {
@@ -42,12 +42,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           body: true,
           excerpt: true,
           publishedAt: true,
-          images: {
-            select: {
-              url: true,
-            },
-            take: 1,
-          },
+          coverImage: true,
         },
       }),
       prisma.author.findFirst({
@@ -148,7 +143,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             id: article.id,
           },
         },
-        coverImage: article.images[0].url,
+        coverImage: article.coverImage,
         publishedAt: article.publishedAt,
       },
     });

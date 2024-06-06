@@ -34,24 +34,24 @@ jobs:
           --url 'https://www.tecnobuc.com/api/news/embed' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  filter:
-    runs-on: self-hosted
-    needs: embed
-    steps:
-      - name: Filter the Unrelevant News
-        run: |
-          curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/filter' \
-          --header 'x-api-key: ${{ secrets.API_KEY }}'
-
   get_images:
     runs-on: self-hosted
-    needs: filter
+    needs: embed
     steps:
       - name: Get Preview Images for the News
         run: |
           curl --request POST \
           --url 'https://www.tecnobuc.com/api/news/get-image' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  filter:
+    runs-on: self-hosted
+    needs: get_images
+    steps:
+      - name: Filter the Unrelevant News
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/news/filter' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   clean:

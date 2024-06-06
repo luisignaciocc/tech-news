@@ -38,7 +38,7 @@ model News {
     filtered       Boolean                      @default(false)
     embedding      Unsupported("vector(1536)")?
     posts          Post[]
-    images         NewsImage[]
+    coverImage     String?
     deletedAt      DateTime?
     sentToApproval Boolean                      @default(false)
     telegramMessageId String?
@@ -52,13 +52,6 @@ model NewsSource {
     lastUpdateAt DateTime @default(now())
     isActive     Boolean  @default(true)
     news         News[]
-}
-
-model NewsImage {
-    id     String @id @default(cuid())
-    url    String
-    newsId String
-    news   News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
 }
 
 model Post {
