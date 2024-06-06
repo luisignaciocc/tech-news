@@ -67,7 +67,16 @@ export default async function RecentPosts() {
             )}
           </div>
           <div className="ml-auto font-medium">
-            {post.createdAt.toLocaleString()}
+            {post.createdAt.toLocaleDateString("en-US", {
+              year: "2-digit",
+              month: "numeric",
+              day: "numeric",
+            })}{" "}
+            {post.createdAt.toLocaleTimeString("en-US", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            })}
           </div>
         </div>
       ))}
