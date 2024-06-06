@@ -48,19 +48,10 @@ export const webhook = async (req: Request) => {
         return;
       }
 
-      await Promise.all([
-        bot.answerCallbackQuery(callbackQuery.id),
-        bot.editMessageReplyMarkup(
-          { inline_keyboard: [] },
-          {
-            chat_id: message.chat.id,
-            message_id: message.message_id,
-          },
-        ),
-      ]);
+      await bot.answerCallbackQuery(callbackQuery.id);
 
       if (action === "accept") {
-        const [filteredNewsToday] = await Promise.all([
+        const [filteredNews] = await Promise.all([
           prisma.news.count({
             where: {
               filtered: true,
@@ -77,9 +68,16 @@ export const webhook = async (req: Request) => {
               filtered: true,
             },
           }),
+          bot.editMessageReplyMarkup(
+            { inline_keyboard: [] },
+            {
+              chat_id: message.chat.id,
+              message_id: message.message_id,
+            },
+          ),
         ]);
         await bot.editMessageText(
-          `${message.text.replace(/^./, `✅ (${filteredNewsToday + 1})`)}`,
+          `${message.text.replace(/^./, `✅ (${filteredNews + 1})`)}`,
           {
             chat_id: message.chat.id,
             message_id: message.message_id,
@@ -95,11 +93,18 @@ export const webhook = async (req: Request) => {
             id: id,
           },
         });
-        await bot.editMessageText(`${message.text.replace(/^./, "❌")}`, {
-          chat_id: message.chat.id,
-          message_id: message.message_id,
-          parse_mode: "Markdown",
-        });
+        bot.editMessageReplyMarkup(
+          { inline_keyboard: [] },
+          {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+          },
+        ),
+          await bot.editMessageText(`${message.text.replace(/^./, "❌")}`, {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+            parse_mode: "Markdown",
+          });
       }
     } else if (!body?.message) {
       console.error("No message found", `${JSON.stringify(body, null, 2)}`);
