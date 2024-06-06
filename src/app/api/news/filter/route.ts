@@ -44,19 +44,20 @@ export async function POST(request: Request): Promise<NextResponse> {
           similarity: number;
         },
       ] = await prisma.$queryRaw`
-      WITH comparation AS (
-        SELECT embedding AS comparation_embedding
-        FROM "News"
-        WHERE id = ${article.id}
-      )
-      SELECT n.id,
-            1 - (n.embedding <=> c.comparation_embedding) AS similarity
-      FROM "News" n,
-            comparation c
-      WHERE n.id != ${article.id}
-      ORDER BY similarity DESC
-      LIMIT 1;
-    `;
+        WITH comparation AS (
+          SELECT embedding AS comparation_embedding
+          FROM "News"
+          WHERE id = ${article.id}
+        )
+        SELECT n.id,
+              1 - (n.embedding <=> c.comparation_embedding) AS similarity
+        FROM "News" n,
+              comparation c
+        WHERE n.id != ${article.id}
+        AND n.embedding IS NOT NULL
+        ORDER BY similarity DESC
+        LIMIT 1;
+      `;
 
       if (similarNews[0].similarity > _SIMILARITY_THRESHOLD) {
         await prisma.news.update({
