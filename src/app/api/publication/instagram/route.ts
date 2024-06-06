@@ -69,6 +69,7 @@ export async function POST(request: Request) {
             Eres un asistente que crea resúmenes concisos y atractivos para publicaciones en Instagram. 
             Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
             La cuenta de Instagram es un sitio de noticias de tecnología llamado Tecnobuc.
+            Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional.
           `,
         },
         {
