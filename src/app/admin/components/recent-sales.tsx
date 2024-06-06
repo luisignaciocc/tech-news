@@ -51,32 +51,39 @@ export default async function RecentPosts() {
             />
             <AvatarFallback>{post.title[0]}</AvatarFallback>
           </Avatar>
-          <div className="ml-4 space-y-1">
+          <div className="ml-4 flex-1 space-y-1">
             {post.new && (
-              <a
-                href={post.new.url}
-                className="text-sm font-medium leading-none"
-              >
-                {post.title}
-              </a>
+              <div className="flex justify-between items-center">
+                <a
+                  href={post.new.url}
+                  className="text-sm font-medium leading-none line-clamp-2 flex-1 mr-4"
+                  target="_blank"
+                >
+                  {post.title}
+                </a>
+                <div className="ml-auto whitespace-nowrap">
+                  {post.createdAt.toLocaleDateString("en-US", {
+                    year: "2-digit",
+                    month: "numeric",
+                    day: "numeric",
+                  })}{" "}
+                  {post.createdAt.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                    hour12: false,
+                  })}
+                </div>
+              </div>
             )}
             {post.new?.source && (
-              <p className="text-sm text-muted-foreground">
-                {post.new.source.url}
-              </p>
+              <a
+                href={post.new.source.url}
+                className="text-sm text-muted-foreground"
+                target="_blank"
+              >
+                <p>{post.new.source.url}</p>
+              </a>
             )}
-          </div>
-          <div className="ml-auto font-medium">
-            {post.createdAt.toLocaleDateString("en-US", {
-              year: "2-digit",
-              month: "numeric",
-              day: "numeric",
-            })}{" "}
-            {post.createdAt.toLocaleTimeString("en-US", {
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-            })}
           </div>
         </div>
       ))}
