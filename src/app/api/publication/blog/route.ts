@@ -101,7 +101,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
           {
             role: "user",
-            content: `Reescribe el siguiente título en español: ${article.title}`,
+            content: `Reescribe el siguiente título en español: ${article.title.split(" - ")[0]}`,
           },
         ],
         model: "gpt-3.5-turbo",
