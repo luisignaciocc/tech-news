@@ -67,12 +67,18 @@ export async function POST(request: Request): Promise<NextResponse> {
       messages: [
         {
           role: "system",
-          content:
-            "Eres un asistente que convierte noticias en artículos en español, en formato markdown. El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, omitiendo cualquier mención directa de la fuente específica y excluyendo cualquier 'call to action' como seguir cuentas en redes sociales o suscribirse a newsletters.",
+          content: `
+            Eres un asistente que convierte noticias en artículos en español, en formato markdown. 
+            El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, 
+            omitiendo cualquier mención directa de la fuente específica y excluyendo cualquier 'call to action' 
+            como seguir cuentas en redes sociales o suscribirse a newsletters. 
+            No incluyas un título al comienzo del artículo.
+            No traduzcas ni modifiques los nombres propios, marcas o nombres de entidades.
+          `,
         },
         {
           role: "user",
-          content: `Reescribe la siguiente noticia en un artículo de formato markdown: ${article.body}`,
+          content: `Reescribe la siguiente noticia en un artículo de formato markdown, sin incluir un título: ${article.body}`,
         },
       ],
       model: "gpt-3.5-turbo",
