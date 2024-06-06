@@ -1,4 +1,4 @@
-import { RecentPosts } from "@/app/admin/components/recent-sales";
+import RecentPosts from "@/app/admin/components/recent-sales";
 import {
   Card,
   CardContent,

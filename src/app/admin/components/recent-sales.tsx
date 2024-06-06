@@ -1,7 +1,4 @@
-"use client";
-
 import { PrismaClient } from "@prisma/client";
-import { useEffect, useState } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -40,32 +37,8 @@ const getRecentsPosts = async () => {
   }
 };
 
-export function RecentPosts() {
-  const [posts, setPosts] = useState<
-    {
-      id: string;
-      title: string;
-      createdAt: Date;
-      coverImage: string | null;
-      new: {
-        id: string;
-        url: string;
-        source: {
-          id: number;
-          url: string;
-        } | null;
-      } | null;
-    }[]
-  >([]);
-
-  useEffect(() => {
-    getLastsPosts();
-  }, []);
-
-  const getLastsPosts = async () => {
-    const lastsPosts = await getRecentsPosts();
-    setPosts(lastsPosts);
-  };
+export default async function RecentPosts() {
+  const posts = await getRecentsPosts();
 
   return (
     <div className="space-y-8">
