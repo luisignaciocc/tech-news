@@ -41,6 +41,8 @@ model News {
     images         NewsImage[]
     deletedAt      DateTime?
     sentToApproval Boolean                      @default(false)
+    telegramMessageId String?
+    telegramChatId String?
 }
 
 model NewsSource {

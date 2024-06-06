@@ -93,37 +93,39 @@ export async function POST(request: Request): Promise<NextResponse> {
             });
           } else {
             const bot = new TelegramBot(TOKEN);
-            await Promise.all([
-              bot.sendMessage(
-                TELEGRAM_PERSONAL_CHAT_ID,
-                `❔ ${article.title}`,
-                {
-                  parse_mode: "Markdown",
-                  reply_markup: {
-                    inline_keyboard: [
-                      [
-                        {
-                          text: "Aprovar",
-                          callback_data: `approve:accept:${article.id}`,
-                        },
-                        {
-                          text: "Eliminar",
-                          callback_data: `approve:delete:${article.id}`,
-                        },
-                      ],
+
+            const message = await bot.sendMessage(
+              TELEGRAM_PERSONAL_CHAT_ID,
+              `❔ ${article.title}`,
+              {
+                parse_mode: "Markdown",
+                reply_markup: {
+                  inline_keyboard: [
+                    [
+                      {
+                        text: "Aprovar",
+                        callback_data: `approve:accept:${article.id}`,
+                      },
+                      {
+                        text: "Eliminar",
+                        callback_data: `approve:delete:${article.id}`,
+                      },
                     ],
-                  },
+                  ],
                 },
-              ),
-              prisma.news.update({
-                where: {
-                  id: article.id,
-                },
-                data: {
-                  sentToApproval: true,
-                },
-              }),
-            ]);
+              },
+            );
+
+            await prisma.news.update({
+              where: {
+                id: article.id,
+              },
+              data: {
+                sentToApproval: true,
+                telegramChatId: message.chat.id.toString(),
+                telegramMessageId: message.message_id.toString(),
+              },
+            });
           }
         }
       }
