@@ -36,6 +36,7 @@ export const webhook = async (req: Request) => {
           `*${JSON.stringify(body, null, 2)}*`,
           { parse_mode: "Markdown" },
         );
+        return;
       }
 
       if (!id) {
@@ -44,32 +45,47 @@ export const webhook = async (req: Request) => {
           `*${JSON.stringify(body, null, 2)}*`,
           { parse_mode: "Markdown" },
         );
+        return;
       }
 
-      await bot.answerCallbackQuery(callbackQuery.id);
-
-      await bot.editMessageReplyMarkup(
-        { inline_keyboard: [] },
-        {
-          chat_id: message.chat.id,
-          message_id: message.message_id,
-        },
-      );
+      await Promise.all([
+        bot.answerCallbackQuery(callbackQuery.id),
+        bot.editMessageReplyMarkup(
+          { inline_keyboard: [] },
+          {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+          },
+        ),
+      ]);
 
       if (action === "accept") {
-        await prisma.news.update({
-          where: {
-            id: id,
+        const [filteredNewsToday] = await Promise.all([
+          prisma.news.count({
+            where: {
+              filtered: true,
+              createdAt: {
+                gte: new Date(new Date().setHours(0, 0, 0, 0)),
+              },
+            },
+          }),
+          prisma.news.update({
+            where: {
+              id: id,
+            },
+            data: {
+              filtered: true,
+            },
+          }),
+        ]);
+        await bot.editMessageText(
+          `${message.text.replace(/^./, `✅ (${filteredNewsToday + 1})`)}`,
+          {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+            parse_mode: "Markdown",
           },
-          data: {
-            filtered: true,
-          },
-        });
-        await bot.editMessageText(`${message.text.replace(/^./, "✅")}`, {
-          chat_id: message.chat.id,
-          message_id: message.message_id,
-          parse_mode: "Markdown",
-        });
+        );
       } else if (action === "delete") {
         await prisma.news.update({
           data: {
