@@ -98,35 +98,39 @@ export async function POST(request: Request): Promise<NextResponse> {
               },
             });
           } else {
-            const completion = await openai.chat.completions.create({
-              model: "gpt-3.5-turbo",
-              messages: [
-                {
-                  role: "system",
-                  content: `
-                    Eres un asistente que clasifica noticias. Tu tarea es determinar si un título de noticia está relacionado con tecnología.
-                    No consideres reseñas (reviews), artículos de opinión, ni artículos de historia como noticias tecnológicas.
-                    Responde únicamente con "sí" o "no".
+            let answer = "no";
+            try {
+              const completion = await openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                messages: [
+                  {
+                    role: "system",
+                    content: `
+                    You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
+                    Do not consider reviews, opinion pieces, historical articles, guides and tutorials, or articles related to movies, series, comics, or TV as technology news.
+                    Respond with "yes" or "no" only.
                   `,
-                },
-                {
-                  role: "user",
-                  content: `
-                    Titulo: "${article.title}"
+                  },
+                  {
+                    role: "user",
+                    content: `
+                    Title: "${article.title}"
                     
-                    ¿Esta noticia está relacionada con tecnología?
+                    Is this news related to technology?
                   `,
-                },
-              ],
-              max_tokens: 10,
-              temperature: 0,
-            });
+                  },
+                ],
+                max_tokens: 10,
+                temperature: 0,
+              });
+              answer =
+                completion.choices[0].message.content?.trim().toLowerCase() ||
+                "no";
+            } catch (error: unknown) {
+              console.error(error);
+            }
 
-            const answer =
-              completion.choices[0].message.content?.trim().toLowerCase() ||
-              "no";
-
-            if (answer === "sí" || answer === "si") {
+            if (answer === "yes") {
               const bot = new TelegramBot(TOKEN);
               const message = await bot.sendMessage(
                 TELEGRAM_PERSONAL_CHAT_ID,
