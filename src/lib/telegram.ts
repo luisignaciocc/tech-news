@@ -55,8 +55,8 @@ export const webhook = async (req: Request) => {
           prisma.news.count({
             where: {
               filtered: true,
-              createdAt: {
-                gte: new Date(new Date().setHours(0, 0, 0, 0)),
+              posts: {
+                none: {},
               },
             },
           }),
