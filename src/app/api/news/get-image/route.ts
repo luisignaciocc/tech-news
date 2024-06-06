@@ -7,7 +7,7 @@ import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
-const imagesFilter = [".svg", ".webp"];
+// const imagesFilter = [".svg", ".webp"];
 
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
@@ -87,32 +87,17 @@ export async function POST(request: Request): Promise<NextResponse> {
               if (wpPostImage) {
                 images = [wpPostImage];
               } else {
-                const imgs = $("img")
-                  .map((_i, el) => $(el).attr("src"))
-                  .get()
-                  .filter(
-                    (src) =>
-                      src &&
-                      src.startsWith("https") &&
-                      !imagesFilter.some((sub) => src.includes(sub)),
-                  );
-                if (imgs.length > 0) {
-                  images = imgs;
-                }
+                await prisma.news.update({
+                  where: {
+                    id: item.id,
+                  },
+                  data: {
+                    deletedAt: new Date(),
+                  },
+                });
+                return false;
               }
             }
-          }
-
-          if (!images) {
-            await prisma.news.update({
-              where: {
-                id: item.id,
-              },
-              data: {
-                deletedAt: new Date(),
-              },
-            });
-            return false;
           }
 
           const imageUrls = await Promise.all(
