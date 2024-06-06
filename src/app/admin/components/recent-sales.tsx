@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -15,6 +16,7 @@ const getRecentsPosts = async () => {
         id: true,
         createdAt: true,
         title: true,
+        slug: true,
         coverImage: true,
         new: {
           select: {
@@ -54,13 +56,13 @@ export default async function RecentPosts() {
           <div className="ml-4 flex-1 space-y-1">
             {post.new && (
               <div className="flex justify-between items-center">
-                <a
-                  href={post.new.url}
-                  className="text-sm font-medium leading-none line-clamp-2 flex-1 mr-4"
+                <Link
+                  href={`/posts/${post.slug}`}
+                  className="hover:underline text-sm font-medium leading-none line-clamp-2 flex-1 mr-4"
                   target="_blank"
                 >
                   {post.title}
-                </a>
+                </Link>
                 <div className="ml-auto whitespace-nowrap">
                   {post.createdAt.toLocaleDateString("en-US", {
                     year: "2-digit",
@@ -77,7 +79,7 @@ export default async function RecentPosts() {
             )}
             {post.new?.source && (
               <a
-                href={post.new.source.url}
+                href={post.new.url}
                 className="text-sm text-muted-foreground"
                 target="_blank"
               >
