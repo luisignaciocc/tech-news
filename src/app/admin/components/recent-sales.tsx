@@ -1,67 +1,103 @@
+"use client";
+
+import { PrismaClient } from "@prisma/client";
+import { useEffect, useState } from "react";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function RecentSales() {
+const getRecentsPosts = async () => {
+  try {
+    const prisma = new PrismaClient();
+
+    const posts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 5,
+      select: {
+        id: true,
+        createdAt: true,
+        title: true,
+        coverImage: true,
+        new: {
+          select: {
+            id: true,
+            url: true,
+            source: {
+              select: {
+                id: true,
+                url: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    return [];
+  }
+};
+
+export function RecentPosts() {
+  const [posts, setPosts] = useState<
+    {
+      id: string;
+      title: string;
+      createdAt: Date;
+      coverImage: string | null;
+      new: {
+        id: string;
+        url: string;
+        source: {
+          id: number;
+          url: string;
+        } | null;
+      } | null;
+    }[]
+  >([]);
+
+  useEffect(() => {
+    getLastsPosts();
+  }, []);
+
+  const getLastsPosts = async () => {
+    const lastsPosts = await getRecentsPosts();
+    setPosts(lastsPosts);
+  };
+
   return (
     <div className="space-y-8">
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/01.png" alt="Avatar" />
-          <AvatarFallback>OM</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Olivia Martin</p>
-          <p className="text-sm text-muted-foreground">
-            olivia.martin@email.com
-          </p>
+      {posts.map((post) => (
+        <div key={post.id} className="flex items-center">
+          <Avatar className="h-9 w-9">
+            <AvatarImage
+              src={post.coverImage ? post.coverImage : ""}
+              alt="Avatar"
+            />
+            <AvatarFallback>{post.title[0]}</AvatarFallback>
+          </Avatar>
+          <div className="ml-4 space-y-1">
+            {post.new && (
+              <a
+                href={post.new.url}
+                className="text-sm font-medium leading-none"
+              >
+                {post.title}
+              </a>
+            )}
+            {post.new?.source && (
+              <p className="text-sm text-muted-foreground">
+                {post.new.source.url}
+              </p>
+            )}
+          </div>
+          <div className="ml-auto font-medium">
+            {post.createdAt.toLocaleString()}
+          </div>
         </div>
-        <div className="ml-auto font-medium">+$1,999.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
-          <AvatarImage src="/avatars/02.png" alt="Avatar" />
-          <AvatarFallback>JL</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Jackson Lee</p>
-          <p className="text-sm text-muted-foreground">jackson.lee@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$39.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/03.png" alt="Avatar" />
-          <AvatarFallback>IN</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Isabella Nguyen</p>
-          <p className="text-sm text-muted-foreground">
-            isabella.nguyen@email.com
-          </p>
-        </div>
-        <div className="ml-auto font-medium">+$299.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/04.png" alt="Avatar" />
-          <AvatarFallback>WK</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">William Kim</p>
-          <p className="text-sm text-muted-foreground">will@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$99.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/05.png" alt="Avatar" />
-          <AvatarFallback>SD</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Sofia Davis</p>
-          <p className="text-sm text-muted-foreground">sofia.davis@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$39.00</div>
-      </div>
+      ))}
     </div>
   );
 }
