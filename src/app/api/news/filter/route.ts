@@ -9,7 +9,7 @@ import { notifyProblem } from "@/lib/utils";
 export const maxDuration = 60;
 
 const _SIMILARITY_THRESHOLD = 0.8;
-const bannedWords = ["wordle", "quordle", "nyt", "review"];
+const bannedWords = ["wordle", "quordle", "nyt", "review", "deal"];
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -106,17 +106,17 @@ export async function POST(request: Request): Promise<NextResponse> {
                   {
                     role: "system",
                     content: `
-                    You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
-                    Do not consider reviews, opinion pieces, historical articles, guides and tutorials, or articles related to movies, series, comics, or TV as technology news.
-                    Respond with "yes" or "no" only.
-                  `,
+                      You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
+                      Do not consider reviews, opinion pieces, historical articles, deals, guides and tutorials,  or articles related to movies, series, comics, or TV as technology news.
+                      Respond with "yes" or "no" only.
+                    `,
                   },
                   {
                     role: "user",
                     content: `
-                    Title: "${article.title}"
-                    
-                    Is this news related to technology?
+                      Title: "${article.title}"
+                      
+                      Is this news related to technology?
                   `,
                   },
                 ],
