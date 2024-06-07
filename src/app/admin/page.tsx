@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import LastPostsCard from "./components/last-posts-card";
+import RecentPostsCard from "./components/recent-posts-card";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -165,7 +165,7 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
               <div className="col-span-3">
-                <LastPostsCard />
+                <RecentPostsCard />
               </div>
             </div>
           </TabsContent>

@@ -7,7 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import {
   RecentPosts,
   RecentPostsLoadingSkeleton,
-} from "@/app/admin/components/recent-posts";
+} from "@/app/admin/components/recent-posts-list";
 import {
   Card,
   CardContent,
@@ -40,7 +40,7 @@ async function RecentPostsCounter() {
   return <Fragment>{postsCount} posts publicados los ultimos 7 dias.</Fragment>;
 }
 
-function LastPostsCard() {
+function RecentPostsCard() {
   return (
     <Card>
       <CardHeader>
@@ -60,4 +60,4 @@ function LastPostsCard() {
   );
 }
 
-export default LastPostsCard;
+export default RecentPostsCard;
