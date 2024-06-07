@@ -115,15 +115,15 @@ const RecentPostsSuspense = () => {
                     href="#"
                     className="hover:underline text-sm font-medium leading-none line-clamp-2 flex-1 mr-4"
                   >
-                    <Skeleton />
+                    <Skeleton width={300} />
                   </Link>
                   <div className="ml-auto whitespace-nowrap">
-                    <Skeleton />
+                    <Skeleton width={100} />
                   </div>
                 </div>
                 <a href="#" className="text-sm text-muted-foreground">
                   <p>
-                    <Skeleton />
+                    <Skeleton width={150} />
                   </p>
                 </a>
               </div>

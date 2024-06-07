@@ -52,7 +52,7 @@ function CardPostsSuspense() {
         <CardHeader>
           <CardTitle>Ultimos Posts Publicados</CardTitle>
           <CardDescription>
-            <Suspense fallback={<Skeleton />}>
+            <Suspense fallback={<Skeleton width={250} />}>
               <WrappedCardDescription />
             </Suspense>
           </CardDescription>
