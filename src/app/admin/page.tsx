@@ -165,7 +165,7 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
               <div className="col-span-3">
-                <CardPostsSuspense></CardPostsSuspense>
+                <CardPostsSuspense />
               </div>
             </div>
           </TabsContent>

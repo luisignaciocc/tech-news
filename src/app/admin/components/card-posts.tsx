@@ -48,7 +48,7 @@ async function WrappedCardDescription() {
 function CardPostsSuspense() {
   return (
     <>
-      <Card className="col-span-3">
+      <Card>
         <CardHeader>
           <CardTitle>Ultimos Posts Publicados</CardTitle>
           <CardDescription>
