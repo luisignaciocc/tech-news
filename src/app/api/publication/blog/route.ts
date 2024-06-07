@@ -69,8 +69,8 @@ export async function POST(request: Request): Promise<NextResponse> {
             como seguir cuentas en redes sociales o suscribirse a newsletters. 
             No incluyas un título al comienzo del artículo.
             No traduzcas ni modifiques los nombres propios, marcas o nombres de entidades.
-        Al final del artículo, dentro de un bloque delimitado por <!-- tags: --> y <!-- end tags -->, 
-        genera una lista de 3 a 5 etiquetas (tags) relevantes relacionadas con el contenido del artículo.
+            Al final del artículo, dentro de <!-- tags: -->, 
+            genera una lista de 3 etiquetas (tags) relevantes relacionadas con el contenido del artículo.
           `,
         },
         {
@@ -87,13 +87,12 @@ export async function POST(request: Request): Promise<NextResponse> {
       await notifyProblem("retrieving the body of the article from OpenAI");
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
-
-    const tagsRegex = /<!-- tags: -->([\s\S]*?)<!-- end tags -->/;
+    const tagsRegex = /<!-- tags: ([\s\S]*?) -->/;
     const tagsMatch = body.match(tagsRegex);
     const tags = tagsMatch
       ? tagsMatch[1]
           .trim()
-          .split("\n")
+          .split(/,\s*|\n/)
           .map((tag) => tag.trim())
       : [];
 
