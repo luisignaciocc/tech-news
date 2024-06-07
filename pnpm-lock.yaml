@@ -99,8 +99,8 @@ dependencies:
     specifier: ^2.2.6
     version: 2.2.6
   openai:
-    specifier: ^4.48.3
-    version: 4.48.3
+    specifier: ^4.49.0
+    version: 4.49.0
   prisma:
     specifier: ^5.14.0
     version: 5.15.0
@@ -191,8 +191,8 @@ devDependencies:
     specifier: ^9.1.0
     version: 9.1.0(eslint@8.57.0)
   eslint-config-turbo:
-    specifier: ^2.0.1
-    version: 2.0.1(eslint@8.57.0)
+    specifier: ^2.0.3
+    version: 2.0.3(eslint@8.57.0)
   eslint-plugin-deprecation:
     specifier: ^3.0.0
     version: 3.0.0(eslint@8.57.0)(typescript@5.4.5)
@@ -221,8 +221,8 @@ devDependencies:
     specifier: ^3.3.0
     version: 3.3.1
   prettier-plugin-tailwindcss:
-    specifier: ^0.6.1
-    version: 0.6.1(prettier@3.3.1)
+    specifier: ^0.6.2
+    version: 0.6.2(prettier@3.3.1)
   tailwindcss:
     specifier: ^3.4.3
     version: 3.4.4
@@ -3188,13 +3188,13 @@ packages:
       eslint: 8.57.0
     dev: true
 
-  /eslint-config-turbo@2.0.1(eslint@8.57.0):
-    resolution: {integrity: sha512-Z/TjALEtWvFmi7c2pszuyU8VMrp7KH1q3I4eNBLzlit5kybYDJhacUDYRDyIdGqXg6XljdyDpxNIOKQByScknw==}
+  /eslint-config-turbo@2.0.3(eslint@8.57.0):
+    resolution: {integrity: sha512-D1+lNOpTFEuAgPWJfRHXHjzvAfO+0TVmORfftmYQNw+uk2UIBjhelhwERBceYFy2oFJnckHsqt69dp/zIM6/0g==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
       eslint: 8.57.0
-      eslint-plugin-turbo: 2.0.1(eslint@8.57.0)
+      eslint-plugin-turbo: 2.0.3(eslint@8.57.0)
     dev: true
 
   /eslint-import-resolver-node@0.3.9:
@@ -3459,8 +3459,8 @@ packages:
       - typescript
     dev: true
 
-  /eslint-plugin-turbo@2.0.1(eslint@8.57.0):
-    resolution: {integrity: sha512-qe3WlGQXVKIZyWlONjvd3+YbtptK6KvfoLb6TrVzkT+mNYbDpjjbGZ3z12Oj0kUNW31n5Me3EVnrgxeyyw1V3g==}
+  /eslint-plugin-turbo@2.0.3(eslint@8.57.0):
+    resolution: {integrity: sha512-mplP4nYaRvtTNuwF5QTLYKLu0/8LTRsHPgX4ARhaof+QZI2ttglONe1/iJpKB4pg0KqFp7WHziKoJL+s0+CJ1w==}
     peerDependencies:
       eslint: '>6.6.0'
     dependencies:
@@ -5351,8 +5351,8 @@ packages:
       mimic-fn: 4.0.0
     dev: false
 
-  /openai@4.48.3:
-    resolution: {integrity: sha512-EmyvU39gEUWlSMVaL5l351DIEq2iMmtyQHpJHOdJnPIULiIbRtFlgyZh8w+svs5Dh/Z2J5m0Svzpk174YWUHpQ==}
+  /openai@4.49.0:
+    resolution: {integrity: sha512-/UkrBSej5ejZ4vnOFoeFefX7erjp4k3+xoLKkswjLEvgBU9QtCnOUgsfpvHkzTzgDXpqPMCzyQHQXWsgiq2xPw==}
     hasBin: true
     dependencies:
       '@types/node': 18.19.34
@@ -5624,8 +5624,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-tailwindcss@0.6.1(prettier@3.3.1):
-    resolution: {integrity: sha512-AnbeYZu0WGj+QgKciUgdMnRxrqcxltleZPgdwfA5104BHM3siBLONN/HLW1yS2HvzSNkzpQ/JAj+LN0jcJO+0w==}
+  /prettier-plugin-tailwindcss@0.6.2(prettier@3.3.1):
+    resolution: {integrity: sha512-eFefm4cg+1c2B57+H274Qm//CTWBdtQN9ansl0YTP/8TC8x3bugCTQSS/e4FC5Ctl9djhTzsbcMrZ7x2/abIow==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
