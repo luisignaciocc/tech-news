@@ -50,7 +50,7 @@ async function RecentPostsSuspense() {
     <div className="space-y-8">
       {posts.map((post) => (
         <div key={post.id} className="flex items-center">
-          <Avatar className="h-9 w-9">
+          <Avatar className="h-9 w-9 rounded">
             <AvatarImage
               src={post.coverImage ? post.coverImage : ""}
               alt="Avatar"
@@ -104,7 +104,7 @@ const RecentPosts = () => {
         <div className="space-y-8">
           {Array.from({ length: 5 }).map((_, index) => (
             <div key={index} className="flex items-center">
-              <Avatar className="h-9 w-9">
+              <Avatar className="h-9 w-9 rounded">
                 <AvatarFallback>
                   <Skeleton />
                 </AvatarFallback>
