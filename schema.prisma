@@ -43,6 +43,7 @@ model News {
   sentToApproval    Boolean                      @default(false)
   telegramMessageId String?
   telegramChatId    String?
+  deletionReason    String?
 }
 
 model NewsSource {
