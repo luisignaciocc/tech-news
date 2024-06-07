@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import LastPostsCard from "./components/card-posts";
+import LastPostsCard from "./components/last-posts-card";
 
 export const metadata: Metadata = {
   title: "Dashboard",
