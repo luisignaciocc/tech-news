@@ -2,20 +2,17 @@ import { Metadata } from "next";
 
 import { MainNav } from "@/app/admin/components/main-nav";
 import { Overview } from "@/app/admin/components/overview";
-import { RecentSales } from "@/app/admin/components/recent-sales";
 import { Search } from "@/app/admin/components/search";
 import TeamSwitcher from "@/app/admin/components/team-switcher";
 import { UserNav } from "@/app/admin/components/user-nav";
 import { CalendarDateRangePicker } from "@/components/date-range-picker";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import RecentPostsCard from "./components/recent-posts-card";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -169,17 +166,9 @@ export default function DashboardPage() {
                   <Overview />
                 </CardContent>
               </Card>
-              <Card className="col-span-3">
-                <CardHeader>
-                  <CardTitle>Recent Sales</CardTitle>
-                  <CardDescription>
-                    You made 265 sales this month.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <RecentSales />
-                </CardContent>
-              </Card>
+              <div className="col-span-3">
+                <RecentPostsCard />
+              </div>
             </div>
           </TabsContent>
         </Tabs>
