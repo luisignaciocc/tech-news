@@ -6,7 +6,7 @@ type Props = {
   date: Date;
 };
 
-const DateFormatter = ({ date }: Props) => {
+export const DateFormatter = ({ date }: Props) => {
   const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
   const zonedDate = toZonedTime(date, timeZone);
@@ -16,4 +16,17 @@ const DateFormatter = ({ date }: Props) => {
   return <time dateTime={date.toISOString()}>{formattedDate}</time>;
 };
 
-export default DateFormatter;
+export const DateTimeFormatter = ({ date }: Props) => {
+  const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  const zonedDate = toZonedTime(date, timeZone);
+
+  const formattedDate = format(zonedDate, "dd/MM/yy", { locale: es });
+  const formattedTime = format(zonedDate, "HH:mm", { locale: es });
+
+  return (
+    <time dateTime={date.toISOString()}>
+      {formattedDate} {formattedTime}
+    </time>
+  );
+};

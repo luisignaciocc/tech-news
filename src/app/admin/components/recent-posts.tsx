@@ -3,6 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 
+import { DateTimeFormatter } from "@/components/date-formatter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const getRecentsPosts = async () => {
@@ -66,7 +67,8 @@ async function RecentPosts() {
                   {post.title}
                 </Link>
                 <div className="ml-auto whitespace-nowrap">
-                  {post.createdAt.toLocaleDateString("en-US", {
+                  <DateTimeFormatter date={post.createdAt} />
+                  {/* {post.createdAt.toLocaleDateString("en-US", {
                     year: "2-digit",
                     month: "numeric",
                     day: "numeric",
@@ -75,7 +77,7 @@ async function RecentPosts() {
                     hour: "2-digit",
                     minute: "2-digit",
                     hour12: false,
-                  })}
+                  })} */}
                 </div>
               </div>
             )}
