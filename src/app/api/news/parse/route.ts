@@ -1,6 +1,6 @@
 import { Readability } from "@mozilla/readability";
 import { PrismaClient } from "@prisma/client";
-import { JSDOM } from "jsdom";
+import { JSDOM, VirtualConsole } from "jsdom";
 import { NextResponse } from "next/server";
 
 import { notifyProblem } from "@/lib/utils";
@@ -46,7 +46,8 @@ export async function POST(request: Request): Promise<NextResponse> {
           });
           clearTimeout(timeout);
           const html = await response.text();
-          const doc = new JSDOM(html).window.document;
+          const virtualConsole = new VirtualConsole();
+          const doc = new JSDOM(html, { virtualConsole }).window.document;
           const reader = new Readability(doc);
           const article = reader.parse();
 

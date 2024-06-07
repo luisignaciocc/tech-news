@@ -5,6 +5,7 @@ import Container from "@/components/container";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import {
+  defaultMetadata,
   PERSONAL_HANDLER,
   SITE_DESCRIPTION,
   SITE_HANDLER,
@@ -59,9 +60,13 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const description = post.excerpt || SITE_DESCRIPTION;
 
   return {
+    ...defaultMetadata,
     metadataBase: new URL(SITE_URL),
     title,
     description,
+    keywords: post.tags.map((tag) => tag.name),
+    creator: post.author.name,
+    publisher: post.author.name,
     openGraph: {
       type: "website",
       url: new URL(`${SITE_URL}/posts/${params.slug}`),

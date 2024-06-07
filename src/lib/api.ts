@@ -33,6 +33,7 @@ export async function getPostBySlug(slug: string) {
     },
     include: {
       author: true,
+      tags: true,
     },
   });
 }

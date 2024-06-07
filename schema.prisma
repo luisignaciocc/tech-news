@@ -1,100 +1,101 @@
 generator client {
-    provider        = "prisma-client-js"
-    previewFeatures = ["postgresqlExtensions"]
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 datasource db {
-    provider   = "postgresql"
-    url        = env("POSTGRES_PRISMA_URL")
-    directUrl  = env("POSTGRES_URL_NON_POOLING")
-    extensions = [vector]
+  provider   = "postgresql"
+  url        = env("POSTGRES_PRISMA_URL")
+  directUrl  = env("POSTGRES_URL_NON_POOLING")
+  extensions = [vector]
 }
 
 model PostView {
-    id        String   @id @default(cuid())
-    slug      String
-    visitedAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  slug      String
+  visitedAt DateTime @default(now())
 }
 
 model News {
-    id             String                       @id @default(cuid())
-    title          String
-    url            String                       @unique
-    sourceUrl      String
-    thumbnailUrl   String?
-    publishedAt    DateTime
-    createdAt      DateTime                     @default(now())
-    parsed         Boolean                      @default(false)
-    body           String?
-    byline         String?
-    lang           String?
-    length         Int?
-    excerpt        String?
-    siteName       String?
-    sourceId       Int?
-    source         NewsSource?                  @relation(fields: [sourceId], references: [id])
-    searchQuery    String?
-    vectorized     Boolean                      @default(false)
-    filtered       Boolean                      @default(false)
-    embedding      Unsupported("vector(1536)")?
-    posts          Post[]
-    images         NewsImage[]
-    deletedAt      DateTime?
-    sentToApproval Boolean                      @default(false)
-    telegramMessageId String?
-    telegramChatId String?
+  id                String                       @id @default(cuid())
+  title             String
+  url               String                       @unique
+  sourceUrl         String
+  thumbnailUrl      String?
+  publishedAt       DateTime
+  createdAt         DateTime                     @default(now())
+  parsed            Boolean                      @default(false)
+  body              String?
+  byline            String?
+  lang              String?
+  length            Int?
+  excerpt           String?
+  siteName          String?
+  sourceId          Int?
+  source            NewsSource?                  @relation(fields: [sourceId], references: [id])
+  searchQuery       String?
+  vectorized        Boolean                      @default(false)
+  filtered          Boolean                      @default(false)
+  embedding         Unsupported("vector(1536)")?
+  posts             Post[]
+  coverImage        String?
+  deletedAt         DateTime?
+  sentToApproval    Boolean                      @default(false)
+  telegramMessageId String?
+  telegramChatId    String?
+  deletionReason    String?
 }
 
 model NewsSource {
-    id           Int      @id @default(autoincrement())
-    name         String   @unique
-    url          String   @unique
-    lastUpdateAt DateTime @default(now())
-    isActive     Boolean  @default(true)
-    news         News[]
-}
-
-model NewsImage {
-    id     String @id @default(cuid())
-    url    String
-    newsId String
-    news   News   @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  id           Int      @id @default(autoincrement())
+  name         String   @unique
+  url          String   @unique
+  lastUpdateAt DateTime @default(now())
+  isActive     Boolean  @default(true)
+  news         News[]
 }
 
 model Post {
-    id                String    @id @default(cuid())
-    slug              String    @unique
-    title             String
-    content           String
-    createdAt         DateTime  @default(now())
-    coverImage        String?
-    author            Author    @relation(fields: [authorId], references: [id])
-    authorId          String
-    excerpt           String?
-    publishedAt       DateTime?
-    newId             String?
-    postedToTwitter   Boolean   @default(false)
-    tweetId           String?
-    postedToLinkedin  Boolean   @default(false)
-    linkedinPostId    String?
-    postedToInstagram Boolean   @default(false)
-    instagramMediaId  String?
-    postedToFacebook  Boolean   @default(false)
-    facebookPostId    String?
-    new               News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
+  id                String    @id @default(cuid())
+  slug              String    @unique
+  title             String
+  content           String
+  createdAt         DateTime  @default(now())
+  coverImage        String?
+  author            Author    @relation(fields: [authorId], references: [id])
+  authorId          String
+  excerpt           String?
+  publishedAt       DateTime?
+  newId             String?
+  postedToTwitter   Boolean   @default(false)
+  tweetId           String?
+  postedToLinkedin  Boolean   @default(false)
+  linkedinPostId    String?
+  postedToInstagram Boolean   @default(false)
+  instagramMediaId  String?
+  postedToFacebook  Boolean   @default(false)
+  facebookPostId    String?
+  new               News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
+  tags              Tag[]
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
 }
 
 model Author {
-    id      String @id @default(cuid())
-    name    String
-    picture String
-    posts   Post[]
+  id      String @id @default(cuid())
+  name    String
+  picture String
+  posts   Post[]
 }
 
 model Users {
-    id        String   @id @default(cuid())
-    username  String   @unique
-    email     String   @unique
-    password  String
-    createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
 }

@@ -99,8 +99,8 @@ export async function GET(request: Request) {
       headers: {
         "Cache-Control": "s-maxage=3600",
       },
-      width: 630,
-      height: 630,
+      width: 1080,
+      height: 1080,
     },
   );
 }

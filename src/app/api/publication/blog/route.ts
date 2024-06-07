@@ -24,13 +24,13 @@ export async function POST(request: Request): Promise<NextResponse> {
     const [article, author] = await Promise.all([
       prisma.news.findFirst({
         where: {
-          parsed: true,
+          filtered: true,
           deletedAt: null,
+          coverImage: {
+            not: null,
+          },
           posts: {
             none: {},
-          },
-          images: {
-            some: {},
           },
         },
         orderBy: {
@@ -42,12 +42,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           body: true,
           excerpt: true,
           publishedAt: true,
-          images: {
-            select: {
-              url: true,
-            },
-            take: 1,
-          },
+          coverImage: true,
         },
       }),
       prisma.author.findFirst({
@@ -67,12 +62,20 @@ export async function POST(request: Request): Promise<NextResponse> {
       messages: [
         {
           role: "system",
-          content:
-            "Eres un asistente que convierte noticias en artículos en español, en formato markdown. El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, omitiendo cualquier mención directa de la fuente específica y excluyendo cualquier 'call to action' como seguir cuentas en redes sociales o suscribirse a newsletters.",
+          content: `
+            Eres un asistente que convierte noticias en artículos en español, en formato markdown. 
+            El artículo debe ser fiel a la noticia original pero reescrito con otras palabras y estructura, 
+            omitiendo cualquier mención directa de la fuente específica y excluyendo cualquier 'call to action' 
+            como seguir cuentas en redes sociales o suscribirse a newsletters. 
+            No incluyas un título al comienzo del artículo.
+            No traduzcas ni modifiques los nombres propios, marcas o nombres de entidades.
+            Al final del artículo, dentro de <!-- tags: -->, 
+            genera una lista de 3 etiquetas (tags) relevantes relacionadas con el contenido del artículo.
+          `,
         },
         {
           role: "user",
-          content: `Reescribe la siguiente noticia en un artículo de formato markdown: ${article.body}`,
+          content: `Reescribe la siguiente noticia en un artículo de formato markdown, sin incluir un título: ${article.body}`,
         },
       ],
       model: "gpt-3.5-turbo",
@@ -84,6 +87,16 @@ export async function POST(request: Request): Promise<NextResponse> {
       await notifyProblem("retrieving the body of the article from OpenAI");
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
+    const tagsRegex = /<!-- tags: ([\s\S]*?) -->/;
+    const tagsMatch = body.match(tagsRegex);
+    const tags = tagsMatch
+      ? tagsMatch[1]
+          .trim()
+          .split(/,\s*|\n/)
+          .map((tag) => tag.trim())
+      : [];
+
+    const articleMarkdown = body.replace(tagsRegex, "").trim();
 
     const [titleCompletion, excerptCompletion] = await Promise.all([
       openai.chat.completions.create({
@@ -95,7 +108,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
           {
             role: "user",
-            content: `Reescribe el siguiente título en español: ${article.title}`,
+            content: `Reescribe el siguiente título en español: ${article.title.split(" - ")[0]}`,
           },
         ],
         model: "gpt-3.5-turbo",
@@ -129,7 +142,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     await prisma.post.create({
       data: {
         title: title,
-        content: body,
+        content: articleMarkdown,
         excerpt: excerpt || article.excerpt,
         author: {
           connect: {
@@ -142,8 +155,18 @@ export async function POST(request: Request): Promise<NextResponse> {
             id: article.id,
           },
         },
-        coverImage: article.images[0].url,
+        coverImage: article.coverImage,
         publishedAt: article.publishedAt,
+        tags: {
+          connectOrCreate: tags.map((tag) => ({
+            create: {
+              name: tag.toLowerCase(),
+            },
+            where: {
+              name: tag.toLowerCase(),
+            },
+          })),
+        },
       },
     });
 

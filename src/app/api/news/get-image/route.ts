@@ -7,8 +7,6 @@ import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
-const imagesFilter = [".svg", ".webp"];
-
 export async function POST(request: Request): Promise<NextResponse> {
   const apiKey = request.headers.get("x-api-key");
 
@@ -38,11 +36,10 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const news = await prisma.news.findMany({
       where: {
-        filtered: true,
+        filtered: false,
+        vectorized: true,
+        coverImage: null,
         deletedAt: null,
-        images: {
-          none: {},
-        },
       },
       orderBy: {
         createdAt: "desc",
@@ -72,69 +69,44 @@ export async function POST(request: Request): Promise<NextResponse> {
           const html = await response.text();
           const $ = cheerio.load(html);
 
-          let images: string[] | undefined;
+          let image: string | undefined;
           const ogImage = $('meta[property="og:image"]').attr("content");
           if (ogImage) {
-            images = [ogImage];
+            image = ogImage;
           } else {
             const twitterImage = $('meta[name="twitter:image"]').attr(
               "content",
             );
             if (twitterImage) {
-              images = [twitterImage];
+              image = twitterImage;
             } else {
               const wpPostImage = $(".wp-post-image").attr("src");
               if (wpPostImage) {
-                images = [wpPostImage];
+                image = wpPostImage;
               } else {
-                const imgs = $("img")
-                  .map((_i, el) => $(el).attr("src"))
-                  .get()
-                  .filter(
-                    (src) =>
-                      src &&
-                      src.startsWith("https") &&
-                      !imagesFilter.some((sub) => src.includes(sub)),
-                  );
-                if (imgs.length > 0) {
-                  images = imgs;
-                }
+                await prisma.news.update({
+                  where: {
+                    id: item.id,
+                  },
+                  data: {
+                    deletedAt: new Date(),
+                  },
+                });
+                return false;
               }
             }
           }
 
-          if (!images) {
-            await prisma.news.update({
-              where: {
-                id: item.id,
-              },
-              data: {
-                deletedAt: new Date(),
-              },
-            });
-            return false;
-          }
-
-          const imageUrls = await Promise.all(
-            images.map(async (image) => {
-              const result = await cloudinary.uploader.upload(image, {
-                folder: "posts_previews",
-              });
-
-              return result.secure_url;
-            }),
-          );
+          const imageUrl = await cloudinary.uploader.upload(image, {
+            folder: "posts_previews",
+          });
 
           await prisma.news.update({
             where: {
               id: item.id,
             },
             data: {
-              images: {
-                createMany: {
-                  data: imageUrls.map((url) => ({ url })),
-                },
-              },
+              coverImage: imageUrl.secure_url,
             },
           });
 

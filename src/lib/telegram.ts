@@ -36,6 +36,7 @@ export const webhook = async (req: Request) => {
           `*${JSON.stringify(body, null, 2)}*`,
           { parse_mode: "Markdown" },
         );
+        return;
       }
 
       if (!id) {
@@ -44,32 +45,45 @@ export const webhook = async (req: Request) => {
           `*${JSON.stringify(body, null, 2)}*`,
           { parse_mode: "Markdown" },
         );
+        return;
       }
 
       await bot.answerCallbackQuery(callbackQuery.id);
 
-      await bot.editMessageReplyMarkup(
-        { inline_keyboard: [] },
-        {
-          chat_id: message.chat.id,
-          message_id: message.message_id,
-        },
-      );
-
       if (action === "accept") {
-        await prisma.news.update({
-          where: {
-            id: id,
+        const [filteredNews] = await Promise.all([
+          prisma.news.count({
+            where: {
+              filtered: true,
+              posts: {
+                none: {},
+              },
+            },
+          }),
+          prisma.news.update({
+            where: {
+              id: id,
+            },
+            data: {
+              filtered: true,
+            },
+          }),
+          bot.editMessageReplyMarkup(
+            { inline_keyboard: [] },
+            {
+              chat_id: message.chat.id,
+              message_id: message.message_id,
+            },
+          ),
+        ]);
+        await bot.editMessageText(
+          `${message.text.replace(/^./, `✅ (${filteredNews + 1})`)}`,
+          {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+            parse_mode: "Markdown",
           },
-          data: {
-            filtered: true,
-          },
-        });
-        await bot.editMessageText(`${message.text.replace(/^./, "✅")}`, {
-          chat_id: message.chat.id,
-          message_id: message.message_id,
-          parse_mode: "Markdown",
-        });
+        );
       } else if (action === "delete") {
         await prisma.news.update({
           data: {
@@ -79,11 +93,18 @@ export const webhook = async (req: Request) => {
             id: id,
           },
         });
-        await bot.editMessageText(`${message.text.replace(/^./, "❌")}`, {
-          chat_id: message.chat.id,
-          message_id: message.message_id,
-          parse_mode: "Markdown",
-        });
+        bot.editMessageReplyMarkup(
+          { inline_keyboard: [] },
+          {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+          },
+        ),
+          await bot.editMessageText(`${message.text.replace(/^./, "❌")}`, {
+            chat_id: message.chat.id,
+            message_id: message.message_id,
+            parse_mode: "Markdown",
+          });
       }
     } else if (!body?.message) {
       console.error("No message found", `${JSON.stringify(body, null, 2)}`);
