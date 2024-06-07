@@ -2,8 +2,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
-import { Suspense } from "react";
-import Skeleton from "react-loading-skeleton";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
@@ -97,44 +95,4 @@ async function RecentPosts() {
   );
 }
 
-const RecentPostsSuspense = () => {
-  return (
-    <Suspense
-      fallback={
-        <div className="space-y-8">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <div key={index} className="flex items-center">
-              <Avatar className="h-9 w-9 rounded">
-                <AvatarFallback>
-                  <Skeleton />
-                </AvatarFallback>
-              </Avatar>
-              <div className="ml-4 flex-1 space-y-1">
-                <div className="flex justify-between items-center">
-                  <Link
-                    href="#"
-                    className="hover:underline text-sm font-medium leading-none line-clamp-2 flex-1 mr-4"
-                  >
-                    <Skeleton width={300} />
-                  </Link>
-                  <div className="ml-auto whitespace-nowrap">
-                    <Skeleton width={100} />
-                  </div>
-                </div>
-                <a href="#" className="text-sm text-muted-foreground">
-                  <p>
-                    <Skeleton width={150} />
-                  </p>
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      }
-    >
-      <RecentPosts />
-    </Suspense>
-  );
-};
-
-export default RecentPostsSuspense;
+export default RecentPosts;
