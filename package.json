@@ -5,7 +5,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint --fix",
-    "format": "prettier --write .",
+    "format": "prettier --write . && prisma format",
     "type-check": "tsc --pretty --noEmit",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "prepare": "husky",
