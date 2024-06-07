@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 
-import RecentPosts from "@/app/admin/components/recent-posts";
+import RecentPostsSuspense from "@/app/admin/components/recent-posts";
 import {
   Card,
   CardContent,
@@ -45,34 +45,24 @@ async function WrappedCardDescription() {
   );
 }
 
-function CardPosts() {
+function CardPostsSuspense() {
   return (
-    <Suspense
-      fallback={
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>Ultimos Posts Publicados</CardTitle>
-            <CardDescription>
-              <Skeleton />
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <RecentPosts />
-          </CardContent>
-        </Card>
-      }
-    >
+    <>
       <Card className="col-span-3">
         <CardHeader>
           <CardTitle>Ultimos Posts Publicados</CardTitle>
-          <WrappedCardDescription />
+          <CardDescription>
+            <Suspense fallback={<Skeleton />}>
+              <WrappedCardDescription />
+            </Suspense>
+          </CardDescription>
         </CardHeader>
         <CardContent>
-          <RecentPosts />
+          <RecentPostsSuspense />
         </CardContent>
       </Card>
-    </Suspense>
+    </>
   );
 }
 
-export default CardPosts;
+export default CardPostsSuspense;

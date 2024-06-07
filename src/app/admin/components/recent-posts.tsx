@@ -43,7 +43,7 @@ const getRecentsPosts = async () => {
   }
 };
 
-async function RecentPostsSuspense() {
+async function RecentPosts() {
   const posts = await getRecentsPosts();
 
   return (
@@ -97,7 +97,7 @@ async function RecentPostsSuspense() {
   );
 }
 
-const RecentPosts = () => {
+const RecentPostsSuspense = () => {
   return (
     <Suspense
       fallback={
@@ -132,9 +132,9 @@ const RecentPosts = () => {
         </div>
       }
     >
-      <RecentPostsSuspense />
+      <RecentPosts />
     </Suspense>
   );
 };
 
-export default RecentPosts;
+export default RecentPostsSuspense;
