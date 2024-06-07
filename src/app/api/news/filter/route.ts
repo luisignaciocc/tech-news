@@ -70,6 +70,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         await prisma.news.update({
           data: {
             deletedAt: new Date(),
+            deletionReason: `Similar to ${similarNews[0].id} (${similarNews[0].similarity})`,
           },
           where: {
             id: article.id,
@@ -82,6 +83,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           await prisma.news.update({
             data: {
               deletedAt: new Date(),
+              deletionReason: `Contains banned word`,
             },
             where: {
               id: article.id,
@@ -170,6 +172,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               await prisma.news.update({
                 data: {
                   deletedAt: new Date(),
+                  deletionReason: `Not detected as related to technology`,
                 },
                 where: {
                   id: article.id,

@@ -62,6 +62,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               },
               data: {
                 deletedAt: new Date(),
+                deletionReason: "Empty article",
               },
             });
 
@@ -96,6 +97,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             },
             data: {
               deletedAt: new Date(),
+              deletionReason: "Error parsing the article",
             },
           });
 

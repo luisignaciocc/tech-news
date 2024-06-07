@@ -88,6 +88,7 @@ export const webhook = async (req: Request) => {
         await prisma.news.update({
           data: {
             deletedAt: new Date(),
+            deletionReason: `Not approved by *${callbackQuery.from.username}*`,
           },
           where: {
             id: id,

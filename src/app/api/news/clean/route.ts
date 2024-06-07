@@ -55,6 +55,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             },
             data: {
               deletedAt: new Date(),
+              deletionReason: "Not approved in time (24h - Telegram)",
             },
           }),
           post.telegramChatId &&

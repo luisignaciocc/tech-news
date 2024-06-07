@@ -44,6 +44,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
           data: {
             deletedAt: new Date(),
+            deletionReason: "Empty body from the original news fetch",
           },
         });
         continue;
@@ -72,6 +73,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           },
           data: {
             deletedAt: new Date(),
+            deletionReason: "Error vectorizing news",
           },
         });
         continue;

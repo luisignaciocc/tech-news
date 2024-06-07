@@ -62,6 +62,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               },
               data: {
                 deletedAt: new Date(),
+                deletionReason: "Error fetching the news link to get the image",
               },
             });
             return false;
@@ -90,6 +91,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                   },
                   data: {
                     deletedAt: new Date(),
+                    deletionReason: "No image found in the news link",
                   },
                 });
                 return false;
@@ -118,6 +120,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             },
             data: {
               deletedAt: new Date(),
+              deletionReason: "Error fetching the news link to get the image",
             },
           });
           return false;
