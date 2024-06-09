@@ -172,7 +172,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               await prisma.news.update({
                 data: {
                   deletedAt: new Date(),
-                  deletionReason: `Not detected as related to technology, answer: ${answer}`,
+                  deletionReason: `Not detected as related to technology (${answer})`,
                 },
                 where: {
                   id: article.id,
