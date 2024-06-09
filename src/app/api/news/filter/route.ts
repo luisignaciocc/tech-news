@@ -102,7 +102,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               },
             });
           } else {
-            let answer = "no";
+            let answer = "yes";
             try {
               const completion = await openai.chat.completions.create({
                 model: "gpt-3.5-turbo",
@@ -112,7 +112,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                     content: `
                       You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
                       Do not consider reviews, opinion pieces, historical articles, deals, guides and tutorials,  or articles related to movies, series, comics, or TV as technology news.
-                      Respond with "yes" or "no" only.
+                      Respond with "yes" if it is related to technology, otherwise respond with "no" and explain the reasons why it is not considered a technology news.
                     `,
                   },
                   {
@@ -129,7 +129,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               });
               answer =
                 completion.choices[0].message.content?.trim().toLowerCase() ||
-                "no";
+                "yes";
             } catch (error: unknown) {
               console.error(error);
             }
@@ -172,7 +172,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               await prisma.news.update({
                 data: {
                   deletedAt: new Date(),
-                  deletionReason: `Not detected as related to technology`,
+                  deletionReason: `Not detected as related to technology, answer: ${answer}`,
                 },
                 where: {
                   id: article.id,
