@@ -3,9 +3,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
-import { countPostsLastSevenDays, countTotalPosts } from "../utils/prisma";
+import { countPostsLastThirtyDays, countTotalPosts } from "../utils/prisma";
 
-export function PostsLastSevenDaysSkeleton() {
+export function PostsLastThirtyDaysSkeleton() {
   return (
     <Fragment>
       <div className="text-2xl font-bold">
@@ -18,13 +18,13 @@ export function PostsLastSevenDaysSkeleton() {
   );
 }
 
-export async function PostsLastSevenDays() {
-  const postsLastSevenDays = await countPostsLastSevenDays();
+export async function PostsLastThirtyDays() {
+  const postsLastThirtyDays = await countPostsLastThirtyDays();
   const totalPosts = await countTotalPosts();
 
   const publishedPercentage = () => {
     try {
-      const percentage = ((postsLastSevenDays / totalPosts) * 100).toFixed(2);
+      const percentage = ((postsLastThirtyDays / totalPosts) * 100).toFixed(2);
 
       return percentage;
     } catch (error) {
@@ -36,7 +36,7 @@ export async function PostsLastSevenDays() {
 
   return (
     <Fragment>
-      <div className="text-2xl font-bold">{postsLastSevenDays}</div>
+      <div className="text-2xl font-bold">{postsLastThirtyDays}</div>
       <p className="text-xs text-muted-foreground">{percentage}%</p>
     </Fragment>
   );
