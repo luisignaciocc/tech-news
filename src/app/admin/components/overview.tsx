@@ -1,41 +1,53 @@
 "use client";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
+const generateSkeletonData = () => {
+  const data = [];
+  for (let i = 0; i < 15; i++) {
+    data.push({
+      height: `${Math.floor(Math.random() * 310)}px`,
+      width: "34px",
+    });
+  }
+  return data;
+};
+
 export function OverviewSkeleton() {
+  const barData = generateSkeletonData();
+
   return (
-    <Fragment>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column-reverse",
-          alignItems: "center",
-          height: "350px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-            marginBottom: "20px",
-          }}
-        >
-          {Array.from({ length: 15 }).map((_, index) => (
+    <div className="container mx-auto ml-5">
+      <div className="flex justify-center items-end space-x-2">
+        <div className="flex flex-col items-end mr-2">
+          <Skeleton className="mb-10" width={20} height={20} />
+          <Skeleton className="mb-10" width={20} height={20} />
+          <Skeleton className="mb-10" width={20} height={20} />
+          <Skeleton className="mb-10" width={20} height={20} />
+          <Skeleton className="mb-16" width={20} height={20} />
+        </div>
+        {barData.map((bar, index) => (
+          <div key={index} className="flex flex-col items-center">
             <Skeleton
               key={index}
-              count={1}
-              height={Math.floor(Math.random() * 200) + 50}
-              width={40}
+              className="w-10 mb-2"
+              style={{ height: bar.height, width: bar.width }}
             />
-          ))}
-        </div>
+            <div
+              className="transform -skewX-25 rotate-45"
+              style={{ transformOrigin: "top center" }}
+            >
+              <Skeleton
+                className="w-10"
+                style={{ height: "60px", width: "12px" }}
+              />
+            </div>
+          </div>
+        ))}
       </div>
-    </Fragment>
+    </div>
   );
 }
 

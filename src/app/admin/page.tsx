@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import { MainNav } from "@/app/admin/components/main-nav";
 import { Search } from "@/app/admin/components/search";
@@ -9,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { OverviewSkeleton } from "./components/overview";
 import { OverviewContainer } from "./components/overview-container";
 import RecentPostsCard from "./components/recent-posts-card";
 
@@ -163,7 +165,10 @@ export default function DashboardPage() {
                   <CardTitle>Posts</CardTitle>
                 </CardHeader>
                 <CardContent className="pl-2">
-                  <OverviewContainer />
+                  <Suspense fallback={<OverviewSkeleton />}>
+                    <OverviewContainer />
+                  </Suspense>
+                  {/* <OverviewSkeleton /> */}
                 </CardContent>
               </Card>
               <div className="col-span-3">
