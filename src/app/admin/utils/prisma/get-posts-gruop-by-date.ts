@@ -1,9 +1,8 @@
-"use server";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function getPostDate() {
+export async function getPostsGroupByDate() {
   try {
     const data = await prisma.post.groupBy({
       by: ["createdAt"],

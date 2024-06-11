@@ -1,11 +1,10 @@
 "use server";
 
+import { getPostsGroupByDate } from "../utils/prisma/get-posts-gruop-by-date";
 import { Overview } from "./overview";
-import { getPostDate } from "./post-date";
 
 export async function OverviewContainer() {
-  await new Promise((resolve) => setTimeout(resolve, 3000));
-  const data = await getPostDate();
+  const data = await getPostsGroupByDate();
 
   return <Overview data={data} />;
 }
