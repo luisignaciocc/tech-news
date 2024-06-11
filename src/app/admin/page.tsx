@@ -160,17 +160,9 @@ export default function DashboardPage() {
               </Card>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>Posts</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <Suspense fallback={<OverviewSkeleton />}>
-                    <OverviewContainer />
-                  </Suspense>
-                  {/* <OverviewSkeleton /> */}
-                </CardContent>
-              </Card>
+              <Suspense fallback={<OverviewSkeleton />}>
+                <OverviewContainer />
+              </Suspense>
               <div className="col-span-3">
                 <RecentPostsCard />
               </div>
