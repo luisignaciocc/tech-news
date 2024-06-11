@@ -1,6 +1,6 @@
 "use server";
 
-import { getPostsGroupByDate } from "../utils/prisma/get-posts-gruop-by-date";
+import { getPostsGroupByDate } from "../utils/prisma";
 import { Overview } from "./overview";
 
 export async function OverviewContainer() {
