@@ -1,7 +1,7 @@
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 import { MainNav } from "@/app/admin/components/main-nav";
-import { Overview } from "@/app/admin/components/overview";
 import { Search } from "@/app/admin/components/search";
 import TeamSwitcher from "@/app/admin/components/team-switcher";
 import { UserNav } from "@/app/admin/components/user-nav";
@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { OverviewSkeleton } from "./components/overview";
+import { OverviewContainer } from "./components/overview-container";
 import RecentPostsCard from "./components/recent-posts-card";
 
 export const dynamic = "force-dynamic";
@@ -158,14 +160,9 @@ export default function DashboardPage() {
               </Card>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Card className="col-span-4">
-                <CardHeader>
-                  <CardTitle>Overview</CardTitle>
-                </CardHeader>
-                <CardContent className="pl-2">
-                  <Overview />
-                </CardContent>
-              </Card>
+              <Suspense fallback={<OverviewSkeleton />}>
+                <OverviewContainer />
+              </Suspense>
               <div className="col-span-3">
                 <RecentPostsCard />
               </div>
