@@ -5,7 +5,7 @@ import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 
 import Spinner from "@/components/spinner";
 
-export function PostsCountGraphSkeleton() {
+export function CountGraphSkeleton() {
   return (
     <div className="w-full flex items-center justify-center h-full">
       <Spinner className="h-24 w-24" />
@@ -13,7 +13,7 @@ export function PostsCountGraphSkeleton() {
   );
 }
 
-export default function PostsCountGraph({
+export function CountGraph({
   data,
 }: {
   data: { name: string; total: number }[];

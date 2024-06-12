@@ -1,47 +1,12 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
 import { DateTimeFormatter } from "@/components/date-formatter";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const getRecentsPosts = async () => {
-  try {
-    const prisma = new PrismaClient();
-
-    const posts = await prisma.post.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
-      take: 5,
-      select: {
-        id: true,
-        createdAt: true,
-        title: true,
-        slug: true,
-        coverImage: true,
-        new: {
-          select: {
-            id: true,
-            url: true,
-            source: {
-              select: {
-                id: true,
-                url: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    return posts;
-  } catch (error) {
-    return [];
-  }
-};
+import { getRecentsPosts } from "../utils/prisma";
 
 export const RecentPostsLoadingSkeleton = () => {
   return (

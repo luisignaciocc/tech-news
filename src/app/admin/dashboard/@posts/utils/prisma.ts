@@ -2,6 +2,42 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+export const getRecentsPosts = async () => {
+  try {
+    const prisma = new PrismaClient();
+
+    const posts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 5,
+      select: {
+        id: true,
+        createdAt: true,
+        title: true,
+        slug: true,
+        coverImage: true,
+        new: {
+          select: {
+            id: true,
+            url: true,
+            source: {
+              select: {
+                id: true,
+                url: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return posts;
+  } catch (error) {
+    return [];
+  }
+};
+
 export async function getPostsGroupByDate() {
   try {
     const data = await prisma.post.groupBy({
@@ -46,7 +82,7 @@ export async function getPostsGroupByDate() {
   }
 }
 
-export async function countLastDays(
+export async function countPostsLastDays(
   days: number,
 ): Promise<{ count: number; percentage: number }> {
   try {

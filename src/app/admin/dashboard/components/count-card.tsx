@@ -17,13 +17,11 @@ export function CountCardLoadingSkeleton() {
 }
 
 async function Counter({
-  days,
   getCount,
 }: {
-  days: number;
-  getCount: (days: number) => Promise<{ count: number; percentage: number }>;
+  getCount: () => Promise<{ count: number; percentage: number }>;
 }) {
-  const { count, percentage } = await getCount(days);
+  const { count, percentage } = await getCount();
 
   return (
     <Fragment>
@@ -35,12 +33,10 @@ async function Counter({
 
 export async function CountCard({
   title,
-  days,
   getCount,
 }: {
   title: string;
-  days: number;
-  getCount: (days: number) => Promise<{ count: number; percentage: number }>;
+  getCount: () => Promise<{ count: number; percentage: number }>;
 }) {
   return (
     <Card>
@@ -49,7 +45,7 @@ export async function CountCard({
       </CardHeader>
       <CardContent>
         <Suspense fallback={<CountCardLoadingSkeleton />}>
-          <Counter days={days} getCount={getCount} />
+          <Counter getCount={getCount} />
         </Suspense>
       </CardContent>
     </Card>
