@@ -1,31 +1,20 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
 
 import { MainNav } from "@/app/admin/components/main-nav";
 import { Search } from "@/app/admin/components/search";
 import TeamSwitcher from "@/app/admin/components/team-switcher";
 import { UserNav } from "@/app/admin/components/user-nav";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
+import { CountCard } from "./components/count-card";
 import PostsCountCard from "./components/posts-count-card";
-import {
-  PostsLastDay,
-  PostsLastDaySkeleton,
-} from "./components/posts-last-day";
-import {
-  PostsLastNinetyDays,
-  PostsLastNinetyDaysSkeleton,
-} from "./components/posts-last-ninety-days";
-import {
-  PostsLastSevenDays,
-  PostsLastSevenDaysSkeleton,
-} from "./components/posts-last-seven-days";
-import {
-  PostsLastThirtyDays,
-  PostsLastThirtyDaysSkeleton,
-} from "./components/posts-last-thirty-days";
 import RecentPostsCard from "./components/recent-posts-card";
+import {
+  countPostsLastDay,
+  countPostsLastNinetyDays,
+  countPostsLastSevenDays,
+  countPostsLastThirtyDays,
+} from "./utils/prisma";
 
 export const dynamic = "force-dynamic";
 
@@ -66,54 +55,22 @@ export default function DashboardPage() {
           </TabsList>
           <TabsContent value="overview" className="space-y-4">
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Posts Publicados los Ultimos 7 Dias
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Suspense fallback={<PostsLastSevenDaysSkeleton />}>
-                    <PostsLastSevenDays />
-                  </Suspense>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Posts Publicados los Ultimos 30 Dias
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Suspense fallback={<PostsLastThirtyDaysSkeleton />}>
-                    <PostsLastThirtyDays />
-                  </Suspense>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Posts Publicados los Ultimos 90 Dias
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Suspense fallback={<PostsLastNinetyDaysSkeleton />}>
-                    <PostsLastNinetyDays />
-                  </Suspense>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Posts Publicados las Ultimas 24 Horas
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Suspense fallback={<PostsLastDaySkeleton />}>
-                    <PostsLastDay />
-                  </Suspense>
-                </CardContent>
-              </Card>
+              <CountCard
+                title="Publicados los Ultimos 7 Dias"
+                getCount={countPostsLastSevenDays}
+              />
+              <CountCard
+                title="Publicados los Ultimos 30 Dias"
+                getCount={countPostsLastThirtyDays}
+              />
+              <CountCard
+                title="Publicados los Ultimos 90 Dias"
+                getCount={countPostsLastNinetyDays}
+              />
+              <CountCard
+                title="Publicados las Ult. 24 Horas"
+                getCount={countPostsLastDay}
+              />
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
               <div className="col-span-4 h-full">
