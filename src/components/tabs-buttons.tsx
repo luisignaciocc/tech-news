@@ -9,7 +9,7 @@ interface TabListProps {
   tabs: Tab[];
 }
 
-function TabList({ tabs }: TabListProps) {
+function TabsButtons({ tabs }: TabListProps) {
   return (
     <TabsList>
       {tabs.map((tab) => (
@@ -21,4 +21,4 @@ function TabList({ tabs }: TabListProps) {
   );
 }
 
-export default TabList;
+export default TabsButtons;

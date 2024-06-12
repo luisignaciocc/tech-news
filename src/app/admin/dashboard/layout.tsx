@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 
+import TabsButtons from "@/components/tabs-buttons";
 import { Tabs } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
-
-import TabList from "./components/dashboard-tab-list";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -23,7 +22,7 @@ export default function GroupedLayout({
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
       </div>
       <Tabs defaultValue="posts" className="space-y-4">
-        <TabList
+        <TabsButtons
           tabs={[
             { value: "posts", label: "Posts" },
             { value: "news", label: "News" },
