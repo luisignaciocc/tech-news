@@ -1,8 +1,9 @@
-import { Fragment } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import { countPostsLastNinetyDays, countTotalPosts } from "../utils/prisma";
+import { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
+
+import { countPostsLastNinetyDays, countTotalPosts } from "../utils/prisma";
 
 export function PostsLastNinetyDaysSkeleton() {
   return (
