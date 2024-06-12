@@ -46,76 +46,38 @@ export async function getPostsGroupByDate() {
   }
 }
 
-export async function countTotalPosts() {
+export async function countLastDays(
+  days: number,
+): Promise<{ count: number; percentage: number }> {
   try {
-    const postsCount = await prisma.post.count();
-
-    return postsCount;
-  } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastSevenDays() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+    const [currentPeriod, previousPeriod] = await Promise.all([
+      prisma.post.count({
+        where: {
+          createdAt: {
+            gte: new Date(Date.now() - days * 24 * 60 * 60 * 1000),
+          },
         },
-      },
-    });
-
-    return postsCount;
-  } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastThirtyDays() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+      }),
+      prisma.post.count({
+        where: {
+          createdAt: {
+            gte: new Date(Date.now() - days * 2 * 24 * 60 * 60 * 1000),
+            lt: new Date(Date.now() - days * 24 * 60 * 60 * 1000),
+          },
         },
-      },
-    });
+      }),
+    ]);
 
-    return postsCount;
+    let percentage = 0;
+    if (previousPeriod > 0) {
+      percentage = ((currentPeriod - previousPeriod) / previousPeriod) * 100;
+    }
+
+    return {
+      count: currentPeriod,
+      percentage: parseFloat(percentage.toFixed(2)),
+    };
   } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastNinetyDays() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-        },
-      },
-    });
-
-    return postsCount;
-  } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastDay() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
-        },
-      },
-    });
-
-    return postsCount;
-  } catch (error) {
-    return 0;
+    return { count: 0, percentage: 0 };
   }
 }

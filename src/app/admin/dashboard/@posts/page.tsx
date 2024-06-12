@@ -1,11 +1,6 @@
 import { Fragment } from "react";
 
-import {
-  countPostsLastDay,
-  countPostsLastNinetyDays,
-  countPostsLastSevenDays,
-  countPostsLastThirtyDays,
-} from "@/app/admin/utils/prisma";
+import { countLastDays } from "@/app/admin/utils/prisma";
 
 import { CountCard } from "./components/count-card";
 import PostsCountCard from "./components/posts-count-card";
@@ -17,19 +12,23 @@ function PostsPage() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CountCard
           title="Publicados los Ultimos 7 Dias"
-          getCount={countPostsLastSevenDays}
+          days={7}
+          getCount={countLastDays}
         />
         <CountCard
           title="Publicados los Ultimos 30 Dias"
-          getCount={countPostsLastThirtyDays}
+          days={30}
+          getCount={countLastDays}
         />
         <CountCard
           title="Publicados los Ultimos 90 Dias"
-          getCount={countPostsLastNinetyDays}
+          days={90}
+          getCount={countLastDays}
         />
         <CountCard
           title="Publicados las Ult. 24 Horas"
-          getCount={countPostsLastDay}
+          days={1}
+          getCount={countLastDays}
         />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
