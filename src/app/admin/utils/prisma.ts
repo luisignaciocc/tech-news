@@ -45,3 +45,77 @@ export async function getPostsGroupByDate() {
     throw error;
   }
 }
+
+export async function countTotalPosts() {
+  try {
+    const postsCount = await prisma.post.count();
+
+    return postsCount;
+  } catch (error) {
+    return 0;
+  }
+}
+
+export async function countPostsLastSevenDays() {
+  try {
+    const postsCount = await prisma.post.count({
+      where: {
+        createdAt: {
+          gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        },
+      },
+    });
+
+    return postsCount;
+  } catch (error) {
+    return 0;
+  }
+}
+
+export async function countPostsLastThirtyDays() {
+  try {
+    const postsCount = await prisma.post.count({
+      where: {
+        createdAt: {
+          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        },
+      },
+    });
+
+    return postsCount;
+  } catch (error) {
+    return 0;
+  }
+}
+
+export async function countPostsLastNinetyDays() {
+  try {
+    const postsCount = await prisma.post.count({
+      where: {
+        createdAt: {
+          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        },
+      },
+    });
+
+    return postsCount;
+  } catch (error) {
+    return 0;
+  }
+}
+
+export async function countPostsLastDay() {
+  try {
+    const postsCount = await prisma.post.count({
+      where: {
+        createdAt: {
+          gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
+        },
+      },
+    });
+
+    return postsCount;
+  } catch (error) {
+    return 0;
+  }
+}
