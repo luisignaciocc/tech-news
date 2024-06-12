@@ -1,9 +1,8 @@
 import { Fragment, Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { countTotalPosts } from "@/app/admin/utils/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { countTotalPosts } from "../utils/prisma";
 
 export function CountCardLoadingSkeleton() {
   return (

@@ -2,9 +2,9 @@
 
 import { Suspense } from "react";
 
+import { getPostsGroupByDate } from "@/app/admin/utils/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { getPostsGroupByDate } from "../utils/prisma";
 import PostsCountGraph, { PostsCountGraphSkeleton } from "./posts-count-graph";
 
 async function GraphWrapper() {

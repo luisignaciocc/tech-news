@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import {
   RecentPosts,
   RecentPostsLoadingSkeleton,
-} from "@/app/admin/components/recent-posts-list";
+} from "@/app/admin/dashboard/@posts/components/recent-posts-list";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 function RecentPostsCard() {
