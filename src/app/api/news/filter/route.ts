@@ -30,7 +30,6 @@ export async function POST(request: Request): Promise<NextResponse> {
         coverImage: {
           not: null,
         },
-        filtered: false,
         deletedAt: null,
         sentToApproval: false,
       },

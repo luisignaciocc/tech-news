@@ -36,7 +36,6 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const news = await prisma.news.findMany({
       where: {
-        filtered: false,
         vectorized: true,
         coverImage: null,
         deletedAt: null,

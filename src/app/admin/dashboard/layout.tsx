@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Dashboard Administrativo.",
 };
 
-export default function GroupedLayout({
+export default function Layout({
   posts,
   news,
 }: Readonly<{

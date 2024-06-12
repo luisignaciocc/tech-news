@@ -7,12 +7,20 @@ import {
   RecentPosts,
   RecentPostsLoadingSkeleton,
 } from "./components/recent-posts-list";
-import { countPostsLastDays, getPostsGroupByDate } from "./utils/prisma";
+import {
+  countPostsLastDays,
+  countPostsToPublish,
+  getPostsGroupByDate,
+} from "./utils/prisma";
 
-function PostsPage() {
+function Page() {
   return (
     <Fragment>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <CountCard
+          title="En cola para publicar"
+          getCount={() => countPostsToPublish()}
+        />
         <CountCard
           title="Publicados las Ult. 24 Horas"
           getCount={() => countPostsLastDays(1)}
@@ -24,10 +32,6 @@ function PostsPage() {
         <CountCard
           title="Publicados los Ultimos 30 Dias"
           getCount={() => countPostsLastDays(30)}
-        />
-        <CountCard
-          title="Publicados los Ultimos 90 Dias"
-          getCount={() => countPostsLastDays(90)}
         />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
@@ -47,4 +51,4 @@ function PostsPage() {
   );
 }
 
-export default PostsPage;
+export default Page;

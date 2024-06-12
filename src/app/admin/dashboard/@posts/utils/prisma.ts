@@ -4,8 +4,6 @@ const prisma = new PrismaClient();
 
 export const getRecentsPosts = async () => {
   try {
-    const prisma = new PrismaClient();
-
     const posts = await prisma.post.findMany({
       orderBy: {
         createdAt: "desc",
@@ -79,6 +77,29 @@ export async function getPostsGroupByDate() {
   } catch (error) {
     console.error(error);
     throw error;
+  }
+}
+
+export async function countPostsToPublish() {
+  try {
+    const count = await prisma.news.count({
+      where: {
+        filtered: true,
+        posts: {
+          none: {},
+        },
+      },
+    });
+
+    return {
+      count,
+      percentage: 0,
+    };
+  } catch (error) {
+    return {
+      count: 0,
+      percentage: 0,
+    };
   }
 }
 

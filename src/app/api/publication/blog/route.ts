@@ -25,10 +25,6 @@ export async function POST(request: Request): Promise<NextResponse> {
       prisma.news.findFirst({
         where: {
           filtered: true,
-          deletedAt: null,
-          coverImage: {
-            not: null,
-          },
           posts: {
             none: {},
           },
