@@ -1,7 +1,14 @@
+import { Metadata } from "next";
+
 import { Tabs } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 
 import TabList from "./components/dashboard-tab-list";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Dashboard Administrativo.",
+};
 
 export default function GroupedLayout({
   posts,
