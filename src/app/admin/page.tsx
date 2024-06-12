@@ -8,8 +8,15 @@ import { UserNav } from "@/app/admin/components/user-nav";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { OverviewSkeleton } from "./components/overview";
-import { OverviewContainer } from "./components/overview-container";
+import PostsCountCard from "./components/posts-count-card";
+import {
+  PostsLastDay,
+  PostsLastDaySkeleton,
+} from "./components/posts-last-day";
+import {
+  PostsLastNinetyDays,
+  PostsLastNinetyDaysSkeleton,
+} from "./components/posts-last-ninety-days";
 import {
   PostsLastSevenDays,
   PostsLastSevenDaysSkeleton,
@@ -19,14 +26,6 @@ import {
   PostsLastThirtyDaysSkeleton,
 } from "./components/posts-last-thirty-days";
 import RecentPostsCard from "./components/recent-posts-card";
-import {
-  PostsLastNinetyDays,
-  PostsLastNinetyDaysSkeleton,
-} from "./components/posts-last-ninety-days";
-import {
-  PostsLastDay,
-  PostsLastDaySkeleton,
-} from "./components/posts-last-day";
 
 export const dynamic = "force-dynamic";
 
@@ -117,9 +116,9 @@ export default function DashboardPage() {
               </Card>
             </div>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-              <Suspense fallback={<OverviewSkeleton />}>
-                <OverviewContainer />
-              </Suspense>
+              <div className="col-span-4 h-full">
+                <PostsCountCard />
+              </div>
               <div className="col-span-3">
                 <RecentPostsCard />
               </div>
