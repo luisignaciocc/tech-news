@@ -1,20 +1,20 @@
 import { Metadata } from "next";
 
-import { MainNav } from "@/app/admin/components/main-nav";
-import { Search } from "@/app/admin/components/search";
-import TeamSwitcher from "@/app/admin/components/team-switcher";
-import { UserNav } from "@/app/admin/components/user-nav";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { CountCard } from "./components/count-card";
-import PostsCountCard from "./components/posts-count-card";
-import RecentPostsCard from "./components/recent-posts-card";
+import { MainNav } from "@/app/admin/dashboard/components/main-nav";
+import { Search } from "@/app/admin/dashboard/components/search";
+import TeamSwitcher from "@/app/admin/dashboard/components/team-switcher";
+import { UserNav } from "@/app/admin/dashboard/components/user-nav";
 import {
   countPostsLastDay,
   countPostsLastNinetyDays,
   countPostsLastSevenDays,
   countPostsLastThirtyDays,
-} from "./utils/prisma";
+} from "@/app/admin/utils/prisma";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+import { CountCard } from "./components/count-card";
+import PostsCountCard from "./components/posts-count-card";
+import RecentPostsCard from "./components/recent-posts-card";
 
 export const dynamic = "force-dynamic";
 
