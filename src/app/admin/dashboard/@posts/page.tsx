@@ -7,9 +7,9 @@ import {
   countPostsLastThirtyDays,
 } from "@/app/admin/utils/prisma";
 
-import { CountCard } from "../components/count-card";
-import PostsCountCard from "../components/posts-count-card";
-import RecentPostsCard from "../components/recent-posts-card";
+import { CountCard } from "./components/count-card";
+import PostsCountCard from "./components/posts-count-card";
+import RecentPostsCard from "./components/recent-posts-card";
 
 function PostsPage() {
   return (
