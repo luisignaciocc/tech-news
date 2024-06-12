@@ -1,6 +1,5 @@
 import { Metadata } from "next";
-
-import PostsPage from "./@posts/page";
+import { Fragment } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -10,5 +9,5 @@ export const metadata: Metadata = {
 };
 
 export default function DashboardPage() {
-  return <PostsPage />;
+  return <Fragment />;
 }

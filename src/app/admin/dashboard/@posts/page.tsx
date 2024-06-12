@@ -1,10 +1,11 @@
+import { Fragment } from "react";
+
 import {
   countPostsLastDay,
   countPostsLastNinetyDays,
   countPostsLastSevenDays,
   countPostsLastThirtyDays,
 } from "@/app/admin/utils/prisma";
-import { TabsContent } from "@/components/ui/tabs";
 
 import { CountCard } from "../components/count-card";
 import PostsCountCard from "../components/posts-count-card";
@@ -12,7 +13,7 @@ import RecentPostsCard from "../components/recent-posts-card";
 
 function PostsPage() {
   return (
-    <TabsContent value="Posts" className="space-y-4">
+    <Fragment>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CountCard
           title="Publicados los Ultimos 7 Dias"
@@ -39,7 +40,7 @@ function PostsPage() {
           <RecentPostsCard />
         </div>
       </div>
-    </TabsContent>
+    </Fragment>
   );
 }
 
