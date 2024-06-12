@@ -1,14 +1,24 @@
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-function DashboardTabList() {
+interface Tab {
+  value: string;
+  label: string;
+}
+
+interface TabListProps {
+  tabs: Tab[];
+}
+
+function TabList({ tabs }: TabListProps) {
   return (
     <TabsList>
-      <TabsTrigger value="posts">Posts</TabsTrigger>
-      <TabsTrigger value="news">News</TabsTrigger>
-      <TabsTrigger value="reports">Reports</TabsTrigger>
-      <TabsTrigger value="notifications">Notifications</TabsTrigger>
+      {tabs.map((tab) => (
+        <TabsTrigger key={tab.value} value={tab.value}>
+          {tab.label}
+        </TabsTrigger>
+      ))}
     </TabsList>
   );
 }
 
-export default DashboardTabList;
+export default TabList;

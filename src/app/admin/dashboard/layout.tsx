@@ -1,7 +1,7 @@
 import { Tabs } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 
-import DashboardTabList from "./components/dashboard-tab-list";
+import TabList from "./components/dashboard-tab-list";
 
 export default function GroupedLayout({
   posts,
@@ -16,7 +16,12 @@ export default function GroupedLayout({
         <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
       </div>
       <Tabs defaultValue="posts" className="space-y-4">
-        <DashboardTabList />
+        <TabList
+          tabs={[
+            { value: "posts", label: "Posts" },
+            { value: "news", label: "News" },
+          ]}
+        />
         <TabsContent value="posts" className="space-y-4">
           {posts}
         </TabsContent>
