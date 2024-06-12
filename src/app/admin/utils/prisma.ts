@@ -46,40 +46,27 @@ export async function getPostsGroupByDate() {
   }
 }
 
-export async function countPostsLastDays(
+export async function countLastDays(
   days: number,
 ): Promise<{ count: number; percentage: number }> {
   try {
-    const currentPeriodStart =
-      days === 1
-        ? new Date(Date.now() - 24 * 60 * 60 * 1000)
-        : new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-
-    const currentPeriod = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: currentPeriodStart,
+    const [currentPeriod, previousPeriod] = await Promise.all([
+      prisma.post.count({
+        where: {
+          createdAt: {
+            gte: new Date(Date.now() - days * 24 * 60 * 60 * 1000),
+          },
         },
-      },
-    });
-
-    const previousPeriodStart =
-      days === 1
-        ? new Date(Date.now() - 24 * 60 * 60 * 1000 * 2)
-        : new Date(Date.now() - days * 2 * 24 * 60 * 60 * 1000);
-    const previousPeriodEnd =
-      days === 1
-        ? new Date(Date.now() - 24 * 60 * 60 * 1000)
-        : new Date(Date.now() - days * 24 * 60 * 60 * 1000);
-
-    const previousPeriod = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: previousPeriodStart,
-          lt: previousPeriodEnd,
+      }),
+      prisma.post.count({
+        where: {
+          createdAt: {
+            gte: new Date(Date.now() - days * 2 * 24 * 60 * 60 * 1000),
+            lt: new Date(Date.now() - days * 24 * 60 * 60 * 1000),
+          },
         },
-      },
-    });
+      }),
+    ]);
 
     let percentage = 0;
     if (previousPeriod > 0) {
