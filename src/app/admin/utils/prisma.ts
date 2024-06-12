@@ -56,60 +56,15 @@ export async function countTotalPosts() {
   }
 }
 
-export async function countPostsLastSevenDays() {
+export async function countPostsLastDays(days: number) {
   try {
     const postsCount = await prisma.post.count({
       where: {
         createdAt: {
-          gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
-        },
-      },
-    });
-
-    return postsCount;
-  } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastThirtyDays() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-        },
-      },
-    });
-
-    return postsCount;
-  } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastNinetyDays() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
-        },
-      },
-    });
-
-    return postsCount;
-  } catch (error) {
-    return 0;
-  }
-}
-
-export async function countPostsLastDay() {
-  try {
-    const postsCount = await prisma.post.count({
-      where: {
-        createdAt: {
-          gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
+          gte:
+            days === 1
+              ? new Date(Date.now() - 24 * 60 * 60 * 1000)
+              : new Date(Date.now() - days * 24 * 60 * 60 * 1000),
         },
       },
     });

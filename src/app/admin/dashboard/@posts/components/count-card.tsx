@@ -2,6 +2,7 @@ import { Fragment, Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { countTotalPosts } from "@/app/admin/utils/prisma";
+import { countPostsLastDays } from "@/app/admin/utils/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CountCardLoadingSkeleton() {
@@ -17,10 +18,10 @@ export function CountCardLoadingSkeleton() {
   );
 }
 
-async function Counter({ getCount }: { getCount: () => Promise<number> }) {
+async function Counter({ days }: { days: number }) {
   const [totalPosts, specificCount] = await Promise.all([
     countTotalPosts(),
-    getCount(),
+    countPostsLastDays(days),
   ]);
 
   const percentage = ((specificCount / totalPosts) * 100).toFixed(2);
@@ -35,10 +36,10 @@ async function Counter({ getCount }: { getCount: () => Promise<number> }) {
 
 export async function CountCard({
   title,
-  getCount,
+  days,
 }: {
   title: string;
-  getCount: () => Promise<number>;
+  days: number;
 }) {
   return (
     <Card>
@@ -47,7 +48,7 @@ export async function CountCard({
       </CardHeader>
       <CardContent>
         <Suspense fallback={<CountCardLoadingSkeleton />}>
-          <Counter getCount={getCount} />
+          <Counter days={days} />
         </Suspense>
       </CardContent>
     </Card>
