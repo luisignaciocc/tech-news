@@ -1,14 +1,13 @@
 import { Fragment } from "react";
 
 import { CountCard } from "../components/count-card";
-import { CountGraphCard } from "../components/count-graph-card";
+import { CountDoubleGraphCard } from "../components/count-double-graph-card copy";
 import { RecentsTableCard } from "../components/recent-table-card";
 import {
   RecentNews,
   RecentNewsLoadingSkeleton,
 } from "./components/recent-news-list";
 import {
-  getCollectedNews,
   getCollectedNewsGroupByDate,
   getLastDayNewsStats,
   getValidatedNews,
@@ -75,12 +74,6 @@ function Page() {
         />
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <div className="col-span-4 h-full">
-          <CountGraphCard
-            title="Noticias Válidas"
-            getData={getValidatedNewsGroupByDate}
-          />
-        </div>
         <div className="col-span-3">
           <RecentsTableCard
             title="Noticias Validadas para Publicar"
@@ -89,20 +82,12 @@ function Page() {
             <RecentNews k="valid" getData={getValidatedNews} />
           </RecentsTableCard>
         </div>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-        <div className="col-span-3">
-          <RecentsTableCard
-            title="Ultimas Noticias Colectadas"
-            fallback={<RecentNewsLoadingSkeleton />}
-          >
-            <RecentNews k="collected" getData={getCollectedNews} />
-          </RecentsTableCard>
-        </div>
         <div className="col-span-4 h-full">
-          <CountGraphCard
-            title="Noticias Colectadas"
-            getData={getCollectedNewsGroupByDate}
+          <CountDoubleGraphCard
+            title="Noticias Colectadas / Validas por Fecha"
+            getData1={getCollectedNewsGroupByDate}
+            getData2={getValidatedNewsGroupByDate}
+            dataKeys={["Colectadas", "Validadas"]}
           />
         </div>
       </div>

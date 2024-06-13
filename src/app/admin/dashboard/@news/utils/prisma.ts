@@ -76,7 +76,7 @@ export async function getCollectedNewsGroupByDate() {
       },
       where: {
         createdAt: {
-          gte: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+          gte: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
         },
       },
       orderBy: {
@@ -120,7 +120,7 @@ export async function getValidatedNewsGroupByDate() {
       },
       where: {
         createdAt: {
-          gte: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+          gte: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
         },
         filtered: true,
         deletedAt: null,
