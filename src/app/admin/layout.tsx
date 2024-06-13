@@ -1,3 +1,4 @@
+import SessionAuthProvider from "../components/session-auth-provider";
 import NavBar from "./components/nav-bar";
 
 export default function GroupedLayout({
@@ -7,8 +8,10 @@ export default function GroupedLayout({
 }>) {
   return (
     <div className="flex-col md:flex">
-      <NavBar />
-      {children}
+      <SessionAuthProvider>
+        <NavBar />
+        {children}
+      </SessionAuthProvider>
     </div>
   );
 }

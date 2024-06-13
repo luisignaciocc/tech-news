@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { MainNav } from "@/app/admin/components/main-nav";
-import { Search } from "@/app/admin/components/search";
 import { UserNav } from "@/app/admin/components/user-nav";
 
 function NavBar() {
@@ -14,7 +13,6 @@ function NavBar() {
         </Link>
         <MainNav className="mx-6 hidden md:block" />
         <div className="ml-auto flex items-center space-x-4">
-          <Search />
           <UserNav />
         </div>
       </div>
