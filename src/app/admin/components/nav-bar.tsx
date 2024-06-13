@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import { MainNav } from "@/app/admin/components/main-nav";
 import { Search } from "@/app/admin/components/search";
@@ -8,7 +9,9 @@ function NavBar() {
   return (
     <div className="border-b">
       <div className="flex h-16 items-center px-4">
-        <Image src="/icon.png" alt="Logo" width={50} height={50} priority />
+        <Link href={"/"}>
+          <Image src="/icon.png" alt="Logo" width={50} height={50} priority />
+        </Link>
         <MainNav className="mx-6 hidden md:block" />
         <div className="ml-auto flex items-center space-x-4">
           <Search />
