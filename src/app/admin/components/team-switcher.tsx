@@ -7,8 +7,6 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
-  CommandEmpty,
-  CommandInput,
   CommandItem,
   CommandList,
   CommandSeparator,
@@ -71,8 +69,6 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandList>
-              <CommandInput placeholder="Search link..." />
-              <CommandEmpty>No link found.</CommandEmpty>
               {links.map((link) => (
                 <CommandItem
                   key={link.href}
