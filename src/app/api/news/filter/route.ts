@@ -133,7 +133,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               console.error(error);
             }
 
-            if (answer === "yes") {
+            if (answer.startsWith("y")) {
               const bot = new TelegramBot(TOKEN);
               const message = await bot.sendMessage(
                 TELEGRAM_PERSONAL_CHAT_ID,
