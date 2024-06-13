@@ -24,13 +24,13 @@ export function MainNav({
         Validación
       </Link>
       <Link
-        href="/examples/dashboard"
+        href="/examples/products"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Products
       </Link>
       <Link
-        href="/examples/dashboard"
+        href="/examples/settings"
         className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
       >
         Settings

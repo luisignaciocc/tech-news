@@ -4,6 +4,8 @@ import Link from "next/link";
 import { MainNav } from "@/app/admin/components/main-nav";
 import { UserNav } from "@/app/admin/components/user-nav";
 
+import TeamSwitcher from "./team-switcher";
+
 function NavBar() {
   return (
     <div className="border-b">
@@ -11,7 +13,12 @@ function NavBar() {
         <Link href={"/"}>
           <Image src="/icon.png" alt="Logo" width={50} height={50} priority />
         </Link>
-        <MainNav className="mx-6 hidden md:block" />
+        <div className="md:hidden">
+          <TeamSwitcher />
+        </div>
+        <div className="hidden md:block">
+          <MainNav className="mx-6" />
+        </div>
         <div className="ml-auto flex items-center space-x-4">
           <UserNav />
         </div>
