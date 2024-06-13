@@ -99,8 +99,8 @@ dependencies:
     specifier: ^2.2.6
     version: 2.2.6
   openai:
-    specifier: ^4.50.0
-    version: 4.50.0
+    specifier: ^4.51.0
+    version: 4.51.0
   prisma:
     specifier: ^5.14.0
     version: 5.15.0
@@ -224,8 +224,8 @@ devDependencies:
     specifier: ^3.3.2
     version: 3.3.2
   prettier-plugin-tailwindcss:
-    specifier: ^0.6.3
-    version: 0.6.3(prettier@3.3.2)
+    specifier: ^0.6.4
+    version: 0.6.4(prettier@3.3.2)
   tailwindcss:
     specifier: ^3.4.3
     version: 3.4.4
@@ -5356,8 +5356,8 @@ packages:
       mimic-fn: 4.0.0
     dev: false
 
-  /openai@4.50.0:
-    resolution: {integrity: sha512-2ADkNIU6Q589oYHr5pn9k7SbUcrBTK9X0rIXrYqwMVSoqOj1yK9/1OO0ExaWsqOOpD7o58UmRjeKlx9gKAcuKQ==}
+  /openai@4.51.0:
+    resolution: {integrity: sha512-UKuWc3/qQyklqhHM8CbdXCv0Z0obap6T0ECdcO5oATQxAbKE5Ky3YCXFQY207z+eGG6ez4U9wvAcuMygxhmStg==}
     hasBin: true
     dependencies:
       '@types/node': 18.19.34
@@ -5629,8 +5629,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-tailwindcss@0.6.3(prettier@3.3.2):
-    resolution: {integrity: sha512-GeJ9bqXN4APAP0V5T2a1J/o6a50MWevEUCPWxijpdXFDQkBCoAfz4pQfv+YMXSqZ5GXLMDYio0mUOfrYL7gf4w==}
+  /prettier-plugin-tailwindcss@0.6.4(prettier@3.3.2):
+    resolution: {integrity: sha512-3vhbIvlKyAWPaw9bUr2cw6M1BGx2Oy9CCLJyv+nxEiBGCTcL69WcAz2IFMGqx8IXSzQCInGSo2ujAByg9poHLQ==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
