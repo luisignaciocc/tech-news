@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MainNav } from "@/app/admin/components/main-nav";
 import { UserNav } from "@/app/admin/components/user-nav";
 
-import MobileNav from "./team-switcher";
+import MobileNav from "./mobile-nav";
 
 function NavBar() {
   return (
