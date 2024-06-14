@@ -2,6 +2,7 @@
 
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -47,9 +48,13 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 interface TeamSwitcherProps extends PopoverTriggerProps {}
 
 export default function TeamSwitcher({ className }: TeamSwitcherProps) {
+  const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
-  const [selectedLink, setSelectedLink] = React.useState<Link>(links[0]);
+  const [selectedLink, setSelectedLink] = React.useState<Link>(() => {
+    const link = links.find((l) => pathname.startsWith(l.href));
+    return link || links[0];
+  });
 
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
