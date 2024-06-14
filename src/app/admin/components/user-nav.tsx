@@ -17,12 +17,25 @@ import {
 export function UserNav() {
   const { data: session } = useSession();
 
+  function getInitials(name: string) {
+    const words = name.split(" ");
+    let initials = "";
+    if (words.length === 1) {
+      initials = words[0].charAt(0).toUpperCase();
+    } else if (words.length >= 2) {
+      initials = (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+    }
+    return initials;
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>NT</AvatarFallback>
+            <AvatarFallback>
+              {session?.user?.name ? getInitials(session.user.name) : "NT"}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>

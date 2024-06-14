@@ -1,8 +1,7 @@
 "use client";
 
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -22,25 +21,25 @@ import { cn } from "@/lib/utils";
 
 import { linksArray } from "./links";
 
-type Link = (typeof linksArray)[number];
-
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
 >;
 
-interface TeamSwitcherProps extends PopoverTriggerProps {}
+interface MobileNavProps extends PopoverTriggerProps {}
 
-export default function TeamSwitcher({ className }: TeamSwitcherProps) {
+export default function MobileNav({ className }: MobileNavProps) {
+  const router = useRouter();
   const pathname = usePathname();
+
   const [open, setOpen] = React.useState(false);
-  const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
-  const [selectedLink, setSelectedLink] = React.useState<Link>(() => {
+  const [showNewLink, setShowNewLink] = React.useState(false);
+  const selectedLink = React.useMemo(() => {
     const link = linksArray.find((l) => pathname.startsWith(l.href));
     return link || linksArray[0];
-  });
+  }, [pathname, linksArray]);
 
   return (
-    <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
+    <Dialog open={showNewLink} onOpenChange={setShowNewLink}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -61,12 +60,12 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
                 <CommandItem
                   key={link.href}
                   onSelect={() => {
-                    setSelectedLink(link);
                     setOpen(false);
+                    router.push(link.href);
                   }}
                   className="text-sm"
                 >
-                  <Link href={link.href}>{link.label}</Link>
+                  {link.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
