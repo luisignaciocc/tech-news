@@ -1,5 +1,7 @@
+import DefaultTable from "../components/table";
+
 function PostsPage() {
-  return <div>PostsPage</div>;
+  return <DefaultTable />;
 }
 
 export default PostsPage;
