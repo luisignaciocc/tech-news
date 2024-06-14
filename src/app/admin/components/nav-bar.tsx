@@ -4,7 +4,7 @@ import Link from "next/link";
 import { MainNav } from "@/app/admin/components/main-nav";
 import { UserNav } from "@/app/admin/components/user-nav";
 
-import TeamSwitcher from "./team-switcher";
+import MobileNav from "./team-switcher";
 
 function NavBar() {
   return (
@@ -14,7 +14,7 @@ function NavBar() {
           <Image src="/icon.png" alt="Logo" width={50} height={50} priority />
         </Link>
         <div className="md:hidden">
-          <TeamSwitcher />
+          <MobileNav />
         </div>
         <div className="hidden md:block">
           <MainNav className="mx-6" />
