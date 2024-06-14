@@ -1,7 +1,6 @@
 "use client";
 
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 
@@ -22,8 +21,6 @@ import { cn } from "@/lib/utils";
 
 import { linksArray } from "./links";
 
-type Link = (typeof linksArray)[number];
-
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
 >;
@@ -36,10 +33,10 @@ export default function MobileNav({ className }: TeamSwitcherProps) {
 
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
-  const [selectedLink, setSelectedLink] = React.useState<Link>(() => {
+  const selectedLink = React.useMemo(() => {
     const link = linksArray.find((l) => pathname.startsWith(l.href));
     return link || linksArray[0];
-  });
+  }, [pathname, linksArray]);
 
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
@@ -63,7 +60,6 @@ export default function MobileNav({ className }: TeamSwitcherProps) {
                 <CommandItem
                   key={link.href}
                   onSelect={() => {
-                    setSelectedLink(link);
                     setOpen(false);
                     router.push(link.href);
                   }}
