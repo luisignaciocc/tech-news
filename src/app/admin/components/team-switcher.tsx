@@ -20,26 +20,9 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-const links = [
-  {
-    label: "Dashboard",
-    href: "/admin/dashboard/",
-  },
-  {
-    label: "Validación",
-    href: "/admin/validation",
-  },
-  {
-    label: "Products",
-    href: "/examples/products",
-  },
-  {
-    label: "Settings",
-    href: "/examples/settings",
-  },
-];
+import { linksArray } from "./links";
 
-type Link = (typeof links)[number];
+type Link = (typeof linksArray)[number];
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
@@ -52,8 +35,8 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
   const [selectedLink, setSelectedLink] = React.useState<Link>(() => {
-    const link = links.find((l) => pathname.startsWith(l.href));
-    return link || links[0];
+    const link = linksArray.find((l) => pathname.startsWith(l.href));
+    return link || linksArray[0];
   });
 
   return (
@@ -74,7 +57,7 @@ export default function TeamSwitcher({ className }: TeamSwitcherProps) {
         <PopoverContent className="w-[200px] p-0">
           <Command>
             <CommandList>
-              {links.map((link) => (
+              {linksArray.map((link) => (
                 <CommandItem
                   key={link.href}
                   onSelect={() => {

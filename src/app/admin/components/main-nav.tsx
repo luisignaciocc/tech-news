@@ -1,6 +1,6 @@
-import Link from "next/link";
-
 import { cn } from "@/lib/utils";
+
+import { Links } from "./links";
 
 export function MainNav({
   className,
@@ -11,30 +11,7 @@ export function MainNav({
       className={cn("flex items-center space-x-4 lg:space-x-6", className)}
       {...props}
     >
-      <Link
-        href="/admin/dashboard/"
-        className="text-sm font-medium transition-colors hover:text-primary"
-      >
-        Dashboard
-      </Link>
-      <Link
-        href="/admin/validation"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Validación
-      </Link>
-      <Link
-        href="/examples/products"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Products
-      </Link>
-      <Link
-        href="/examples/settings"
-        className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-      >
-        Settings
-      </Link>
+      <Links className="text-sm font-medium transition-colors hover:text-primary flex gap-4" />
     </nav>
   );
 }
