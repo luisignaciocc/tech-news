@@ -1,5 +1,5 @@
-function PublishPage() {
-  return <div>PublishPage</div>;
+function ToPublishPage() {
+  return <div>ToPublishPage</div>;
 }
 
-export default PublishPage;
+export default ToPublishPage;
