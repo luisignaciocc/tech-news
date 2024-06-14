@@ -4,6 +4,8 @@ import TabsButtons from "@/components/tabs-buttons";
 import { Tabs } from "@/components/ui/tabs";
 import { TabsContent } from "@/components/ui/tabs";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Dashboard Administrativo.",
