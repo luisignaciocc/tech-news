@@ -2,7 +2,7 @@
 
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,9 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 interface TeamSwitcherProps extends PopoverTriggerProps {}
 
 export default function MobileNav({ className }: TeamSwitcherProps) {
+  const router = useRouter();
   const pathname = usePathname();
+
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
   const [selectedLink, setSelectedLink] = React.useState<Link>(() => {
@@ -63,10 +65,11 @@ export default function MobileNav({ className }: TeamSwitcherProps) {
                   onSelect={() => {
                     setSelectedLink(link);
                     setOpen(false);
+                    router.push(link.href);
                   }}
                   className="text-sm"
                 >
-                  <Link href={link.href}>{link.label}</Link>
+                  {link.label}
                   <CheckIcon
                     className={cn(
                       "ml-auto h-4 w-4",
