@@ -1,5 +1,6 @@
 import { Metadata } from "next";
-import Link from "next/link";
+
+import TabLinks from "./components/tab-links";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -16,8 +17,7 @@ export default function Layout({
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Validación</h2>
       </div>
-      <Link href={"/admin/validation/topublish?page=1"}>To Publish</Link>
-      <Link href={"/admin/validation/deleted?page=1"}>Deleted</Link>
+      <TabLinks />
       {children}
     </div>
   );

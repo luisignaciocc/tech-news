@@ -16,16 +16,19 @@ function DefaultTable() {
         <TableRow>
           <TableHead className="w-[100px]">Titulo</TableHead>
           <TableHead>Descripción</TableHead>
-          <TableHead>Button 1</TableHead>
-          <TableHead className="text-right">Button 2</TableHead>
+          <TableHead className="text-right">Buttons</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         <TableRow>
           <TableCell className="font-medium">Title</TableCell>
           <TableCell>Description</TableCell>
-          <TableCell>Button 1</TableCell>
-          <TableCell className="text-right">Button 2</TableCell>
+          <TableCell className="text-right">
+            <div className="flex justify-end space-x-2">
+              <button>Botón 1</button>
+              <button>Botón 2</button>
+            </div>
+          </TableCell>
         </TableRow>
       </TableBody>
     </Table>

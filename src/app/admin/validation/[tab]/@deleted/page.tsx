@@ -1,7 +1,12 @@
 import DefaultTable from "../../components/table";
 
 function DeletedPage() {
-  return <DefaultTable />;
+  return (
+    <div>
+      <h1>DeletedPage</h1>
+      <DefaultTable />
+    </div>
+  );
 }
 
 export default DeletedPage;
