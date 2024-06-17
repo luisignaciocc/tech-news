@@ -1,10 +1,37 @@
-import DefaultTable from "../../components/table";
+import { getToPublishData } from "../@topublish/utils/prisma";
+import PaginationButtons from "../components/pagination-buttons";
+import ToPublishTable from "./components/topublish-table";
 
-function ToPublishPage() {
+interface ToPublishDataResponse {
+  data: ToPublishData[];
+  hasMorePages: boolean;
+}
+
+interface ToPublishData {
+  id: string;
+  title: string;
+}
+
+async function ToPublishPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | undefined };
+}) {
+  let response: ToPublishDataResponse = {
+    data: [],
+    hasMorePages: false,
+  };
+
+  response = await getToPublishData(Number(searchParams?.page), 5);
+
   return (
     <div>
-      <h1>ToPublishPage</h1>
-      <DefaultTable />
+      <ToPublishTable data={response.data} />
+      <PaginationButtons
+        page={Number(searchParams?.page)}
+        hasMorePages={response.hasMorePages}
+        tab={"topublish"}
+      />
     </div>
   );
 }

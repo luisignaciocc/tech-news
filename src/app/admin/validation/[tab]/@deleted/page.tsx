@@ -1,10 +1,11 @@
-import DefaultTable from "../../components/table";
-
-function DeletedPage() {
+function DeletedPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | undefined };
+}) {
   return (
     <div>
-      <h1>DeletedPage</h1>
-      <DefaultTable />
+      <h1>DeletedPage {searchParams?.page}</h1>
     </div>
   );
 }
