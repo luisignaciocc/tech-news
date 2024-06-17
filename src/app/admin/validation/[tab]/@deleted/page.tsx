@@ -1,5 +1,3 @@
-import DefaultTable from "../components/table";
-
 function DeletedPage({
   searchParams,
 }: {
@@ -8,7 +6,6 @@ function DeletedPage({
   return (
     <div>
       <h1>DeletedPage {searchParams?.page}</h1>
-      <DefaultTable />
     </div>
   );
 }
