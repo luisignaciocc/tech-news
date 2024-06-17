@@ -22,20 +22,16 @@ async function ToPublishTable({ data }: DefaultTableProps) {
       <TableCaption>A list of news to publish.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]" style={{ width: "30%" }}>
-            Titulo
-          </TableHead>
-          <TableHead className="text-center" style={{ width: "10%" }}>
-            Buttons
-          </TableHead>
+          <TableHead className="w-1/3 px-4">Titulo</TableHead>
+          <TableHead className="w-1/6 text-center">Buttons</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.length > 0 ? (
           data.map((item) => (
             <TableRow key={item.title}>
-              <TableCell className="font-medium">{item.title}</TableCell>
-              <TableCell className="text-right">
+              <TableCell className="font-medium px-4">{item.title}</TableCell>
+              <TableCell className="text-right px-4">
                 <div className="flex justify-end space-x-2">
                   <button>Botón 1</button>
                   <button>Botón 2</button>
