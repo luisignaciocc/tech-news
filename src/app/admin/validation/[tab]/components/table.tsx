@@ -8,15 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-interface ToPublishData {
-  id: string;
-  title: string;
-}
-interface DefaultTableProps {
-  data: ToPublishData[];
-}
-
-async function DefaultTable({ data }: DefaultTableProps) {
+async function DefaultTable() {
   return (
     <Table className="mt-5">
       <TableCaption>A list of your recent invoices.</TableCaption>
@@ -32,18 +24,16 @@ async function DefaultTable({ data }: DefaultTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item) => (
-          <TableRow key={item.title}>
-            <TableCell className="font-medium">{item.title}</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell className="text-right">
-              <div className="flex justify-end space-x-2">
-                <button>Botón 1</button>
-                <button>Botón 2</button>
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
+        <TableRow>
+          <TableCell className="font-medium"></TableCell>
+          <TableCell>Description</TableCell>
+          <TableCell className="text-right">
+            <div className="flex justify-end space-x-2">
+              <button>Botón 1</button>
+              <button>Botón 2</button>
+            </div>
+          </TableCell>
+        </TableRow>
       </TableBody>
     </Table>
   );

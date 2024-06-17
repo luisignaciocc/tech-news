@@ -1,6 +1,6 @@
 import { getToPublishData } from "../@topublish/utils/prisma";
 import PaginationButtons from "../components/pagination-buttons";
-import DefaultTable from "../components/table";
+import ToPublishTable from "./components/table";
 
 interface ToPublishDataResponse {
   data: ToPublishData[];
@@ -22,11 +22,11 @@ async function ToPublishPage({
     hasMorePages: false,
   };
 
-  response = await getToPublishData(Number(searchParams?.page), 2);
+  response = await getToPublishData(Number(searchParams?.page), 5);
 
   return (
     <div>
-      <DefaultTable data={response.data} />
+      <ToPublishTable data={response.data} />
       <PaginationButtons
         page={Number(searchParams?.page)}
         hasMorePages={response.hasMorePages}
