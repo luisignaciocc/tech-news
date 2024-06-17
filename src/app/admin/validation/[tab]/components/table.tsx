@@ -15,16 +15,28 @@ interface DefaultTableProps {
   page: number;
 }
 
+interface ToPublishDataResponse {
+  data: ToPublishData[];
+  totalCount: number;
+  currentPage: number;
+  totalPages: number;
+}
+
 interface ToPublishData {
   id: string;
   title: string;
 }
 
 async function DefaultTable({ tab, page }: DefaultTableProps) {
-  let data: ToPublishData[] = [];
+  let response: ToPublishDataResponse = {
+    data: [],
+    totalCount: 0,
+    currentPage: 0,
+    totalPages: 0,
+  };
 
   if (tab === "topublish") {
-    data = await getToPublishData();
+    response = await getToPublishData(page, 2);
   }
 
   return (
@@ -42,7 +54,7 @@ async function DefaultTable({ tab, page }: DefaultTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((item) => (
+        {response.data.map((item) => (
           <TableRow key={item.title}>
             <TableCell className="font-medium">{item.title}</TableCell>
             <TableCell>Description</TableCell>
