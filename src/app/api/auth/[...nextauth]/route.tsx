@@ -52,15 +52,17 @@ const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
+    session: async ({ session, token }) => {
+      return {
+        ...session,
+        user: token.user as Session["user"],
+      };
+    },
     jwt: ({ token, user }) => {
       if (user) {
-        token.user = user;
+        return { ...token, user };
       }
-      return Promise.resolve(token);
-    },
-    session: async ({ session, token }) => {
-      session.user = token.user as Session["user"];
-      return Promise.resolve(session);
+      return token;
     },
   },
 };
