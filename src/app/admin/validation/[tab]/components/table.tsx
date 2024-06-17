@@ -8,40 +8,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { getToPublishData } from "../@topublish/utils/prisma";
-
-interface DefaultTableProps {
-  tab: string;
-  page: number;
-}
-
-interface ToPublishDataResponse {
-  data: ToPublishData[];
-  totalCount: number;
-  currentPage: number;
-  totalPages: number;
-}
-
 interface ToPublishData {
   id: string;
   title: string;
 }
+interface DefaultTableProps {
+  data: ToPublishData[];
+}
 
-async function DefaultTable({ tab, page }: DefaultTableProps) {
-  let response: ToPublishDataResponse = {
-    data: [],
-    totalCount: 0,
-    currentPage: 0,
-    totalPages: 0,
-  };
-
-  if (tab === "topublish") {
-    response = await getToPublishData(page, 2);
-  }
-
+async function DefaultTable({ data }: DefaultTableProps) {
   return (
     <Table className="mt-5">
-      <TableCaption>A list of your recent invoices, page: {page}.</TableCaption>
+      <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]" style={{ width: "30%" }}>
@@ -54,7 +32,7 @@ async function DefaultTable({ tab, page }: DefaultTableProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {response.data.map((item) => (
+        {data.map((item) => (
           <TableRow key={item.title}>
             <TableCell className="font-medium">{item.title}</TableCell>
             <TableCell>Description</TableCell>
