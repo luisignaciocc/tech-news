@@ -22,8 +22,6 @@ async function ToPublishPage({
     hasMorePages: false,
   };
 
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   response = await getToPublishData(Number(searchParams?.page), 5);
 
   return (

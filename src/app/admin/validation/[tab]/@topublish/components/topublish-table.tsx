@@ -19,7 +19,7 @@ interface DefaultTableProps {
 async function ToPublishTable({ data }: DefaultTableProps) {
   return (
     <Table className="mt-5">
-      <TableCaption>A list of news to publish.</TableCaption>
+      <TableCaption>Lista de noticias por publicar.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-1/3 px-4">Titulo</TableHead>
