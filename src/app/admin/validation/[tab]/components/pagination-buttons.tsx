@@ -16,10 +16,12 @@ export default function PageNavigation({
   return (
     <div>
       <div className="flex justify-between mb-5">
-        {page > 1 && (
+        {page > 1 ? (
           <Link href={`/admin/validation/${tab}?page=${page - 1}`}>
             <Button>Anterior</Button>
           </Link>
+        ) : (
+          <Button disabled>Anterior</Button>
         )}
         {hasMorePages ? (
           <Link href={`/admin/validation/${tab}?page=${page + 1}`}>
