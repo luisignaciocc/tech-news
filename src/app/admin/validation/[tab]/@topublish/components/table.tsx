@@ -19,7 +19,7 @@ interface DefaultTableProps {
 async function ToPublishTable({ data }: DefaultTableProps) {
   return (
     <Table className="mt-5">
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>A list of news to publish.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]" style={{ width: "30%" }}>
