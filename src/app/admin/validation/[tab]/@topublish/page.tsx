@@ -1,10 +1,13 @@
-import DefaultTable from "../../components/table";
+import DefaultTable from "../components/table";
 
-function ToPublishPage() {
+async function ToPublishPage({
+  searchParams,
+}: {
+  searchParams?: { [key: string]: string | undefined };
+}) {
   return (
     <div>
-      <h1>ToPublishPage</h1>
-      <DefaultTable />
+      <DefaultTable tab={"topublish"} page={Number(searchParams?.page)} />
     </div>
   );
 }

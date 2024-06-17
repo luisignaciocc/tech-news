@@ -1,4 +1,4 @@
-import DefaultTable from "../../components/table";
+import DefaultTable from "../components/table";
 
 function DeletedPage() {
   return (
