@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
-function ValidationPage() {
+function TabPage() {
   redirect("/admin/validation/topublish?page=1");
 }
 
-export default ValidationPage;
+export default TabPage;
