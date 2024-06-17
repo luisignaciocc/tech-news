@@ -26,10 +26,10 @@ export async function getToPublishData(page: number, perPage: number) {
     take: perPage,
   });
 
+  const hasMorePages = totalCount > page * perPage;
+
   return {
     data,
-    totalCount,
-    currentPage: page,
-    totalPages: Math.ceil(totalCount / perPage),
+    hasMorePages,
   };
 }

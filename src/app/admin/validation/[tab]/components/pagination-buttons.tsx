@@ -4,13 +4,13 @@ import { Button } from "@/components/ui/button";
 
 interface PageNavigationProps {
   page: number;
-  hasMorePosts: number;
+  hasMorePages: boolean;
   tab: string;
 }
 
 export default function PageNavigation({
   page,
-  hasMorePosts,
+  hasMorePages,
   tab,
 }: PageNavigationProps) {
   return (
@@ -21,7 +21,7 @@ export default function PageNavigation({
             <Button>Anterior</Button>
           </Link>
         )}
-        {hasMorePosts ? (
+        {hasMorePages ? (
           <Link href={`/admin/validation/${tab}?page=${page + 1}`}>
             <Button>Siguiente</Button>
           </Link>

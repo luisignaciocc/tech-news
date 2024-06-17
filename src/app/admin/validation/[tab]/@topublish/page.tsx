@@ -4,9 +4,7 @@ import DefaultTable from "../components/table";
 
 interface ToPublishDataResponse {
   data: ToPublishData[];
-  totalCount: number;
-  currentPage: number;
-  totalPages: number;
+  hasMorePages: boolean;
 }
 
 interface ToPublishData {
@@ -21,9 +19,7 @@ async function ToPublishPage({
 }) {
   let response: ToPublishDataResponse = {
     data: [],
-    totalCount: 0,
-    currentPage: 0,
-    totalPages: 0,
+    hasMorePages: false,
   };
 
   response = await getToPublishData(Number(searchParams?.page), 2);
@@ -32,8 +28,8 @@ async function ToPublishPage({
     <div>
       <DefaultTable data={response.data} />
       <PaginationButtons
-        page={response.currentPage}
-        hasMorePosts={1}
+        page={Number(searchParams?.page)}
+        hasMorePages={response.hasMorePages}
         tab={"topublish"}
       />
     </div>
