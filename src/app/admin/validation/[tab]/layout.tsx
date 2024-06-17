@@ -1,3 +1,5 @@
+import TabLinks from "../components/tab-links";
+
 export default function GroupedLayout({
   params: { tab },
   children,
@@ -11,6 +13,7 @@ export default function GroupedLayout({
 }) {
   return (
     <div>
+      <TabLinks tab={tab} />
       {tab === "topublish" ? (
         <div>{topublish}</div>
       ) : tab === "deleted" ? (
