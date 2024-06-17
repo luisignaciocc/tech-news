@@ -5,7 +5,6 @@ import Skeleton from "react-loading-skeleton";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -15,7 +14,6 @@ import {
 export default function Loading() {
   return (
     <Table className="mt-5">
-      <TableCaption>Cargando...</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-1/3 px-4">
