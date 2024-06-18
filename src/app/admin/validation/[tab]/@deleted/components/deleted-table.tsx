@@ -37,7 +37,7 @@ async function DeletedTable({ data }: DefaultTableProps) {
                 <p className="text-gray-600">{item.deletionReason}</p>
               </TableCell>
               <TableCell className="text-right px-4">
-                <TableButtons id={item.id} />
+                <TableButtons newsId={item.id} />
               </TableCell>
             </TableRow>
           ))
