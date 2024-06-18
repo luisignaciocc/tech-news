@@ -25,7 +25,7 @@ async function DeletedTable({ data }: DefaultTableProps) {
       <TableHeader>
         <TableRow>
           <TableHead className="w-1/3 px-4">Titulo</TableHead>
-          <TableHead className="w-1/6 text-center">Buttons</TableHead>
+          <TableHead className="w-1/6 text-end">Buttons</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -37,7 +37,7 @@ async function DeletedTable({ data }: DefaultTableProps) {
                 <p className="text-gray-600">{item.deletionReason}</p>
               </TableCell>
               <TableCell className="text-right px-4">
-                <div className="flex justify-center space-x-2">
+                <div className="flex justify-end space-x-2">
                   <button className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-2 py-2 rounded">
                     <FaCheckCircle />
                   </button>

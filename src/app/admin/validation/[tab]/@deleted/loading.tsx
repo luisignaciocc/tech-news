@@ -19,10 +19,7 @@ export default function Loading() {
           <TableHead className="w-1/3 px-4">
             <Skeleton width={100} />
           </TableHead>
-          <TableHead className="w-1/3 px-4">
-            <Skeleton width={100} />
-          </TableHead>
-          <TableHead className="w-1/6 text-center">
+          <TableHead className="w-1/6 text-end">
             <Skeleton width={100} />
           </TableHead>
         </TableRow>
@@ -32,14 +29,12 @@ export default function Loading() {
           <TableRow key={index}>
             <TableCell className="font-medium px-4">
               <Skeleton />
-            </TableCell>
-            <TableCell className="font-medium px-4">
-              <Skeleton />
+              <Skeleton width={200} />
             </TableCell>
             <TableCell className="text-right px-4">
-              <div className="flex justify-center space-x-2">
-                <Skeleton width={150} height={30} />
-                <Skeleton width={150} height={30} />
+              <div className="flex justify-end space-x-2">
+                <Skeleton width={40} height={30} />
+                <Skeleton width={40} height={30} />
               </div>
             </TableCell>
           </TableRow>
