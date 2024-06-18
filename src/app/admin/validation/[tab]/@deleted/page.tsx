@@ -1,3 +1,5 @@
+import DeletedTable from "./components/deleted-table";
+
 function DeletedPage({
   searchParams,
 }: {
@@ -5,7 +7,7 @@ function DeletedPage({
 }) {
   return (
     <div>
-      <h1>DeletedPage {searchParams?.page}</h1>
+      <DeletedTable />
     </div>
   );
 }
