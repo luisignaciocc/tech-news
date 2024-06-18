@@ -1,3 +1,4 @@
+import PaginationButtons from "../components/pagination-buttons";
 import DeletedTable from "./components/deleted-table";
 import { getDeletedData } from "./utils/prisma";
 
@@ -12,12 +13,16 @@ async function DeletedPage({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
-  const response = await getDeletedData();
+  const response = await getDeletedData(Number(searchParams?.page), 5);
 
   return (
     <div>
-      <h1>{searchParams?.page}</h1>
-      <DeletedTable data={response as DeletedData[]} />
+      <DeletedTable data={response.data as DeletedData[]} />
+      <PaginationButtons
+        page={Number(searchParams?.page)}
+        hasMorePages={response.hasMorePages}
+        tab={"deleted"}
+      />
     </div>
   );
 }
