@@ -21,6 +21,9 @@ export async function getToPublishData(page: number, perPage: number) {
         id: true,
         title: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       skip: (page - 1) * perPage,
       take: perPage,
     }),

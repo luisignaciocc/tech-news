@@ -23,6 +23,9 @@ export async function getDeletedData(page: number, perPage: number) {
         title: true,
         deletionReason: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
       skip: (page - 1) * perPage,
       take: perPage,
     }),
