@@ -27,17 +27,14 @@ function TableButtons({ newsId }: TableButtonsProps) {
 
   return (
     <div className="flex justify-end space-x-2">
-      <button
-        className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-2 py-2 rounded"
-        onClick={() => handleUpdate()}
-      >
-        <FaCheckCircle />
+      <button onClick={() => handleUpdate()}>
+        <FaCheckCircle
+          className="text-green-500 hover:text-green-600"
+          size={24}
+        />
       </button>
-      <button
-        className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-2 py-2 rounded"
-        onClick={() => handleDelete()}
-      >
-        <FaTimesCircle />
+      <button onClick={() => handleDelete()}>
+        <FaTimesCircle className="text-red-500 hover:text-red-600" size={24} />
       </button>
     </div>
   );

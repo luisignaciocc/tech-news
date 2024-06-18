@@ -20,25 +20,21 @@ export default function PageNavigation({
         <Link href={`/admin/validation/${tab}?page=${page - 1}`}>
           <Button className="flex items-center space-x-2">
             <FaChevronLeft />
-            <span>Anterior</span>
           </Button>
         </Link>
       ) : (
         <Button disabled className="flex items-center space-x-2">
           <FaChevronLeft />
-          <span>Anterior</span>
         </Button>
       )}
       {hasMorePages ? (
         <Link href={`/admin/validation/${tab}?page=${page + 1}`}>
           <Button className="flex items-center space-x-2">
-            <span>Siguiente</span>
             <FaChevronRight />
           </Button>
         </Link>
       ) : (
         <Button disabled className="flex items-center space-x-2">
-          <span>Siguiente</span>
           <FaChevronRight />
         </Button>
       )}
