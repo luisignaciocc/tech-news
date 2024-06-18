@@ -1,3 +1,5 @@
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+
 import {
   Table,
   TableBody,
@@ -36,8 +38,12 @@ async function DeletedTable({ data }: DefaultTableProps) {
               </TableCell>
               <TableCell className="text-right px-4">
                 <div className="flex justify-center space-x-2">
-                  <button>Botón 1</button>
-                  <button>Botón 2</button>
+                  <button className="flex items-center space-x-2 bg-green-500 hover:bg-green-600 text-white px-2 py-2 rounded">
+                    <FaCheckCircle />
+                  </button>
+                  <button className="flex items-center space-x-2 bg-red-500 hover:bg-red-600 text-white px-2 py-2 rounded">
+                    <FaTimesCircle />
+                  </button>
                 </div>
               </TableCell>
             </TableRow>
