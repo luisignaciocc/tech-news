@@ -7,7 +7,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-async function DeletedTable() {
+interface DeletedData {
+  id: string;
+  title: string;
+  deletionReason: string;
+}
+
+interface DefaultTableProps {
+  data: DeletedData[];
+}
+
+async function DeletedTable({ data }: DefaultTableProps) {
   return (
     <Table className="mt-5">
       <TableHeader>
@@ -18,16 +28,28 @@ async function DeletedTable() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium px-4">Title</TableCell>
-          <TableCell className="font-medium px-4">Description</TableCell>
-          <TableCell className="text-right px-4">
-            <div className="flex justify-end space-x-2">
-              <button>Botón 1</button>
-              <button>Botón 2</button>
-            </div>
-          </TableCell>
-        </TableRow>
+        {data.length > 0 ? (
+          data.map((item) => (
+            <TableRow key={item.id}>
+              <TableCell className="font-medium px-4">{item.title}</TableCell>
+              <TableCell className="font-medium px-4">
+                {item.deletionReason}
+              </TableCell>
+              <TableCell className="text-right px-4">
+                <div className="flex justify-end space-x-2">
+                  <button>Botón 1</button>
+                  <button>Botón 2</button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={2} className="text-center">
+              No hay datos para mostrar
+            </TableCell>
+          </TableRow>
+        )}
       </TableBody>
     </Table>
   );
