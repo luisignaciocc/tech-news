@@ -17,12 +17,13 @@ async function ToPublishPage({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
+  const perPage = 15;
   let response: ToPublishDataResponse = {
     data: [],
     hasMorePages: false,
   };
 
-  response = await getToPublishData(Number(searchParams?.page), 5);
+  response = await getToPublishData(Number(searchParams?.page), perPage);
 
   return (
     <div>

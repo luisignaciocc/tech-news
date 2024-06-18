@@ -13,7 +13,8 @@ async function DeletedPage({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
-  const response = await getDeletedData(Number(searchParams?.page), 5);
+  const perPage = 10;
+  const response = await getDeletedData(Number(searchParams?.page), perPage);
 
   return (
     <div>
