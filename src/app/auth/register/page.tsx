@@ -16,7 +16,6 @@ interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
-  actions;
 }
 
 export default function Register() {
