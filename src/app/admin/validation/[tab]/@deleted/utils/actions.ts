@@ -22,3 +22,26 @@ export async function deleteNews(newsId: string) {
     };
   }
 }
+
+export async function updateDeletedAt(newsId: string) {
+  try {
+    await prisma.news.update({
+      where: {
+        id: newsId,
+      },
+      data: {
+        deletedAt: null,
+      },
+    });
+
+    return {
+      success: true,
+      message: `Noticia con ID ${newsId} actualizada exitosamente.`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Error al actualizar la noticia con ID ${newsId}: ${error}`,
+    };
+  }
+}
