@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og";
-import { NextResponse } from "next/server";
 
 import { SITE_NAME, SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
 
@@ -8,11 +7,11 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const title = searchParams.get("title");
   const coverImage = searchParams.get("cover_image");
-  const apiKey = searchParams.get("api_key");
+  // const apiKey = searchParams.get("api_key");
 
-  if (apiKey !== process.env.API_KEY) {
-    return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
-  }
+  // if (apiKey !== process.env.API_KEY) {
+  //   return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
+  // }
 
   return new ImageResponse(
     (
@@ -43,11 +42,11 @@ export async function GET(request: Request) {
         >
           <span
             style={{
-              fontSize: 16,
+              fontSize: 30,
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              padding: "14px 0px",
+              padding: "10px 0px",
               width: "100%",
               textAlign: "center",
               backgroundColor: "black",
@@ -68,7 +67,7 @@ export async function GET(request: Request) {
         />
         <div
           style={{
-            fontSize: 24,
+            fontSize: 36,
             color: "white",
             width: "100%",
             height: "100%",
@@ -84,7 +83,7 @@ export async function GET(request: Request) {
           <div
             style={{
               position: "absolute",
-              bottom: 115,
+              bottom: 200,
               left: 0,
               right: 0,
               height: "200%",
