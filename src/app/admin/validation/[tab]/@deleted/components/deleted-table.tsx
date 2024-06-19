@@ -19,10 +19,9 @@ interface DeletedData {
 
 interface DefaultTableProps {
   data: DeletedData[];
-  onSelectionChange: (selectedIds: string[]) => void;
 }
 
-async function DeletedTable({ data, onSelectionChange }: DefaultTableProps) {
+async function DeletedTable({ data }: DefaultTableProps) {
   return (
     <Table className="mt-5">
       <TableHeader>
@@ -39,10 +38,7 @@ async function DeletedTable({ data, onSelectionChange }: DefaultTableProps) {
             <TableRow key={item.id}>
               <TableCell className="px-4">
                 <div className="flex items-center">
-                  <CheckboxColumn
-                    id={item.id}
-                    onSelectionChange={onSelectionChange}
-                  />
+                  <CheckboxColumn id={item.id} />
                   <div className="ml-4">
                     <p className="font-medium">{item.title}</p>
                     <p className="text-gray-600">{item.deletionReason}</p>
