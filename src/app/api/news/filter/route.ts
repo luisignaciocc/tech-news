@@ -9,7 +9,14 @@ import { notifyProblem } from "@/lib/utils";
 export const maxDuration = 60;
 
 const _SIMILARITY_THRESHOLD = 0.8;
-const bannedWords = ["wordle", "quordle", "nyt", "review", "deal"];
+const bannedWords = [
+  "wordle",
+  "quordle",
+  "nyt",
+  "review",
+  "deal",
+  "apk teardown",
+];
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
