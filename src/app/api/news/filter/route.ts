@@ -113,6 +113,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                       Do not consider reviews, opinion pieces, historical articles, deals, guides and tutorials, or articles related to movies, series, comics, or TV as technology news.
                       If the headline refers to more than one topic, do not consider it as a technology news.
                       If the headline is about a drop in the price of a product, do not consider it as a technology news.
+                      If the headline is about a startup valuation, aquisition, or funding, do not consider it as a technology news.
                       Respond with "yes" if it is related to technology, otherwise respond with "no" and explain the reasons why it is not considered a technology news.
                     `,
                   },
