@@ -23,7 +23,7 @@ export async function deleteNews(newsId: string) {
   }
 }
 
-export async function updateDeletedAt(newsId: string) {
+export async function updateDeletedAtNull(newsId: string) {
   try {
     await prisma.news.update({
       where: {

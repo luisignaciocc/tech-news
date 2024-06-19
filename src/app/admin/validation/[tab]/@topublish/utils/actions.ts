@@ -4,7 +4,7 @@ import TelegramBot from "node-telegram-bot-api";
 
 const prisma = new PrismaClient();
 
-export async function updateDeletedAt(newsId: string) {
+export async function updateDeletedAtNotNull(newsId: string) {
   try {
     await prisma.news.update({
       where: {
@@ -28,7 +28,7 @@ export async function updateDeletedAt(newsId: string) {
   }
 }
 
-export async function updateFiltered(newsId: string) {
+export async function updateFilteredTrue(newsId: string) {
   const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
   if (!TOKEN) {
     console.error("No telegram API keys found");

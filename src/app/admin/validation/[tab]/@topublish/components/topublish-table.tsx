@@ -7,7 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import TableButtons from "./table-buttons";
+import ActionsButtons from "../../components/actions-buttons";
+import { updateDeletedAtNotNull, updateFilteredTrue } from "../utils/actions";
 
 interface ToPublishData {
   id: string;
@@ -32,7 +33,11 @@ async function ToPublishTable({ data }: DefaultTableProps) {
             <TableRow key={item.title}>
               <TableCell className="font-medium px-4">{item.title}</TableCell>
               <TableCell className="text-right px-4">
-                <TableButtons newsId={item.id} />
+                <ActionsButtons
+                  newsId={item.id}
+                  onUpdate={updateFilteredTrue}
+                  onDelete={updateDeletedAtNotNull}
+                />
               </TableCell>
             </TableRow>
           ))

@@ -7,7 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import TableButtons from "./table-buttons";
+import ActionsButtons from "../../components/actions-buttons";
+import { deleteNews, updateDeletedAtNull } from "../utils/actions";
 
 interface DeletedData {
   id: string;
@@ -37,7 +38,11 @@ async function DeletedTable({ data }: DefaultTableProps) {
                 <p className="text-gray-600">{item.deletionReason}</p>
               </TableCell>
               <TableCell className="text-right px-4">
-                <TableButtons newsId={item.id} />
+                <ActionsButtons
+                  newsId={item.id}
+                  onUpdate={updateDeletedAtNull}
+                  onDelete={deleteNews}
+                />
               </TableCell>
             </TableRow>
           ))
