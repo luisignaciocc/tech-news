@@ -56,13 +56,9 @@ export async function POST(request: Request): Promise<NextResponse> {
             !article.textContent ||
             (article.length && article.length < 1000)
           ) {
-            await prisma.news.update({
+            await prisma.news.delete({
               where: {
                 url: item.url,
-              },
-              data: {
-                deletedAt: new Date(),
-                deletionReason: "Empty article",
               },
             });
 
