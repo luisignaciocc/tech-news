@@ -1,4 +1,5 @@
 import PaginationButtons from "../components/pagination-buttons";
+import { CheckboxProvider } from "../context/checkbox-context";
 import DeletedTable from "./components/deleted-table";
 import { getDeletedData } from "./utils/prisma";
 
@@ -18,7 +19,9 @@ async function DeletedPage({
 
   return (
     <div>
-      <DeletedTable data={response.data as DeletedData[]} />
+      <CheckboxProvider>
+        <DeletedTable data={response.data as DeletedData[]} />
+      </CheckboxProvider>
       <PaginationButtons
         page={Number(searchParams?.page)}
         hasMorePages={response.hasMorePages}

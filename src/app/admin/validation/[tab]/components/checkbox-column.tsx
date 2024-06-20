@@ -8,12 +8,12 @@ export const CheckboxColumn = ({ id }: { id: string }) => {
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    if (id in checkboxes) {
+    if (id in checkboxes && checkboxes[id] !== checked) {
       setChecked(checkboxes[id]);
-    } else {
+    } else if (!(id in checkboxes)) {
       handleCheckboxChange(id, false);
     }
-  }, [id, checkboxes, handleCheckboxChange]);
+  }, [id, checkboxes, checked, handleCheckboxChange]);
 
   const handleChange = () => {
     setChecked((prevChecked) => {

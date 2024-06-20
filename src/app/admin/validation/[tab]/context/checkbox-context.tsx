@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useRef, useState } from "react";
+import React, { createContext, useState } from "react";
 
 interface Checkboxes {
   [key: string]: boolean;
@@ -23,16 +23,20 @@ export const CheckboxProvider = ({
   children: React.ReactNode;
 }) => {
   const [checkboxes, setCheckboxes] = useState<Checkboxes>({});
-  const checkboxesRef = useRef<Checkboxes>(checkboxes);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const updateCheckbox = (id: string, checked: boolean) => {
     setCheckboxes((prevCheckboxes) => {
+      if (prevCheckboxes[id] === checked) {
+        return prevCheckboxes;
+      }
       const newCheckboxes = {
         ...prevCheckboxes,
         [id]: checked,
       };
-      checkboxesRef.current = newCheckboxes;
-      printCheckboxes();
+      setSelectedIds(
+        Object.keys(newCheckboxes).filter((key) => newCheckboxes[key]),
+      );
       return newCheckboxes;
     });
   };
@@ -43,23 +47,20 @@ export const CheckboxProvider = ({
         acc[key] = checked;
         return acc;
       }, {} as Checkboxes);
-      checkboxesRef.current = newCheckboxes;
-      printCheckboxes();
+      setSelectedIds(
+        Object.keys(newCheckboxes).filter((key) => newCheckboxes[key]),
+      );
       return newCheckboxes;
     });
-  };
-
-  const printCheckboxes = () => {
-    // console.log("Current Checkboxes State:", checkboxesRef.current);
   };
 
   return (
     <CheckboxContext.Provider
       value={{
-        selectedIds: [],
+        selectedIds,
         handleCheckboxChange: updateCheckbox,
         handleSelectAll,
-        checkboxes: checkboxesRef.current,
+        checkboxes,
       }}
     >
       {children}
