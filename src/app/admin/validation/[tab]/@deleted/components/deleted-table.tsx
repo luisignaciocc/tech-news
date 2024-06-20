@@ -9,8 +9,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import CheckboxColumn from "../../../components/checkbox-column";
 import ActionsButtons from "../../components/actions-buttons";
+import { CheckboxColumn } from "../../components/checkbox-column";
+import SelectAll from "../../components/select-all";
 import { CheckboxProvider } from "../../context/checkbox-context";
 import { deleteNews, updateDeletedAtNull } from "../utils/actions";
 
@@ -31,7 +32,9 @@ async function DeletedTable({ data }: DefaultTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead className="w-1/3 px-4">
-              <div className="ml-7">Titulo</div>
+              <div className="ml-7">
+                <SelectAll />
+              </div>
             </TableHead>
             <TableHead className="w-1/6 text-end">
               <div className="flex items-center justify-end">

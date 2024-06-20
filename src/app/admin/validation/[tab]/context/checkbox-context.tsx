@@ -1,33 +1,55 @@
 "use client";
-import React, { createContext, useCallback, useState } from "react";
+import React, { createContext, useRef, useState } from "react";
+
+interface Checkboxes {
+  [key: string]: boolean;
+}
 
 export const CheckboxContext = createContext<{
   selectedIds: string[];
-  handleCheckboxChange: (id: string) => void;
+  handleCheckboxChange: (id: string, checked: boolean) => void;
+  handleSelectAll: () => void;
+  checkboxes: Checkboxes;
 }>({
   selectedIds: [],
   handleCheckboxChange: () => {},
+  handleSelectAll: () => {},
+  checkboxes: {},
 });
 
-export interface CheckboxProviderProps {
+export const CheckboxProvider = ({
+  children,
+}: {
   children: React.ReactNode;
-}
+}) => {
+  const [checkboxes, setCheckboxes] = useState<Checkboxes>({});
+  const checkboxesRef = useRef<Checkboxes>(checkboxes);
 
-export const CheckboxProvider = ({ children }: CheckboxProviderProps) => {
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-  const handleCheckboxChange = useCallback((id: string) => {
-    setSelectedIds((prevSelectedIds) => {
-      if (prevSelectedIds.includes(id)) {
-        return prevSelectedIds.filter((selectedId) => selectedId !== id);
-      } else {
-        return [...prevSelectedIds, id];
-      }
+  const updateCheckbox = (id: string, checked: boolean) => {
+    setCheckboxes((prevCheckboxes) => {
+      const newCheckboxes = {
+        ...prevCheckboxes,
+        [id]: checked,
+      };
+      checkboxesRef.current = newCheckboxes;
+      printCheckboxes();
+      return newCheckboxes;
     });
-  }, []);
+  };
+
+  const printCheckboxes = () => {
+    console.log("Current Checkboxes State:", checkboxesRef.current);
+  };
 
   return (
-    <CheckboxContext.Provider value={{ selectedIds, handleCheckboxChange }}>
+    <CheckboxContext.Provider
+      value={{
+        selectedIds: [],
+        handleCheckboxChange: updateCheckbox,
+        handleSelectAll: () => {},
+        checkboxes: checkboxesRef.current,
+      }}
+    >
       {children}
     </CheckboxContext.Provider>
   );
