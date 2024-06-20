@@ -8,7 +8,7 @@ interface Checkboxes {
 export const CheckboxContext = createContext<{
   selectedIds: string[];
   handleCheckboxChange: (id: string, checked: boolean) => void;
-  handleSelectAll: () => void;
+  handleSelectAll: (checked: boolean) => void;
   checkboxes: Checkboxes;
 }>({
   selectedIds: [],
@@ -37,8 +37,20 @@ export const CheckboxProvider = ({
     });
   };
 
+  const handleSelectAll = (checked: boolean) => {
+    setCheckboxes((prevCheckboxes) => {
+      const newCheckboxes = Object.keys(prevCheckboxes).reduce((acc, key) => {
+        acc[key] = checked;
+        return acc;
+      }, {} as Checkboxes);
+      checkboxesRef.current = newCheckboxes;
+      printCheckboxes();
+      return newCheckboxes;
+    });
+  };
+
   const printCheckboxes = () => {
-    console.log("Current Checkboxes State:", checkboxesRef.current);
+    // console.log("Current Checkboxes State:", checkboxesRef.current);
   };
 
   return (
@@ -46,7 +58,7 @@ export const CheckboxProvider = ({
       value={{
         selectedIds: [],
         handleCheckboxChange: updateCheckbox,
-        handleSelectAll: () => {},
+        handleSelectAll,
         checkboxes: checkboxesRef.current,
       }}
     >
