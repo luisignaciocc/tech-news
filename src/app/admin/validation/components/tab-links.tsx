@@ -19,6 +19,14 @@ export default function TabLinks({ tab }: { tab: string }) {
       >
         Deleted
       </Link>
+      <Link
+        href={`/admin/validation/notaproved?page=1`}
+        className={`bg-primary hover:bg-white hover:text-black border border-black font-bold py-2 px-6 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0 ${
+          tab === "notaproved" ? "bg-white text-black" : "text-white"
+        }`}
+      >
+        Not Aproved
+      </Link>
     </div>
   );
 }
