@@ -73,7 +73,7 @@ export async function GET(request: Request) {
             width: "100%",
             height: "100%",
             display: "flex",
-            padding: 24,
+            padding: 30,
             alignItems: "center",
             justifyContent: "center",
             position: "relative",
