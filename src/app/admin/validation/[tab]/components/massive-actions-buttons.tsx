@@ -51,6 +51,7 @@ function MassiveActionsButtons({
 
   return (
     <div className="flex justify-end space-x-2">
+      <div className="mr-2">Acciones Masivas</div>
       <button
         onClick={handleUpdate}
         disabled={isLoading}
