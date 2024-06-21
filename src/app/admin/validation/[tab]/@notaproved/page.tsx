@@ -1,3 +1,4 @@
+import PaginationButtons from "../components/pagination-buttons";
 import NotAprovedTable from "./components/notaproved-table";
 import { getNotAprovedData } from "./utils/prisma";
 
@@ -27,6 +28,11 @@ async function NotAprovedPage({
   return (
     <div>
       <NotAprovedTable data={response.data} />
+      <PaginationButtons
+        page={Number(searchParams?.page)}
+        hasMorePages={response.hasMorePages}
+        tab={"notaproved"}
+      />
     </div>
   );
 }
