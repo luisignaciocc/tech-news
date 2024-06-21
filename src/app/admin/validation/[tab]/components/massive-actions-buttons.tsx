@@ -15,12 +15,11 @@ function MassiveActionsButtons({
   onDelete,
 }: MassiveActionsButtonsProps) {
   const router = useRouter();
-  const [isUpdateLoading, setIsUpdateLoading] = useState(false);
-  const [isDeleteLoading, setIsDeleteLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdate = async () => {
     try {
-      setIsUpdateLoading(true);
+      setIsLoading(true);
       const { success, message } = await onUpdate(newsIds);
       if (success) {
         router.refresh();
@@ -30,13 +29,13 @@ function MassiveActionsButtons({
     } catch (error) {
       console.error(error);
     } finally {
-      setIsUpdateLoading(false);
+      setIsLoading(false);
     }
   };
 
   const handleDelete = async () => {
     try {
-      setIsDeleteLoading(true);
+      setIsLoading(true);
       const { success, message } = await onDelete(newsIds);
       if (success) {
         router.refresh();
@@ -46,7 +45,7 @@ function MassiveActionsButtons({
     } catch (error) {
       console.error(error);
     } finally {
-      setIsDeleteLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -54,15 +53,15 @@ function MassiveActionsButtons({
     <div className="flex justify-end space-x-2">
       <button
         onClick={handleUpdate}
-        disabled={isUpdateLoading}
-        className={`${isUpdateLoading ? "text-gray-400 hover:text-gray-400" : "text-green-500 hover:text-green-600"}`}
+        disabled={isLoading}
+        className={`${isLoading ? "text-gray-400 hover:text-gray-400" : "text-green-500 hover:text-green-600"}`}
       >
         <FaCheckCircle size={24} />
       </button>
       <button
         onClick={handleDelete}
-        disabled={isDeleteLoading}
-        className={`${isDeleteLoading ? "text-gray-400 hover:text-gray-400" : "text-red-500 hover:text-red-600"}`}
+        disabled={isLoading}
+        className={`${isLoading ? "text-gray-400 hover:text-gray-400" : "text-red-500 hover:text-red-600"}`}
       >
         <FaTimesCircle size={24} />
       </button>

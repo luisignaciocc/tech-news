@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import {
   Table,
@@ -34,10 +34,6 @@ interface DefaultTableProps {
 
 function DeletedTable({ data }: DefaultTableProps) {
   const { selectedIds } = useContext(CheckboxContext);
-
-  useEffect(() => {
-    // console.log("selectedIds:", selectedIds);
-  }, [selectedIds]);
 
   return (
     <Table className="mt-5">
