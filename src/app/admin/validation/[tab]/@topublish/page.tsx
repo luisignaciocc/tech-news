@@ -1,5 +1,6 @@
 import { getToPublishData } from "../@topublish/utils/prisma";
 import PaginationButtons from "../components/pagination-buttons";
+import { CheckboxProvider } from "../context/checkbox-context";
 import ToPublishTable from "./components/topublish-table";
 
 interface ToPublishDataResponse {
@@ -27,7 +28,9 @@ async function ToPublishPage({
 
   return (
     <div>
-      <ToPublishTable data={response.data} />
+      <CheckboxProvider>
+        <ToPublishTable data={response.data} />
+      </CheckboxProvider>
       <PaginationButtons
         page={Number(searchParams?.page)}
         hasMorePages={response.hasMorePages}
