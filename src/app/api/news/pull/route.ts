@@ -220,10 +220,7 @@ export async function POST(request: Request) {
         lastUpdateAt: new Date(),
       },
     });
-    await notifyProblem(
-      `Pulling news from Google News, view log for more info: ${oldestNewsSource.name}`,
-      error,
-    );
+
     if (error instanceof Error) {
       return NextResponse.json(
         { error: `Error al hacer la solicitud a la API: ${error.message}` },
