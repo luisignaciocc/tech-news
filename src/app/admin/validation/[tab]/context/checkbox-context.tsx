@@ -1,20 +1,16 @@
 "use client";
 import React, { createContext, useState } from "react";
 
-interface Checkboxes {
-  [key: string]: boolean;
-}
-
 export const CheckboxContext = createContext<{
   selectedIds: string[];
   handleCheckboxChange: (id: string, checked: boolean) => void;
-  handleSelectAll: (checked: boolean) => void;
-  checkboxes: Checkboxes;
+  handleSelectAll: (ids: string[], checked: boolean) => void;
+  handleClearAll: () => void;
 }>({
   selectedIds: [],
   handleCheckboxChange: () => {},
   handleSelectAll: () => {},
-  checkboxes: {},
+  handleClearAll: () => {},
 });
 
 export const CheckboxProvider = ({
@@ -22,36 +18,28 @@ export const CheckboxProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [checkboxes, setCheckboxes] = useState<Checkboxes>({});
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
   const updateCheckbox = (id: string, checked: boolean) => {
-    setCheckboxes((prevCheckboxes) => {
-      if (prevCheckboxes[id] === checked) {
-        return prevCheckboxes;
-      }
-      const newCheckboxes = {
-        ...prevCheckboxes,
-        [id]: checked,
-      };
-      setSelectedIds(
-        Object.keys(newCheckboxes).filter((key) => newCheckboxes[key]),
+    if (checked) {
+      setSelectedIds((prevSelectedIds) => [...prevSelectedIds, id]);
+    } else {
+      setSelectedIds((prevSelectedIds) =>
+        prevSelectedIds.filter((selectedId) => selectedId !== id),
       );
-      return newCheckboxes;
-    });
+    }
   };
 
-  const handleSelectAll = (checked: boolean) => {
-    setCheckboxes((prevCheckboxes) => {
-      const newCheckboxes = Object.keys(prevCheckboxes).reduce((acc, key) => {
-        acc[key] = checked;
-        return acc;
-      }, {} as Checkboxes);
-      setSelectedIds(
-        Object.keys(newCheckboxes).filter((key) => newCheckboxes[key]),
-      );
-      return newCheckboxes;
-    });
+  const handleSelectAll = (ids: string[], checked: boolean) => {
+    if (checked) {
+      setSelectedIds(ids);
+    } else {
+      setSelectedIds([]);
+    }
+  };
+
+  const handleClearAll = () => {
+    setSelectedIds([]);
   };
 
   return (
@@ -60,7 +48,7 @@ export const CheckboxProvider = ({
         selectedIds,
         handleCheckboxChange: updateCheckbox,
         handleSelectAll,
-        checkboxes,
+        handleClearAll,
       }}
     >
       {children}

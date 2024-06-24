@@ -38,7 +38,7 @@ function ToPublishTable({ data }: DefaultTableProps) {
       <TableHeader>
         <TableRow>
           <TableHead className="w-1/3 px-4">
-            <SelectAll />
+            <SelectAll shownIds={data?.map((item) => item.id) || []} />
           </TableHead>
           <TableHead className="w-1/6 text-right">
             <MassiveActionsButtons
