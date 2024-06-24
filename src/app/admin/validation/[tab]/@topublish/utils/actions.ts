@@ -43,37 +43,38 @@ export async function updateFilteredTrueMany(newsIds: string[]) {
   const bot = new TelegramBot(TOKEN);
 
   try {
-    const articles = await prisma.news.findMany({
-      where: {
-        id: {
-          in: newsIds,
+    const [articles, filteredNews] = await Promise.all([
+      prisma.news.findMany({
+        where: {
+          id: {
+            in: newsIds,
+          },
         },
-      },
-    });
-
-    const filteredNews = await prisma.news.count({
-      where: {
-        filtered: true,
-        posts: {
-          none: {},
+      }),
+      prisma.news.count({
+        where: {
+          filtered: true,
+          posts: {
+            none: {},
+          },
         },
-      },
-    });
+      }),
+    ]);
 
-    const promises: Promise<unknown>[] = [];
+    const promises: Promise<unknown>[] = [
+      prisma.news.updateMany({
+        where: {
+          id: {
+            in: newsIds,
+          },
+        },
+        data: {
+          filtered: true,
+        },
+      }),
+    ];
 
     for (const article of articles) {
-      promises.push(
-        prisma.news.update({
-          where: {
-            id: article.id,
-          },
-          data: {
-            filtered: true,
-          },
-        }),
-      );
-
       if (article.telegramChatId && article.telegramMessageId) {
         promises.push(
           bot.editMessageReplyMarkup(
