@@ -148,11 +148,12 @@ export async function POST(request: Request): Promise<NextResponse> {
               const bot = new TelegramBot(TOKEN);
               const message = await bot.sendMessage(
                 TELEGRAM_PERSONAL_CHAT_ID,
-                `${autoApprove ? "✅" : "❔"}❔ ${article.title}`,
+                `${autoApprove ? "✅" : "❔"} ${article.title}`,
                 {
                   parse_mode: "Markdown",
                   reply_markup: autoApprove
-                    ? {
+                    ? undefined
+                    : {
                         inline_keyboard: [
                           [
                             {
@@ -165,8 +166,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                             },
                           ],
                         ],
-                      }
-                    : undefined,
+                      },
                 },
               );
 

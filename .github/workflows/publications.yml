@@ -2,7 +2,7 @@ name: Generate Publication
 
 on:
   schedule:
-    - cron: "*/30 12-23,0,1 * * *"
+    - cron: "*/20 12-23,0,1 * * *"
 
 jobs:
   blog:
