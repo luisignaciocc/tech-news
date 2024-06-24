@@ -4,8 +4,6 @@ import { JSDOM } from "jsdom";
 import { NextResponse } from "next/server";
 import { parseString } from "xml2js";
 
-import { notifyProblem } from "@/lib/utils";
-
 export const maxDuration = 60;
 
 interface RssChannel {
