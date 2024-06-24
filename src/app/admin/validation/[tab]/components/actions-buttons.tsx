@@ -1,7 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+
+import { CheckboxContext } from "../context/checkbox-context";
 
 interface ActionsButtonsProps {
   newsId: string;
@@ -12,6 +14,7 @@ interface ActionsButtonsProps {
 function ActionsButtons({ newsId, onUpdate, onDelete }: ActionsButtonsProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { handleClearAll } = useContext(CheckboxContext);
 
   const handleUpdate = async () => {
     try {
@@ -25,6 +28,7 @@ function ActionsButtons({ newsId, onUpdate, onDelete }: ActionsButtonsProps) {
     } catch (error) {
       console.error(error);
     } finally {
+      handleClearAll();
       setIsLoading(false);
     }
   };
@@ -41,6 +45,7 @@ function ActionsButtons({ newsId, onUpdate, onDelete }: ActionsButtonsProps) {
     } catch (error) {
       console.error(error);
     } finally {
+      handleClearAll();
       setIsLoading(false);
     }
   };
