@@ -59,7 +59,13 @@ export async function POST(request: Request) {
     const coverImageUrlEncoded = encodeURIComponent(
       lastPost.coverImage || `${SITE_URL}/icon.png`,
     );
-    const imageUrl = `${SITE_URL}/api/publication/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+
+    const imageTemplates = ["image-01"];
+
+    const randomImageTemplate =
+      imageTemplates[Math.floor(Math.random() * imageTemplates.length)];
+
+    const imageUrl = `${SITE_URL}/api/publication/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
 
     const completion = await openai.chat.completions.create({
       messages: [

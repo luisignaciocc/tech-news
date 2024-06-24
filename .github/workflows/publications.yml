@@ -34,16 +34,6 @@ jobs:
           --url 'https://www.tecnobuc.com/api/publication/linkedin' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  # instagram:
-  #   runs-on: self-hosted
-  #   needs: blog
-  #   steps:
-  #     - name: Generate an instagram post from an article
-  #       run: |
-  #         curl --request POST \
-  #         --url 'https://www.tecnobuc.com/api/publication/instagram' \
-  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
-
   facebook:
     runs-on: self-hosted
     needs: blog
@@ -56,7 +46,6 @@ jobs:
 
   telegram:
     runs-on: self-hosted
-    # needs: [blog, twitter, linkedin, instagram, facebook]
     needs: [blog, twitter, linkedin, facebook]
     steps:
       - name: Generate a facebook post from an article
