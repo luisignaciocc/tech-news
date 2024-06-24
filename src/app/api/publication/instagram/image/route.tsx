@@ -43,11 +43,11 @@ export async function GET(request: Request) {
         >
           <span
             style={{
-              fontSize: 16,
+              fontSize: 30,
               display: "flex",
               flexWrap: "wrap",
               justifyContent: "center",
-              padding: "14px 0px",
+              padding: "10px 0px",
               width: "100%",
               textAlign: "center",
               backgroundColor: "black",
@@ -68,12 +68,12 @@ export async function GET(request: Request) {
         />
         <div
           style={{
-            fontSize: 24,
+            fontSize: 36,
             color: "white",
             width: "100%",
             height: "100%",
             display: "flex",
-            padding: 16,
+            padding: 30,
             alignItems: "center",
             justifyContent: "center",
             position: "relative",
@@ -84,7 +84,7 @@ export async function GET(request: Request) {
           <div
             style={{
               position: "absolute",
-              bottom: 115,
+              bottom: 208,
               left: 0,
               right: 0,
               height: "200%",

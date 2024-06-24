@@ -144,29 +144,30 @@ export async function updateFilteredTrue(newsId: string) {
   }
 
   const bot = new TelegramBot(TOKEN);
-  const [article, filteredNews] = await Promise.all([
-    prisma.news.findUnique({
-      where: {
-        id: newsId,
-      },
-    }),
-    prisma.news.count({
-      where: {
-        filtered: true,
-        posts: {
-          none: {},
-        },
-      },
-    }),
-  ]);
-
-  if (!article) {
-    return {
-      success: false,
-      message: `No se encontró la noticia con ID ${newsId}`,
-    };
-  }
   try {
+    const [article, filteredNews] = await Promise.all([
+      prisma.news.findUnique({
+        where: {
+          id: newsId,
+        },
+      }),
+      prisma.news.count({
+        where: {
+          filtered: true,
+          posts: {
+            none: {},
+          },
+        },
+      }),
+    ]);
+
+    if (!article) {
+      return {
+        success: false,
+        message: `No se encontró la noticia con ID ${newsId}`,
+      };
+    }
+
     const promises: Promise<unknown>[] = [
       prisma.news.update({
         where: {
@@ -177,6 +178,7 @@ export async function updateFilteredTrue(newsId: string) {
         },
       }),
     ];
+
     if (article.telegramChatId && article.telegramMessageId) {
       promises.push(
         bot.editMessageReplyMarkup(
