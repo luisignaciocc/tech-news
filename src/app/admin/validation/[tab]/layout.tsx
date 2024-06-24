@@ -5,11 +5,13 @@ export default function GroupedLayout({
   children,
   topublish,
   deleted,
+  notaproved,
 }: {
   params: { tab: string };
   children: React.ReactNode;
   topublish: React.ReactNode;
   deleted: React.ReactNode;
+  notaproved: React.ReactNode;
 }) {
   return (
     <div>
@@ -18,6 +20,8 @@ export default function GroupedLayout({
         <div>{topublish}</div>
       ) : tab === "deleted" ? (
         <div>{deleted}</div>
+      ) : tab === "notaproved" ? (
+        <div>{notaproved}</div>
       ) : (
         <div>{children}</div>
       )}
