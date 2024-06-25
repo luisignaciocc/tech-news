@@ -25,7 +25,7 @@ export async function GET(request: Request) {
           alignItems: "center",
           justifyContent: "flex-start",
           position: "relative",
-          backgroundColor: "black",
+          backgroundColor: "#181818",
         }}
       >
         <img
