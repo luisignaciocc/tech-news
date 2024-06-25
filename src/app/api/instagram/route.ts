@@ -65,7 +65,7 @@ export async function POST(request: Request) {
     const randomImageTemplate =
       imageTemplates[Math.floor(Math.random() * imageTemplates.length)];
 
-    const imageUrl = `${SITE_URL}/api/publication/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+    const imageUrl = `${SITE_URL}/api/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
 
     const completion = await openai.chat.completions.create({
       messages: [
