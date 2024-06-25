@@ -19,86 +19,57 @@ export async function GET(request: Request) {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
           height: "100%",
           width: "100%",
           alignItems: "center",
-          justifyContent: "space-between",
-          letterSpacing: "-.02em",
-          fontWeight: 700,
-          background: "white",
+          justifyContent: "center",
           position: "relative",
+          backgroundColor: "black",
         }}
       >
-        <div
-          style={{
-            left: 0,
-            right: 0,
-            top: 0,
-            position: "relative",
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "black",
-            paddingTop: "10px",
-            paddingBottom: "10px",
-          }}
-        >
-          <span
-            style={{
-              fontSize: 30,
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              padding: "10px 0px",
-              width: "100%",
-              textAlign: "center",
-              backgroundColor: "black",
-              color: "white",
-              lineHeight: 0.6,
-            }}
-          >
-            {SITE_SHORT_NAME}
-          </span>
-          <img
-            alt="Site Icon"
-            src={`${SITE_URL}/icon.png`}
-            style={{
-              width: "70px",
-              height: "70px",
-              zIndex: 1,
-            }}
-          />
-        </div>
         <img
           alt={title || SITE_SHORT_NAME}
-          height={200}
+          height={1080}
           src={coverImage || `${SITE_URL}/icon.png`}
           style={{
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            zIndex: 0,
           }}
         />
         <div
           style={{
             position: "absolute",
-            fontSize: 42,
+            fontSize: 50,
             color: "white",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            width: "70%",
+            width: "80%",
             bottom: "20px",
+            left: "70px",
             marginBottom: "40px",
             fontWeight: 900,
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
+            zIndex: 1,
           }}
         >
           {title || SITE_NAME}
         </div>
+        <img
+          alt="Logo"
+          src={`${SITE_URL}/icon.png`}
+          style={{
+            width: "70px",
+            height: "70px",
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            zIndex: 2,
+            borderRadius: "50%",
+          }}
+        />
       </div>
     ),
     {
