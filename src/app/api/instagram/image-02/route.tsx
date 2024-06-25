@@ -18,7 +18,6 @@ export async function GET(request: Request) {
     (
       <div
         style={{
-          paddingTop: 39,
           display: "flex",
           flexDirection: "column",
           height: "100%",
@@ -36,9 +35,14 @@ export async function GET(request: Request) {
             left: 0,
             right: 0,
             top: 0,
-            position: "absolute",
+            position: "relative",
+            width: "100%",
             display: "flex",
             alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "black",
+            paddingTop: "10px",
+            paddingBottom: "10px",
           }}
         >
           <span
@@ -57,6 +61,15 @@ export async function GET(request: Request) {
           >
             {SITE_SHORT_NAME}
           </span>
+          <img
+            alt="Site Icon"
+            src="http://localhost:3000/icon.png"
+            style={{
+              width: "70px",
+              height: "70px",
+              zIndex: 1,
+            }}
+          />
         </div>
         <img
           alt={title || SITE_SHORT_NAME}
@@ -78,6 +91,7 @@ export async function GET(request: Request) {
             justifyContent: "center",
             width: "70%",
             bottom: "20px",
+            marginBottom: "40px",
             fontWeight: 900,
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
