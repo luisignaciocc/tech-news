@@ -63,7 +63,7 @@ export async function GET(request: Request) {
           </span>
           <img
             alt="Site Icon"
-            src="http://localhost:3000/icon.png"
+            src={`${SITE_URL}/icon.png`}
             style={{
               width: "70px",
               height: "70px",
@@ -84,7 +84,7 @@ export async function GET(request: Request) {
         <div
           style={{
             position: "absolute",
-            fontSize: 32,
+            fontSize: 42,
             color: "white",
             display: "flex",
             alignItems: "center",
