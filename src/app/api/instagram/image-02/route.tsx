@@ -59,7 +59,7 @@ export async function GET(request: Request) {
         </div>
         <img
           alt="Logo"
-          src={`${SITE_URL}/icon.png`}
+          src={`${SITE_URL}/icon-accent.png`}
           style={{
             width: "70px",
             height: "70px",

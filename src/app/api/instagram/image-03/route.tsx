@@ -58,20 +58,45 @@ export async function GET(request: Request) {
         >
           {title || SITE_NAME}
         </div>
-        <img
-          alt="Logo"
-          src={`${SITE_URL}/icon.png`}
+        <div
           style={{
-            width: "70px",
-            height: "70px",
+            width: "90px",
+            height: "90px",
             position: "absolute",
-            top: "62%",
+            top: "61%",
             left: "50%",
             transform: "translateX(-50%)",
-            zIndex: 2,
+            zIndex: 1,
             borderRadius: "50%",
+            backgroundColor: "#181818",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        />
+        >
+          <div
+            style={{
+              width: "85%",
+              height: "85%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+              borderRadius: "50%",
+            }}
+          >
+            <img
+              alt="Logo"
+              src={`${SITE_URL}/icon.png`}
+              style={{
+                width: "110px",
+                height: "110px",
+                objectFit: "contain",
+              }}
+            />
+          </div>
+        </div>
       </div>
     ),
     {
