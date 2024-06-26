@@ -64,13 +64,13 @@ export async function GET(request: Request) {
         <div
           style={{
             position: "absolute",
-            bottom: "20px",
-            right: "20px",
-            width: "90px",
-            height: "90px",
+            bottom: "-170px",
+            right: "-170px",
+            width: "300px",
+            height: "300px",
             zIndex: 1,
-            borderRadius: "50%",
             backgroundColor: "#181818",
+            transform: "rotate(45deg)",
             overflow: "hidden",
             display: "flex",
             alignItems: "center",
@@ -79,8 +79,10 @@ export async function GET(request: Request) {
         >
           <div
             style={{
-              width: "85%",
-              height: "85%",
+              left: "-100px",
+              top: "-5px",
+              width: "25%",
+              height: "25%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -95,6 +97,7 @@ export async function GET(request: Request) {
                 width: "110px",
                 height: "110px",
                 objectFit: "contain",
+                borderRadius: "50%",
               }}
             />
           </div>
