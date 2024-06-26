@@ -28,13 +28,35 @@ export async function GET(request: Request) {
           backgroundColor: "#181818",
         }}
       >
+        <div
+          style={{
+            backgroundColor: "#181818",
+            width: "90%",
+            height: "30%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 60,
+              color: "#cccccc",
+              fontWeight: 900,
+            }}
+          >
+            {title || SITE_NAME}
+          </div>
+        </div>
         <img
           alt={title || SITE_SHORT_NAME}
           height={1080}
           src={coverImage || `${SITE_URL}/icon.png`}
           style={{
             width: "100%",
-            height: "65%",
+            height: "70%",
             objectFit: "cover",
             zIndex: 0,
           }}
@@ -42,36 +64,41 @@ export async function GET(request: Request) {
         <div
           style={{
             position: "absolute",
-            fontSize: 56,
-            color: "#cccccc",
+            bottom: "20px",
+            right: "20px",
+            width: "90px",
+            height: "90px",
+            zIndex: 1,
+            borderRadius: "50%",
+            backgroundColor: "#181818",
+            overflow: "hidden",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            textAlign: "center",
-            width: "80%",
-            bottom: "20px",
-            marginBottom: "40px",
-            fontWeight: 900,
-            zIndex: 1,
           }}
         >
-          {title || SITE_NAME}
+          <div
+            style={{
+              width: "85%",
+              height: "85%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+              borderRadius: "50%",
+            }}
+          >
+            <img
+              alt="Logo"
+              src={`${SITE_URL}/icon.png`}
+              style={{
+                width: "110px",
+                height: "110px",
+                objectFit: "contain",
+              }}
+            />
+          </div>
         </div>
-        <img
-          alt="Logo"
-          src={`${SITE_URL}/icon.png`}
-          style={{
-            width: "70px",
-            height: "70px",
-            position: "absolute",
-            top: "62%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            zIndex: 2,
-            borderRadius: "50%",
-          }}
-        />
       </div>
     ),
     {
