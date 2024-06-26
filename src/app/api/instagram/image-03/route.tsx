@@ -43,7 +43,7 @@ export async function GET(request: Request) {
           style={{
             position: "absolute",
             fontSize: 56,
-            color: "white",
+            color: "#cccccc",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -53,8 +53,6 @@ export async function GET(request: Request) {
             bottom: "20px",
             marginBottom: "40px",
             fontWeight: 900,
-            textShadow:
-              "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
             zIndex: 1,
           }}
         >
