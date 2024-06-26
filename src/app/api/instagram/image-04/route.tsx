@@ -49,7 +49,7 @@ export async function GET(request: Request) {
             bottom: "20px",
             marginBottom: "8%",
             fontWeight: 900,
-            backgroundColor: "linear-gradient(to bottom, #404040, #707070)",
+            background: "linear-gradient(to bottom, #2c2c2c, #a0a0a0)",
             padding: "20px",
             border: "2px solid white",
             borderRadius: "8px",
@@ -58,21 +58,28 @@ export async function GET(request: Request) {
             zIndex: 1,
           }}
         >
-          {title || SITE_NAME}
+          <img
+            alt="Logo"
+            src={`${SITE_URL}/icon.png`}
+            style={{
+              width: "50px",
+              height: "50px",
+              top: "-25px",
+              marginRight: "20px",
+              position: "absolute",
+              left: "20px",
+              zIndex: 3,
+              borderRadius: "50%",
+            }}
+          />
+          <div
+            style={{
+              left: "20px",
+            }}
+          >
+            {title || SITE_NAME}
+          </div>
         </div>
-        <img
-          alt="Logo"
-          src={`${SITE_URL}/icon.png`}
-          style={{
-            width: "70px",
-            height: "70px",
-            position: "absolute",
-            top: "10px",
-            right: "10px",
-            zIndex: 2,
-            borderRadius: "50%",
-          }}
-        />
       </div>
     ),
     {
