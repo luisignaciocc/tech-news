@@ -23,7 +23,7 @@ export async function GET(request: Request) {
           width: "100%",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "flex-start",
+          justifyContent: "space-between",
           position: "relative",
           backgroundColor: "#181818",
         }}
@@ -42,13 +42,15 @@ export async function GET(request: Request) {
         <div
           style={{
             position: "absolute",
-            fontSize: 50,
+            fontSize: 56,
             color: "white",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
+            justifyContent: "center",
+            textAlign: "center",
             width: "80%",
             bottom: "20px",
-            left: "70px",
             marginBottom: "40px",
             fontWeight: 900,
             textShadow:
@@ -65,8 +67,9 @@ export async function GET(request: Request) {
             width: "70px",
             height: "70px",
             position: "absolute",
-            top: "10px",
-            right: "10px",
+            top: "62%",
+            left: "50%",
+            transform: "translateX(-50%)",
             zIndex: 2,
             borderRadius: "50%",
           }}
