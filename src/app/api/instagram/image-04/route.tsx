@@ -58,20 +58,44 @@ export async function GET(request: Request) {
             zIndex: 1,
           }}
         >
-          <img
-            alt="Logo"
-            src={`${SITE_URL}/icon.png`}
+          <div
             style={{
-              width: "50px",
-              height: "50px",
-              top: "-25px",
-              marginRight: "20px",
               position: "absolute",
+              width: "65px",
+              height: "65px",
+              top: "-35px",
               left: "20px",
-              zIndex: 3,
+              zIndex: 2,
               borderRadius: "50%",
+              backgroundColor: "black",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
             }}
-          />
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: "50%",
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <img
+                alt="Logo"
+                src={`${SITE_URL}/icon.png`}
+                style={{
+                  width: "90",
+                  height: "90",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
+          </div>
           <div
             style={{
               left: "20px",
