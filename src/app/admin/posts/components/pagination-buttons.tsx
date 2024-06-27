@@ -6,13 +6,11 @@ import { Button } from "@/components/ui/button";
 interface PageNavigationProps {
   page: number;
   hasMorePages: boolean;
-  tab: string;
 }
 
 export default function PageNavigation({
   page,
   hasMorePages,
-  tab,
 }: PageNavigationProps) {
   return (
     <div className="flex justify-center space-x-4 mb-5">

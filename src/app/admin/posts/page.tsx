@@ -24,7 +24,6 @@ async function PostsPage({
       <PaginationButtons
         page={Number(searchParams?.page)}
         hasMorePages={response.hasMorePages}
-        tab={"deleted"}
       />
     </Fragment>
   );
