@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
-import PostsTable from "./components/deleted-table";
 import PaginationButtons from "./components/pagination-buttons";
+import PostsTable from "./components/posts-table";
 import { getPostsData } from "./utils/prisma";
 
 interface PostsData {
