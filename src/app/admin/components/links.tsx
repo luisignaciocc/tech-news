@@ -11,7 +11,7 @@ export const linksArray = [
   },
   {
     label: "Posts",
-    href: "/admin/posts",
+    href: "/admin/posts?page=1",
   },
 ];
 
