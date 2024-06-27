@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Dashboard Administrativo.",
+  title: "Posts",
+  description: "Posts Publicados.",
 };
 
 export default function Layout({
