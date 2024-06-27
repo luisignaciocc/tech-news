@@ -22,9 +22,6 @@ export default function Loading() {
           </TableHead>
           <TableHead className="w-1/6 text-right">
             <div className="flex justify-end space-x-2">
-              <div className="mr-2">
-                <Skeleton width={120} />
-              </div>
               <Skeleton width={25} height={25} />
               <Skeleton width={25} height={25} />
             </div>
