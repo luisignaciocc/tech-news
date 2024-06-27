@@ -21,7 +21,6 @@ export async function GET(request: Request) {
           display: "flex",
           height: "100%",
           width: "100%",
-          alignItems: "center",
           justifyContent: "center",
           position: "relative",
           backgroundColor: "black",
@@ -32,22 +31,24 @@ export async function GET(request: Request) {
           height={1080}
           src={coverImage || `${SITE_URL}/icon.png`}
           style={{
-            width: "100%",
-            height: "100%",
+            top: "150px",
+            width: "85%",
+            height: "50%",
             objectFit: "cover",
             zIndex: 0,
+            borderRadius: "4%",
           }}
         />
         <div
           style={{
             position: "absolute",
-            fontSize: 50,
+            fontSize: 58,
             color: "white",
             display: "flex",
             alignItems: "center",
             width: "80%",
-            bottom: "20px",
-            left: "70px",
+            bottom: "10px",
+            left: "90px",
             marginBottom: "40px",
             fontWeight: 900,
             textShadow:
