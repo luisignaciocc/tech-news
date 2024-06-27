@@ -1,6 +1,6 @@
 import { getToPublishData } from "../@topublish/utils/prisma";
 import PaginationButtons from "../components/pagination-buttons";
-import { CheckboxProvider } from "../context/checkbox-context";
+import { CheckboxProvider } from "../../../context/checkbox-context";
 import ToPublishTable from "./components/topublish-table";
 
 interface ToPublishDataResponse {

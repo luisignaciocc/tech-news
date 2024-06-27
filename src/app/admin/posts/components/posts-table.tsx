@@ -9,10 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { deletedPostUpdateNews } from "../utils/actions";
+import DeleteButton from "./delete-button";
+
 interface PostsData {
   id: string;
   title: string;
   coverImage: string;
+  newId: string;
 }
 
 interface DefaultTableProps {
@@ -42,7 +46,13 @@ function PostsTable({ data }: DefaultTableProps) {
                 />
                 <span className="font-medium">{item.title}</span>
               </TableCell>
-              <TableCell className="text-right px-4">Buttons</TableCell>
+              <TableCell className="text-right px-4">
+                <DeleteButton
+                  postId={item.id}
+                  newId={item.newId}
+                  onDelete={deletedPostUpdateNews}
+                />
+              </TableCell>
             </TableRow>
           ))
         ) : (

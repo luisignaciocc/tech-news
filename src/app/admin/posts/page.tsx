@@ -8,6 +8,7 @@ interface PostsData {
   id: string;
   title: string;
   coverImage: string;
+  newId: string;
 }
 
 async function PostsPage({

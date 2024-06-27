@@ -1,5 +1,5 @@
 import PaginationButtons from "../components/pagination-buttons";
-import { CheckboxProvider } from "../context/checkbox-context";
+import { CheckboxProvider } from "../../../context/checkbox-context";
 import DeletedTable from "./components/deleted-table";
 import { getDeletedData } from "./utils/prisma";
 

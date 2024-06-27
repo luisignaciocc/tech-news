@@ -14,7 +14,7 @@ import ActionsButtons from "../../components/actions-buttons";
 import { CheckboxColumn } from "../../components/checkbox-column";
 import MassiveActionsButtons from "../../components/massive-actions-buttons";
 import SelectAll from "../../components/select-all";
-import { CheckboxContext } from "../../context/checkbox-context";
+import { CheckboxContext } from "../../../../context/checkbox-context";
 import {
   updateDeletedAtNotNull,
   updateDeletedAtNotNullMany,

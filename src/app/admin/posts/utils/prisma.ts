@@ -11,6 +11,7 @@ export async function getPostsData(page: number, perPage: number) {
         id: true,
         title: true,
         coverImage: true,
+        newId: true,
       },
       orderBy: {
         createdAt: "desc",

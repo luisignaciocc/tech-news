@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext } from "react";
 
-import { CheckboxContext } from "../context/checkbox-context";
+import { CheckboxContext } from "../../../context/checkbox-context";
 
 const SelectAll: React.FC<{ shownIds: string[] }> = ({ shownIds }) => {
   const { handleSelectAll, selectedIds } = useContext(CheckboxContext);
