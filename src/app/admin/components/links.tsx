@@ -9,6 +9,10 @@ export const linksArray = [
     label: "Validación",
     href: "/admin/validation",
   },
+  {
+    label: "Posts",
+    href: "/admin/posts",
+  },
 ];
 
 interface LinksProps {
