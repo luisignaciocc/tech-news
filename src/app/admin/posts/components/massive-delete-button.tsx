@@ -5,12 +5,12 @@ import { FaTimesCircle } from "react-icons/fa";
 
 import { CheckboxContext } from "../../context/checkbox-context";
 
-interface DeleteButtonProps {
-  postId: string;
-  onDelete: (postId: string) => Promise<{ success: boolean; message: string }>;
+interface MassiveDeleteButtonProps {
+  postsIds: string[];
+  onDelete: (ids: string[]) => Promise<{ success: boolean; message: string }>;
 }
 
-function DeleteButton({ postId, onDelete }: DeleteButtonProps) {
+function MassiveDeleteButton({ postsIds, onDelete }: MassiveDeleteButtonProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { handleClearAll } = useContext(CheckboxContext);
@@ -18,7 +18,7 @@ function DeleteButton({ postId, onDelete }: DeleteButtonProps) {
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      const { success, message } = await onDelete(postId);
+      const { success, message } = await onDelete(postsIds);
       if (success) {
         router.refresh();
       } else {
@@ -45,4 +45,4 @@ function DeleteButton({ postId, onDelete }: DeleteButtonProps) {
   );
 }
 
-export default DeleteButton;
+export default MassiveDeleteButton;

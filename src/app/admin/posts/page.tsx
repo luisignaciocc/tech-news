@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 
+import { CheckboxProvider } from "../context/checkbox-context";
 import PaginationButtons from "./components/pagination-buttons";
 import PostsTable from "./components/posts-table";
 import { getPostsData } from "./utils/prisma";
@@ -21,7 +22,9 @@ async function PostsPage({
 
   return (
     <Fragment>
-      <PostsTable data={response.data as PostsData[]} />
+      <CheckboxProvider>
+        <PostsTable data={response.data as PostsData[]} />
+      </CheckboxProvider>
       <PaginationButtons
         page={Number(searchParams?.page)}
         hasMorePages={response.hasMorePages}

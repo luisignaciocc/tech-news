@@ -10,11 +10,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import ActionsButtons from "../../components/actions-buttons";
-import { CheckboxColumn } from "../../components/checkbox-column";
-import MassiveActionsButtons from "../../components/massive-actions-buttons";
-import SelectAll from "../../components/select-all";
+import { CheckboxColumn } from "../../../../components/checkbox-column";
+import SelectAll from "../../../../components/select-all";
 import { CheckboxContext } from "../../../../context/checkbox-context";
+import ActionsButtons from "../../components/actions-buttons";
+import MassiveActionsButtons from "../../components/massive-actions-buttons";
 import {
   updateDeletedAtNotNull,
   updateDeletedAtNotNullMany,
