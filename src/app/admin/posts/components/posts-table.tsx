@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useContext } from "react";
 
 import {
@@ -10,29 +11,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { CheckboxColumn } from "../../../../components/checkbox-column";
-import SelectAll from "../../../../components/select-all";
-import { CheckboxContext } from "../../../../context/checkbox-context";
-import ActionsButtons from "../../components/actions-buttons";
-import MassiveActionsButtons from "../../components/massive-actions-buttons";
+import { CheckboxColumn } from "../../components/checkbox-column";
+import SelectAll from "../../components/select-all";
+import { CheckboxContext } from "../../context/checkbox-context";
 import {
-  deleteNews,
-  deleteNewsMany,
-  updateDeletedAtNull,
-  updateDeletedAtNullMany,
+  deletedPostUpdateNews,
+  deletedPostUpdateNewsMany,
 } from "../utils/actions";
+import DeleteButton from "./delete-button";
+import MassiveDeleteButton from "./massive-delete-button";
 
-interface DeletedData {
+interface PostsData {
   id: string;
   title: string;
-  deletionReason: string;
+  coverImage: string;
+  newId: string;
 }
 
 interface DefaultTableProps {
-  data: DeletedData[];
+  data: PostsData[];
 }
 
-function DeletedTable({ data }: DefaultTableProps) {
+function PostsTable({ data }: DefaultTableProps) {
   const { selectedIds } = useContext(CheckboxContext);
 
   return (
@@ -43,10 +43,9 @@ function DeletedTable({ data }: DefaultTableProps) {
             <SelectAll shownIds={data?.map((item) => item.id) || []} />
           </TableHead>
           <TableHead className="w-1/6 text-end">
-            <MassiveActionsButtons
-              newsIds={selectedIds}
-              onUpdate={updateDeletedAtNullMany}
-              onDelete={deleteNewsMany}
+            <MassiveDeleteButton
+              postsIds={selectedIds}
+              onDelete={deletedPostUpdateNewsMany}
             />
           </TableHead>
         </TableRow>
@@ -58,17 +57,22 @@ function DeletedTable({ data }: DefaultTableProps) {
               <TableCell className="px-4">
                 <div className="flex items-center">
                   <CheckboxColumn id={item.id} />
-                  <div className="ml-4">
-                    <p className="font-medium">{item.title}</p>
-                    <p className="text-gray-600">{item.deletionReason}</p>
+                  <div className="ml-4 flex items-center">
+                    <Image
+                      src={item.coverImage}
+                      alt=""
+                      width={60}
+                      height={60}
+                      className="mr-4"
+                    />
+                    <span className="font-medium">{item.title}</span>
                   </div>
                 </div>
               </TableCell>
               <TableCell className="text-right px-4">
-                <ActionsButtons
-                  newsId={item.id}
-                  onUpdate={updateDeletedAtNull}
-                  onDelete={deleteNews}
+                <DeleteButton
+                  postId={item.id}
+                  onDelete={deletedPostUpdateNews}
                 />
               </TableCell>
             </TableRow>
@@ -85,4 +89,4 @@ function DeletedTable({ data }: DefaultTableProps) {
   );
 }
 
-export default DeletedTable;
+export default PostsTable;
