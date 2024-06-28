@@ -58,3 +58,39 @@ export async function updateStatus(sourceId: number) {
     };
   }
 }
+
+export async function consultSource(sourceId: number) {
+  try {
+    const data = await prisma.newsSource.findUnique({
+      where: {
+        id: sourceId,
+      },
+    });
+
+    if (!data) {
+      return {
+        success: false,
+        data: null,
+        message: `No se encontró ningún source con el ID ${sourceId}`,
+      };
+    }
+
+    return {
+      success: true,
+      data: {
+        id: data.id,
+        name: data.name,
+        url: data.url,
+        lastUpdateAt: data.lastUpdateAt,
+        isActive: data.isActive,
+      },
+      message: "Source encontrado exitosamente",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      data: null,
+      message: `Error al consultar el source con ID ${sourceId}: ${error}`,
+    };
+  }
+}
