@@ -1,4 +1,4 @@
-function SourcesPage() {
+async function SourcesPage() {
   return <div></div>;
 }
 
