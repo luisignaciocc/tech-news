@@ -8,6 +8,7 @@ export async function getSourcesData() {
       id: true,
       name: true,
       lastUpdateAt: true,
+      isActive: true,
     },
     orderBy: {
       lastUpdateAt: "desc",
@@ -35,7 +36,6 @@ export async function getSourcesData() {
 
       return {
         id: newsSource.id,
-        name: newsSource.name,
         newsCount,
       };
     }),

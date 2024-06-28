@@ -9,16 +9,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { deleteSource } from "../utils/actions";
+import ActionsButtons from "./actions-buttons";
+
 interface SourcesData {
   id: number;
   name: string;
   lastUpdateAt: Date;
+  isActive: boolean;
   newsCount: number;
 }
 
 interface NewsSourceWithCount {
   id: number;
-  name: string;
   newsCount: number;
 }
 
@@ -36,6 +39,7 @@ function SourcesTable({
           <TableHead className="w-1/3 px-4">Title</TableHead>
           <TableHead className="w-1/6">Last Update</TableHead>
           <TableHead className="w-1/6 text-center">News Count</TableHead>
+          <TableHead className="w-1/6 text-center">Active</TableHead>
           <TableHead className="w-1/6 text-end">Actions</TableHead>
         </TableRow>
       </TableHeader>
@@ -56,7 +60,20 @@ function SourcesTable({
               <TableCell className="text-center px-4">
                 {newsCount[index].newsCount}
               </TableCell>
-              <TableCell className="text-right px-4">Buttons</TableCell>
+              <TableCell className="text-center px-4">
+                {item.isActive ? (
+                  <span className="bg-green-500 text-white px-2 py-1 rounded-md">
+                    Active
+                  </span>
+                ) : (
+                  <span className="bg-red-500 text-white px-2 py-1 rounded-md">
+                    Inactive
+                  </span>
+                )}
+              </TableCell>
+              <TableCell className="text-right px-4">
+                <ActionsButtons sourceId={item.id} onDelete={deleteSource} />
+              </TableCell>
             </TableRow>
           ))
         ) : (

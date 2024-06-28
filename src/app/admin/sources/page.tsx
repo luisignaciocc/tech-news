@@ -1,3 +1,4 @@
+import { CheckboxProvider } from "../context/checkbox-context";
 import SourcesTable from "./components/sources-table";
 import { getSourcesData } from "./utils/prisma";
 
@@ -5,6 +6,7 @@ interface SourcesData {
   id: number;
   name: string;
   lastUpdateAt: Date;
+  isActive: boolean;
   newsCount: number;
 }
 
@@ -13,10 +15,12 @@ async function SourcesPage() {
 
   return (
     <div>
-      <SourcesTable
-        data={newsSources as SourcesData[]}
-        newsCount={newsSourcesWithCount}
-      />
+      <CheckboxProvider>
+        <SourcesTable
+          data={newsSources as SourcesData[]}
+          newsCount={newsSourcesWithCount}
+        />
+      </CheckboxProvider>
     </div>
   );
 }
