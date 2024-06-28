@@ -9,7 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { deleteSource } from "../utils/actions";
+import { deleteSource, updateStatus } from "../utils/actions";
 import ActionsButtons from "./actions-buttons";
 
 interface SourcesData {
@@ -72,7 +72,11 @@ function SourcesTable({
                 )}
               </TableCell>
               <TableCell className="text-right px-4">
-                <ActionsButtons sourceId={item.id} onDelete={deleteSource} />
+                <ActionsButtons
+                  sourceId={item.id}
+                  onUpdate={updateStatus}
+                  onDelete={deleteSource}
+                />
               </TableCell>
             </TableRow>
           ))
