@@ -7,6 +7,10 @@ export async function getSourcesData() {
     select: {
       id: true,
       name: true,
+      lastUpdateAt: true,
+    },
+    orderBy: {
+      lastUpdateAt: "desc",
     },
   });
 
