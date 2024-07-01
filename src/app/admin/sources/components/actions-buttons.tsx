@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 
 import Modal from "../../components/modal";
 import { CheckboxContext } from "../../context/checkbox-context";
+import { updateNewsSource } from "../utils/actions";
 
 interface ActionsButtonsProps {
   sourceId: number;
@@ -33,6 +34,7 @@ interface ActionsButtonsProps {
 }
 
 interface FormData {
+  id: number;
   name: string;
   url: string;
   isActive: boolean;
@@ -46,7 +48,8 @@ function ActionsButtons({
 }: ActionsButtonsProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { handleClearAll } = useContext(CheckboxContext);
+
   const [sourceData, setSourceData] = useState<{
     id: number;
     name: string;
@@ -54,8 +57,9 @@ function ActionsButtons({
     lastUpdateAt: Date;
     isActive: boolean;
   } | null>(null);
-  const { handleClearAll } = useContext(CheckboxContext);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isLoadingModal, setIsLoadingModal] = useState(false);
 
   const handleEdit = async () => {
     try {
@@ -88,12 +92,32 @@ function ActionsButtons({
     setValue,
   } = useForm<FormData>();
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    alert(JSON.stringify({ ...data, isActive: isChecked }));
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      setIsLoadingModal(true);
+      const { success, message } = await updateNewsSource(
+        data.id,
+        data.name,
+        data.url,
+        isChecked,
+      );
+      if (success) {
+        router.refresh();
+      } else {
+        console.error(message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      handleClearAll();
+      setIsLoadingModal(false);
+      handleModalClose();
+    }
   };
 
   useEffect(() => {
     if (sourceData) {
+      setValue("id", sourceData.id);
       setValue("name", sourceData.name);
       setValue("url", sourceData.url);
       setIsChecked(sourceData.isActive);
@@ -169,8 +193,11 @@ function ActionsButtons({
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-medium">Edit Source</h2>
               <button
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                className={`text-gray-500 hover:text-gray-700 focus:outline-none ${
+                  isLoading ? "text-gray-400 hover:text-gray-400" : ""
+                }`}
                 onClick={handleModalClose}
+                disabled={isLoadingModal}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -189,6 +216,12 @@ function ActionsButtons({
             <hr />
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="space-y-4 mt-4">
+                <input
+                  type="hidden"
+                  id="sourceId"
+                  name="sourceId"
+                  value={sourceData.id}
+                />
                 <div>
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -255,8 +288,22 @@ function ActionsButtons({
                 </div>
               </div>
               <div className="flex justify-end mt-4 space-x-2">
-                <Button type="submit">Save</Button>
-                <Button variant="secondary" onClick={handleModalClose}>
+                <Button
+                  type="submit"
+                  disabled={isLoadingModal}
+                  className={
+                    isLoading
+                      ? "text-gray-400 hover:text-gray-400 cursor-not-allowed"
+                      : ""
+                  }
+                >
+                  Save
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={handleModalClose}
+                  disabled={isLoadingModal}
+                >
                   Cancel
                 </Button>
               </div>

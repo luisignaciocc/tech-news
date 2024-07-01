@@ -94,3 +94,33 @@ export async function consultSource(sourceId: number) {
     };
   }
 }
+
+export async function updateNewsSource(
+  id: number,
+  name: string,
+  url: string,
+  isActive: boolean,
+): Promise<{ success: boolean; message: string }> {
+  try {
+    await prisma.newsSource.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name: name,
+        url: url,
+        isActive: isActive,
+      },
+    });
+
+    return {
+      success: true,
+      message: `Source con ID ${id} actualizado exitosamente.`,
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Error al actualizar el Source con ID ${id}: ${error}`,
+    };
+  }
+}
