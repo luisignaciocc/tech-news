@@ -124,3 +124,29 @@ export async function updateNewsSource(
     };
   }
 }
+
+export async function createSource(
+  name: string,
+  url: string,
+  isActive: boolean,
+): Promise<{ success: boolean; message: string }> {
+  try {
+    await prisma.newsSource.create({
+      data: {
+        name,
+        url,
+        isActive,
+      },
+    });
+
+    return {
+      success: true,
+      message: "Source creado exitosamente.",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: `Error al crear el Source: ${error}`,
+    };
+  }
+}

@@ -1,12 +1,15 @@
 "use client";
-import { useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import Modal from "../../components/modal";
+import { CheckboxContext } from "../../context/checkbox-context";
+import { createSource } from "../utils/actions";
 
 interface FormData extends FieldValues {
   name: string;
@@ -15,7 +18,11 @@ interface FormData extends FieldValues {
 }
 
 function AddSource() {
+  const router = useRouter();
+  const { handleClearAll } = useContext(CheckboxContext);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoadingModal, setIsLoadingModal] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -33,8 +40,30 @@ function AddSource() {
     reset,
   } = useForm<FormData>();
 
-  const onSubmit = (data: FieldValues) => {
-    alert(JSON.stringify(data));
+  // const onSubmit = (data: FieldValues) => {
+  //   alert(JSON.stringify(data));
+  // };
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    try {
+      setIsLoadingModal(true);
+      const { success, message } = await createSource(
+        data.name,
+        data.url,
+        data.isActive,
+      );
+      if (success) {
+        router.refresh();
+      } else {
+        console.error(message);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      handleClearAll();
+      setIsLoadingModal(false);
+      handleCloseModal();
+    }
   };
 
   return (
@@ -48,7 +77,13 @@ function AddSource() {
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-bold">Add Source</h2>
-          <button onClick={handleCloseModal}>
+          <button
+            className={`text-gray-500 hover:text-gray-700 focus:outline-none ${
+              isLoadingModal ? "text-gray-400 hover:text-gray-400" : ""
+            }`}
+            onClick={handleCloseModal}
+            disabled={isLoadingModal}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -106,12 +141,21 @@ function AddSource() {
             </div>
           </div>
           <div className="flex justify-end mt-4 space-x-2">
-            <Button type="submit">Save</Button>
             <Button
-              type="button"
+              type="submit"
+              disabled={isLoadingModal}
+              className={
+                isLoadingModal
+                  ? "text-gray-400 hover:text-gray-400 cursor-not-allowed"
+                  : ""
+              }
+            >
+              Save
+            </Button>
+            <Button
               variant="secondary"
-              className="mr-2"
               onClick={handleCloseModal}
+              disabled={isLoadingModal}
             >
               Cancel
             </Button>
