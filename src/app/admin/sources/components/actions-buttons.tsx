@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { Fragment, useContext, useEffect, useState } from "react";
-import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
@@ -228,17 +228,10 @@ function ActionsButtons({
                     type="text"
                     id="name"
                     defaultValue={sourceData.name}
-                    {...register("name", {
-                      required: {
-                        value: true,
-                        message: "Username is required",
-                      },
-                    })}
+                    {...register("name", { required: true })}
                   />
                   {errors.name && (
-                    <div className="text-red-500">
-                      {(errors.name as FieldError).message}
-                    </div>
+                    <span className="text-red-500">This field is required</span>
                   )}
                 </div>
                 <div>
@@ -248,16 +241,14 @@ function ActionsButtons({
                     id="url"
                     defaultValue={sourceData.url}
                     {...register("url", {
-                      required: {
-                        value: true,
-                        message: "URL is required",
-                      },
+                      required: true,
+                      pattern: /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                     })}
                   />
                   {errors.url && (
-                    <div className="text-red-500">
-                      {(errors.url as FieldError).message}
-                    </div>
+                    <span className="text-red-500">
+                      Please enter a valid URL
+                    </span>
                   )}
                 </div>
                 <div>
