@@ -191,9 +191,9 @@ function ActionsButtons({
       </div>
       <Modal isOpen={isModalOpen} onClose={handleModalClose}>
         {sourceData && (
-          <div className="p-6">
+          <Fragment>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-medium">Edit Source</h2>
+              <h2 className="text-2xl font-bold">Edit Source</h2>
               <button
                 className={`text-gray-500 hover:text-gray-700 focus:outline-none ${
                   isLoading ? "text-gray-400 hover:text-gray-400" : ""
@@ -301,7 +301,7 @@ function ActionsButtons({
                 </Button>
               </div>
             </form>
-          </div>
+          </Fragment>
         )}
       </Modal>
     </Fragment>

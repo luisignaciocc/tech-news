@@ -63,37 +63,49 @@ function AddSource() {
             </svg>
           </button>
         </div>
+        <hr />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-4">
-            <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              id="name"
-              {...register("name", { required: true })}
-            />
-            {errors.name && (
-              <span className="text-red-500">This field is required</span>
-            )}
+          <div className="space-y-4 mt-4">
+            <div>
+              <Label htmlFor="name">Name</Label>
+              <Input
+                type="text"
+                id="name"
+                {...register("name", { required: true })}
+              />
+              {errors.name && (
+                <span className="text-red-500">This field is required</span>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="url">URL</Label>
+              <Input
+                type="text"
+                id="url"
+                {...register("url", {
+                  required: true,
+                  pattern: /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                })}
+              />
+              {errors.url && (
+                <span className="text-red-500">Please enter a valid URL</span>
+              )}
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="items-top flex space-x-2">
+                <input
+                  type="checkbox"
+                  id="isActive"
+                  {...register("isActive")}
+                />
+
+                <div className="grid gap-1.5 leading-none">
+                  <Label htmlFor="isActive"> Is Active</Label>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="mb-4">
-            <Label htmlFor="url">URL</Label>
-            <Input
-              type="text"
-              id="url"
-              {...register("url", {
-                required: true,
-                pattern: /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              })}
-            />
-            {errors.url && (
-              <span className="text-red-500">Please enter a valid URL</span>
-            )}
-          </div>
-          <div className="mb-4">
-            <input type="checkbox" id="isActive" {...register("isActive")} />
-            <Label htmlFor="isActive"> Is Active</Label>
-          </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-4 space-x-2">
             <Button type="submit">Save</Button>
             <Button
               type="button"
