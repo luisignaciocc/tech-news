@@ -41,13 +41,13 @@ export async function GET(request: Request) {
         <div
           style={{
             position: "absolute",
-            fontSize: 50,
+            fontSize: 60,
             color: "white",
             display: "flex",
             alignItems: "center",
-            width: "80%",
-            bottom: "20px",
-            left: "70px",
+            textAlign: "center",
+            width: "90%",
+            bottom: "80px",
             marginBottom: "40px",
             fontWeight: 900,
             textShadow:
