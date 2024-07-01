@@ -83,6 +83,7 @@ function ActionsButtons({
   const handleModalClose = () => {
     setIsModalOpen(false);
     setSourceData(null);
+    reset();
   };
 
   const {
@@ -90,6 +91,7 @@ function ActionsButtons({
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
