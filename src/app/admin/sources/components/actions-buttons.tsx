@@ -5,7 +5,6 @@ import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -56,6 +55,7 @@ function ActionsButtons({
     isActive: boolean;
   } | null>(null);
   const { handleClearAll } = useContext(CheckboxContext);
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleEdit = async () => {
     try {
@@ -63,6 +63,7 @@ function ActionsButtons({
       const { success, data, message } = await onEdit(sourceId);
       if (success) {
         setSourceData(data);
+        setIsChecked(data?.isActive ?? false);
         setIsModalOpen(true);
       } else {
         console.error(message);
@@ -88,16 +89,20 @@ function ActionsButtons({
   } = useForm<FormData>();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    alert(JSON.stringify(data));
+    alert(JSON.stringify({ ...data, isActive: isChecked }));
   };
 
   useEffect(() => {
     if (sourceData) {
       setValue("name", sourceData.name);
       setValue("url", sourceData.url);
-      setValue("isActive", sourceData.isActive);
+      setIsChecked(sourceData.isActive);
     }
   }, [sourceData, setValue]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+  };
 
   const handleUpdate = async () => {
     try {
@@ -236,10 +241,12 @@ function ActionsButtons({
                 </div>
                 <div className="flex items-center space-x-2">
                   <div className="items-top flex space-x-2">
-                    <Checkbox
+                    <input
+                      type="checkbox"
                       id="isActive"
                       name="isActive"
-                      defaultChecked={sourceData.isActive}
+                      checked={isChecked}
+                      onChange={handleChange}
                     />
                     <div className="grid gap-1.5 leading-none">
                       <Label htmlFor="isActive">Is Active</Label>
