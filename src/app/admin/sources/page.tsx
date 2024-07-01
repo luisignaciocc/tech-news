@@ -1,4 +1,5 @@
 import { CheckboxProvider } from "../context/checkbox-context";
+import AddSource from "./components/add-source";
 import SourcesTable from "./components/sources-table";
 import { getSourcesData } from "./utils/prisma";
 
@@ -16,6 +17,7 @@ async function SourcesPage() {
   return (
     <div>
       <CheckboxProvider>
+        <AddSource />
         <SourcesTable
           data={newsSources as SourcesData[]}
           newsCount={newsSourcesWithCount}
