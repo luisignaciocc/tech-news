@@ -53,7 +53,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const res = await fetch("https://api.linkedin.com/rest/posts", {
       method: "POST",
       headers: {
-        "LinkedIn-Version": "202305",
+        "LinkedIn-Version": "202406",
         "X-Restli-Protocol-Version": "2.0.0",
         Authorization: `Bearer ${ACESS_TOKEN}`,
         "Content-Type": "application/json",
