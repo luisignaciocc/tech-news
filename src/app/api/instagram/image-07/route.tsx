@@ -2,7 +2,7 @@
 import { ImageResponse } from "next/og";
 
 // import { NextResponse } from "next/server";
-import { SITE_NAME, SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
+import { SITE_URL } from "@/lib/metadata";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -24,11 +24,10 @@ export async function GET(request: Request) {
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
-          backgroundColor: "black",
         }}
       >
         <img
-          alt={title || SITE_SHORT_NAME}
+          alt={title || "Site Short Name"}
           height={1080}
           src={coverImage || `${SITE_URL}/icon.png`}
           style={{
@@ -36,6 +35,17 @@ export async function GET(request: Request) {
             height: "100%",
             objectFit: "cover",
             zIndex: 0,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "60%",
+            bottom: 0,
+            backgroundImage:
+              "linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)",
+            zIndex: 1, // Actualizado a 1 para estar detrás del texto
           }}
         />
         <div
@@ -52,10 +62,10 @@ export async function GET(request: Request) {
             fontWeight: 900,
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
-            zIndex: 1,
+            zIndex: 2, // Actualizado a 2 para estar delante del degradado
           }}
         >
-          {title || SITE_NAME}
+          {title || "Site Name"}
         </div>
         <img
           alt="Logo"
@@ -66,7 +76,7 @@ export async function GET(request: Request) {
             position: "absolute",
             top: "10px",
             right: "10px",
-            zIndex: 2,
+            zIndex: 3, // Actualizado a 3 para estar delante de todo
             borderRadius: "50%",
           }}
         />
