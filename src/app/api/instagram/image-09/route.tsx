@@ -111,7 +111,7 @@ export async function GET(request: Request) {
           </span>
           <div
             style={{
-              width: "65%",
+              width: "80%",
               height: "2px",
               backgroundColor: "white",
               marginTop: "10px",
