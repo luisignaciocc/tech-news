@@ -46,17 +46,15 @@ export async function GET(request: Request) {
             display: "flex",
             alignItems: "center",
             width: "90%",
+            height: "250px",
             bottom: "20px",
             marginBottom: "8%",
             fontWeight: 900,
-            background: "linear-gradient(to bottom, #2c2c2c, #a0a0a0)",
+            background: "#003366",
             padding: "20px",
-            border: "2px solid white",
-            borderRadius: "8px",
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
             zIndex: 1,
-            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
           {title || SITE_NAME}
