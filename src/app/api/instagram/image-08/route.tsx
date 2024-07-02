@@ -131,6 +131,64 @@ export async function GET(request: Request) {
             }}
           />
         </div>
+        <span
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            width: "50px",
+            height: "50px",
+            backgroundColor: "#ff9500",
+            top: "65%",
+            left: "55px",
+            position: "absolute",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            borderRadius: "50%",
+          }}
+        />
+        <span
+          style={{
+            fontSize: 30,
+            display: "flex",
+            flexWrap: "wrap",
+            width: "200px",
+            height: "50px",
+            backgroundColor: "#ff9500",
+            top: "65%",
+            left: "120px",
+            position: "absolute",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "black",
+            borderRadius: "25px",
+          }}
+        >
+          Tecnología
+        </span>
+        <span
+          style={{
+            fontSize: 30,
+            display: "flex",
+            flexWrap: "wrap",
+            width: "320px",
+            height: "50px",
+            backgroundColor: "black",
+            top: "65%",
+            left: "350px",
+            position: "absolute",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            borderRadius: "25px",
+            border: "2px solid white",
+          }}
+        >
+          {new Date().toLocaleString("es-ES", {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+          })}
+        </span>
       </div>
     ),
     {
