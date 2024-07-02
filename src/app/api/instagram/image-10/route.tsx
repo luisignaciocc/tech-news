@@ -45,7 +45,7 @@ export async function GET(request: Request) {
             color: "white",
             display: "flex",
             alignItems: "center",
-            width: "85%",
+            width: "90%",
             bottom: "20px",
             marginBottom: "8%",
             fontWeight: 900,
@@ -56,53 +56,47 @@ export async function GET(request: Request) {
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
             zIndex: 1,
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
+          {title || SITE_NAME}
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "350px",
+            right: "-100px",
+            transform: "translateX(-50%)",
+            display: "flex",
+            alignItems: "center",
+            width: "380px",
+            height: "80px",
+            backgroundColor: "white",
+            zIndex: 2,
+          }}
+        >
+          <img
+            alt="Logo"
+            src={`${SITE_URL}/icon-accent.png`}
+            style={{
+              width: "90px",
+              height: "90px",
+              left: 0,
+              objectFit: "contain",
+            }}
+          />
+          <div style={{ marginLeft: "-10px", fontSize: 40 }}>| TECNOLOGÍA</div>
           <div
             style={{
               position: "absolute",
-              width: "65px",
-              height: "65px",
-              top: "-35px",
-              left: "20px",
-              zIndex: 2,
-              borderRadius: "50%",
-              backgroundColor: "black",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              overflow: "hidden",
+              bottom: "-10px",
+              right: "30px",
+              width: "30px",
+              height: "30px",
+              backgroundColor: "#fff",
+              transform: "rotate(45deg)",
             }}
-          >
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                borderRadius: "50%",
-                overflow: "hidden",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                alt="Logo"
-                src={`${SITE_URL}/icon.png`}
-                style={{
-                  width: "90",
-                  height: "90",
-                  objectFit: "contain",
-                }}
-              />
-            </div>
-          </div>
-          <div
-            style={{
-              left: "20px",
-            }}
-          >
-            {title || SITE_NAME}
-          </div>
+          />
         </div>
       </div>
     ),
