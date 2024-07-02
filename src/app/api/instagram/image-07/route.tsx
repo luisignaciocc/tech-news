@@ -45,7 +45,7 @@ export async function GET(request: Request) {
             bottom: 0,
             backgroundImage:
               "linear-gradient(to top, rgba(0,0,0,1) 10%, rgba(0,0,0,0) 100%)",
-            zIndex: 1, // Actualizado a 1 para estar detrás del texto
+            zIndex: 1,
           }}
         />
         <div
@@ -62,24 +62,38 @@ export async function GET(request: Request) {
             fontWeight: 900,
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
-            zIndex: 2, // Actualizado a 2 para estar delante del degradado
+            zIndex: 2,
           }}
         >
           {title || "Site Name"}
         </div>
-        <img
-          alt="Logo"
-          src={`${SITE_URL}/icon-accent.png`}
+        <div
           style={{
-            width: "70px",
-            height: "70px",
             position: "absolute",
-            top: "10px",
-            right: "10px",
-            zIndex: 3, // Actualizado a 3 para estar delante de todo
+            top: 90,
+            left: 120,
+            width: "90px",
+            height: "90px",
+            zIndex: 1,
+            backgroundColor: "#181818",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
             borderRadius: "50%",
           }}
-        />
+        >
+          <img
+            alt="Logo"
+            src={`${SITE_URL}/icon.png`}
+            style={{
+              width: "140px",
+              height: "140px",
+              objectFit: "contain",
+              borderRadius: "50%",
+            }}
+          />
+        </div>
       </div>
     ),
     {
