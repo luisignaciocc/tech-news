@@ -96,6 +96,41 @@ export async function GET(request: Request) {
             />
           </div>
         </div>
+        <div
+          style={{
+            width: "90%",
+            bottom: 15,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 30,
+              display: "flex",
+              flexWrap: "wrap",
+              padding: "10px 0px",
+              width: "100%",
+              backgroundColor: "black",
+              color: "white",
+              lineHeight: 0.6,
+            }}
+          >
+            {SITE_SHORT_NAME}
+          </span>
+          <div
+            style={{
+              width: "65%",
+              height: "2px",
+              backgroundColor: "white",
+              marginTop: "10px",
+              marginRight: "40px",
+              justifyContent: "flex-end",
+            }}
+          />
+        </div>
       </div>
     ),
     {
