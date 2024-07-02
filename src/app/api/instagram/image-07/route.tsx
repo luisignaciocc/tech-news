@@ -2,7 +2,7 @@
 import { ImageResponse } from "next/og";
 
 // import { NextResponse } from "next/server";
-import { SITE_URL } from "@/lib/metadata";
+import { SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -93,6 +93,47 @@ export async function GET(request: Request) {
               borderRadius: "50%",
             }}
           />
+        </div>
+        <div
+          style={{
+            position: "absolute",
+            bottom: "0",
+            right: "0",
+            width: "180px",
+            height: "80px",
+            zIndex: 1,
+            backgroundColor: "#B22222",
+            overflow: "hidden",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        />
+        <div
+          style={{
+            width: "30%",
+            bottom: 15,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 30,
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              padding: "10px 0px",
+              width: "100%",
+              textAlign: "center",
+              backgroundColor: "black",
+              color: "white",
+              lineHeight: 0.6,
+            }}
+          >
+            {SITE_SHORT_NAME}
+          </span>
         </div>
       </div>
     ),
