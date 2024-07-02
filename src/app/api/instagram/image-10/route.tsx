@@ -21,7 +21,7 @@ export async function GET(request: Request) {
           display: "flex",
           height: "100%",
           width: "100%",
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "center",
           position: "relative",
           backgroundColor: "black",
@@ -29,11 +29,11 @@ export async function GET(request: Request) {
       >
         <img
           alt={title || SITE_SHORT_NAME}
-          height={1080}
+          height={Math.floor(1080 * 0.9)}
           src={coverImage || `${SITE_URL}/icon.png`}
           style={{
             width: "100%",
-            height: "100%",
+            height: "75%",
             objectFit: "cover",
             zIndex: 0,
           }}
@@ -95,6 +95,59 @@ export async function GET(request: Request) {
               transform: "rotate(45deg)",
             }}
           />
+        </div>
+        <div
+          style={{
+            bottom: 30,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <span
+            style={{
+              fontSize: 28,
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              padding: "10px 0px",
+              width: "100%",
+              textAlign: "center",
+              backgroundColor: "black",
+              color: "white",
+              lineHeight: 0.6,
+              letterSpacing: "0.1em",
+            }}
+          >
+            ENTÉRATE DE TODOS LOS DETALLES EN&nbsp;
+            <img
+              src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
+              alt="Flecha"
+              style={{
+                width: "1.5em",
+                height: "1em",
+                marginRight: "-1em",
+              }}
+            />
+            <img
+              src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
+              alt="Flecha"
+              style={{
+                width: "1.5em",
+                height: "1em",
+                marginRight: "-1em",
+              }}
+            />
+            <img
+              src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
+              alt="Flecha"
+              style={{
+                width: "1.5em",
+                height: "1em",
+              }}
+            />
+            &nbsp;{SITE_SHORT_NAME}
+          </span>
         </div>
       </div>
     ),
