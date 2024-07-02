@@ -79,10 +79,11 @@ export async function GET(request: Request) {
         >
           <div
             style={{
+              position: "relative",
+              width: "75px",
+              height: "75px",
               left: "-100px",
               top: "-5px",
-              width: "25%",
-              height: "25%",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -94,6 +95,7 @@ export async function GET(request: Request) {
               alt="Logo"
               src={`${SITE_URL}/icon.png`}
               style={{
+                top: "-1px",
                 width: "110px",
                 height: "110px",
                 objectFit: "contain",
