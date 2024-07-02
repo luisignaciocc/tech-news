@@ -13,6 +13,10 @@ export const linksArray = [
     label: "Posts",
     href: "/admin/posts?page=1",
   },
+  {
+    label: "Sources",
+    href: "/admin/sources",
+  },
 ];
 
 interface LinksProps {
