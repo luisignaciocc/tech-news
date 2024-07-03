@@ -108,8 +108,8 @@ importers:
         specifier: ^2.2.6
         version: 2.2.6
       openai:
-        specifier: ^4.52.2
-        version: 4.52.2
+        specifier: ^4.52.3
+        version: 4.52.3
       prisma:
         specifier: ^5.16.1
         version: 5.16.1
@@ -3186,8 +3186,8 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
-  openai@4.52.2:
-    resolution: {integrity: sha512-mMc0XgFuVSkcm0lRIi8zaw++otC82ZlfkCur1qguXYWPETr/+ZwL9A/vvp3YahX+shpaT6j03dwsmUyLAfmEfg==}
+  openai@4.52.3:
+    resolution: {integrity: sha512-IyQLYKGYoEEkUCEm2frPzwHDJ3Ym663KtivnY6pWCzuoi6/HgSIMMxpcuTRS81GH6tiULPYGmTxIvzXdmPIWOw==}
     hasBin: true
 
   openid-client@5.6.5:
@@ -3455,6 +3455,7 @@ packages:
     engines: {node: '>=0.6.0', teleport: '>=0.2.0'}
     deprecated: |-
       You or someone you depend on is using Q, the JavaScript Promise library that gave JavaScript developers strong feelings about promises. They can almost certainly migrate to the native JavaScript promise now. Thank you literally everyone for joining me in this bet against the odds. Be excellent to each other.
+
       (For a CapTP with native promises, see @endo/eventual-send and @endo/captp)
 
   qs@6.10.4:
@@ -7588,7 +7589,7 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
-  openai@4.52.2:
+  openai@4.52.3:
     dependencies:
       '@types/node': 18.19.39
       '@types/node-fetch': 2.6.11
