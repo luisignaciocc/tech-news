@@ -14,6 +14,7 @@ import {
 } from "@/lib/metadata";
 
 import Header from "./components/header";
+import NewsCard from "./components/news-card";
 import { PostBody } from "./components/post-body";
 import { PostHeader } from "./components/post-header";
 
@@ -29,6 +30,16 @@ export default async function Post({ params }: Params) {
   return (
     <main>
       <Container>
+        <div className="flex flex-wrap justify-center gap-4">
+          {[0, 1, 2, 3].map((_, index) => (
+            <NewsCard
+              key={index}
+              imageUrl={post.coverImage}
+              title={post.title}
+              tags={post.tags}
+            />
+          ))}
+        </div>
         <Header />
         <article className="mb-32">
           <PostHeader
