@@ -57,6 +57,7 @@ export default async function Post({ params }: Params) {
             coverImage={post.coverImage}
             date={post.createdAt}
             tags={post.tags}
+            excerpt={post.excerpt}
           />
           <PostBody content={content} />
         </div>

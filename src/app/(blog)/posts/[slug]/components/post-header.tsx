@@ -1,21 +1,22 @@
 import Link from "next/link";
-import React from "react";
+import React, { Fragment } from "react";
 
 import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
+
+import markdownStyles from "./markdown-styles.module.css";
 
 type Props = {
   title: string;
   coverImage: string | null;
   date: Date;
   tags: { id: number; name: string }[];
+  excerpt: string | null;
 };
 
-export function PostHeader({ title, coverImage, date, tags }: Props) {
+export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
   return (
-    <>
-      {/* <PostTitle>{title}</PostTitle> */}
-
+    <Fragment>
       <div className="mb-6 md:mb-6">
         <CoverImage title={title} src={coverImage || "/api/preview-image"} />
       </div>
@@ -37,7 +38,8 @@ export function PostHeader({ title, coverImage, date, tags }: Props) {
           <DateFormatter date={date} />
         </div>
       </div>
-      <h1 className="text-4xl font-bold mb-2">{title}</h1>
-    </>
+      <h1 className="text-4xl font-bold mb-4">{title}</h1>
+      <h2 className={markdownStyles["markdown"]}>{excerpt}</h2>
+    </Fragment>
   );
 }
