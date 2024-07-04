@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Container from "@/components/container";
-import { getPostBySlug, getPostSlugs } from "@/lib/api";
+import { getPostBySlug, getPostsCards, getPostSlugs } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import {
   defaultMetadata,
@@ -21,6 +21,8 @@ import { PostHeader } from "./components/post-header";
 export default async function Post({ params }: Params) {
   const post = await getPostBySlug(params.slug);
 
+  const slugsCard = await getPostsCards(post?.id || "", 4);
+
   if (!post) {
     return notFound();
   }
@@ -31,16 +33,17 @@ export default async function Post({ params }: Params) {
     <main>
       <Container>
         <div className="flex flex-wrap justify-center gap-6">
-          {[0, 1, 2, 3].map((_, index) => (
+          {slugsCard.map((post, index) => (
             <div
               key={index}
               className="relative flex items-center max-w-[280px] mt-12 mr-5"
             >
               <NewsCard
                 key={index}
-                imageUrl={post.coverImage}
+                imageUrl={post.coverImage || ""}
                 title={post.title}
                 tags={post.tags}
+                slug={post.slug}
               />
               {index < 3 && (
                 <div className="absolute right-[-5px] bottom-1 h-24 border-r border-gray-300" />

@@ -1,26 +1,32 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 interface NewsCardProps {
   imageUrl: string | null;
   title: string;
   tags: { id: number; name: string }[];
+  slug: string;
 }
 
-const NewsCard: React.FC<NewsCardProps> = ({ imageUrl, title, tags }) => {
+const NewsCard: React.FC<NewsCardProps> = ({ imageUrl, title, tags, slug }) => {
   return (
-    <div className="flex items-center w-full max-w-[280px] mt-12">
+    <div className="flex items-center w-full max-w-[280px] mt-3">
       <div className="w-1/3">
-        <Image
-          src={imageUrl || "https://via.placeholder.com/150x150"}
-          alt={title}
-          className="w-full h-full object-cover"
-          width={200}
-          height={200}
-        />
+        <Link href={`/posts/${slug}`}>
+          <Image
+            src={imageUrl || ""}
+            alt={title}
+            className="w-full h-full object-cover"
+            width={200}
+            height={200}
+          />
+        </Link>
       </div>
       <div className="w-2/3 p-2">
-        <h3 className="text-xs font-bold mb-1 line-clamp-3">{title}</h3>
+        <h3 className="text-xs font-bold mb-1 line-clamp-3 hover:text-red-600">
+          <Link href={`/posts/${slug}`}>{title}</Link>
+        </h3>
         <p className="text-red-600 text-xs line-clamp-2">
           {tags.map((tag) => tag.name.toUpperCase()).join(", ")}
         </p>

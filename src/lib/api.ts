@@ -38,6 +38,24 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
+export async function getPostsCards(id: string, limit: number) {
+  return prisma.post.findMany({
+    where: {
+      id: {
+        not: id,
+      },
+    },
+    select: {
+      id: true,
+      coverImage: true,
+      title: true,
+      slug: true,
+      tags: true,
+    },
+    take: limit,
+  });
+}
+
 export const getPosts = async (params?: {
   page?: number;
   perPage?: number;
