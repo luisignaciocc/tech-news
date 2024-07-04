@@ -31,7 +31,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ imageUrl, title, tags, slug }) => {
           {tags.map((tag, index) => (
             <React.Fragment key={index}>
               <Link href={`/posts/tags/${tag.name}`}>
-                <span className="mr-1">{tag.name.toUpperCase()}</span>
+                <span className="">{tag.name.toUpperCase()}</span>
               </Link>
               {index < tags.length - 1 && ", "}
             </React.Fragment>

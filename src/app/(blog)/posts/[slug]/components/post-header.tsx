@@ -1,37 +1,43 @@
-import Avatar from "@/components/avatar";
+import Link from "next/link";
+import React from "react";
+
 import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
-
-import { PostTitle } from "./post-title";
 
 type Props = {
   title: string;
   coverImage: string | null;
   date: Date;
-  author: {
-    name: string;
-    picture: string;
-  };
+  tags: { id: number; name: string }[];
 };
 
-export function PostHeader({ title, coverImage, date, author }: Props) {
+export function PostHeader({ title, coverImage, date, tags }: Props) {
   return (
     <>
-      <PostTitle>{title}</PostTitle>
-      <div className="hidden md:block md:mb-12">
-        <Avatar name={author.name} picture={author.picture} />
-      </div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
+      {/* <PostTitle>{title}</PostTitle> */}
+
+      <div className="mb-6 md:mb-6">
         <CoverImage title={title} src={coverImage || "/api/preview-image"} />
       </div>
-      <div className="max-w-2xl mx-auto">
-        <div className="block md:hidden mb-6">
-          <Avatar name={author.name} picture={author.picture} />
+      <div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start">
+        <div className="text-red-600 flex flex-wrap">
+          {tags.map((tag, index) => (
+            <React.Fragment key={index}>
+              <Link href={`/posts/tags/${tag.name}`}>
+                <span>{tag.name.toUpperCase()}</span>
+              </Link>
+              {index < tags.length - 1 && (
+                <span className="mr-1 inline">,</span>
+              )}
+            </React.Fragment>
+          ))}
         </div>
-        <div className="mb-6 text-lg">
+        <span className="ml-2 mr-2 hidden sm:inline">|</span>
+        <div className="flex items-start">
           <DateFormatter date={date} />
         </div>
       </div>
+      <h1 className="text-4xl font-bold mb-2">{title}</h1>
     </>
   );
 }
