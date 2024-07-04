@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-interface NewsCardProps {
+interface PostCardProps {
   imageUrl: string | null;
   title: string;
   tags: { id: number; name: string }[];
   slug: string;
 }
 
-const NewsCard: React.FC<NewsCardProps> = ({ imageUrl, title, tags, slug }) => {
+const PostCard: React.FC<PostCardProps> = ({ imageUrl, title, tags, slug }) => {
   return (
     <div className="flex items-center w-full max-w-[280px] mt-3">
       <div className="w-1/3">
@@ -42,4 +42,4 @@ const NewsCard: React.FC<NewsCardProps> = ({ imageUrl, title, tags, slug }) => {
   );
 };
 
-export default NewsCard;
+export default PostCard;

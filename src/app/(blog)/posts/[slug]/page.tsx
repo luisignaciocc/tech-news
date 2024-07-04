@@ -17,8 +17,8 @@ import {
   SITE_URL,
 } from "@/lib/metadata";
 
-import NewsCard from "./components/news-card";
 import { PostBody } from "./components/post-body";
+import PostCard from "./components/post-card";
 import { PostHeader } from "./components/post-header";
 import SimilarPosts from "./components/similiar-post";
 
@@ -43,7 +43,7 @@ export default async function Post({ params }: Params) {
             key={index}
             className="relative flex items-center max-w-[280px] mt-12 mr-5"
           >
-            <NewsCard
+            <PostCard
               key={index}
               imageUrl={post.coverImage || ""}
               title={post.title}
