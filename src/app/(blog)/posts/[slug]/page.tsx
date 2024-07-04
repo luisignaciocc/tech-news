@@ -17,6 +17,7 @@ import {
   SITE_URL,
 } from "@/lib/metadata";
 
+import MoreTags from "./components/more-tags";
 import { PostBody } from "./components/post-body";
 import PostCard from "./components/post-card";
 import { PostHeader } from "./components/post-header";
@@ -78,6 +79,7 @@ export default async function Post({ params }: Params) {
                 publishedAt={post.publishedAt}
               />
             ))}
+          <MoreTags tags={post.tags} />
         </div>
       </article>
     </main>
