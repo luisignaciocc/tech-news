@@ -18,7 +18,7 @@ export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
   return (
     <Fragment>
       <div className="mb-6 md:mb-6">
-        <CoverImage title={title} src={coverImage || "/api/preview-image"} />
+        <CoverImage title={title} src={coverImage!} />
       </div>
       <div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start">
         <div className="text-red-600 flex flex-wrap">
