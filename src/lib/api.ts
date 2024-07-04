@@ -50,6 +50,7 @@ export async function getPostsCards(id: string, limit: number) {
       coverImage: true,
       title: true,
       slug: true,
+      publishedAt: true,
       tags: true,
     },
     take: limit,

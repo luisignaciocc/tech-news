@@ -31,7 +31,7 @@ const PostCard: React.FC<PostCardProps> = ({ imageUrl, title, tags, slug }) => {
           {tags.map((tag, index) => (
             <React.Fragment key={index}>
               <Link href={`/posts/tags/${tag.name}`}>
-                <span className="">{tag.name.toUpperCase()}</span>
+                <span>{tag.name.toUpperCase()}</span>
               </Link>
               {index < tags.length - 1 && ", "}
             </React.Fragment>

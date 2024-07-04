@@ -75,6 +75,7 @@ export default async function Post({ params }: Params) {
                 title={post.title}
                 tags={post.tags}
                 slug={post.slug}
+                publishedAt={post.publishedAt}
               />
             ))}
         </div>
