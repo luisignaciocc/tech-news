@@ -30,14 +30,22 @@ export default async function Post({ params }: Params) {
   return (
     <main>
       <Container>
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="flex flex-wrap justify-center gap-6">
           {[0, 1, 2, 3].map((_, index) => (
-            <NewsCard
+            <div
               key={index}
-              imageUrl={post.coverImage}
-              title={post.title}
-              tags={post.tags}
-            />
+              className="relative flex items-center max-w-[280px] mt-12 mr-5"
+            >
+              <NewsCard
+                key={index}
+                imageUrl={post.coverImage}
+                title={post.title}
+                tags={post.tags}
+              />
+              {index < 3 && (
+                <div className="absolute right-[-5px] bottom-1 h-24 border-r border-gray-300" />
+              )}
+            </div>
           ))}
         </div>
         <Header />
