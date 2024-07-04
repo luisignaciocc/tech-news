@@ -51,7 +51,7 @@ export default async function Post({ params }: Params) {
       {/* <Header /> */}
       <article className="mb-32">
         <div className="w-full h-[60px] bg-gray-100 mb-8"></div>
-        <div className="w-[90%] h-full flex flex-col items-Start justify-Start mx-auto md:w-[820px]">
+        <div className="w-[90%] h-full flex flex-col items-Start justify-Start mx-auto md:w-[60%]">
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
