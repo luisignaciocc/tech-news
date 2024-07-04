@@ -1,7 +1,12 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { getPostBySlug, getPostsCards, getPostSlugs } from "@/lib/api";
+import {
+  getPostBySlug,
+  getPostsCards,
+  getPostSlugs,
+  getRelatedPostFromPost,
+} from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
 import {
   defaultMetadata,
@@ -15,6 +20,7 @@ import {
 import NewsCard from "./components/news-card";
 import { PostBody } from "./components/post-body";
 import { PostHeader } from "./components/post-header";
+import SimilarPosts from "./components/similiar-post";
 
 export default async function Post({ params }: Params) {
   const post = await getPostBySlug(params.slug);
@@ -26,6 +32,8 @@ export default async function Post({ params }: Params) {
   }
 
   const content = await markdownToHtml(post.content || "");
+
+  const similarPosts = await getRelatedPostFromPost(post.id);
 
   return (
     <main>
@@ -48,7 +56,6 @@ export default async function Post({ params }: Params) {
           </div>
         ))}
       </div>
-      {/* <Header /> */}
       <article className="mb-32">
         <div className="w-full h-[60px] bg-gray-100 mb-8"></div>
         <div className="w-[90%] h-full flex flex-col items-Start justify-Start mx-auto md:w-[60%]">
@@ -60,6 +67,16 @@ export default async function Post({ params }: Params) {
             excerpt={post.excerpt}
           />
           <PostBody content={content} />
+          {similarPosts &&
+            similarPosts.map((post, index) => (
+              <SimilarPosts
+                key={index}
+                imageUrl={post.coverImage || ""}
+                title={post.title}
+                tags={post.tags}
+                slug={post.slug}
+              />
+            ))}
         </div>
       </article>
     </main>
