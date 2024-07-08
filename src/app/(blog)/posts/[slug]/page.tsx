@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 import {
   getPostBySlug,
@@ -19,12 +20,21 @@ import {
 
 import MoreTags from "./components/more-tags";
 import { PostBody } from "./components/post-body";
-import PostCard from "./components/post-card";
+import { PostCard } from "./components/post-card";
 import { PostHeader } from "./components/post-header";
+import PostPageSkeleton from "./components/post-page-skeleton";
 import SimilarPosts from "./components/similiar-post";
 import SocialMediaButtons from "./components/social-media-buttons";
 
-export default async function Post({ params }: Params) {
+export default function Post({ params }: Params) {
+  return (
+    <Suspense fallback={<PostPageSkeleton />}>
+      <PostPageContent params={params} />
+    </Suspense>
+  );
+}
+
+export async function PostPageContent({ params }: Params) {
   const post = await getPostBySlug(params.slug);
 
   const slugsCard = await getPostsCards(post?.id || "", 4);

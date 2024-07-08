@@ -1,6 +1,9 @@
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import Skeleton from "react-loading-skeleton";
 
 interface PostCardProps {
   imageUrl: string | null;
@@ -9,7 +12,28 @@ interface PostCardProps {
   slug: string;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ imageUrl, title, tags, slug }) => {
+export function PostCardSkeleton() {
+  return (
+    <div className="flex items-center w-full max-w-[280px] mt-3 mr-5">
+      <div className="w-1/3 mr-5">
+        <Skeleton width={100} height={55} />
+      </div>
+      <div className="w-2/3 p-2">
+        <Skeleton height={12} />
+        <Skeleton height={12} width={110} />
+        <Skeleton height={12} />
+        <Skeleton height={12} width={80} />
+      </div>
+    </div>
+  );
+}
+
+export const PostCard: React.FC<PostCardProps> = ({
+  imageUrl,
+  title,
+  tags,
+  slug,
+}) => {
   return (
     <div className="flex items-center w-full max-w-[280px] mt-3">
       <div className="w-1/3">
@@ -41,5 +65,3 @@ const PostCard: React.FC<PostCardProps> = ({ imageUrl, title, tags, slug }) => {
     </div>
   );
 };
-
-export default PostCard;
