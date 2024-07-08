@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { Fragment, Suspense } from "react";
 
 import {
   getPostBySlug,
@@ -18,6 +18,7 @@ import {
   SITE_URL,
 } from "@/lib/metadata";
 
+import NavBar from "../../components/navbar";
 import MoreTags from "./components/more-tags";
 import { PostBody } from "./components/post-body";
 import { PostCard } from "./components/post-card";
@@ -28,9 +29,12 @@ import SocialMediaButtons from "./components/social-media-buttons";
 
 export default function Post({ params }: Params) {
   return (
-    <Suspense fallback={<PostPageSkeleton />}>
-      <PostPageContent params={params} />
-    </Suspense>
+    <Fragment>
+      <NavBar />
+      <Suspense fallback={<PostPageSkeleton />}>
+        <PostPageContent params={params} />
+      </Suspense>
+    </Fragment>
   );
 }
 
@@ -49,7 +53,8 @@ export async function PostPageContent({ params }: Params) {
 
   return (
     <main>
-      <div className="flex flex-wrap justify-center gap-6 mb-7">
+      <NavBar />
+      <div className="flex flex-wrap justify-center gap-6 mb-7 mt-14">
         {slugsCard.map((post, index) => (
           <div
             key={index}

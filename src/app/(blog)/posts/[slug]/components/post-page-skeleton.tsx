@@ -9,7 +9,7 @@ import { SimilarPostsSkeleton } from "./similar-post";
 function PostPageSkeleton() {
   return (
     <main>
-      <div className="flex flex-wrap justify-center gap-6 mb-7">
+      <div className="flex flex-wrap justify-center gap-6 mb-7 mt-14">
         {[...Array(4)].map((_, index) => (
           <div
             key={index}
