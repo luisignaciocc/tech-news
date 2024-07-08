@@ -22,6 +22,7 @@ import { PostBody } from "./components/post-body";
 import PostCard from "./components/post-card";
 import { PostHeader } from "./components/post-header";
 import SimilarPosts from "./components/similiar-post";
+import SocialMediaButtons from "./components/social-media-buttons";
 
 export default async function Post({ params }: Params) {
   const post = await getPostBySlug(params.slug);
@@ -57,8 +58,13 @@ export default async function Post({ params }: Params) {
           </div>
         ))}
       </div>
-      <article className="mb-32">
+      <article className="mb-32 relative">
         <div className="w-full h-[60px] bg-gray-100 mb-8"></div>
+
+        <div className="hidden sm:hidden lg:block">
+          <SocialMediaButtons />
+        </div>
+
         <div className="w-[90%] h-full flex flex-col items-Start justify-Start mx-auto md:w-[60%]">
           <PostHeader
             title={post.title}

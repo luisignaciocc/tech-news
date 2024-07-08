@@ -5,6 +5,7 @@ import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
 
 import markdownStyles from "./markdown-styles.module.css";
+import SocialMediaButtons from "./social-media-buttons";
 
 type Props = {
   title: string;
@@ -36,6 +37,7 @@ export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
         </div>
       </div>
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
+      <SocialMediaButtons />
       <h2 className={markdownStyles["markdown"]}>{excerpt}</h2>
     </Fragment>
   );
