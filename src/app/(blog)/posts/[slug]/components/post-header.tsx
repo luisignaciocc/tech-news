@@ -22,16 +22,13 @@ export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
       </div>
       <div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start">
         <div className="text-red-600 flex flex-wrap">
-          {tags.map((tag, index) => (
-            <React.Fragment key={index}>
-              <Link href={`/posts/tags/${tag.name}`}>
-                <span>{tag.name.toUpperCase()}</span>
+          {tags.length > 0 && (
+            <React.Fragment>
+              <Link href={`/posts/tags/${tags[0].name}`}>
+                <span>{tags[0].name.toUpperCase()}</span>
               </Link>
-              {index < tags.length - 1 && (
-                <span className="mr-1 inline">,</span>
-              )}
             </React.Fragment>
-          ))}
+          )}
         </div>
         <span className="ml-2 mr-2 hidden sm:inline">|</span>
         <div className="flex items-start">
