@@ -1,7 +1,8 @@
 import React from "react";
 
+import { PostBodySkeleton } from "./post-body";
 import { PostCardSkeleton } from "./post-card";
-import SocialMediaButtons from "./social-media-buttons";
+import { PostHeaderSkeleton } from "./post-header";
 
 function PostPageSkeleton() {
   return (
@@ -21,15 +22,10 @@ function PostPageSkeleton() {
       </div>
       <article className="mb-32 relative">
         <div className="w-full h-[60px] bg-gray-100 mb-8"></div>
-
-        <div className="hidden sm:hidden lg:block">
-          <SocialMediaButtons />
-        </div>
-
         <div className="w-[90%] h-full flex flex-col items-Start justify-Start mx-auto md:w-[60%]">
-          {/* <PostHeaderSkeleton />
-            <PostBodySkeleton />
-            {[...Array(3)].map((_, index) => (
+          <PostHeaderSkeleton />
+          <PostBodySkeleton />
+          {/* {[...Array(3)].map((_, index) => (
               <SimilarPostsSkeleton key={index} />
             ))}
             <MoreTagsSkeleton /> */}

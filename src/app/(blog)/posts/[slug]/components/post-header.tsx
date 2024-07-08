@@ -1,5 +1,8 @@
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Link from "next/link";
 import React, { Fragment } from "react";
+import Skeleton from "react-loading-skeleton";
 
 import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
@@ -14,6 +17,40 @@ type Props = {
   tags: { id: number; name: string }[];
   excerpt: string | null;
 };
+
+export function PostHeaderSkeleton() {
+  return (
+    <Fragment>
+      <div className="mb-6 md:mb-6">
+        <Skeleton height={450} />
+      </div>
+      <div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start">
+        <div className="flex flex-wrap">
+          <Skeleton width={120} />
+        </div>
+        <span className="ml-2 mr-2 hidden sm:inline">|</span>
+        <div className="flex items-start">
+          <Skeleton width={150} />
+        </div>
+      </div>
+      <h1 className="text-3xl font-bold mb-1 w-[90%]">
+        <Skeleton />
+      </h1>
+      <h1 className="text-3xl font-bold mb-1 w-full">
+        <Skeleton />
+      </h1>
+      <h1 className="text-3xl font-bold mb-6 w-[50%]">
+        <Skeleton />
+      </h1>
+      <div className="mb-1 w-full">
+        <Skeleton />
+      </div>
+      <div className="mb-4 w-[60%]">
+        <Skeleton />
+      </div>
+    </Fragment>
+  );
+}
 
 export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
   return (
