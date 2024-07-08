@@ -1,6 +1,6 @@
 import React from "react";
 
-import { SimilarPostsSkeleton } from "./similiar-post";
+import { SimilarPostsSkeleton } from "./similar-post";
 
 function PostPageSkeleton() {
   return (

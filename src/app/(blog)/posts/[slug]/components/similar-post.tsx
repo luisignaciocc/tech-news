@@ -43,16 +43,21 @@ export function SimilarPostsSkeleton() {
       <div className="bg-white p-4 w-full sm:hidden flex flex-col items-start">
         <hr className="mb-6 w-full border-black" />
         <div className="w-full mb-4">
-          <div className="skeleton-loader w-full h-full"></div>
+          <Skeleton height={150} />
         </div>
         <div className="w-full flex flex-col justify-between">
+          <Skeleton width={110} />
+
           <div>
-            <p className="text-xs font-bold mb-2 uppercase text-gray-400 skeleton-loader-text"></p>
-            <h3 className="text-base font-bold mb-1 line-clamp-3 skeleton-loader-text"></h3>
+            <Skeleton count={2} />
           </div>
-          <div className="flex flex-col justify-between items-end mt-4">
-            <div className="text-gray-700 text-xs line-clamp-2 w-full skeleton-loader-text"></div>
-            <div className="text-gray-600 text-xs line-clamp-1 w-full mt-2 skeleton-loader-text"></div>
+          <div className="flex flex-col justify-between items-start mt-4">
+            <div className="text-gray-700 text-xs line-clamp-2 w-[50%]">
+              <Skeleton />
+            </div>
+            <div className="text-gray-600 text-xs line-clamp-1 w-[50%] mt-2">
+              <Skeleton />
+            </div>
           </div>
         </div>
       </div>

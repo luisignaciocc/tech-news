@@ -23,7 +23,7 @@ import { PostBody } from "./components/post-body";
 import { PostCard } from "./components/post-card";
 import { PostHeader } from "./components/post-header";
 import PostPageSkeleton from "./components/post-page-skeleton";
-import { SimilarPosts } from "./components/similiar-post";
+import { SimilarPosts } from "./components/similar-post";
 import SocialMediaButtons from "./components/social-media-buttons";
 
 export default function Post({ params }: Params) {
