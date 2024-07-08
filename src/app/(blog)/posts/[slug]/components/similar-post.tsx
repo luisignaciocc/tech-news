@@ -18,7 +18,7 @@ interface SimilarPostsProps {
 export function SimilarPostsSkeleton() {
   return (
     <Fragment>
-      {/* Version para pantallas grandes */}
+      {/* Version for large screens */}
       <div className="bg-gray-100 p-4 w-full hidden sm:flex sm:w-[75%] items-start">
         <div className="w-1/3">
           <Skeleton height={100} />
@@ -39,7 +39,7 @@ export function SimilarPostsSkeleton() {
         </div>
       </div>
 
-      {/* Version para pantallas pequeñas */}
+      {/* Version for small screens */}
       <div className="bg-white p-4 w-full sm:hidden flex flex-col items-start">
         <hr className="mb-6 w-full border-black" />
         <div className="w-full mb-4">

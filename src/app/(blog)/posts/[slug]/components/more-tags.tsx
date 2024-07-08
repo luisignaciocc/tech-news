@@ -1,4 +1,7 @@
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
 
 interface Tag {
   id: number;
@@ -7,6 +10,16 @@ interface Tag {
 
 interface MoreTagsProps {
   tags: Tag[];
+}
+
+export function MoreTagsSkeleton() {
+  return (
+    <div className="flex flex-wrap gap-2 mt-5">
+      <Skeleton className="" width={150} height={30} />
+      <Skeleton className="" width={200} height={30} />
+      <Skeleton className="" width={180} height={30} />
+    </div>
+  );
 }
 
 const MoreTags: React.FC<MoreTagsProps> = ({ tags }) => {
