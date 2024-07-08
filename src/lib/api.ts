@@ -54,6 +54,9 @@ export async function getPostsCards(id: string, limit: number) {
       tags: true,
     },
     take: limit,
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 }
 
@@ -74,17 +77,33 @@ export async function getRelatedPostFromPost(postId: string) {
     // Step 2: Finding similar news
     const similarNews = await getSimilarNews(newsId);
 
-    if (!similarNews) {
+    if (!similarNews || similarNews.length === 0) {
       return null;
     }
 
-    // Step 3: Finding related post
-    const relatedPost = await getPostsCards(similarNews.id, 1);
+    // Paso 3: Select a random number of similar news items
+    const randomIndex = Math.floor(Math.random() * similarNews.length);
+    const selectedSimilarNews = similarNews[randomIndex];
 
-    return relatedPost;
+    // Paso 4: Find the post related to the selected news
+    const relatedPost = await prisma.post.findFirst({
+      where: {
+        newId: selectedSimilarNews.id,
+      },
+      select: {
+        id: true,
+        coverImage: true,
+        title: true,
+        slug: true,
+        publishedAt: true,
+        tags: true,
+      },
+    });
+
+    return relatedPost ? [relatedPost] : [];
   } catch (error) {
     console.error("Error getting related post:", error);
-    return null;
+    return [];
   }
 }
 
@@ -93,29 +112,25 @@ async function getSimilarNews(newsId: string) {
     // Searching for similar news with newsId
     const similarNews: { id: string; similarity: number }[] =
       await prisma.$queryRaw`
-      WITH comparation AS (
-        SELECT embedding AS comparation_embedding
-        FROM "News"
-        WHERE id = ${newsId}
-      )
-      SELECT n.id,
-            1 - (n.embedding <=> c.comparation_embedding) AS similarity
-      FROM "News" n,
-            comparation c
-      WHERE n.id != ${newsId}
-      AND n.embedding IS NOT NULL
-      ORDER BY similarity DESC
-      LIMIT 1;
-    `;
+    WITH comparation AS (
+      SELECT embedding AS comparation_embedding
+      FROM "News"
+      WHERE id = ${newsId}
+    )
+    SELECT n.id, 
+          1 - (n.embedding <=> c.comparation_embedding) AS similarity
+    FROM "News" n,
+          comparation c
+    WHERE n.id != ${newsId} 
+    AND n.embedding IS NOT NULL
+    AND 1 - (n.embedding <=> c.comparation_embedding) > 0.6
+    ORDER BY similarity DESC;
+  `;
 
-    if (similarNews.length > 0 && similarNews[0].similarity > 0.6) {
-      return similarNews[0];
-    } else {
-      return null;
-    }
+    return similarNews;
   } catch (error) {
     console.error("Error getting similar news:", error);
-    return null;
+    return [];
   }
 }
 
