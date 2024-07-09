@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Fragment, Suspense } from "react";
 
 import {
+  getMostUsedTags,
   getPostBySlug,
   getPostsCards,
   getPostSlugs,
@@ -27,10 +28,12 @@ import PostPageSkeleton from "./components/post-page-skeleton";
 import { SimilarPosts } from "./components/similar-post";
 import SocialMediaButtons from "./components/social-media-buttons";
 
-export default function Post({ params }: Params) {
+export default async function Post({ params }: Params) {
+  const tagsMostUsed = await getMostUsedTags();
+
   return (
     <Fragment>
-      <NavBar />
+      <NavBar tags={tagsMostUsed} />
       <Suspense fallback={<PostPageSkeleton />}>
         <PostPageContent params={params} />
       </Suspense>
@@ -51,9 +54,11 @@ export async function PostPageContent({ params }: Params) {
 
   const similarPosts = await getRelatedPostFromPost(post.id);
 
+  const tagsMostUsed = await getMostUsedTags();
+
   return (
     <main>
-      <NavBar />
+      <NavBar tags={tagsMostUsed} />
       <div className="flex flex-wrap justify-center gap-6 mb-7 mt-14">
         {slugsCard.map((post, index) => (
           <div
