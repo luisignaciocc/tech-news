@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
 import {
   FaFacebookF,
@@ -10,6 +10,7 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
+import { useMediaQuery } from "react-responsive";
 
 interface NavBarProps {
   tags: string[];
@@ -17,6 +18,13 @@ interface NavBarProps {
 
 function NavBar({ tags }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isDesktopScreen = useMediaQuery({ minWidth: 1024 });
+
+  useEffect(() => {
+    if (isDesktopScreen) {
+      setIsMenuOpen(false);
+    }
+  }, [isDesktopScreen]);
 
   return (
     <nav className="bg-[#333] shadow-[0_4px_12px_rgba(0,0,0,0.5)] fixed top-0 left-0 right-0 z-50">
@@ -130,22 +138,22 @@ function NavBar({ tags }: NavBarProps) {
               transition-transform
               duration-350
               ease-in-out
-              ${isMenuOpen ? "sm:-translate-x-[290px] -translate-x-[220px]" : "translate-x-0"}
+              ${isMenuOpen ? "sm:-translate-x-[290px] -translate-x-[240px]" : "translate-x-0"}
             `}
           >
             <div className="lg:hidden flex items-center">
-              <button className="text-white hover:text-gray-400 sm:px-3 px-1 py-2 rounded-md text-sm font-bold uppercase">
+              <button className="text-white hover:text-gray-400 sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase">
                 <BsSearch className="h-6 w-6" />
               </button>
               <span className="text-white">|</span>
               <button
-                className="text-white hover:text-gray-400 sm:px-3 px-1 py-2 rounded-md text-sm font-bold uppercase"
+                className="text-white hover:text-gray-400 sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? (
-                  <BsX className="h-6 w-6" />
+                  <BsX className="h-10 w-10" />
                 ) : (
-                  <BsList className="h-6 w-6" />
+                  <BsList className="h-8 w-8" />
                 )}
               </button>
             </div>
@@ -155,17 +163,34 @@ function NavBar({ tags }: NavBarProps) {
 
       {/* Mobile menu */}
       {isMenuOpen && (
-        <div className="bg-black fixed top-0 right-0 bottom-0 z-40 sm:w-72 w-56">
-          <div className="sm:px-6 py-6 flex flex-col space-y-4">
-            {tags.map((tag) => (
-              <Link
-                key={tag}
-                href={`/posts/tags/${tag}`}
-                className="text-white hover:text-gray-400 text-sm font-bold uppercase mx-4"
-              >
-                {tag}
-              </Link>
+        <div className="bg-black fixed top-0 right-0 bottom-0 z-40 sm:w-72 w-60 flex flex-col items-center">
+          <div className="w-16 h-16 rounded-full overflow-hidden flex items-center mt-6 mb-8">
+            <Image
+              src="/icon.png"
+              width="100"
+              height="100"
+              alt="Logotipo de Tecnobuc"
+              className="w-[100px] h-[100px] object-cover"
+            />
+          </div>
+          <div className="flex flex-col space-y-4 w-full">
+            <div className="w-full border-t border-gray-500"></div>
+            {tags.map((tag, index) => (
+              <React.Fragment key={tag}>
+                <div className="sm:px-6 px-3">
+                  <Link
+                    href={`/posts/tags/${tag}`}
+                    className="text-white hover:text-gray-500 text-sm font-bold uppercase w-full block"
+                  >
+                    {tag}
+                  </Link>
+                </div>
+                {index < tags.length - 1 && (
+                  <div className="w-full border-b border-gray-500"></div>
+                )}
+              </React.Fragment>
             ))}
+            <div className="w-full border-b border-gray-500"></div>
           </div>
         </div>
       )}
