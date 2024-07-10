@@ -1,11 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 interface SearchParams {
   s: string;
 }
 
 function SearchPost({ searchParams }: { searchParams: SearchParams }) {
-  return <div>Buscando... {searchParams.s}</div>;
+  return (
+    <Fragment>
+      <div>Buscando... {searchParams.s}</div>
+    </Fragment>
+  );
 }
 
 export default SearchPost;

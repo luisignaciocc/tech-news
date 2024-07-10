@@ -30,6 +30,8 @@ function NavBar({ tags }: NavBarProps) {
     if (searchValue) {
       router.push(`/posts?s=${searchValue}`);
       setSearchValue("");
+      setIsMenuOpen(false);
+      setIsSearchOpen(false);
     }
   };
 
