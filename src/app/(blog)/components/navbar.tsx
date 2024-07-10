@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
@@ -11,7 +12,6 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
-
 interface NavBarProps {
   tags: string[];
 }
@@ -20,6 +20,24 @@ function NavBar({ tags }: NavBarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isDesktopScreen = useMediaQuery({ minWidth: 1024 });
+
+  const [searchValue, setSearchValue] = useState("");
+  const router = useRouter();
+
+  const [inputFocused, setInputFocused] = useState(false);
+
+  const handleSearch = () => {
+    if (searchValue) {
+      router.push(`/posts?s=${searchValue}`);
+      setSearchValue("");
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   useEffect(() => {
     if (isDesktopScreen) {
@@ -42,8 +60,17 @@ function NavBar({ tags }: NavBarProps) {
                 type="text"
                 className="w-full h-8 px-2 text-white bg-[#333] focus:outline-none"
                 placeholder="Buscar..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoFocus={inputFocused}
               />
-              <BsSearch className="h-6 w-6 text-white" />
+              <button
+                className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-sm font-bold uppercase"
+                onClick={handleSearch}
+              >
+                <BsSearch className="h-6 w-6" />
+              </button>
             </div>
             <hr className="bg-white" />
           </div>
@@ -162,6 +189,7 @@ function NavBar({ tags }: NavBarProps) {
                     onClick={() => {
                       setIsMenuOpen(false);
                       setIsSearchOpen((prevState) => !prevState);
+                      setInputFocused(true);
                     }}
                   />
                 )}
@@ -194,6 +222,7 @@ function NavBar({ tags }: NavBarProps) {
                       onClick={() => {
                         setIsMenuOpen(false);
                         setIsSearchOpen((prevState) => !prevState);
+                        setInputFocused(true);
                       }}
                     />
                   )}
