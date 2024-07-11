@@ -4,6 +4,7 @@ import React from "react";
 import { getPostsBySearchTerm } from "@/lib/api";
 
 import { MoreStories } from "../components/more-stories";
+import { PostPreview } from "../components/post-preview";
 
 interface SearchParams {
   s: string;
@@ -11,7 +12,7 @@ interface SearchParams {
 
 async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
   const searchTerm = searchParams.s;
-  const numberPosts = 6;
+  const numberPosts = 11;
   const { posts, count } = await getPostsBySearchTerm(searchTerm, numberPosts);
 
   const morePosts = posts;
@@ -43,7 +44,30 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
       <div className="flex gap-4 mt-2">
         <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
           {morePosts.length > 0 && (
-            <MoreStories posts={morePosts} hasMorePosts={hasMorePosts} />
+            <MoreStories
+              posts={morePosts.slice(0, 6)}
+              hasMorePosts={hasMorePosts}
+            />
+          )}
+          {posts.length > 6 && (
+            <PostPreview
+              key={posts[6].slug}
+              title={posts[6].title}
+              coverImage={posts[6].coverImage}
+              date={posts[6].createdAt}
+              author={posts[6].author}
+              slug={posts[6].slug}
+              excerpt={posts[6].excerpt}
+              tags={posts[6].tags}
+            />
+          )}
+          {morePosts.length > 0 && (
+            <div className="mt-8">
+              <MoreStories
+                posts={morePosts.slice(7, 11)}
+                hasMorePosts={hasMorePosts}
+              />
+            </div>
           )}
         </div>
         <div className="w-4/12 bg-black hidden lg:block">

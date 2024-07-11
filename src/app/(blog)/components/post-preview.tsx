@@ -37,9 +37,13 @@ export function PostPreview({
       </div>
       <div className="text-sm flex items-center">
         {tags.slice(0, 1).map((tag) => (
-          <div key={tag.name} className="uppercase text-gray-800 mr-2">
+          <Link
+            href={`/posts/tags/${tag.name}`}
+            key={tag.name}
+            className="uppercase text-gray-800 mr-2"
+          >
             {tag.name}
-          </div>
+          </Link>
         ))}
         <span className="mr-2 border-r border border-black h-3"></span>
         <div className="text-gray-500">
