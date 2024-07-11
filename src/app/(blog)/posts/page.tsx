@@ -43,11 +43,16 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
       </div>
       <div className="flex gap-4 mt-2">
         <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
-          {morePosts.length > 0 && (
+          {morePosts.length > 0 ? (
             <MoreStories
               posts={morePosts.slice(0, 6)}
               hasMorePosts={hasMorePosts}
             />
+          ) : (
+            <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
+              <p className="text-2xl">No hay publicaciones disponibles.</p>
+              <p className="mt-5">Intenta con otro término de búsqueda.</p>
+            </div>
           )}
           {posts.length > 6 && (
             <PostPreview
