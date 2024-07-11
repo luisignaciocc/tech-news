@@ -6,7 +6,7 @@ import { getPostsCards } from "@/lib/api";
 
 import { MoreStories } from "../components/more-stories";
 import { PostPreview } from "../components/post-preview";
-import { SpecialCardPost } from "../components/special-card-post";
+import SpecialSection from "../components/special-section";
 
 interface SearchParams {
   s: string;
@@ -81,25 +81,7 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
         </div>
         <div className="w-4/12 hidden lg:block">
           <div>
-            <h2 className="text-3xl uppercase font-bold">Especiales</h2>
-            <hr className="bg-black border-1 border-black" />
-            {specialPosts.map((post, index) => (
-              <div
-                key={index}
-                className="relative flex flex-col items-start w-full mt-3 mr-5"
-              >
-                <SpecialCardPost
-                  key={index}
-                  imageUrl={post.coverImage || ""}
-                  title={post.title}
-                  slug={post.slug}
-                  number={`${(index + 1).toString().padStart(2, "0")}`}
-                />
-                {index !== specialPosts.length - 1 && (
-                  <hr className="mt-6 w-full" />
-                )}
-              </div>
-            ))}
+            <SpecialSection specialPosts={specialPosts} />
           </div>
           <div className="mt-20">
             <h2 className="text-3xl uppercase">inteligencia artificial</h2>
