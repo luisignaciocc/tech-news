@@ -206,10 +206,7 @@ export const getPostsBySearchTerm = async (
   });
 
   return {
-    posts: posts.map((post) => ({
-      ...post,
-      tags: post.tags.length > 0 ? [post.tags[0]] : [],
-    })),
+    posts,
     count,
   };
 };

@@ -22,7 +22,7 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
   return (
     <div className="mt-20 mx-8 mb-24 xl:mx-28">
       <div className="flex items-center">
-        <div className="w-16 h-16 rounded-full overflow-hidden mr-2">
+        <div className="w-16 h-16 rounded-full overflow-hidden">
           <Image
             src="/icon.png"
             width="100"
@@ -31,13 +31,16 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
             className="w-[80px] h-[80px] object-cover"
           />
         </div>
-        <span className="uppercase text-4xl mt-4 flex items-center">
+        <span className="uppercase text-4xl mt-4 flex items-center leading-tight tracking-tighter">
           <span className="hidden md:inline-block mr-2">Buscando</span>
           <span>{`"${searchParams.s}"`}</span>
-          <span className="hidden md:inline-block ml-1"> : n resultados</span>
+          <span className="hidden md:inline-block ml-1">
+            {" "}
+            : {count} resultados
+          </span>
         </span>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 mt-2">
         <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
           {morePosts.length > 0 && (
             <MoreStories posts={morePosts} hasMorePosts={hasMorePosts} />

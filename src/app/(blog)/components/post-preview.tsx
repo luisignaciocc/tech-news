@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import Avatar from "@/components/avatar";
 import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
 
@@ -24,32 +23,37 @@ export function PostPreview({
   coverImage,
   date,
   excerpt,
-  author,
   slug,
   tags,
 }: Props) {
   return (
     <div>
-      <div className="mb-5">
+      <div className="mb-4">
         <CoverImage
           slug={slug}
           title={title}
           src={coverImage || "/api/preview-image"}
         />
       </div>
+      <div className="text-sm flex items-center">
+        {tags.slice(0, 1).map((tag) => (
+          <div key={tag.name} className="uppercase text-gray-800 mr-2">
+            {tag.name}
+          </div>
+        ))}
+        <span className="mr-2 border-r border border-black h-3"></span>
+        <div className="text-gray-500">
+          <DateFormatter date={date} />
+        </div>
+      </div>
       <h3 className="text-2xl leading-tight tracking-tighter">
         <Link href={`/posts/${slug}`} className="hover:underline">
           {title}
         </Link>
       </h3>
-      <div className="text-lg mb-4">
-        <DateFormatter date={date} />
-        {tags.map((tag) => (
-          <div key={tag.name}>{tag.name}</div>
-        ))}
-      </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      <Avatar name={author.name} picture={author.picture} />
+      <p className="text-lg leading-tight tracking-tighter text-gray-500 mt-2 line-clamp-3">
+        {excerpt}
+      </p>
     </div>
   );
 }

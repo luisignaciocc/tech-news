@@ -11,16 +11,22 @@ type Props = {
 
 const CoverImage = ({ title, src, slug }: Props) => {
   const image = (
-    <Image
-      src={src}
-      alt={`Cover Image for ${title}`}
-      className={cn("shadow-lg", {
-        "hover:shadow-xl transition-shadow duration-200": slug,
+    <div
+      className={cn("relative overflow-hidden", {
+        "transition-all duration-700 hover:grayscale w-full": slug,
         "mx-auto": !slug,
       })}
-      width={820}
-      height={630}
-    />
+    >
+      <Image
+        src={src}
+        alt={`Cover Image for ${title}`}
+        className={cn("transition-all duration-1000 hover:scale-105", {
+          "mx-auto": !slug,
+        })}
+        width={820}
+        height={630}
+      />
+    </div>
   );
   return (
     <div className="sm:mx-0">
