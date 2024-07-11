@@ -1,7 +1,8 @@
 import Link from "next/link";
 
-import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
+
+import ZoomImage from "./zoom-image";
 
 type Props = {
   title: string;
@@ -29,7 +30,7 @@ export function PostPreview({
   return (
     <div>
       <div className="mb-4">
-        <CoverImage
+        <ZoomImage
           slug={slug}
           title={title}
           src={coverImage || "/api/preview-image"}
