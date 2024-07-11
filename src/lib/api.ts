@@ -150,6 +150,70 @@ export async function getMostUsedTags() {
   return mostUsedTags.map((tag) => tag.name);
 }
 
+export const getPostsBySearchTerm = async (
+  searchTerm: string,
+  numberPosts: number,
+) => {
+  const posts = await prisma.post.findMany({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: searchTerm,
+          },
+        },
+        {
+          tags: {
+            some: {
+              name: searchTerm,
+            },
+          },
+        },
+      ],
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      slug: true,
+      title: true,
+      coverImage: true,
+      createdAt: true,
+      excerpt: true,
+      author: true,
+      tags: true,
+    },
+    take: numberPosts,
+  });
+
+  const count = await prisma.post.count({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: searchTerm,
+          },
+        },
+        {
+          tags: {
+            some: {
+              name: searchTerm,
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  return {
+    posts: posts.map((post) => ({
+      ...post,
+      tags: post.tags.length > 0 ? [post.tags[0]] : [],
+    })),
+    count,
+  };
+};
+
 export const getPosts = async (params?: {
   page?: number;
   perPage?: number;
@@ -163,6 +227,7 @@ export const getPosts = async (params?: {
       },
       include: {
         author: true,
+        tags: true,
       },
       skip: offset,
       take: limit,

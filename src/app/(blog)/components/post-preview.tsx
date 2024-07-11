@@ -14,6 +14,9 @@ type Props = {
     picture: string;
   };
   slug: string;
+  tags: {
+    name: string;
+  }[];
 };
 
 export function PostPreview({
@@ -23,6 +26,7 @@ export function PostPreview({
   excerpt,
   author,
   slug,
+  tags,
 }: Props) {
   return (
     <div>
@@ -33,13 +37,16 @@ export function PostPreview({
           src={coverImage || "/api/preview-image"}
         />
       </div>
-      <h3 className="text-3xl mb-3 leading-snug">
+      <h3 className="text-2xl leading-tight tracking-tighter">
         <Link href={`/posts/${slug}`} className="hover:underline">
           {title}
         </Link>
       </h3>
       <div className="text-lg mb-4">
         <DateFormatter date={date} />
+        {tags.map((tag) => (
+          <div key={tag.name}>{tag.name}</div>
+        ))}
       </div>
       <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
       <Avatar name={author.name} picture={author.picture} />

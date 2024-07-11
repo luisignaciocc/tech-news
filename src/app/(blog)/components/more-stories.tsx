@@ -1,21 +1,29 @@
 import Link from "next/link";
 
-import { Post } from "@/lib/api";
-
 import { PostPreview } from "./post-preview";
 
 type Props = {
-  posts: Post[];
+  posts: {
+    slug: string;
+    title: string;
+    coverImage: string | null;
+    createdAt: Date;
+    excerpt: string | null;
+    author: {
+      name: string;
+      picture: string;
+    };
+    tags: {
+      name: string;
+    }[];
+  }[];
   hasMorePosts?: boolean;
 };
 
 export function MoreStories({ posts, hasMorePosts }: Props) {
   return (
     <section>
-      <h2 className="mb-8 text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
-        Más Noticias
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-32 mb-32">
         {posts.map((post) => (
           <PostPreview
             key={post.slug}
@@ -25,6 +33,7 @@ export function MoreStories({ posts, hasMorePosts }: Props) {
             author={post.author}
             slug={post.slug}
             excerpt={post.excerpt}
+            tags={post.tags}
           />
         ))}
         {hasMorePosts && (
