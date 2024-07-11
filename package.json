@@ -46,7 +46,7 @@
     "next-auth": "^4.24.7",
     "node-telegram-bot-api": "^0.66.0",
     "oauth-1.0a": "^2.2.6",
-    "openai": "^4.52.5",
+    "openai": "^4.52.7",
     "prisma": "^5.16.2",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
