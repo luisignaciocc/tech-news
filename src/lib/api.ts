@@ -206,57 +206,59 @@ export const getPostsBySearchTerm = async (
   searchTerm: string,
   numberPosts: number,
 ) => {
-  const posts = await prisma.post.findMany({
-    where: {
-      OR: [
-        {
-          title: {
-            contains: searchTerm,
-          },
-        },
-        {
-          tags: {
-            some: {
-              name: searchTerm,
+  const [posts, count] = await Promise.all([
+    prisma.post.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
             },
           },
-        },
-      ],
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    select: {
-      id: true,
-      slug: true,
-      title: true,
-      coverImage: true,
-      createdAt: true,
-      excerpt: true,
-      author: true,
-      tags: true,
-    },
-    take: numberPosts,
-  });
+          {
+            tags: {
+              some: {
+                name: searchTerm,
+              },
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        coverImage: true,
+        createdAt: true,
+        excerpt: true,
+        author: true,
+        tags: true,
+      },
+      take: numberPosts,
+    }),
 
-  const count = await prisma.post.count({
-    where: {
-      OR: [
-        {
-          title: {
-            contains: searchTerm,
-          },
-        },
-        {
-          tags: {
-            some: {
-              name: searchTerm,
+    prisma.post.count({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
             },
           },
-        },
-      ],
-    },
-  });
+          {
+            tags: {
+              some: {
+                name: searchTerm,
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ]);
 
   return {
     posts,
