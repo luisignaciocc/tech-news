@@ -56,7 +56,10 @@ function MoreStoriesSection({ morePosts, hasMorePosts, posts }: Props) {
       ) : (
         <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
           <p className="text-2xl">No hay publicaciones disponibles.</p>
-          <p className="mt-5">Intenta con otro término de búsqueda.</p>
+          <p className="mt-5">
+            Intenta con otro término de búsqueda, puedes utilizar palabras
+            claves o abreviaturas, ejemplo: `ARTIFICIAL` o `IA`.
+          </p>
         </div>
       )}
       {posts.length > 6 && (
