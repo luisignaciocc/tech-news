@@ -34,6 +34,7 @@ export function MoreStories({ posts, hasMorePosts }: Props) {
             slug={post.slug}
             excerpt={post.excerpt}
             tags={post.tags}
+            titleLinkClassName="hover:underline"
           />
         ))}
         {hasMorePosts && (

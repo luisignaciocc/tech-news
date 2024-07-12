@@ -1,10 +1,15 @@
 import Image from "next/image";
 import React from "react";
 
-import { getPostsBySearchTerm, getRandomPosts } from "@/lib/api";
+import {
+  getMostUsedTags,
+  getPostsBySearchTerm,
+  getRandomPosts,
+} from "@/lib/api";
 
 import MoreStoriesSection from "../components/more-stories-section";
 import SpecialSection from "../components/special-section";
+import TagSection from "../components/tag-section";
 
 interface SearchParams {
   s: string;
@@ -23,6 +28,8 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
   const postIds = posts.map((post) => post.id);
 
   const specialPosts = await getRandomPosts(postIds, 5);
+
+  const mostUsedTag = await getMostUsedTags(1);
 
   return (
     <div className="mt-20 mx-8 mb-24 xl:mx-28">
@@ -53,10 +60,7 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
         />
         <div className="w-4/12 hidden lg:block">
           <SpecialSection specialPosts={specialPosts} />
-          <div className="mt-20">
-            <h2 className="text-3xl uppercase">inteligencia artificial</h2>
-            <hr className="bg-black border-1 border-black" />
-          </div>
+          <TagSection mostUsedTag={mostUsedTag} morePosts={morePosts} />
         </div>
       </div>
     </div>

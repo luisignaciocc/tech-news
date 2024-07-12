@@ -69,6 +69,7 @@ function MoreStoriesSection({ morePosts, hasMorePosts, posts }: Props) {
           slug={posts[6].slug}
           excerpt={posts[6].excerpt}
           tags={posts[6].tags}
+          titleLinkClassName="hover:underline"
         />
       )}
       {morePosts.length > 0 && (

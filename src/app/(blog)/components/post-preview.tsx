@@ -1,11 +1,12 @@
 import Link from "next/link";
+import React from "react";
 
 import { DateFormatter } from "@/components/date-formatter";
 
 import ZoomImage from "./zoom-image";
 
 type Props = {
-  title: string;
+  title: string | React.ReactNode;
   coverImage?: string | null;
   date: Date;
   excerpt?: string | null;
@@ -17,6 +18,7 @@ type Props = {
   tags: {
     name: string;
   }[];
+  titleLinkClassName?: string;
 };
 
 export function PostPreview({
@@ -26,13 +28,24 @@ export function PostPreview({
   excerpt,
   slug,
   tags,
+  titleLinkClassName,
 }: Props) {
+  const getTitleAsString = (): string => {
+    if (typeof title === "string") {
+      return title;
+    } else {
+      // Get the title if it comes as an element
+      const textContent = React.Children.toArray(title).join("");
+      return textContent;
+    }
+  };
+
   return (
     <div>
       <div className="mb-4">
         <ZoomImage
           slug={slug}
-          title={title}
+          title={getTitleAsString()}
           src={coverImage || "/api/preview-image"}
         />
       </div>
@@ -52,7 +65,7 @@ export function PostPreview({
         </div>
       </div>
       <h3 className="text-2xl leading-tight tracking-tighter">
-        <Link href={`/posts/${slug}`} className="hover:underline">
+        <Link href={`/posts/${slug}`} className={`${titleLinkClassName}`}>
           {title}
         </Link>
       </h3>

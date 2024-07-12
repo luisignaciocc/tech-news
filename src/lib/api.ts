@@ -186,7 +186,7 @@ async function getSimilarNews(newsId: string) {
   }
 }
 
-export async function getMostUsedTags() {
+export async function getMostUsedTags(limit: number) {
   const mostUsedTags = await prisma.tag.findMany({
     orderBy: {
       posts: {
@@ -196,7 +196,7 @@ export async function getMostUsedTags() {
     select: {
       name: true,
     },
-    take: 6,
+    take: limit,
   });
 
   return mostUsedTags.map((tag) => tag.name);

@@ -8,7 +8,7 @@ export default async function GroupedLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const tagsMostUsed = await getMostUsedTags();
+  const tagsMostUsed = await getMostUsedTags(6);
 
   return (
     <div className="min-h-screen">
