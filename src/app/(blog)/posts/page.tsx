@@ -1,8 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-import { getPostsBySearchTerm } from "@/lib/api";
-import { getPostsCards } from "@/lib/api";
+import { getPostsBySearchTerm, getRandomPosts } from "@/lib/api";
 
 import { MoreStories } from "../components/more-stories";
 import { PostPreview } from "../components/post-preview";
@@ -22,7 +21,9 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
   const perPage = 6;
   const hasMorePosts = page * perPage < count;
 
-  const specialPosts = await getPostsCards("asdasddas", 5);
+  const postIds = posts.map((post) => post.id);
+
+  const specialPosts = await getRandomPosts(postIds, 5);
 
   return (
     <div className="mt-20 mx-8 mb-24 xl:mx-28">

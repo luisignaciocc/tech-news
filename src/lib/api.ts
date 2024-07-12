@@ -60,6 +60,58 @@ export async function getPostsCards(id: string, limit: number) {
   });
 }
 
+export async function getRandomPosts(excludedIds: string[], limit: number) {
+  const totalCount = await prisma.post.count({
+    where: {
+      id: {
+        notIn: excludedIds,
+      },
+    },
+  });
+
+  // Obtener una lista de IDs aleatorios que no están en el array excludedIds
+  const randomIds = new Set<string>();
+  while (randomIds.size < limit && randomIds.size < totalCount) {
+    const randomIndex = Math.floor(Math.random() * totalCount);
+    const randomId = (
+      await prisma.post.findMany({
+        where: {
+          id: {
+            notIn: excludedIds,
+          },
+        },
+        select: {
+          id: true,
+        },
+        skip: randomIndex,
+        take: 1,
+      })
+    )[0]?.id;
+    if (randomId) {
+      randomIds.add(randomId);
+    }
+  }
+
+  // Obtener los posts con los IDs aleatorios
+  const randomPosts = await prisma.post.findMany({
+    where: {
+      id: {
+        in: Array.from(randomIds),
+      },
+    },
+    select: {
+      id: true,
+      coverImage: true,
+      title: true,
+      slug: true,
+      publishedAt: true,
+      tags: true,
+    },
+  });
+
+  return randomPosts;
+}
+
 export async function getRelatedPostFromPost(postId: string) {
   try {
     // Step 1: Finding news related to postId
@@ -175,6 +227,7 @@ export const getPostsBySearchTerm = async (
       createdAt: "desc",
     },
     select: {
+      id: true,
       slug: true,
       title: true,
       coverImage: true,
