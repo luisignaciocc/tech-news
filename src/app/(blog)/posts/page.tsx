@@ -1,5 +1,7 @@
 import Image from "next/image";
 import React from "react";
+import { Suspense } from "react";
+import { Fragment } from "react";
 
 import {
   getMostUsedTags,
@@ -11,14 +13,32 @@ import {
 import MiniFooter from "../components/mini-footer";
 import MoreStoriesSection from "../components/more-stories-section";
 import PostCarousel from "../components/posts-carousel";
-import SpecialSection from "../components/special-section";
+import SearchPageSkeleton from "../components/search-page-skeleton";
+import { SpecialSection } from "../components/special-section";
 import TagSection from "../components/tag-section";
-
 interface SearchParams {
   s: string;
 }
 
-async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
+export default async function SearchPost({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
+  return (
+    <Fragment>
+      <Suspense fallback={<SearchPageSkeleton />}>
+        <SearchPostContent searchParams={searchParams} />
+      </Suspense>
+    </Fragment>
+  );
+}
+
+export async function SearchPostContent({
+  searchParams,
+}: {
+  searchParams: SearchParams;
+}) {
   const searchTerm = searchParams.s;
   const numberPosts = 11;
   const { posts, count } = await getPostsBySearchTerm(searchTerm, numberPosts);
@@ -85,5 +105,3 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
     </div>
   );
 }
-
-export default SearchPost;

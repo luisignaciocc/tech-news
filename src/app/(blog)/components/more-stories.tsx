@@ -1,4 +1,8 @@
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Link from "next/link";
+import React from "react";
+import Skeleton from "react-loading-skeleton";
 
 import { PostPreview } from "./post-preview";
 
@@ -19,6 +23,35 @@ type Props = {
   }[];
   hasMorePosts?: boolean;
 };
+
+interface MoreStoriesSkeletonProps {
+  repeat: number;
+}
+
+export function MoreStoriesSkeleton({ repeat }: MoreStoriesSkeletonProps) {
+  return (
+    <section>
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-8 mb-8">
+        {Array.from({ length: repeat }).map((_, index) => (
+          <div key={index}>
+            <div className="mb-1">
+              <Skeleton height={150} />
+            </div>
+            <div>
+              <Skeleton height={15} width={250} />
+              <Skeleton height={30} className="mt-3" />
+              <Skeleton height={30} />
+              <Skeleton height={30} />
+              <Skeleton height={20} className="mt-3" />
+              <Skeleton height={20} />
+              <Skeleton height={20} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export function MoreStories({ posts, hasMorePosts }: Props) {
   return (

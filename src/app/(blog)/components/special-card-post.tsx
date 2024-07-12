@@ -1,31 +1,12 @@
-import "react-loading-skeleton/dist/skeleton.css";
-
 import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
-import Skeleton from "react-loading-skeleton";
 
 interface SpecialCardPostProps {
   imageUrl: string | null;
   title: string;
   slug: string;
   number: string;
-}
-
-export function SpecialCardPostSkeleton() {
-  return (
-    <div className="flex items-center w-full max-w-[280px] mt-3 mr-5">
-      <div className="w-1/3 mr-5">
-        <Skeleton width={100} height={55} />
-      </div>
-      <div className="w-2/3 p-2">
-        <Skeleton height={12} />
-        <Skeleton height={12} width={110} />
-        <Skeleton height={12} />
-        <Skeleton height={12} width={80} />
-      </div>
-    </div>
-  );
 }
 
 export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
