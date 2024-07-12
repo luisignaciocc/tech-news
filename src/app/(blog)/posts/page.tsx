@@ -9,6 +9,7 @@ import {
 } from "@/lib/api";
 
 import MoreStoriesSection from "../components/more-stories-section";
+import PostCarousel from "../components/posts-carousel";
 import SpecialSection from "../components/special-section";
 import TagSection from "../components/tag-section";
 
@@ -43,6 +44,8 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
 
   const postsByTags = await getPostsByTags(mostUsedTag, 3);
 
+  const postsForCarousel = await getRandomPosts(postIds, 3);
+
   return (
     <div className="mt-20 mx-8 mb-24 xl:mx-28">
       <div className="flex items-center">
@@ -73,6 +76,7 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
         <div className="w-4/12 hidden lg:block">
           <SpecialSection specialPosts={specialPosts} />
           <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
+          <PostCarousel posts={postsForCarousel} />
         </div>
       </div>
     </div>
