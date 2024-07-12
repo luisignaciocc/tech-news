@@ -8,6 +8,7 @@ import {
   getRandomPosts,
 } from "@/lib/api";
 
+import MiniFooter from "../components/mini-footer";
 import MoreStoriesSection from "../components/more-stories-section";
 import PostCarousel from "../components/posts-carousel";
 import SpecialSection from "../components/special-section";
@@ -77,6 +78,8 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
           <SpecialSection specialPosts={specialPosts} />
           <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
           <PostCarousel posts={postsForCarousel} />
+          <hr className="mt-4 w-full" />
+          <MiniFooter />
         </div>
       </div>
     </div>
