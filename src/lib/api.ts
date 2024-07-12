@@ -202,6 +202,40 @@ export async function getMostUsedTags(limit: number) {
   return mostUsedTags.map((tag) => tag.name);
 }
 
+export async function getPostsByTags(tags: string[], limit: number) {
+  const posts = await prisma.post.findMany({
+    where: {
+      tags: {
+        some: {
+          name: {
+            in: tags,
+          },
+        },
+      },
+    },
+    select: {
+      id: true,
+      coverImage: true,
+      title: true,
+      slug: true,
+      createdAt: true,
+      excerpt: true,
+      tags: {
+        select: {
+          name: true,
+        },
+      },
+      author: true,
+    },
+    take: limit,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return posts;
+}
+
 export const getPostsBySearchTerm = async (
   searchTerm: string,
   numberPosts: number,

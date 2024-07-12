@@ -2,7 +2,8 @@ import React from "react";
 
 import { PostPreview } from "./post-preview";
 
-interface MorePosts {
+interface PostsByTags {
+  id: string;
   title: string;
   coverImage: string | null;
   author: {
@@ -13,24 +14,22 @@ interface MorePosts {
   slug: string;
   excerpt: string | null;
   tags: {
-    id: number;
     name: string;
   }[];
-  id: string;
   createdAt: Date;
 }
 
 interface MostUsedTagProps {
   mostUsedTag: string[];
-  morePosts: MorePosts[];
+  postsByTags: PostsByTags[];
 }
 
-function TagSection({ mostUsedTag, morePosts }: MostUsedTagProps) {
+function TagSection({ mostUsedTag, postsByTags }: MostUsedTagProps) {
   return (
     <div className="mt-10">
       <h2 className="text-3xl uppercase">{mostUsedTag}</h2>
       <hr className="bg-black border-1 border-black mb-6" />
-      {morePosts.slice(0, 3).map((post) => (
+      {postsByTags.slice(0, 3).map((post) => (
         <div key={post.id} className="mb-7">
           <PostPreview
             title={

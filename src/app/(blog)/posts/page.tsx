@@ -4,6 +4,7 @@ import React from "react";
 import {
   getMostUsedTags,
   getPostsBySearchTerm,
+  getPostsByTags,
   getRandomPosts,
 } from "@/lib/api";
 
@@ -29,7 +30,18 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
 
   const specialPosts = await getRandomPosts(postIds, 5);
 
-  const mostUsedTag = await getMostUsedTags(1);
+  const mostUsedTags = await getMostUsedTags(2);
+  let mostUsedTag: string[];
+  const firstTag = mostUsedTags[0];
+  if (firstTag && firstTag.toLowerCase().includes(searchTerm.toLowerCase())) {
+    // If they are similar, assign the second result (if it exists)
+    mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
+  } else {
+    // If they are not similar, assign the first result
+    mostUsedTag = [firstTag];
+  }
+
+  const postsByTags = await getPostsByTags(mostUsedTag, 3);
 
   return (
     <div className="mt-20 mx-8 mb-24 xl:mx-28">
@@ -60,7 +72,7 @@ async function SearchPost({ searchParams }: { searchParams: SearchParams }) {
         />
         <div className="w-4/12 hidden lg:block">
           <SpecialSection specialPosts={specialPosts} />
-          <TagSection mostUsedTag={mostUsedTag} morePosts={morePosts} />
+          <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
         </div>
       </div>
     </div>
