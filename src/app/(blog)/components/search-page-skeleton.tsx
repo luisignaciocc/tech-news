@@ -10,7 +10,7 @@ import { TagSectionSkeleton } from "./tag-section";
 
 function SearchPageSkeleton() {
   return (
-    <div className="mt-20 mx-8 mb-24 xl:mx-28">
+    <div className="mt-10 mx-6 xl:mx-auto mb-10 xl:max-w-6xl ">
       <div className="flex items-center mt-28">
         <Skeleton width={650} height={40} />
       </div>

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import { getMostUsedTags } from "@/lib/api";
 
+import Footer from "./components/footer";
 import NavBar from "./components/navbar";
 
 async function NavBarComponent() {
@@ -27,6 +28,7 @@ export default function Layout({
         <NavBarComponent />
       </Suspense>
       <div className="mt-16">{children}</div>
+      <Footer />
     </div>
   );
 }
