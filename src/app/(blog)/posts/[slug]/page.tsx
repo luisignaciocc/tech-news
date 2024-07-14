@@ -40,7 +40,9 @@ export default async function PostPageContent({ params }: Params) {
             <PostContent slug={params.slug} />
           </Suspense>
         </div>
-        <SimilarPosts slug={params.slug} />
+        <Suspense>
+          <SimilarPosts slug={params.slug} />
+        </Suspense>
       </article>
     </main>
   );
