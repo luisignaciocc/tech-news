@@ -134,6 +134,22 @@ async function getSimilarNews(newsId: string) {
   }
 }
 
+export async function getMostUsedTags() {
+  const mostUsedTags = await prisma.tag.findMany({
+    orderBy: {
+      posts: {
+        _count: "desc",
+      },
+    },
+    select: {
+      name: true,
+    },
+    take: 6,
+  });
+
+  return mostUsedTags.map((tag) => tag.name);
+}
+
 export const getPosts = async (params?: {
   page?: number;
   perPage?: number;

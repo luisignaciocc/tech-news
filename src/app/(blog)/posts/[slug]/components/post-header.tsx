@@ -21,8 +21,11 @@ type Props = {
 export function PostHeaderSkeleton() {
   return (
     <Fragment>
-      <div className="mb-6 md:mb-6">
+      <div className="hidden sm:block mb-6 md:mb-6">
         <Skeleton height={450} />
+      </div>
+      <div className="sm:hidden mb-6 md:mb-6">
+        <Skeleton height={200} />
       </div>
       <div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start">
         <div className="flex flex-wrap">
