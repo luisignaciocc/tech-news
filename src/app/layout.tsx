@@ -14,10 +14,10 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: `NotiTec | Noticiero de tecnología generado por IA`,
+  title: `Tecnobuc | Noticiero de tecnología generado por IA`,
   description: `Un noticiero digital de tecnología con contenido generado automáticamente.`,
   openGraph: {
-    images: [{ url: "/api/og?title=NotiTec" }],
+    images: [{ url: "/api/og?title=Tecnobuc" }],
   },
 };
 
