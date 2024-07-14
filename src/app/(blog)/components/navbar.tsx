@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
@@ -14,22 +14,32 @@ interface NavBarProps {
 }
 
 function NavBar({ tags }: NavBarProps) {
+  const [searchValue, setSearchValue] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isDesktopScreen = useMediaQuery({ minWidth: 1024 });
 
-  const [searchValue, setSearchValue] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [inputFocused, setInputFocused] = useState(false);
+
+  useEffect(() => {
+    const search = searchParams.get("s");
+    if (search) {
+      setSearchValue(search);
+    }
+  }, [searchParams]);
 
   const handleSearch = () => {
     if (searchValue) {
       router.push(`/posts?s=${searchValue}`);
-      setSearchValue("");
-      setIsMenuOpen(false);
-      setIsSearchOpen(false);
+    } else {
+      router.push("/posts");
     }
+    setSearchValue("");
+    setIsMenuOpen(false);
+    setIsSearchOpen(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
