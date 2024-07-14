@@ -19,7 +19,7 @@ export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
     <Fragment>
       <div className="flex flex-row items-start w-full mt-3">
         <Link href={`/posts/${slug}`}>
-          <div className="w-[100px] h-[100px] rounded-md overflow-hidden mr-2 relative">
+          <div className="w-24 h-24 rounded-md overflow-hidden mr-2 relative">
             <Image
               src={imageUrl || ""}
               alt={title}

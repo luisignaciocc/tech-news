@@ -49,11 +49,11 @@ function NavBar({ tags }: NavBarProps) {
       <nav className={"bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50"}>
         {/* Search box */}
         {isSearchOpen && (
-          <div className="bg-[#333] w-full overflow-hidden transition-all duration-300 ease-in-out">
+          <div className="bg-primary w-full overflow-hidden transition-all duration-300 ease-in-out">
             <div className="h-14 flex items-center px-4 justify-between">
               <input
                 type="text"
-                className="w-full h-8 px-2 text-white bg-[#333] focus:outline-none"
+                className="w-full h-8 px-2 text-white bg-primary focus:outline-none"
                 placeholder="Buscar..."
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}

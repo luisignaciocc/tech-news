@@ -1,7 +1,4 @@
-import Image from "next/image";
-import React from "react";
-import { Suspense } from "react";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 
 import {
   getMostUsedTags,
@@ -13,35 +10,23 @@ import {
 import MiniFooter from "../components/mini-footer";
 import MoreStoriesSection from "../components/more-stories-section";
 import PostCarousel from "../components/posts-carousel";
-import SearchPageSkeleton from "../components/search-page-skeleton";
 import { SpecialSection } from "../components/special-section";
 import TagSection from "../components/tag-section";
 interface SearchParams {
-  s: string;
+  s?: string;
 }
 
-export default async function SearchPost({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  return (
-    <Fragment>
-      <Suspense fallback={<SearchPageSkeleton />}>
-        <SearchPostContent searchParams={searchParams} />
-      </Suspense>
-    </Fragment>
-  );
-}
-
-export async function SearchPostContent({
+export default async function SearchPostContent({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
   const searchTerm = searchParams.s;
   const numberPosts = 11;
-  const { posts, count } = await getPostsBySearchTerm(searchTerm, numberPosts);
+  const [{ posts, count }, mostUsedTags] = await Promise.all([
+    getPostsBySearchTerm(searchTerm, numberPosts),
+    getMostUsedTags(2),
+  ]);
 
   const morePosts = posts;
   const page = 1;
@@ -50,45 +35,37 @@ export async function SearchPostContent({
 
   const postIds = posts.map((post) => post.id);
 
-  const specialPosts = await getRandomPosts(postIds, 5);
-
-  const mostUsedTags = await getMostUsedTags(2);
   let mostUsedTag: string[];
   const firstTag = mostUsedTags[0];
-  if (firstTag && firstTag.toLowerCase().includes(searchTerm.toLowerCase())) {
-    // If they are similar, assign the second result (if it exists)
+  if (
+    firstTag &&
+    searchTerm &&
+    firstTag.toLowerCase().includes(searchTerm.toLowerCase())
+  ) {
     mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
   } else {
-    // If they are not similar, assign the first result
     mostUsedTag = [firstTag];
   }
 
-  const postsByTags = await getPostsByTags(mostUsedTag, 3);
-
-  const postsForCarousel = await getRandomPosts(postIds, 3);
+  const [specialPosts, postsByTags, postsForCarousel] = await Promise.all([
+    getRandomPosts(postIds, 5),
+    getPostsByTags(mostUsedTag, 3),
+    getRandomPosts(postIds, 3),
+  ]);
 
   return (
-    <div className="mt-20 mx-8 mb-24 xl:mx-28">
+    <div className="mt-10 mx-6 xl:mx-auto mb-10 xl:max-w-6xl ">
       <div className="flex items-center">
-        <div className="w-16 h-16 rounded-full overflow-hidden">
-          <Image
-            src="/icon.png"
-            width="100"
-            height="100"
-            alt="Logotipo de Tecnobuc"
-            className="w-[80px] h-[80px] object-cover"
-          />
-        </div>
         <span className="uppercase text-4xl mt-4 flex items-center leading-tight tracking-tighter">
-          <span className="hidden md:inline-block mr-2">Buscando</span>
-          <span>{`"${searchParams.s}"`}</span>
-          <span className="hidden md:inline-block ml-1">
-            {" "}
-            : {count} resultados
-          </span>
+          {searchTerm && (
+            <Fragment>
+              <span className="hidden md:inline-block mr-2">Buscando</span>
+              <span>{`"${searchParams.s}"`}</span>
+            </Fragment>
+          )}
         </span>
       </div>
-      <div className="flex gap-4 mt-2">
+      <div className="flex gap-8 mt-2">
         <MoreStoriesSection
           morePosts={morePosts}
           hasMorePosts={hasMorePosts}

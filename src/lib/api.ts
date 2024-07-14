@@ -237,7 +237,7 @@ export async function getPostsByTags(tags: string[], limit: number) {
 }
 
 export const getPostsBySearchTerm = async (
-  searchTerm: string,
+  searchTerm: string = "",
   numberPosts: number,
 ) => {
   const [posts, count] = await Promise.all([

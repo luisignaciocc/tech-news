@@ -114,7 +114,7 @@ function MiniFooter() {
             width="50"
             height="50"
             alt="Logotipo de Tecnobuc"
-            className="w-[60px] h-[60px] object-cover"
+            className="w-14 h-14 object-cover"
           />
         </div>
         <span className="uppercase text-xs">Hecho por Bocono Labs.</span>
