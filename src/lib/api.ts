@@ -60,6 +60,58 @@ export async function getPostsCards(slug: string, limit: number) {
   });
 }
 
+export async function getRandomPosts(excludedIds: string[], limit: number) {
+  const totalCount = await prisma.post.count({
+    where: {
+      id: {
+        notIn: excludedIds,
+      },
+    },
+  });
+
+  // Obtener una lista de IDs aleatorios que no están en el array excludedIds
+  const randomIds = new Set<string>();
+  while (randomIds.size < limit && randomIds.size < totalCount) {
+    const randomIndex = Math.floor(Math.random() * totalCount);
+    const randomId = (
+      await prisma.post.findMany({
+        where: {
+          id: {
+            notIn: excludedIds,
+          },
+        },
+        select: {
+          id: true,
+        },
+        skip: randomIndex,
+        take: 1,
+      })
+    )[0]?.id;
+    if (randomId) {
+      randomIds.add(randomId);
+    }
+  }
+
+  // Obtener los posts con los IDs aleatorios
+  const randomPosts = await prisma.post.findMany({
+    where: {
+      id: {
+        in: Array.from(randomIds),
+      },
+    },
+    select: {
+      id: true,
+      coverImage: true,
+      title: true,
+      slug: true,
+      publishedAt: true,
+      tags: true,
+    },
+  });
+
+  return randomPosts;
+}
+
 export async function getRelatedPostFromPostSlug(slug: string) {
   try {
     // Step 1: Finding news related to postId
@@ -134,7 +186,7 @@ async function getSimilarNews(newsId: string) {
   }
 }
 
-export async function getMostUsedTags() {
+export async function getMostUsedTags(limit: number) {
   const mostUsedTags = await prisma.tag.findMany({
     orderBy: {
       posts: {
@@ -144,11 +196,119 @@ export async function getMostUsedTags() {
     select: {
       name: true,
     },
-    take: 6,
+    take: limit,
   });
 
   return mostUsedTags.map((tag) => tag.name);
 }
+
+export async function getPostsByTags(tags: string[], limit: number) {
+  const posts = await prisma.post.findMany({
+    where: {
+      tags: {
+        some: {
+          name: {
+            in: tags,
+          },
+        },
+      },
+    },
+    select: {
+      id: true,
+      coverImage: true,
+      title: true,
+      slug: true,
+      createdAt: true,
+      excerpt: true,
+      tags: {
+        select: {
+          name: true,
+        },
+      },
+      author: true,
+    },
+    take: limit,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return posts;
+}
+
+export const getPostsBySearchTerm = async (
+  searchTerm: string = "",
+  numberPosts: number,
+) => {
+  const [posts, count] = await Promise.all([
+    prisma.post.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+          {
+            tags: {
+              some: {
+                name: {
+                  contains: searchTerm,
+                  mode: "insensitive",
+                },
+              },
+            },
+          },
+          {
+            content: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        coverImage: true,
+        createdAt: true,
+        excerpt: true,
+        author: true,
+        tags: true,
+      },
+      take: numberPosts,
+    }),
+
+    prisma.post.count({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
+            },
+          },
+          {
+            tags: {
+              some: {
+                name: searchTerm,
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ]);
+
+  return {
+    posts,
+    count,
+  };
+};
 
 export const getPosts = async (params?: {
   page?: number;
@@ -163,6 +323,7 @@ export const getPosts = async (params?: {
       },
       include: {
         author: true,
+        tags: true,
       },
       skip: offset,
       take: limit,

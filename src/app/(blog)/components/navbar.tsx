@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
@@ -13,9 +14,39 @@ interface NavBarProps {
 }
 
 function NavBar({ tags }: NavBarProps) {
+  const [searchValue, setSearchValue] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const isDesktopScreen = useMediaQuery({ minWidth: 1024 });
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [inputFocused, setInputFocused] = useState(false);
+
+  useEffect(() => {
+    const search = searchParams.get("s");
+    if (search) {
+      setSearchValue(search);
+    }
+  }, [searchParams]);
+
+  const handleSearch = () => {
+    if (searchValue) {
+      router.push(`/posts?s=${searchValue}`);
+    } else {
+      router.push("/posts");
+    }
+    setSearchValue("");
+    setIsMenuOpen(false);
+    setIsSearchOpen(false);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   useEffect(() => {
     if (isDesktopScreen) {
@@ -28,14 +59,23 @@ function NavBar({ tags }: NavBarProps) {
       <nav className={"bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50"}>
         {/* Search box */}
         {isSearchOpen && (
-          <div className="bg-[#333] w-full overflow-hidden transition-all duration-300 ease-in-out">
+          <div className="bg-primary w-full overflow-hidden transition-all duration-300 ease-in-out">
             <div className="h-14 flex items-center px-4 justify-between">
               <input
                 type="text"
-                className="w-full h-8 px-2 text-white bg-[#333] focus:outline-none"
+                className="w-full h-8 px-2 text-white bg-primary focus:outline-none"
                 placeholder="Buscar..."
+                value={searchValue}
+                onChange={(e) => setSearchValue(e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoFocus={inputFocused}
               />
-              <BsSearch className="h-6 w-6 text-white" />
+              <button
+                className="text-white hover:text-gray-400 px-3 py-2 rounded-md text-sm font-bold uppercase"
+                onClick={handleSearch}
+              >
+                <BsSearch className="h-6 w-6" />
+              </button>
             </div>
             <hr className="bg-white" />
           </div>
@@ -135,6 +175,7 @@ function NavBar({ tags }: NavBarProps) {
                     onClick={() => {
                       setIsMenuOpen(false);
                       setIsSearchOpen((prevState) => !prevState);
+                      setInputFocused(true);
                     }}
                   />
                 )}
@@ -167,6 +208,7 @@ function NavBar({ tags }: NavBarProps) {
                       onClick={() => {
                         setIsMenuOpen(false);
                         setIsSearchOpen((prevState) => !prevState);
+                        setInputFocused(true);
                       }}
                     />
                   )}

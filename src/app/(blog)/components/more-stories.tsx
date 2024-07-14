@@ -1,21 +1,62 @@
-import Link from "next/link";
+import "react-loading-skeleton/dist/skeleton.css";
 
-import { Post } from "@/lib/api";
+import Link from "next/link";
+import React from "react";
+import Skeleton from "react-loading-skeleton";
 
 import { PostPreview } from "./post-preview";
 
 type Props = {
-  posts: Post[];
+  posts: {
+    slug: string;
+    title: string;
+    coverImage: string | null;
+    createdAt: Date;
+    excerpt: string | null;
+    author: {
+      name: string;
+      picture: string;
+    };
+    tags: {
+      name: string;
+    }[];
+  }[];
   hasMorePosts?: boolean;
 };
+
+interface MoreStoriesSkeletonProps {
+  repeat: number;
+}
+
+export function MoreStoriesSkeleton({ repeat }: MoreStoriesSkeletonProps) {
+  return (
+    <section>
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-8 mb-8">
+        {Array.from({ length: repeat }).map((_, index) => (
+          <div key={index}>
+            <div className="mb-1">
+              <Skeleton height={150} />
+            </div>
+            <div>
+              <Skeleton height={15} width={250} />
+              <Skeleton height={30} className="mt-3" />
+              <Skeleton height={30} />
+              <Skeleton height={30} />
+              <Skeleton height={20} className="mt-3" />
+              <Skeleton height={20} />
+              <Skeleton height={20} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
 
 export function MoreStories({ posts, hasMorePosts }: Props) {
   return (
     <section>
-      <h2 className="mb-8 text-5xl md:text-7xl font-bold tracking-tighter leading-tight">
-        Más Noticias
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-16 lg:gap-x-32 gap-y-20 md:gap-y-32 mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-8 mb-8">
         {posts.map((post) => (
           <PostPreview
             key={post.slug}
@@ -25,6 +66,8 @@ export function MoreStories({ posts, hasMorePosts }: Props) {
             author={post.author}
             slug={post.slug}
             excerpt={post.excerpt}
+            tags={post.tags}
+            titleLinkClassName="hover:underline"
           />
         ))}
         {hasMorePosts && (

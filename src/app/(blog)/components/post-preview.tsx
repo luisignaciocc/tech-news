@@ -1,11 +1,12 @@
 import Link from "next/link";
+import React from "react";
 
-import Avatar from "@/components/avatar";
-import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
 
+import ZoomImage from "./zoom-image";
+
 type Props = {
-  title: string;
+  title: string | React.ReactNode;
   coverImage?: string | null;
   date: Date;
   excerpt?: string | null;
@@ -14,6 +15,10 @@ type Props = {
     picture: string;
   };
   slug: string;
+  tags: {
+    name: string;
+  }[];
+  titleLinkClassName?: string;
 };
 
 export function PostPreview({
@@ -21,28 +26,52 @@ export function PostPreview({
   coverImage,
   date,
   excerpt,
-  author,
   slug,
+  tags,
+  titleLinkClassName,
 }: Props) {
+  const getTitleAsString = (): string => {
+    if (typeof title === "string") {
+      return title;
+    } else {
+      // Get the title if it comes as an element
+      const textContent = React.Children.toArray(title).join("");
+      return textContent;
+    }
+  };
+
   return (
     <div>
-      <div className="mb-5">
-        <CoverImage
+      <div className="mb-4">
+        <ZoomImage
           slug={slug}
-          title={title}
+          title={getTitleAsString()}
           src={coverImage || "/api/preview-image"}
         />
       </div>
-      <h3 className="text-3xl mb-3 leading-snug">
-        <Link href={`/posts/${slug}`} className="hover:underline">
+      <div className="text-sm flex items-center">
+        {tags.slice(0, 1).map((tag) => (
+          <Link
+            href={`/posts/tags/${tag.name}`}
+            key={tag.name}
+            className="uppercase text-gray-800 mr-2"
+          >
+            {tag.name}
+          </Link>
+        ))}
+        <span className="mr-2 border-r border border-black h-3"></span>
+        <div className="text-gray-500">
+          <DateFormatter date={date} />
+        </div>
+      </div>
+      <h3 className="text-2xl leading-tight tracking-tighter">
+        <Link href={`/posts/${slug}`} className={`${titleLinkClassName}`}>
           {title}
         </Link>
       </h3>
-      <div className="text-lg mb-4">
-        <DateFormatter date={date} />
-      </div>
-      <p className="text-lg leading-relaxed mb-4">{excerpt}</p>
-      <Avatar name={author.name} picture={author.picture} />
+      <p className="text-lg leading-tight tracking-tighter text-gray-500 mt-2 line-clamp-3">
+        {excerpt}
+      </p>
     </div>
   );
 }
