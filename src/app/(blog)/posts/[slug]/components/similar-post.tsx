@@ -6,6 +6,7 @@ import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { DateFormatter } from "@/components/date-formatter";
+import { getRelatedPostFromPostSlug } from "@/lib/api";
 
 interface SimilarPostsProps {
   imageUrl: string | null;
@@ -19,7 +20,7 @@ export function SimilarPostsSkeleton() {
   return (
     <Fragment>
       {/* Version for large screens */}
-      <div className="bg-gray-100 p-4 w-full hidden sm:flex sm:w-[75%] items-start">
+      <div className="bg-gray-100 p-4 w-full hidden sm:flex sm:w-3/4 items-start">
         <div className="w-1/3">
           <Skeleton height={100} />
         </div>
@@ -29,10 +30,10 @@ export function SimilarPostsSkeleton() {
             <Skeleton count={2} />
           </div>
           <div className="flex justify-between items-end mt-5">
-            <div className="text-gray-700 text-xs line-clamp-2 w-[50%]">
+            <div className="text-gray-700 text-xs line-clamp-2 w-1/2">
               <Skeleton />
             </div>
-            <div className="text-gray-600 text-xs line-clamp-1 w-[40%] text-left">
+            <div className="text-gray-600 text-xs line-clamp-1 w-2/5 text-left">
               <Skeleton />
             </div>
           </div>
@@ -52,10 +53,10 @@ export function SimilarPostsSkeleton() {
             <Skeleton count={2} />
           </div>
           <div className="flex flex-col justify-between items-start mt-4">
-            <div className="text-gray-700 text-xs line-clamp-2 w-[50%]">
+            <div className="text-gray-700 text-xs line-clamp-2 w-1/2">
               <Skeleton />
             </div>
-            <div className="text-gray-600 text-xs line-clamp-1 w-[50%] mt-2">
+            <div className="text-gray-600 text-xs line-clamp-1 w-1/2 mt-2">
               <Skeleton />
             </div>
           </div>
@@ -65,7 +66,7 @@ export function SimilarPostsSkeleton() {
   );
 }
 
-export const SimilarPosts: React.FC<SimilarPostsProps> = ({
+export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
   imageUrl,
   title,
   tags,
@@ -75,7 +76,7 @@ export const SimilarPosts: React.FC<SimilarPostsProps> = ({
   return (
     <Fragment>
       {/* Version for large screens */}
-      <div className="bg-gray-100 p-4 w-full hidden sm:flex sm:w-[75%] items-start">
+      <div className="bg-gray-100 p-4 w-full hidden sm:flex items-start">
         <div className="w-1/3">
           <Link href={`/posts/${slug}`}>
             <Image
@@ -97,7 +98,7 @@ export const SimilarPosts: React.FC<SimilarPostsProps> = ({
             </h3>
           </div>
           <div className="flex justify-between items-end">
-            <div className="text-gray-700 text-xs line-clamp-2 w-[50%]">
+            <div className="text-gray-700 text-xs line-clamp-2 w-1/2">
               {tags.map((tag, index) => (
                 <React.Fragment key={index}>
                   <Link href={`/posts/tags/${tag.name}`}>
@@ -108,7 +109,7 @@ export const SimilarPosts: React.FC<SimilarPostsProps> = ({
               ))}
             </div>
             {publishedAt && (
-              <div className="text-gray-600 text-xs line-clamp-1 w-[50%] text-left">
+              <div className="text-gray-600 text-xs line-clamp-1 w-1/2 text-left">
                 <span className="mr-2">|</span>{" "}
                 <DateFormatter date={publishedAt} />
               </div>
@@ -118,7 +119,7 @@ export const SimilarPosts: React.FC<SimilarPostsProps> = ({
       </div>
 
       {/* Version for small screens */}
-      <div className="bg-white p-4 w-full sm:hidden flex flex-col items-start">
+      <div className="bg-white p-4 w-full sm:hidden flex flex-col">
         <hr className="mb-6 w-full border-black" />
         <div className="w-full mb-4">
           <Link href={`/posts/${slug}`}>
@@ -163,3 +164,26 @@ export const SimilarPosts: React.FC<SimilarPostsProps> = ({
     </Fragment>
   );
 };
+
+export default async function SimilarPosts({ slug }: { slug: string }) {
+  const similarPosts = await getRelatedPostFromPostSlug(slug);
+  return (
+    <div className="mx-auto px-4 max-w-2xl lg:max-w-4xl xl:max-w-5xl mt-4">
+      <div className="grid lg:grid-cols-5">
+        <div className="lg:col-span-4">
+          {similarPosts?.map((post, index) => (
+            <SimilarPostsCard
+              key={index}
+              imageUrl={post.coverImage || ""}
+              title={post.title}
+              tags={post.tags}
+              slug={post.slug}
+              publishedAt={post.publishedAt}
+            />
+          ))}
+        </div>
+        <div className="hidden lg:col-span-1"></div>
+      </div>
+    </div>
+  );
+}
