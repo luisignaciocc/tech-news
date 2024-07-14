@@ -247,13 +247,23 @@ export const getPostsBySearchTerm = async (
           {
             title: {
               contains: searchTerm,
+              mode: "insensitive",
             },
           },
           {
             tags: {
               some: {
-                name: searchTerm,
+                name: {
+                  contains: searchTerm,
+                  mode: "insensitive",
+                },
               },
+            },
+          },
+          {
+            content: {
+              contains: searchTerm,
+              mode: "insensitive",
             },
           },
         ],
