@@ -3,13 +3,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-} from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
+
+import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
 export function MiniFooterSkeleton() {
   return (
@@ -61,38 +57,19 @@ function MiniFooter() {
     <div className="mt-6">
       <div className="flex justify-center gap-4 mt-2 mb-4">
         <div className="flex items-start justify-center space-x-4">
-          <div className="relative group">
-            <Link href={"https://facebook.com"} target="_blank">
-              <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-              <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                <FaFacebookF className="text-2xl text-gray-500 transition-color duration-300 group-hover:text-black" />
-              </div>
-            </Link>
-          </div>
-          <div className="relative group">
-            <Link href={"https://instagram.com"} target="_blank">
-              <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-              <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                <FaInstagram className="text-2xl text-gray-500 transition-color duration-300 group-hover:text-black" />
-              </div>
-            </Link>
-          </div>
-          <div className="relative group">
-            <Link href={"https://x.com"} target="_blank">
-              <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-              <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                <FaTwitter className="text-2xl text-gray-500 transition-color duration-300 group-hover:text-black" />
-              </div>
-            </Link>
-          </div>
-          <div className="relative group">
-            <Link href={"https://linkedin.com"} target="_blank">
-              <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-              <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                <FaLinkedinIn className="text-2xl text-gray-500 transition-color duration-300 group-hover:text-black" />
-              </div>
-            </Link>
-          </div>
+          {socialMediaLinks.map((socialMedia, index) => (
+            <div
+              className="relative group"
+              key={`social-media-links-footer-${index}`}
+            >
+              <Link href={socialMedia.url} target="_blank">
+                <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
+                <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
+                  <socialMedia.icon className="text-2xl text-gray-500 transition-color duration-300 group-hover:text-black" />
+                </div>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
 
