@@ -5,7 +5,7 @@ import { getMostUsedTags } from "@/lib/api";
 import NavBar from "../components/navbar";
 
 async function NavBarComponent() {
-  const tagsMostUsed = await getMostUsedTags();
+  const tagsMostUsed = await getMostUsedTags(6);
 
   await new Promise((resolve) => setTimeout(resolve, 5000));
 
