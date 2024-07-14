@@ -33,19 +33,19 @@ export function PostHeaderSkeleton() {
           <Skeleton width={150} />
         </div>
       </div>
-      <h1 className="text-3xl font-bold mb-1 w-[90%]">
+      <h1 className="text-3xl font-bold mb-1 w-11/12">
         <Skeleton />
       </h1>
       <h1 className="text-3xl font-bold mb-1 w-full">
         <Skeleton />
       </h1>
-      <h1 className="text-3xl font-bold mb-6 w-[50%]">
+      <h1 className="text-3xl font-bold mb-6 w-1/2">
         <Skeleton />
       </h1>
       <div className="mb-1 w-full">
         <Skeleton />
       </div>
-      <div className="mb-4 w-[60%]">
+      <div className="mb-4 w-3/5">
         <Skeleton />
       </div>
     </Fragment>
