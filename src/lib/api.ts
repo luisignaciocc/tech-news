@@ -38,11 +38,11 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
-export async function getPostsCards(id: string, limit: number) {
+export async function getPostsCards(slug: string, limit: number) {
   return prisma.post.findMany({
     where: {
-      id: {
-        not: id,
+      slug: {
+        not: slug,
       },
     },
     select: {
@@ -112,11 +112,11 @@ export async function getRandomPosts(excludedIds: string[], limit: number) {
   return randomPosts;
 }
 
-export async function getRelatedPostFromPost(postId: string) {
+export async function getRelatedPostFromPostSlug(slug: string) {
   try {
     // Step 1: Finding news related to postId
     const post = await prisma.post.findUnique({
-      where: { id: postId },
+      where: { slug },
       include: { new: true },
     });
 

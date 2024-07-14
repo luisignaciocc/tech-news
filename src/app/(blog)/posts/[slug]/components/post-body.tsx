@@ -10,7 +10,7 @@ type Props = {
 
 export function PostBodySkeleton() {
   return (
-    <div className="text-gray-600 w-full sm:w-[75%]">
+    <div className="text-gray-600 w-full">
       <h2 className="mb-5">
         <Skeleton count={6} />
       </h2>
@@ -29,7 +29,7 @@ export function PostBodySkeleton() {
 
 export function PostBody({ content }: Props) {
   return (
-    <div className="text-gray-600 w-full sm:w-[75%]">
+    <div className="text-gray-600 w-full">
       <div
         className={markdownStyles["markdown"]}
         dangerouslySetInnerHTML={{ __html: content }}

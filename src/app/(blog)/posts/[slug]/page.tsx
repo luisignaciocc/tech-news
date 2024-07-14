@@ -1,14 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Fragment, Suspense } from "react";
+import { Suspense } from "react";
 
-import {
-  getPostBySlug,
-  getPostsCards,
-  getPostSlugs,
-  getRelatedPostFromPost,
-} from "@/lib/api";
-import markdownToHtml from "@/lib/markdownToHtml";
+import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import {
   defaultMetadata,
   PERSONAL_HANDLER,
@@ -18,97 +12,40 @@ import {
   SITE_URL,
 } from "@/lib/metadata";
 
-import MoreTags from "./components/more-tags";
-import { PostBody } from "./components/post-body";
-import { PostCard } from "./components/post-card";
-import { PostHeader } from "./components/post-header";
-import PostPageSkeleton from "./components/post-page-skeleton";
-import { SimilarPosts } from "./components/similar-post";
-import SocialMediaButtons from "./components/social-media-buttons";
-
-export default async function Post({ params }: Params) {
-  return (
-    <Fragment>
-      <Suspense fallback={<PostPageSkeleton />}>
-        <PostPageContent params={params} />
-      </Suspense>
-    </Fragment>
-  );
-}
-
-export async function PostPageContent({ params }: Params) {
-  const post = await getPostBySlug(params.slug);
-
-  const slugsCard = await getPostsCards(post?.id || "", 4);
-
-  if (!post) {
-    return notFound();
-  }
-
-  const content = await markdownToHtml(post.content || "");
-
-  const similarPosts = await getRelatedPostFromPost(post.id);
-
-  return (
-    <main>
-      <div className="flex flex-wrap justify-center gap-6 mb-7 mt-14">
-        {slugsCard.map((post, index) => (
-          <div
-            key={index}
-            className="relative flex items-center max-w-[280px] mt-12 mr-5"
-          >
-            <PostCard
-              key={index}
-              imageUrl={post.coverImage || ""}
-              title={post.title}
-              tags={post.tags}
-              slug={post.slug}
-            />
-            {index < 3 && (
-              <div className="absolute right-[-5px] bottom-1 h-24 border-r border-gray-300" />
-            )}
-          </div>
-        ))}
-      </div>
-      <article className="mb-32 relative">
-        <div className="w-full h-[60px] bg-gray-100 mb-8"></div>
-
-        <div className="hidden sm:hidden lg:block">
-          <SocialMediaButtons />
-        </div>
-
-        <div className="w-[90%] h-full flex flex-col items-Start justify-Start mx-auto md:w-[60%]">
-          <PostHeader
-            title={post.title}
-            coverImage={post.coverImage}
-            date={post.createdAt}
-            tags={post.tags}
-            excerpt={post.excerpt}
-          />
-          <PostBody content={content} />
-          {similarPosts &&
-            similarPosts.map((post, index) => (
-              <SimilarPosts
-                key={index}
-                imageUrl={post.coverImage || ""}
-                title={post.title}
-                tags={post.tags}
-                slug={post.slug}
-                publishedAt={post.publishedAt}
-              />
-            ))}
-          <MoreTags tags={post.tags} />
-        </div>
-      </article>
-    </main>
-  );
-}
+import HeaderPosts, {
+  HeaderPostLoadingSkeleton,
+} from "./components/header-posts";
+import PostContent, {
+  PostContentLoadigSkeleton,
+} from "./components/post-content";
+import SimilarPosts from "./components/similar-post";
 
 type Params = {
   params: {
     slug: string;
   };
 };
+
+export default async function PostPageContent({ params }: Params) {
+  return (
+    <main>
+      <article className="mb-8 relative">
+        <Suspense fallback={<HeaderPostLoadingSkeleton />}>
+          <HeaderPosts slug={params.slug} />
+        </Suspense>
+        <div className="w-full h-14 bg-gray-100 mb-8"></div>
+
+        <div className="mx-auto px-4 max-w-2xl lg:max-w-4xl xl:max-w-5xl">
+          <Suspense fallback={<PostContentLoadigSkeleton />}>
+            <PostContent slug={params.slug} />
+          </Suspense>
+        </div>
+        <SimilarPosts slug={params.slug} />
+      </article>
+    </main>
+  );
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 
