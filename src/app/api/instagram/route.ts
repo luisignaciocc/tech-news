@@ -60,7 +60,18 @@ export async function POST(request: Request) {
       lastPost.coverImage || `${SITE_URL}/icon.png`,
     );
 
-    const imageTemplates = ["image-01"];
+    const imageTemplates = [
+      "image-01",
+      "image-02",
+      "image-03",
+      "image-04",
+      "image-05",
+      "image-06",
+      "image-07",
+      "image-08",
+      "image-09",
+      "image-10",
+    ];
 
     const randomImageTemplate =
       imageTemplates[Math.floor(Math.random() * imageTemplates.length)];

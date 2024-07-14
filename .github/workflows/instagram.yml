@@ -1,0 +1,15 @@
+name: Publish to Instagram
+
+on:
+  schedule:
+    - cron: "15 12,15,18,21 * * *"
+
+jobs:
+  blog:
+    runs-on: self-hosted
+    steps:
+      - name: Publish to Instagram
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/instagram' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
