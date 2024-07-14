@@ -1,9 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
-import Container from "@/components/container";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
-import markdownToHtml from "@/lib/markdownToHtml";
 import {
   defaultMetadata,
   PERSONAL_HANDLER,
@@ -13,42 +12,40 @@ import {
   SITE_URL,
 } from "@/lib/metadata";
 
-import Header from "./components/header";
-import { PostBody } from "./components/post-body";
-import { PostHeader } from "./components/post-header";
-
-export default async function Post({ params }: Params) {
-  const post = await getPostBySlug(params.slug);
-
-  if (!post) {
-    return notFound();
-  }
-
-  const content = await markdownToHtml(post.content || "");
-
-  return (
-    <main>
-      <Container>
-        <Header />
-        <article className="mb-32">
-          <PostHeader
-            title={post.title}
-            coverImage={post.coverImage}
-            date={post.createdAt}
-            author={post.author}
-          />
-          <PostBody content={content} />
-        </article>
-      </Container>
-    </main>
-  );
-}
+import HeaderPosts, {
+  HeaderPostLoadingSkeleton,
+} from "./components/header-posts";
+import PostContent, {
+  PostContentLoadigSkeleton,
+} from "./components/post-content";
+import SimilarPosts from "./components/similar-post";
 
 type Params = {
   params: {
     slug: string;
   };
 };
+
+export default async function PostPageContent({ params }: Params) {
+  return (
+    <main>
+      <article className="mb-8 relative">
+        <Suspense fallback={<HeaderPostLoadingSkeleton />}>
+          <HeaderPosts slug={params.slug} />
+        </Suspense>
+        <div className="w-full h-14 bg-gray-100 mb-8"></div>
+
+        <div className="mx-auto px-4 max-w-2xl lg:max-w-4xl xl:max-w-5xl">
+          <Suspense fallback={<PostContentLoadigSkeleton />}>
+            <PostContent slug={params.slug} />
+          </Suspense>
+        </div>
+        <SimilarPosts slug={params.slug} />
+      </article>
+    </main>
+  );
+}
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const post = await getPostBySlug(params.slug);
 

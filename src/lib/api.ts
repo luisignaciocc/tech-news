@@ -38,6 +38,102 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
+export async function getPostsCards(slug: string, limit: number) {
+  return prisma.post.findMany({
+    where: {
+      slug: {
+        not: slug,
+      },
+    },
+    select: {
+      id: true,
+      coverImage: true,
+      title: true,
+      slug: true,
+      publishedAt: true,
+      tags: true,
+    },
+    take: limit,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}
+
+export async function getRelatedPostFromPostSlug(slug: string) {
+  try {
+    // Step 1: Finding news related to postId
+    const post = await prisma.post.findUnique({
+      where: { slug },
+      include: { new: true },
+    });
+
+    if (!post || !post.new) {
+      return null;
+    }
+
+    const newsId = post.new.id;
+
+    // Step 2: Finding similar news
+    const similarNews = await getSimilarNews(newsId);
+
+    if (!similarNews || similarNews.length === 0) {
+      return null;
+    }
+
+    // Paso 3: Select a random number of similar news items
+    const randomIndex = Math.floor(Math.random() * similarNews.length);
+    const selectedSimilarNews = similarNews[randomIndex];
+
+    // Paso 4: Find the post related to the selected news
+    const relatedPost = await prisma.post.findFirst({
+      where: {
+        newId: selectedSimilarNews.id,
+      },
+      select: {
+        id: true,
+        coverImage: true,
+        title: true,
+        slug: true,
+        publishedAt: true,
+        tags: true,
+      },
+    });
+
+    return relatedPost ? [relatedPost] : [];
+  } catch (error) {
+    console.error("Error getting related post:", error);
+    return [];
+  }
+}
+
+async function getSimilarNews(newsId: string) {
+  try {
+    // Searching for similar news with newsId
+    const similarNews: { id: string; similarity: number }[] =
+      await prisma.$queryRaw`
+    WITH comparation AS (
+      SELECT embedding AS comparation_embedding
+      FROM "News"
+      WHERE id = ${newsId}
+    )
+    SELECT n.id, 
+          1 - (n.embedding <=> c.comparation_embedding) AS similarity
+    FROM "News" n,
+          comparation c
+    WHERE n.id != ${newsId} 
+    AND n.embedding IS NOT NULL
+    AND 1 - (n.embedding <=> c.comparation_embedding) > 0.6
+    ORDER BY similarity DESC;
+  `;
+
+    return similarNews;
+  } catch (error) {
+    console.error("Error getting similar news:", error);
+    return [];
+  }
+}
+
 export const getPosts = async (params?: {
   page?: number;
   perPage?: number;
