@@ -6,7 +6,7 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 
-const socialMediaLinks = [
+export const socialMediaLinks = [
   {
     name: "Facebook",
     url: "https://web.facebook.com/profile.php?id=61559704547847",

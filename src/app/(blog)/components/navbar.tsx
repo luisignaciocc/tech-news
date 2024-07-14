@@ -4,13 +4,9 @@ import Link from "next/link";
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-} from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
+
+import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
 interface NavBarProps {
   tags: string[];
@@ -29,11 +25,7 @@ function NavBar({ tags }: NavBarProps) {
 
   return (
     <Fragment>
-      <nav
-        className={
-          "bg-[#333] shadow-[0_4px_12px_rgba(0,0,0,0.5)] fixed top-0 left-0 right-0 z-50"
-        }
-      >
+      <nav className={"bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50"}>
         {/* Search box */}
         {isSearchOpen && (
           <div className="bg-[#333] w-full overflow-hidden transition-all duration-300 ease-in-out">
@@ -64,7 +56,7 @@ function NavBar({ tags }: NavBarProps) {
                       width="50"
                       height="50"
                       alt="Logotipo de Tecnobuc"
-                      className="w-[60px] h-[60px] object-cover"
+                      className="w-14 h-14 object-cover"
                     />
                   </div>
                   Tecnobuc
@@ -75,41 +67,22 @@ function NavBar({ tags }: NavBarProps) {
             {/* Social media icons */}
             {!isMenuOpen && (
               <div className="md:hidden flex items-center justify-between w-full">
-                <div className="flex items-center sm:ml-4">
-                  <div className="flex justify-start gap-4 mt-2 mb-4 sm:block md:block lg:hidden">
-                    <div className="flex items-start justify-start sm:space-x-2 space-x-1">
-                      <div className="relative group">
-                        <Link href={"https://facebook.com"} target="_blank">
-                          <div className="absolute inset-0 border border-white rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-                          <div className="bg-transparent rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                            <FaFacebookF className="text-1xl sm:text-2xl text-white transition-color duration-300 group-hover:text-black" />
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="relative group">
-                        <Link href={"https://instagram.com"} target="_blank">
-                          <div className="absolute inset-0 border border-white rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-                          <div className="bg-transparent rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                            <FaInstagram className="text-1xl sm:text-2xl text-white transition-color duration-300 group-hover:text-black" />
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="relative group">
-                        <Link href={"https://x.com"} target="_blank">
-                          <div className="absolute inset-0 border border-white rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-                          <div className="bg-transparent rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                            <FaTwitter className="text-1xl sm:text-2xl text-white transition-color duration-300 group-hover:text-black" />
-                          </div>
-                        </Link>
-                      </div>
-                      <div className="relative group">
-                        <Link href={"https://linkedin.com"} target="_blank">
-                          <div className="absolute inset-0 border border-white rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
-                          <div className="bg-transparent rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
-                            <FaLinkedinIn className="text-1xl sm:text-2xl text-white transition-color duration-300 group-hover:text-black" />
-                          </div>
-                        </Link>
-                      </div>
+                <div className="flex items-center mx-2">
+                  <div className="flex justify-center lg:hidden">
+                    <div className="flex sm:space-x-2 space-x-1">
+                      {socialMediaLinks.map((socialMedia, index) => (
+                        <div
+                          className="relative group"
+                          key={`social-media-links-header-${index}`}
+                        >
+                          <a href={socialMedia.url} target="_blank">
+                            <div className="absolute inset-0 border border-white rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
+                            <div className="bg-transparent rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
+                              <socialMedia.icon className="text-1xl sm:text-2xl text-white transition-color duration-300 group-hover:text-black" />
+                            </div>
+                          </a>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -125,7 +98,7 @@ function NavBar({ tags }: NavBarProps) {
                     width="50"
                     height="50"
                     alt="Logotipo de Tecnobuc"
-                    className="w-[60px] h-[60px] object-cover"
+                    className="w-14 h-14 object-cover"
                   />
                 </div>
               </div>
@@ -175,7 +148,7 @@ function NavBar({ tags }: NavBarProps) {
               transition-transform
               duration-350
               ease-in-out
-              ${isMenuOpen ? "sm:-translate-x-[290px] -translate-x-[240px]" : "translate-x-0"}
+              ${isMenuOpen ? "sm:-translate-x-72 -translate-x-60" : "translate-x-0"}
             `}
             >
               <div className="lg:hidden flex items-center">
@@ -223,7 +196,7 @@ function NavBar({ tags }: NavBarProps) {
                 width="100"
                 height="100"
                 alt="Logotipo de Tecnobuc"
-                className="w-[100px] h-[100px] object-cover"
+                className="w-24 h-24 object-cover"
               />
             </div>
             <div className="flex flex-col space-y-4 w-full">
