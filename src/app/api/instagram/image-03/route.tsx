@@ -6,7 +6,7 @@ import { SITE_NAME, SITE_SHORT_NAME, SITE_URL } from "@/lib/metadata";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get("title");
+  const title = searchParams.get("title"); // The title must contain a maximum of 94 characters
   const coverImage = searchParams.get("cover_image");
   // const apiKey = searchParams.get("api_key");
 
@@ -51,12 +51,24 @@ export async function GET(request: Request) {
             textAlign: "center",
             width: "80%",
             bottom: "20px",
-            marginBottom: "40px",
+            marginBottom: "15px",
             fontWeight: 900,
             zIndex: 1,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
           }}
         >
-          {title || SITE_NAME}
+          <div
+            style={{
+              display: "-webkit-box",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              WebkitLineClamp: 4,
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {title || SITE_NAME}
+          </div>
         </div>
         <div
           style={{
