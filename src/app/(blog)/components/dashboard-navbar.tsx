@@ -1,13 +1,14 @@
 "use client";
 import React, { Fragment, useEffect, useState } from "react";
 
-import { getMostUsedTags } from "@/lib/api";
-
 import NavBar from "./navbar";
 
-const NavbarController = () => {
+interface DashboardNavBarProps {
+  tags: string[];
+}
+
+const DashboardNavBar = ({ tags }: DashboardNavBarProps) => {
   const [showNavbar, setShowNavbar] = useState(false);
-  const [tags, setTags] = useState<string[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,17 +20,6 @@ const NavbarController = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-
-    const mostUsedTags = async () => {
-      try {
-        const data = await getMostUsedTags(6);
-        setTags(data);
-      } catch (error) {
-        console.error("Error fetching tags:", error);
-      }
-    };
-
-    mostUsedTags();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -52,4 +42,4 @@ const NavbarController = () => {
   );
 };
 
-export default NavbarController;
+export default DashboardNavBar;

@@ -1,14 +1,15 @@
 import { Viewport } from "next";
+import { Suspense } from "react";
 
 import Container from "@/components/container";
 import { getPosts } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
+import DashboardTagsFetcher from "./components/dashboard-tags-fetcher";
 import { HeroPost } from "./components/hero-post";
 import { Intro } from "./components/intro";
 import { MoreStories } from "./components/more-stories";
-import NavbarController from "./components/navbar-controller";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -30,7 +31,13 @@ export default async function Index({
 
   return (
     <main>
-      <NavbarController />
+      <Suspense
+        fallback={
+          <div className="h-16 bg-gray-100 fixed top-0 left-0 right-0 z-50" />
+        }
+      >
+        <DashboardTagsFetcher />
+      </Suspense>
       <Container>
         <div className="w-11/12 mx-auto justify-center">
           <Intro />
