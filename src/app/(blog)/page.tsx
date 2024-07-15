@@ -32,18 +32,20 @@ export default async function Index({
     <main>
       <NavbarController />
       <Container>
-        <Intro />
-        <HeroPost
-          title={heroPost.title}
-          coverImage={heroPost.coverImage}
-          date={heroPost.createdAt}
-          author={heroPost.author}
-          slug={heroPost.slug}
-          excerpt={heroPost.excerpt}
-        />
-        {morePosts.length > 0 && (
-          <MoreStories posts={morePosts} hasMorePosts={hasMorePosts} />
-        )}
+        <div className="w-11/12 mx-auto justify-center">
+          <Intro />
+          <HeroPost
+            title={heroPost.title}
+            coverImage={heroPost.coverImage}
+            date={heroPost.createdAt}
+            author={heroPost.author}
+            slug={heroPost.slug}
+            excerpt={heroPost.excerpt}
+          />
+          {morePosts.length > 0 && (
+            <MoreStories posts={morePosts} hasMorePosts={hasMorePosts} />
+          )}
+        </div>
       </Container>
     </main>
   );
