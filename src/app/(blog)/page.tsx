@@ -2,12 +2,16 @@ import { Viewport } from "next";
 
 import Container from "@/components/container";
 import { getPosts } from "@/lib/api";
+import { getMostUsedTags, getPostsByTags, getRandomPosts } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
-import { HeroPost } from "./components/hero-post";
 import { Intro } from "./components/intro";
-import { MoreStories } from "./components/more-stories";
+import MiniFooter from "./components/mini-footer";
+import MoreStoriesSection from "./components/more-stories-section";
+import PostCarousel from "./components/posts-carousel";
+import { SpecialSection } from "./components/special-section";
+import TagSection from "./components/tag-section";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -23,26 +27,38 @@ export default async function Index({
   const perPage = PER_PAGE;
   const { posts, count } = await getPosts({ page, perPage });
 
-  const heroPost = posts[0];
-  const morePosts = posts.slice(1);
+  // const heroPost = posts.slice(0, 9);
+  const morePosts = posts.slice(9);
+  const postIds = morePosts.map((post) => post.id);
   const hasMorePosts = page * perPage < count;
+
+  const mostUsedTag = await getMostUsedTags(1);
+
+  const [specialPosts, postsByTags, postsForCarousel] = await Promise.all([
+    getRandomPosts(postIds, 5),
+    getPostsByTags(mostUsedTag, 3),
+    getRandomPosts(postIds, 3),
+  ]);
 
   return (
     <main>
       <Container>
         <Intro />
         <div className="w-11/12 mx-auto justify-center">
-          <HeroPost
-            title={heroPost.title}
-            coverImage={heroPost.coverImage}
-            date={heroPost.createdAt}
-            author={heroPost.author}
-            slug={heroPost.slug}
-            excerpt={heroPost.excerpt}
-          />
-          {morePosts.length > 0 && (
-            <MoreStories posts={morePosts} hasMorePosts={hasMorePosts} />
-          )}
+          <div className="flex gap-8 mt-2">
+            <MoreStoriesSection
+              morePosts={morePosts}
+              hasMorePosts={hasMorePosts}
+              posts={posts}
+            />
+            <div className="w-4/12 hidden lg:block">
+              <SpecialSection specialPosts={specialPosts} />
+              <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
+              <PostCarousel posts={postsForCarousel} />
+              <hr className="mt-4 w-full" />
+              <MiniFooter />
+            </div>
+          </div>
         </div>
       </Container>
     </main>
