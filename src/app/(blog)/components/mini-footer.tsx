@@ -5,6 +5,8 @@ import Link from "next/link";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { SITE_AUTHOR, SITE_AUTHOR_URL } from "@/lib/metadata";
+
 import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
 export function MiniFooterSkeleton() {
@@ -94,7 +96,17 @@ function MiniFooter() {
             className="w-14 h-14 object-cover"
           />
         </div>
-        <span className="uppercase text-xs">Hecho por Bocono Labs.</span>
+        <span className="uppercase text-xs">
+          Hecho por{" "}
+          <a
+            href={SITE_AUTHOR_URL}
+            className="underline hover:text-blue-600 duration-200 transition-colors"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {SITE_AUTHOR}
+          </a>
+        </span>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 "use client";
+// import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
 
+// import { BsSearch } from "react-icons/bs";
 import NavBar from "./navbar";
 
 interface DashboardNavBarProps {
@@ -36,8 +38,27 @@ const DashboardNavBar = ({ tags }: DashboardNavBarProps) => {
       ${showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}
     `}
       >
-        <NavBar tags={tags} />
+        <nav
+          className={"bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50"}
+        >
+          <NavBar
+            isNavBar={true}
+            tags={tags}
+            bgLinksColor="text-white"
+            hoverLinksColor="hover:text-gray-400"
+            socialMediaColor="white"
+          />
+        </nav>
       </nav>
+      <div className="w-full mr-5 ml-3">
+        <NavBar
+          isNavBar={false}
+          tags={tags}
+          bgLinksColor="text-black"
+          hoverLinksColor="hover:text-red-400"
+          socialMediaColor="black"
+        />
+      </div>
     </Fragment>
   );
 };
