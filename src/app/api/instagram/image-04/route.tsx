@@ -104,6 +104,7 @@ export async function GET(request: Request) {
               textOverflow: "ellipsis",
               WebkitLineClamp: 4,
               WebkitBoxOrient: "vertical",
+              paddingRight: "15px",
             }}
           >
             {title || SITE_NAME}
