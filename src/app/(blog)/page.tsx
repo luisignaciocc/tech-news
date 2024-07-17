@@ -60,7 +60,7 @@ export default async function Index({
           {[...Array(5)].map((_, index) => (
             <div
               key={index}
-              className={`relative flex items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 justify-center ${
+              className={`relative flex items-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 justify-center ${
                 index < 1
                   ? ""
                   : index < 2
@@ -75,7 +75,11 @@ export default async function Index({
               }`}
             >
               {index < postsForHeadline.length ? (
-                postsForHeadline[index].title
+                <Link href={`/posts/${postsForHeadline[index].slug}`}>
+                  <div className="mr-5 text-xs font-bold hover:text-gray-400 leading-tight tracking-tight">
+                    {postsForHeadline[index].title}
+                  </div>
+                </Link>
               ) : (
                 <div className="flex justify-center gap-4 mt-2 mb-4">
                   <div className="flex items-start justify-center space-x-2">
