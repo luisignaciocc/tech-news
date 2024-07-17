@@ -27,7 +27,14 @@ export default async function Index({
   const perPage = PER_PAGE;
   const { posts, count } = await getPosts({ page, perPage });
 
-  // const heroPost = posts.slice(0, 9);
+  const heroPost = posts.slice(0, 9).map((post) => ({
+    id: post.id,
+    slug: post.slug,
+    title: post.title,
+    coverImage: post.coverImage,
+    publishedAt: post.createdAt,
+    tags: post.tags,
+  }));
   const morePosts = posts.slice(9);
   const postIds = morePosts.map((post) => post.id);
   const hasMorePosts = page * perPage < count;
@@ -47,6 +54,7 @@ export default async function Index({
         <div className="w-11/12 mx-auto justify-center">
           <div className="flex gap-8 mt-2">
             <MoreStoriesSection
+              heroPosts={heroPost}
               morePosts={morePosts}
               hasMorePosts={hasMorePosts}
               posts={posts}

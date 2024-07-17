@@ -2,6 +2,7 @@ import React from "react";
 
 import { MoreStories } from "../components/more-stories";
 import { PostPreview } from "../components/post-preview";
+import PostCarousel from "./posts-carousel";
 
 interface MorePosts {
   title: string;
@@ -40,14 +41,29 @@ interface Post {
 }
 
 interface Props {
+  heroPosts?: {
+    id: string;
+    slug: string;
+    title: string;
+    coverImage: string | null;
+    publishedAt: Date | null;
+    tags: { id: number; name: string }[];
+  }[];
   morePosts: MorePosts[];
   hasMorePosts?: boolean;
   posts: Post[];
 }
 
-function MoreStoriesSection({ morePosts, hasMorePosts, posts }: Props) {
+function MoreStoriesSection({
+  heroPosts,
+  morePosts,
+  hasMorePosts,
+  posts,
+}: Props) {
   return (
     <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
+      {heroPosts && <PostCarousel posts={heroPosts} />}
+
       {morePosts.length > 0 ? (
         <MoreStories
           posts={morePosts.slice(0, 6)}
@@ -62,6 +78,7 @@ function MoreStoriesSection({ morePosts, hasMorePosts, posts }: Props) {
           </p>
         </div>
       )}
+
       {posts.length > 6 && (
         <PostPreview
           key={posts[6].slug}
@@ -75,6 +92,7 @@ function MoreStoriesSection({ morePosts, hasMorePosts, posts }: Props) {
           titleLinkClassName="hover:underline"
         />
       )}
+
       {morePosts.length > 0 && (
         <div className="mt-8">
           <MoreStories
