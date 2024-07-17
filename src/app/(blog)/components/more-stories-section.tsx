@@ -3,6 +3,7 @@ import React from "react";
 import { MoreStories } from "../components/more-stories";
 import { PostPreview } from "../components/post-preview";
 import PostCarousel from "./posts-carousel";
+import SecondTagSection from "./second-tag-section";
 
 interface MorePosts {
   title: string;
@@ -40,6 +41,23 @@ interface Post {
   }[];
 }
 
+interface PostsByTags {
+  id: string;
+  title: string;
+  coverImage: string | null;
+  author: {
+    id: string;
+    name: string;
+    picture: string;
+  };
+  slug: string;
+  excerpt: string | null;
+  tags: {
+    name: string;
+  }[];
+  createdAt: Date;
+}
+
 interface Props {
   heroPosts?: {
     id: string;
@@ -52,6 +70,8 @@ interface Props {
   morePosts: MorePosts[];
   hasMorePosts?: boolean;
   posts: Post[];
+  secondMostUsedTag: string[];
+  postsByTags: PostsByTags[];
 }
 
 function MoreStoriesSection({
@@ -59,6 +79,8 @@ function MoreStoriesSection({
   morePosts,
   hasMorePosts,
   posts,
+  secondMostUsedTag,
+  postsByTags,
 }: Props) {
   return (
     <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
@@ -78,6 +100,11 @@ function MoreStoriesSection({
           </p>
         </div>
       )}
+
+      <SecondTagSection
+        secondMostUsedTag={secondMostUsedTag}
+        postsByTags={postsByTags}
+      />
 
       {posts.length > 6 && (
         <PostPreview

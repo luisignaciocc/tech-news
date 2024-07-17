@@ -42,15 +42,21 @@ export default async function Index({
   const postIds = posts.map((post) => post.id);
   const hasMorePosts = page * perPage < count;
 
-  const mostUsedTag = await getMostUsedTags(1);
+  const [firstMostUsedTag, secondMostUsedTag] = await getMostUsedTags(2);
 
-  const [postsForHeadline, specialPosts, postsByTags, postsForCarousel] =
-    await Promise.all([
-      getRandomPosts(postIds, 4),
-      getRandomPosts(postIds, 5),
-      getPostsByTags(mostUsedTag, 3),
-      getRandomPosts(postIds, 3),
-    ]);
+  const [
+    postsForHeadline,
+    specialPosts,
+    firstPostsByTags,
+    secondPostsByTags,
+    postsForCarousel,
+  ] = await Promise.all([
+    getRandomPosts(postIds, 4),
+    getRandomPosts(postIds, 5),
+    getPostsByTags([firstMostUsedTag], 3),
+    getPostsByTags([secondMostUsedTag], 3),
+    getRandomPosts(postIds, 3),
+  ]);
 
   return (
     <main>
@@ -109,10 +115,15 @@ export default async function Index({
               morePosts={morePosts}
               hasMorePosts={hasMorePosts}
               posts={posts}
+              secondMostUsedTag={[secondMostUsedTag]}
+              postsByTags={secondPostsByTags}
             />
             <div className="w-4/12 hidden lg:block">
               <SpecialSection specialPosts={specialPosts} />
-              <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
+              <TagSection
+                mostUsedTag={[firstMostUsedTag]}
+                postsByTags={firstPostsByTags}
+              />
               <PostCarousel posts={postsForCarousel} />
               <hr className="mt-4 w-full" />
               <MiniFooter />
