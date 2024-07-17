@@ -35,8 +35,9 @@ export default async function Index({
     publishedAt: post.createdAt,
     tags: post.tags,
   }));
+
   const morePosts = posts.slice(9);
-  const postIds = morePosts.map((post) => post.id);
+  const postIds = posts.map((post) => post.id);
   const hasMorePosts = page * perPage < count;
 
   const mostUsedTag = await getMostUsedTags(1);
