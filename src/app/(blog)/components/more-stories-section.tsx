@@ -70,8 +70,8 @@ interface Props {
   morePosts: MorePosts[];
   hasMorePosts?: boolean;
   posts: Post[];
-  secondMostUsedTag: string[];
-  postsByTags: PostsByTags[];
+  secondMostUsedTag?: string[];
+  postsByTags?: PostsByTags[];
 }
 
 function MoreStoriesSection({
@@ -101,10 +101,12 @@ function MoreStoriesSection({
         </div>
       )}
 
-      <SecondTagSection
-        secondMostUsedTag={secondMostUsedTag}
-        postsByTags={postsByTags}
-      />
+      {secondMostUsedTag && postsByTags && (
+        <SecondTagSection
+          secondMostUsedTag={secondMostUsedTag}
+          postsByTags={postsByTags}
+        />
+      )}
 
       {posts.length > 6 && (
         <PostPreview
