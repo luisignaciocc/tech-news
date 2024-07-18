@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 type Props = {
   name: string;
   picture: string;
@@ -8,7 +6,8 @@ type Props = {
 const Avatar = ({ name, picture }: Props) => {
   return (
     <div className="flex items-center">
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={picture}
         className="w-12 h-12 rounded-full mr-4"
         alt={name}
