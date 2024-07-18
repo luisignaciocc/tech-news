@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 import { DateFormatter } from "@/components/date-formatter";
@@ -24,25 +24,31 @@ type Props = {
 export default function PostVerticalCarousel({ posts }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval>>();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
+      );
+    }, 5000); // Cambiar cada 5 segundos
+    intervalRef.current = interval;
+
+    return () => clearInterval(interval);
+  }, [posts.length]);
 
   useEffect(() => {
     setActiveIndex(currentIndex);
   }, [currentIndex]);
 
-  const handlePrevClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? posts.length - 1 : prevIndex - 1,
-    );
-  };
-
-  const handleNextClick = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
-    );
-  };
-
   const handleIndexClick = (index: number) => {
     setCurrentIndex(index);
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prevIndex) =>
+        prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
+      );
+    }, 5000);
   };
 
   return (
@@ -97,7 +103,17 @@ export default function PostVerticalCarousel({ posts }: Props) {
       </div>
       <div className="flex justify-center items-center mt-2 space-x-0 sm:space-x-0 md:space-x-0 lg:space-x-4 xl:space-x-4">
         <FaChevronUp
-          onClick={handlePrevClick}
+          onClick={() => {
+            setCurrentIndex((prevIndex) =>
+              prevIndex === 0 ? posts.length - 1 : prevIndex - 1,
+            );
+            clearInterval(intervalRef.current);
+            intervalRef.current = setInterval(() => {
+              setCurrentIndex((prevIndex) =>
+                prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
+              );
+            }, 5000);
+          }}
           className="cursor-pointer hover:text-red-400"
         />
         <div className="flex items-center">
@@ -117,7 +133,17 @@ export default function PostVerticalCarousel({ posts }: Props) {
           ))}
         </div>
         <FaChevronDown
-          onClick={handleNextClick}
+          onClick={() => {
+            setCurrentIndex((prevIndex) =>
+              prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
+            );
+            clearInterval(intervalRef.current);
+            intervalRef.current = setInterval(() => {
+              setCurrentIndex((prevIndex) =>
+                prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
+              );
+            }, 5000);
+          }}
           className="cursor-pointer hover:text-red-400"
         />
       </div>
