@@ -1,0 +1,99 @@
+import "react-loading-skeleton/dist/skeleton.css";
+
+import Link from "next/link";
+import React, { Fragment } from "react";
+import Skeleton from "react-loading-skeleton";
+
+import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
+
+interface HeadlinePostsProps {
+  postsForHeadline: {
+    id: string;
+    title: string;
+    slug: string;
+    coverImage: string | null;
+    publishedAt: Date | null;
+    tags: {
+      id: number;
+      name: string;
+    }[];
+  }[];
+}
+
+export function HeadlinePostsSkeleton() {
+  return (
+    <div className="flex flex-wrap justify-center mx-4 my-4">
+      {[...Array(5)].map((_, index) => (
+        <div
+          key={index}
+          className={`relative flex items-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 justify-center ${
+            index < 1
+              ? ""
+              : index < 2
+                ? "sm:block hidden"
+                : index < 3
+                  ? "md:block hidden"
+                  : index < 4
+                    ? "lg:block hidden"
+                    : index < 5
+                      ? "xl:block hidden"
+                      : "hidden"
+          }`}
+        >
+          <Skeleton height={65} width={100} />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function HeadlinePosts({ postsForHeadline }: HeadlinePostsProps) {
+  return (
+    <Fragment>
+      {[...Array(5)].map((_, index) => (
+        <div
+          key={index}
+          className={`relative flex items-start w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 justify-center ${
+            index < 1
+              ? ""
+              : index < 2
+                ? "sm:block hidden"
+                : index < 3
+                  ? "md:block hidden"
+                  : index < 4
+                    ? "lg:block hidden"
+                    : index < 5
+                      ? "xl:block hidden"
+                      : "hidden"
+          }`}
+        >
+          {index < postsForHeadline.length ? (
+            <Link href={`/posts/${postsForHeadline[index].slug}`}>
+              <div className="mr-5 text-xs font-bold hover:text-gray-400 leading-tight tracking-tight">
+                {postsForHeadline[index].title}
+              </div>
+            </Link>
+          ) : (
+            <div className="flex justify-center gap-4 mt-2 mb-4">
+              <div className="flex items-start justify-center space-x-2">
+                {socialMediaLinks.map((socialMedia, index) => (
+                  <div
+                    className="relative group"
+                    key={`social-media-links-footer-${index}`}
+                  >
+                    <Link href={socialMedia.url} target="_blank">
+                      <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
+                      <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
+                        <socialMedia.icon className="text-1xl text-gray-500 transition-color duration-300 group-hover:text-black" />
+                      </div>
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
+    </Fragment>
+  );
+}
