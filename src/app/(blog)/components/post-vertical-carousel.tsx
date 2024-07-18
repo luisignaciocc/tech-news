@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 import { DateFormatter } from "@/components/date-formatter";
@@ -23,6 +23,11 @@ type Props = {
 
 export default function PostVerticalCarousel({ posts }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    setActiveIndex(currentIndex);
+  }, [currentIndex]);
 
   const handlePrevClick = () => {
     setCurrentIndex((prevIndex) =>
@@ -42,38 +47,56 @@ export default function PostVerticalCarousel({ posts }: Props) {
 
   return (
     <div className="mb-10">
-      <div className="mb-4">
-        <ZoomImage
-          slug={posts[currentIndex].slug}
-          title={posts[currentIndex].title}
-          src={posts[currentIndex].coverImage || "/api/preview-image"}
-        />
-      </div>
-      <div className="text-sm flex items-center">
-        {posts[currentIndex].tags.slice(0, 1).map((tag) => (
-          <Link
-            href={`/posts/tags/${tag.name}`}
-            key={tag.id}
-            className="uppercase text-gray-800 mr-2"
-          >
-            {tag.name}
-          </Link>
-        ))}
-        <span className="mr-2 border-r border border-black h-3"></span>
-        <div className="text-gray-500">
-          <DateFormatter date={posts[currentIndex].publishedAt || new Date()} />
+      <div className="relative h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px] overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-between">
+          {posts.map((post, index) => (
+            <div
+              key={post.id}
+              className={`absolute left-0 w-full h-[400px] sm:h-[450px] md:h-[500px] lg:h-[600px] transition-transform duration-1000 ${
+                index === activeIndex
+                  ? "translate-y-0"
+                  : index < activeIndex
+                    ? "-translate-y-full"
+                    : "translate-y-full"
+              }`}
+            >
+              <div className="mb-4">
+                <ZoomImage
+                  slug={post.slug}
+                  title={post.title}
+                  src={post.coverImage || "/api/preview-image"}
+                />
+              </div>
+              <div className="text-sm flex items-center">
+                {post.tags.slice(0, 1).map((tag) => (
+                  <Link
+                    href={`/posts/tags/${tag.name}`}
+                    key={tag.id}
+                    className="uppercase text-gray-800 mr-2"
+                  >
+                    {tag.name}
+                  </Link>
+                ))}
+                <span className="mr-2 border-r border border-black h-3"></span>
+                <div className="text-gray-500">
+                  <DateFormatter date={post.publishedAt || new Date()} />
+                </div>
+              </div>
+              <h3 className="text-2xl leading-tight tracking-tighter">
+                <Link href={`/posts/${post.slug}`} className={``}>
+                  {post.title}
+                </Link>
+              </h3>
+              <p className="text-lg leading-tight tracking-tighter text-gray-500 mt-2">
+                {post.excerpt}
+              </p>
+            </div>
+          ))}
+          <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-white to-transparent"></div>
         </div>
       </div>
-      <h3 className="text-2xl leading-tight tracking-tighter line-clamp-2 overflow-hidden">
-        <Link href={`/posts/${posts[currentIndex].slug}`} className={``}>
-          {posts[currentIndex].title}
-        </Link>
-      </h3>
-      <p className="text-lg leading-tight tracking-tighter text-gray-500 mt-2 line-clamp-3 overflow-hidden">
-        {posts[currentIndex].excerpt}
-      </p>
-      <div className="flex justify-center items-center space-x-4 mt-4">
-        <FaChevronDown
+      <div className="flex justify-center items-center mt-2 space-x-0 sm:space-x-0 md:space-x-0 lg:space-x-4 xl:space-x-4">
+        <FaChevronUp
           onClick={handlePrevClick}
           className="cursor-pointer hover:text-red-400"
         />
@@ -81,19 +104,19 @@ export default function PostVerticalCarousel({ posts }: Props) {
           {posts.map((_, index) => (
             <div
               key={index}
-              className={`px-2 py-1 text-lg font-bold cursor-pointer ${
-                index === currentIndex ? "text-red-500" : "text-gray-500"
+              className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-lg font-bold cursor-pointer ${
+                index === activeIndex ? "text-red-500" : "text-gray-500"
               }`}
               onClick={() => handleIndexClick(index)}
             >
               {index + 1}
               {index < posts.length - 1 && (
-                <span className="ml-4 border-r border-gray-400 h-4"></span>
+                <span className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"></span>
               )}
             </div>
           ))}
         </div>
-        <FaChevronUp
+        <FaChevronDown
           onClick={handleNextClick}
           className="cursor-pointer hover:text-red-400"
         />
