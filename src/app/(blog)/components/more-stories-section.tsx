@@ -2,7 +2,7 @@ import React from "react";
 
 import { MoreStories } from "../components/more-stories";
 import { PostPreview } from "../components/post-preview";
-import PostCarousel from "./posts-carousel";
+import PostVerticalCarousel from "./post-vertical-carousel";
 import SecondTagSection from "./second-tag-section";
 
 interface MorePosts {
@@ -63,6 +63,7 @@ interface Props {
     id: string;
     slug: string;
     title: string;
+    excerpt: string | null;
     coverImage: string | null;
     publishedAt: Date | null;
     tags: { id: number; name: string }[];
@@ -84,7 +85,7 @@ function MoreStoriesSection({
 }: Props) {
   return (
     <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
-      {heroPosts && <PostCarousel posts={heroPosts} />}
+      {heroPosts && <PostVerticalCarousel posts={heroPosts} />}
 
       {morePosts.length > 0 ? (
         <MoreStories

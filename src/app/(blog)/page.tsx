@@ -33,6 +33,7 @@ export default async function Index({
     id: post.id,
     slug: post.slug,
     title: post.title,
+    excerpt: post.excerpt,
     coverImage: post.coverImage,
     publishedAt: post.createdAt,
     tags: post.tags,

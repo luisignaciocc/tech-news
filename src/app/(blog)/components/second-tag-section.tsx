@@ -87,7 +87,7 @@ function SecondTagSection({
       </div>
 
       {/* Version para mobile */}
-      <div className="h-min mb-8 block lg:hidden">
+      <div className="mb-8 block lg:hidden">
         <div className="carousel relative h-auto overflow-hidden">
           <div className="carousel-items h-full">
             {postsByTags.map((post, index) => (
