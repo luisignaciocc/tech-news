@@ -24,6 +24,7 @@ type Props = {
 export default function PostVerticalCarousel({ posts }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
@@ -49,6 +50,14 @@ export default function PostVerticalCarousel({ posts }: Props) {
         prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
       );
     }, 5000);
+  };
+
+  const handleIndexHover = (index: number) => {
+    setHoveredIndex(index);
+  };
+
+  const handleIndexLeave = () => {
+    setHoveredIndex(null);
   };
 
   return (
@@ -93,7 +102,7 @@ export default function PostVerticalCarousel({ posts }: Props) {
                   {post.title}
                 </Link>
               </h3>
-              <p className="text-lg leading-tight tracking-tighter text-gray-500 mt-2">
+              <p className="text-lg leading-tight tracking-tighter text-gray-500 mt-2 overflow-hidden text-ellipsis whitespace-nowrap">
                 {post.excerpt}
               </p>
             </div>
@@ -116,21 +125,37 @@ export default function PostVerticalCarousel({ posts }: Props) {
           }}
           className="cursor-pointer hover:text-red-400"
         />
-        <div className="flex items-center">
-          {posts.map((_, index) => (
-            <div
-              key={index}
-              className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-lg font-bold cursor-pointer ${
-                index === activeIndex ? "text-red-500" : "text-gray-500"
-              }`}
-              onClick={() => handleIndexClick(index)}
-            >
-              {index + 1}
-              {index < posts.length - 1 && (
-                <span className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"></span>
-              )}
-            </div>
-          ))}
+        <div className="flex items-center relative">
+          <div className="flex items-center">
+            {posts.map((post, index) => (
+              <div
+                key={index}
+                className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-sm sm:text-sm md:text-sm lg:text-lg xl:text-lg font-bold cursor-pointer relative flex justify-center items-center ${
+                  index === activeIndex ? "text-red-500" : "text-gray-500"
+                }`}
+                onClick={() => handleIndexClick(index)}
+                onMouseEnter={() => handleIndexHover(index)}
+                onMouseLeave={handleIndexLeave}
+              >
+                {index + 1}
+                {index < posts.length - 1 && (
+                  <span className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"></span>
+                )}
+                {hoveredIndex === index && activeIndex !== index && (
+                  <div className="absolute bg-white shadow-lg p-2 rounded-md z-10 w-56 h-auto -top-48">
+                    <ZoomImage
+                      slug={post.slug}
+                      title={post.title}
+                      src={post.coverImage || "/api/preview-image"}
+                    />
+                    <p className="text-xs font-bold mt-2 overflow-hidden text-ellipsis -mb-1 line-clamp-3">
+                      {post.title}
+                    </p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
         <FaChevronDown
           onClick={() => {
