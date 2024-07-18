@@ -74,7 +74,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           content: `Reescribe la siguiente noticia en un artículo de formato markdown, sin incluir un título: ${article.body}`,
         },
       ],
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
     });
 
     const body = bodyCompletion.choices[0].message.content;
@@ -107,7 +107,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             content: `Reescribe el siguiente título en español: ${article.title.split(" - ")[0]}`,
           },
         ],
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
       }),
       openai.chat.completions.create({
         messages: [
@@ -121,7 +121,7 @@ export async function POST(request: Request): Promise<NextResponse> {
             content: `Reescribe el siguiente resumen en español: ${article.excerpt}`,
           },
         ],
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
       }),
     ]);
 

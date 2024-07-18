@@ -99,7 +99,7 @@ export async function POST(request: Request) {
           `,
         },
       ],
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
     });
 
     const summary = completion.choices[0].message.content;
