@@ -19,18 +19,26 @@ interface RssChannel {
 }
 
 interface RssItem {
-  title: string;
-  link: string[];
-  guid: {
-    isPermaLink: boolean;
-    content: string;
-  };
-  pubDate: string;
-  description: string;
-  source: {
-    url: string;
-    content: string;
-  };
+  title: [string];
+  link: [string];
+  guid: [
+    {
+      _: string;
+      $: {
+        isPermaLink: string;
+      };
+    },
+  ];
+  pubDate: [string];
+  description: [string];
+  source: [
+    {
+      _: string;
+      $: {
+        url: string;
+      };
+    },
+  ];
 }
 
 interface RssResponse {
@@ -125,12 +133,12 @@ export async function POST(request: Request) {
     const oneDaysAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     const articleData = newsItems
       .map((item: RssItem) => ({
-        title: item.title,
+        title: item.title[0],
         link: item.link[0],
-        guid: item.guid.content,
-        pubDate: item.pubDate,
-        description: item.description,
-        source: item.source.url,
+        guid: item.guid[0]._,
+        pubDate: item.pubDate[0],
+        description: item.description[0],
+        source: item.source[0].$.url,
         dataNAu: null,
       }))
       .filter((item) => {

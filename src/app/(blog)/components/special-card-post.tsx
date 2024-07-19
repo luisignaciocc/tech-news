@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 
@@ -20,7 +19,8 @@ export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
       <div className="flex flex-row items-start w-full mt-3">
         <Link href={`/posts/${slug}`}>
           <div className="w-24 h-24 rounded-md overflow-hidden mr-2 relative">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={imageUrl || ""}
               alt={title}
               className="w-full h-full object-cover"

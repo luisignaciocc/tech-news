@@ -1,6 +1,5 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
@@ -38,7 +37,8 @@ export const PostCard: React.FC<PostCardProps> = ({
     <div className="flex items-center w-full max-w-96 mt-3">
       <div className="w-1/3">
         <Link href={`/posts/${slug}`}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={imageUrl || ""}
             alt={title}
             className="w-full h-full object-cover"

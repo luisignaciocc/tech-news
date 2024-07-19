@@ -2,7 +2,7 @@ name: Process News
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/24 * * * *"
 
 jobs:
   pull:
@@ -11,7 +11,7 @@ jobs:
       - name: Pull the News from the Brave Search API
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/pull' \
+          --url 'https://www.tecnobuc.com/api/news/pull/old' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   parse:
