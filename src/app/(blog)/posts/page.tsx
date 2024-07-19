@@ -4,7 +4,7 @@ import {
   getMostUsedTags,
   getPostsBySearchTerm,
   getPostsByTags,
-  getRandomPosts,
+  getRandomPostsFromPreviousWeek,
 } from "@/lib/api";
 
 import MiniFooter from "../components/mini-footer";
@@ -33,8 +33,6 @@ export default async function SearchPostContent({
   const perPage = 6;
   const hasMorePosts = page * perPage < count;
 
-  const postIds = posts.map((post) => post.id);
-
   let mostUsedTag: string[];
   const firstTag = mostUsedTags[0];
   if (
@@ -48,9 +46,9 @@ export default async function SearchPostContent({
   }
 
   const [specialPosts, postsByTags, postsForCarousel] = await Promise.all([
-    getRandomPosts(postIds, 5),
+    getRandomPostsFromPreviousWeek(5),
     getPostsByTags(mostUsedTag, 3),
-    getRandomPosts(postIds, 3),
+    getRandomPostsFromPreviousWeek(3),
   ]);
 
   return (

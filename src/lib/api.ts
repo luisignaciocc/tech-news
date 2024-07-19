@@ -61,24 +61,26 @@ export async function getPostsCards(slug: string, limit: number) {
   });
 }
 
-export async function getRandomPosts(excludedIds: string[], limit: number) {
+export async function getRandomPostsFromPreviousWeek(limit: number) {
+  const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+
   const totalCount = await prisma.post.count({
     where: {
-      id: {
-        notIn: excludedIds,
+      publishedAt: {
+        gte: twoWeeksAgo,
       },
     },
   });
 
-  // Obtener una lista de IDs aleatorios que no están en el array excludedIds
+  // Get a list of random IDs of posts published in the last week
   const randomIds = new Set<string>();
   while (randomIds.size < limit && randomIds.size < totalCount) {
     const randomIndex = Math.floor(Math.random() * totalCount);
     const randomId = (
       await prisma.post.findMany({
         where: {
-          id: {
-            notIn: excludedIds,
+          publishedAt: {
+            gte: twoWeeksAgo,
           },
         },
         select: {
@@ -93,7 +95,7 @@ export async function getRandomPosts(excludedIds: string[], limit: number) {
     }
   }
 
-  // Obtener los posts con los IDs aleatorios
+  // Get the posts with random IDs
   const randomPosts = await prisma.post.findMany({
     where: {
       id: {

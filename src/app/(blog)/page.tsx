@@ -3,7 +3,11 @@ import { Suspense } from "react";
 
 import Container from "@/components/container";
 import { getPosts } from "@/lib/api";
-import { getMostUsedTags, getPostsByTags, getRandomPosts } from "@/lib/api";
+import {
+  getMostUsedTags,
+  getPostsByTags,
+  getRandomPostsFromPreviousWeek,
+} from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
@@ -48,7 +52,6 @@ export default async function Index({
   }));
 
   const morePosts = posts.slice(9);
-  const postIds = posts.map((post) => post.id);
   const hasMorePosts = page * perPage < count;
 
   const [firstMostUsedTag, secondMostUsedTag] = await getMostUsedTags(2);
@@ -60,11 +63,11 @@ export default async function Index({
     secondPostsByTags,
     postsForCarousel,
   ] = await Promise.all([
-    getRandomPosts(postIds, 4),
-    getRandomPosts(postIds, 5),
+    getRandomPostsFromPreviousWeek(4),
+    getRandomPostsFromPreviousWeek(5),
     getPostsByTags([firstMostUsedTag], 3),
     getPostsByTags([secondMostUsedTag], 3),
-    getRandomPosts(postIds, 3),
+    getRandomPostsFromPreviousWeek(3),
   ]);
 
   return (

@@ -1,8 +1,6 @@
 "use client";
-// import Link from "next/link";
 import React, { Fragment, useEffect, useState } from "react";
 
-// import { BsSearch } from "react-icons/bs";
 import NavBar from "./navbar";
 
 interface DashboardNavBarProps {
