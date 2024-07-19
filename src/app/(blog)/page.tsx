@@ -6,7 +6,7 @@ import { getPosts } from "@/lib/api";
 import {
   getMostUsedTags,
   getPostsByTags,
-  getRandomPostsFromPreviousWeek,
+  getRandomPostsFromTwoWeeksAgo,
 } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
@@ -63,11 +63,11 @@ export default async function Index({
     secondPostsByTags,
     postsForCarousel,
   ] = await Promise.all([
-    getRandomPostsFromPreviousWeek(4),
-    getRandomPostsFromPreviousWeek(5),
+    getRandomPostsFromTwoWeeksAgo(4),
+    getRandomPostsFromTwoWeeksAgo(5),
     getPostsByTags([firstMostUsedTag], 3),
     getPostsByTags([secondMostUsedTag], 3),
-    getRandomPostsFromPreviousWeek(3),
+    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   return (

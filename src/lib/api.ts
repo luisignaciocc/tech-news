@@ -61,7 +61,7 @@ export async function getPostsCards(slug: string, limit: number) {
   });
 }
 
-export async function getRandomPostsFromPreviousWeek(limit: number) {
+export async function getRandomPostsFromTwoWeeksAgo(limit: number) {
   const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
 
   const totalCount = await prisma.post.count({

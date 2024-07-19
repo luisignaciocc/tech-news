@@ -4,7 +4,7 @@ import {
   getMostUsedTags,
   getPostsBySearchTerm,
   getPostsByTags,
-  getRandomPostsFromPreviousWeek,
+  getRandomPostsFromTwoWeeksAgo,
 } from "@/lib/api";
 
 import MiniFooter from "../components/mini-footer";
@@ -46,9 +46,9 @@ export default async function SearchPostContent({
   }
 
   const [specialPosts, postsByTags, postsForCarousel] = await Promise.all([
-    getRandomPostsFromPreviousWeek(5),
+    getRandomPostsFromTwoWeeksAgo(5),
     getPostsByTags(mostUsedTag, 3),
-    getRandomPostsFromPreviousWeek(3),
+    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   return (
