@@ -4,21 +4,9 @@ import Link from "next/link";
 import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
-import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
+import { getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
 
-interface HeadlinePostsProps {
-  postsForHeadline: {
-    id: string;
-    title: string;
-    slug: string;
-    coverImage: string | null;
-    publishedAt: Date | null;
-    tags: {
-      id: number;
-      name: string;
-    }[];
-  }[];
-}
+import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
 export function HeadlinePostsSkeleton() {
   return (
@@ -49,7 +37,9 @@ export function HeadlinePostsSkeleton() {
   );
 }
 
-export function HeadlinePosts({ postsForHeadline }: HeadlinePostsProps) {
+export async function HeadlinePosts() {
+  const postsForHeadline = await getRandomPostsFromTwoWeeksAgo(4);
+
   return (
     <Fragment>
       {[...Array(5)].map((_, index) => (

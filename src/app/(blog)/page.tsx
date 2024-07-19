@@ -3,11 +3,7 @@ import { Suspense } from "react";
 
 import Container from "@/components/container";
 import { getPosts } from "@/lib/api";
-import {
-  getMostUsedTags,
-  getPostsByTags,
-  getRandomPostsFromTwoWeeksAgo,
-} from "@/lib/api";
+import { getMostUsedTags, getPostsByTags } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
@@ -20,8 +16,8 @@ import MiniFooter from "./components/mini-footer";
 import { MiniFooterSkeleton } from "./components/mini-footer";
 import { MoreStoriesSkeleton } from "./components/more-stories";
 import MoreStoriesSection from "./components/more-stories-section";
-import PostCarousel from "./components/posts-carousel";
 import { PostCarouselSkeleton } from "./components/posts-carousel";
+import PostsCarouselFetcher from "./components/posts-carousel-fetcher";
 import { SpecialSection } from "./components/special-section";
 import { SpecialSectionSkeleton } from "./components/special-section";
 import TagSection from "./components/tag-section";
@@ -54,20 +50,10 @@ export default async function Index({
   const morePosts = posts.slice(9);
   const hasMorePosts = page * perPage < count;
 
-  const [firstMostUsedTag, secondMostUsedTag] = await getMostUsedTags(2);
+  const [secondMostUsedTag] = await getMostUsedTags(2);
 
-  const [
-    postsForHeadline,
-    specialPosts,
-    firstPostsByTags,
-    secondPostsByTags,
-    postsForCarousel,
-  ] = await Promise.all([
-    getRandomPostsFromTwoWeeksAgo(4),
-    getRandomPostsFromTwoWeeksAgo(5),
-    getPostsByTags([firstMostUsedTag], 3),
+  const [secondPostsByTags] = await Promise.all([
     getPostsByTags([secondMostUsedTag], 3),
-    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   return (
@@ -78,7 +64,7 @@ export default async function Index({
         </Suspense>
         <Suspense fallback={<HeadlinePostsSkeleton />}>
           <div className="flex flex-wrap justify-center mx-5 md:mx-8 xl:mx-14 mb-5">
-            <HeadlinePosts postsForHeadline={postsForHeadline} />
+            <HeadlinePosts />
           </div>
         </Suspense>
         <div className="w-11/12 mx-auto justify-center">
@@ -97,16 +83,13 @@ export default async function Index({
             </Suspense>
             <div className="w-4/12 hidden lg:block">
               <Suspense fallback={<SpecialSectionSkeleton />}>
-                <SpecialSection specialPosts={specialPosts} />
+                <SpecialSection />
               </Suspense>
               <Suspense fallback={<TagSectionSkeleton />}>
-                <TagSection
-                  mostUsedTag={[firstMostUsedTag]}
-                  postsByTags={firstPostsByTags}
-                />
+                <TagSection />
               </Suspense>
               <Suspense fallback={<PostCarouselSkeleton />}>
-                <PostCarousel posts={postsForCarousel} />
+                <PostsCarouselFetcher />
               </Suspense>
               <hr className="mt-4 w-full" />
               <Suspense fallback={<MiniFooterSkeleton />}>

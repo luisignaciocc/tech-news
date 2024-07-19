@@ -1,11 +1,6 @@
 import React, { Fragment } from "react";
 
-import {
-  getMostUsedTags,
-  getPostsBySearchTerm,
-  getPostsByTags,
-  getRandomPostsFromTwoWeeksAgo,
-} from "@/lib/api";
+import { getPostsBySearchTerm, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
 
 import MiniFooter from "../components/mini-footer";
 import MoreStoriesSection from "../components/more-stories-section";
@@ -23,9 +18,8 @@ export default async function SearchPostContent({
 }) {
   const searchTerm = searchParams.s;
   const numberPosts = 11;
-  const [{ posts, count }, mostUsedTags] = await Promise.all([
+  const [{ posts, count }] = await Promise.all([
     getPostsBySearchTerm(searchTerm, numberPosts),
-    getMostUsedTags(2),
   ]);
 
   const morePosts = posts;
@@ -33,21 +27,7 @@ export default async function SearchPostContent({
   const perPage = 6;
   const hasMorePosts = page * perPage < count;
 
-  let mostUsedTag: string[];
-  const firstTag = mostUsedTags[0];
-  if (
-    firstTag &&
-    searchTerm &&
-    firstTag.toLowerCase().includes(searchTerm.toLowerCase())
-  ) {
-    mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
-  } else {
-    mostUsedTag = [firstTag];
-  }
-
-  const [specialPosts, postsByTags, postsForCarousel] = await Promise.all([
-    getRandomPostsFromTwoWeeksAgo(5),
-    getPostsByTags(mostUsedTag, 3),
+  const [postsForCarousel] = await Promise.all([
     getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
@@ -70,8 +50,8 @@ export default async function SearchPostContent({
           posts={posts}
         />
         <div className="w-4/12 hidden lg:block">
-          <SpecialSection specialPosts={specialPosts} />
-          <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
+          <SpecialSection />
+          <TagSection searchTerm={searchTerm} />
           <PostCarousel posts={postsForCarousel} />
           <hr className="mt-4 w-full" />
           <MiniFooter />
