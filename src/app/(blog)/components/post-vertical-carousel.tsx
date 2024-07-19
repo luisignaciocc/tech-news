@@ -2,7 +2,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Link from "next/link";
-import React, { Fragment, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 
@@ -26,7 +26,7 @@ type Props = {
 
 export function PostVerticalCarouselSkeleton() {
   return (
-    <Fragment>
+    <div className="w-full">
       <div className="mb-2">
         <Skeleton height={400} />
       </div>
@@ -37,7 +37,7 @@ export function PostVerticalCarouselSkeleton() {
         <Skeleton height={20} className="mt-3" />
         <Skeleton height={20} />
       </div>
-    </Fragment>
+    </div>
   );
 }
 

@@ -2,8 +2,6 @@ import { Viewport } from "next";
 import { Suspense } from "react";
 
 import Container from "@/components/container";
-import { getPosts } from "@/lib/api";
-import { getMostUsedTags, getPostsByTags } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 import { PER_PAGE } from "@/lib/utils";
 
@@ -15,7 +13,7 @@ import { Intro, IntroSkeleton } from "./components/intro";
 import MiniFooter from "./components/mini-footer";
 import { MiniFooterSkeleton } from "./components/mini-footer";
 import { MoreStoriesSkeleton } from "./components/more-stories";
-import MoreStoriesSection from "./components/more-stories-section";
+import MoreStoriesFetcher from "./components/more-stories-fetcher";
 import { PostCarouselSkeleton } from "./components/posts-carousel";
 import PostsCarouselFetcher from "./components/posts-carousel-fetcher";
 import { SpecialSection } from "./components/special-section";
@@ -35,26 +33,6 @@ export default async function Index({
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
   const perPage = PER_PAGE;
-  const { posts, count } = await getPosts({ page, perPage });
-
-  const heroPost = posts.slice(0, 9).map((post) => ({
-    id: post.id,
-    slug: post.slug,
-    title: post.title,
-    excerpt: post.excerpt,
-    coverImage: post.coverImage,
-    publishedAt: post.createdAt,
-    tags: post.tags,
-  }));
-
-  const morePosts = posts.slice(9);
-  const hasMorePosts = page * perPage < count;
-
-  const [secondMostUsedTag] = await getMostUsedTags(2);
-
-  const [secondPostsByTags] = await Promise.all([
-    getPostsByTags([secondMostUsedTag], 3),
-  ]);
 
   return (
     <main>
@@ -70,16 +48,13 @@ export default async function Index({
         <div className="w-11/12 mx-auto justify-center">
           <div className="flex gap-8 mt-2">
             <Suspense
-              fallback={<MoreStoriesSkeleton repeat={1} isIndex={true} />}
+              fallback={
+                <div className="w-8/12">
+                  <MoreStoriesSkeleton repeat={4} isIndex={true} />
+                </div>
+              }
             >
-              <MoreStoriesSection
-                heroPosts={heroPost}
-                morePosts={morePosts}
-                hasMorePosts={hasMorePosts}
-                posts={posts}
-                secondMostUsedTag={[secondMostUsedTag]}
-                postsByTags={secondPostsByTags}
-              />
+              <MoreStoriesFetcher page={page} perPage={perPage} />
             </Suspense>
             <div className="w-4/12 hidden lg:block">
               <Suspense fallback={<SpecialSectionSkeleton />}>

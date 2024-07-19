@@ -38,7 +38,11 @@ export function MoreStoriesSkeleton({
   return (
     <section>
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-8 mb-8">
-        {isIndex && <PostVerticalCarouselSkeleton />}
+        {isIndex && (
+          <div className="col-span-full">
+            <PostVerticalCarouselSkeleton />
+          </div>
+        )}
         {Array.from({ length: repeat }).map((_, index) => (
           <div key={index}>
             <div className="mb-1">
@@ -55,7 +59,11 @@ export function MoreStoriesSkeleton({
             </div>
           </div>
         ))}
-        {isIndex && <SecondTagSectionSkeleton />}
+        {isIndex && (
+          <div className="col-span-full">
+            <SecondTagSectionSkeleton />
+          </div>
+        )}
       </div>
     </section>
   );
