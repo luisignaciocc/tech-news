@@ -5,6 +5,8 @@ import React from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { PostPreview } from "./post-preview";
+import { PostVerticalCarouselSkeleton } from "./post-vertical-carousel";
+import { SecondTagSectionSkeleton } from "./second-tag-section";
 
 type Props = {
   posts: {
@@ -26,12 +28,17 @@ type Props = {
 
 interface MoreStoriesSkeletonProps {
   repeat: number;
+  isIndex?: boolean;
 }
 
-export function MoreStoriesSkeleton({ repeat }: MoreStoriesSkeletonProps) {
+export function MoreStoriesSkeleton({
+  repeat,
+  isIndex,
+}: MoreStoriesSkeletonProps) {
   return (
     <section>
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-8 mb-8">
+        {isIndex && <PostVerticalCarouselSkeleton />}
         {Array.from({ length: repeat }).map((_, index) => (
           <div key={index}>
             <div className="mb-1">
@@ -48,6 +55,7 @@ export function MoreStoriesSkeleton({ repeat }: MoreStoriesSkeletonProps) {
             </div>
           </div>
         ))}
+        {isIndex && <SecondTagSectionSkeleton />}
       </div>
     </section>
   );

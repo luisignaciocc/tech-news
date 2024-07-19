@@ -1,7 +1,10 @@
 "use client";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
 
 import { DateFormatter } from "@/components/date-formatter";
 
@@ -20,6 +23,23 @@ interface Post {
 type Props = {
   posts: Post[];
 };
+
+export function PostVerticalCarouselSkeleton() {
+  return (
+    <Fragment>
+      <div className="mb-2">
+        <Skeleton height={400} />
+      </div>
+      <div>
+        <Skeleton height={15} width={250} />
+        <Skeleton height={30} className="mt-3" />
+        <Skeleton height={30} />
+        <Skeleton height={20} className="mt-3" />
+        <Skeleton height={20} />
+      </div>
+    </Fragment>
+  );
+}
 
 export default function PostVerticalCarousel({ posts }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);

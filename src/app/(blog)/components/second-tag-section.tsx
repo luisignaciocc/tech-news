@@ -1,7 +1,10 @@
 "use client";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Link from "next/link";
 import React, { Fragment, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import Skeleton from "react-loading-skeleton";
 
 import ZoomImage from "./zoom-image";
 
@@ -27,6 +30,22 @@ interface SecondTagSectionProps {
   postsByTags: PostsByTags[];
 }
 
+export function SecondTagSectionSkeleton() {
+  return (
+    <div className="hidden lg:block">
+      <div className="flex mb-16 mt-5">
+        <div className="w-8/12 h-full mr-2">
+          <Skeleton height={300} />
+        </div>
+        <div className="w-4/12 flex flex-col justify-between">
+          <Skeleton height={145} />
+          <Skeleton height={145} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SecondTagSection({
   secondMostUsedTag,
   postsByTags,
@@ -48,7 +67,7 @@ function SecondTagSection({
       {/* Version para pantallas grandes */}
       <div className="hidden lg:block">
         <div className="flex mb-16 mt-5">
-          <div className="w-8/12 h-full pr-2">
+          <div className="w-8/12 h-full mr-2">
             <div className="relative">
               <ZoomImage
                 title={postsByTags[0].title}

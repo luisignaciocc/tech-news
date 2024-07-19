@@ -22,7 +22,7 @@ interface HeadlinePostsProps {
 
 export function HeadlinePostsSkeleton() {
   return (
-    <div className="flex flex-wrap justify-center mx-4 my-4">
+    <div className="flex flex-wrap justify-center mx-10 my-4">
       {[...Array(5)].map((_, index) => (
         <div
           key={index}
@@ -40,7 +40,9 @@ export function HeadlinePostsSkeleton() {
                       : "hidden"
           }`}
         >
-          <Skeleton height={65} width={100} />
+          <div className="w-11/12">
+            <Skeleton height={40} />
+          </div>
         </div>
       ))}
     </div>
