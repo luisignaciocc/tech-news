@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 
 import MiniFooter from "@/app/(blog)/components/mini-footer";
-import MoreStoriesSection from "@/app/(blog)/components/more-stories-section";
+import { MoreStories } from "@/app/(blog)/components/more-stories";
 import PostCarousel from "@/app/(blog)/components/posts-carousel";
 import { SpecialSection } from "@/app/(blog)/components/special-section";
 import TagSection from "@/app/(blog)/components/tag-section";
@@ -20,7 +20,6 @@ export default async function TagsPage({ params }: Params) {
     getPostsBySearchTerm(tagTerm, numberPosts),
   ]);
 
-  const morePosts = posts;
   const page = 1;
   const perPage = 6;
   const hasMorePosts = page * perPage < count;
@@ -42,11 +41,7 @@ export default async function TagsPage({ params }: Params) {
         </span>
       </div>
       <div className="flex gap-8 mt-2">
-        <MoreStoriesSection
-          morePosts={morePosts}
-          hasMorePosts={hasMorePosts}
-          posts={posts}
-        />
+        <MoreStories hasMorePosts={hasMorePosts} posts={posts} />
         <div className="w-4/12 hidden lg:block">
           <SpecialSection />
           <TagSection searchTerm={tagTerm} />
