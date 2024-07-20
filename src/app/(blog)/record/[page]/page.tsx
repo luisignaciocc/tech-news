@@ -1,55 +1,59 @@
-import { MoreStories } from "@/app/(blog)/components/more-stories";
-import Container from "@/components/container";
-import { getPosts, getPostSlugs } from "@/lib/api";
-import {
-  defaultMetadata,
-  SITE_DESCRIPTION,
-  SITE_SHORT_NAME,
-} from "@/lib/metadata";
-import { PER_PAGE } from "@/lib/utils";
+import React from "react";
 
+import { getPosts, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
+
+import MiniFooter from "../../components/mini-footer";
+import { MoreStories } from "../../components/more-stories";
+import PostCarousel from "../../components/posts-carousel";
+import { SpecialSection } from "../../components/special-section";
 import PageNavigation from "./components/page-navigation";
 
-export default async function RecordPage({
+export default async function SearchPostContent({
   params,
 }: {
-  params: { page: string };
+  params?: {
+    page?: string;
+  };
 }) {
-  const currentPage = params.page;
-  const page = parseInt(currentPage);
-  const perPage = PER_PAGE;
-  const { posts, count } = await getPosts({ page, perPage });
+  const page = params?.page ? parseInt(params.page) : 1;
+  const perPage = 30;
+  const [{ posts, count }, postsForCarousel] = await Promise.all([
+    getPosts({
+      page,
+      perPage,
+    }),
+    getRandomPostsFromTwoWeeksAgo(3),
+  ]);
+
   const hasMorePosts = page * perPage < count;
 
   return (
-    <main>
-      <Container>
-        {posts.length > 0 && <MoreStories posts={posts} />}
-        <PageNavigation currentPage={currentPage} hasMorePosts={hasMorePosts} />
-      </Container>
-    </main>
+    <div className="mt-10 mx-6 xl:mx-auto mb-10 xl:max-w-6xl ">
+      <div className="flex items-center">
+        <span className="uppercase text-4xl mt-4 flex items-center leading-tight tracking-tighter">
+          <span className="hidden md:inline-block mr-2">
+            Posts más antiguos
+          </span>
+        </span>
+      </div>
+      <div className="flex gap-8 mt-2">
+        <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
+          {posts.length > 0 ? (
+            <MoreStories posts={posts} />
+          ) : (
+            <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
+              <p className="text-2xl">No hay mas publicaciones.</p>
+            </div>
+          )}
+        </div>
+        <div className="w-4/12 hidden lg:block">
+          <SpecialSection />
+          <PostCarousel posts={postsForCarousel} />
+          <hr className="mt-4 w-full" />
+          <MiniFooter />
+        </div>
+      </div>
+      <PageNavigation currentPage={page} hasMorePosts={hasMorePosts} />
+    </div>
   );
-}
-
-export async function generateStaticParams() {
-  const slugs = await getPostSlugs();
-
-  const pages = Math.ceil(slugs.length / PER_PAGE) - 1; // -1 because the first page is handled by the index page
-
-  return Array.from({ length: pages }).map((_, index) => ({
-    params: { page: (index + 2).toString() },
-  }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { page: string };
-}) {
-  const currentPage = params.page;
-  return {
-    ...defaultMetadata,
-    title: `${SITE_SHORT_NAME} | Página ${currentPage}`,
-    description: `Archivo | ${SITE_DESCRIPTION}`,
-  };
 }
