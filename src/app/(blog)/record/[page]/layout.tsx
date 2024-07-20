@@ -2,7 +2,7 @@ import { Suspense } from "react";
 
 import { getMostUsedTags } from "@/lib/api";
 
-import NavBar from "../components/navbar";
+import NavBar from "../../components/navbar";
 
 async function NavBarComponent() {
   const tagsMostUsed = await getMostUsedTags(5);

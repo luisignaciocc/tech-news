@@ -177,7 +177,7 @@ function NavBar({
             {tags.map((tag, index) => (
               <div key={tag} className="flex items-center">
                 <Link
-                  href={`/posts/tags/${tag}`}
+                  href={`/posts/tags/${encodeURIComponent(tag)}`}
                   className={`${bgLinksColor} ${hoverLinksColor} px-3 py-2 rounded-md text-sm font-bold uppercase`}
                 >
                   {tag}
@@ -281,7 +281,7 @@ function NavBar({
               <React.Fragment key={tag}>
                 <div className="sm:px-6 px-3">
                   <Link
-                    href={`/posts/tags/${tag}`}
+                    href={`/posts/tags/${encodeURIComponent(tag)}`}
                     className="text-white hover:text-gray-400 text-sm font-bold uppercase w-full block"
                   >
                     {tag}
