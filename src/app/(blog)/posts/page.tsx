@@ -7,6 +7,7 @@ import MoreStoriesSection from "../components/more-stories-section";
 import PostCarousel from "../components/posts-carousel";
 import { SpecialSection } from "../components/special-section";
 import TagSection from "../components/tag-section";
+
 interface SearchParams {
   s?: string;
 }
@@ -22,7 +23,6 @@ export default async function SearchPostContent({
     getPostsBySearchTerm(searchTerm, numberPosts),
   ]);
 
-  const morePosts = posts;
   const page = 1;
   const perPage = 6;
   const hasMorePosts = page * perPage < count;
@@ -44,11 +44,9 @@ export default async function SearchPostContent({
         </span>
       </div>
       <div className="flex gap-8 mt-2">
-        <MoreStoriesSection
-          morePosts={morePosts}
-          hasMorePosts={hasMorePosts}
-          posts={posts}
-        />
+        <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
+          <MoreStoriesSection hasMorePosts={hasMorePosts} posts={posts} />
+        </div>
         <div className="w-4/12 hidden lg:block">
           <SpecialSection />
           <TagSection searchTerm={searchTerm} />
