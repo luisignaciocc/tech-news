@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { getPostsBySearchTerm, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
 
 import MiniFooter from "../components/mini-footer";
-import MoreStoriesSection from "../components/more-stories-section";
+import { MoreStories } from "../components/more-stories";
 import PostCarousel from "../components/posts-carousel";
 import { SpecialSection } from "../components/special-section";
 import TagSection from "../components/tag-section";
@@ -18,16 +18,9 @@ export default async function SearchPostContent({
   searchParams: SearchParams;
 }) {
   const searchTerm = searchParams.s;
-  const numberPosts = 11;
-  const [{ posts, count }] = await Promise.all([
-    getPostsBySearchTerm(searchTerm, numberPosts),
-  ]);
-
-  const page = 1;
-  const perPage = 6;
-  const hasMorePosts = page * perPage < count;
-
-  const [postsForCarousel] = await Promise.all([
+  const perPage = 25;
+  const [{ posts }, postsForCarousel] = await Promise.all([
+    getPostsBySearchTerm(searchTerm, perPage),
     getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
@@ -45,7 +38,17 @@ export default async function SearchPostContent({
       </div>
       <div className="flex gap-8 mt-2">
         <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
-          <MoreStoriesSection hasMorePosts={hasMorePosts} posts={posts} />
+          {posts.length > 0 ? (
+            <MoreStories posts={posts} hasMorePosts />
+          ) : (
+            <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
+              <p className="text-2xl">No hay publicaciones disponibles.</p>
+              <p className="mt-5">
+                Intenta con otro término de búsqueda, puedes utilizar palabras
+                claves o abreviaturas, ejemplo: `ARTIFICIAL` o `IA`.
+              </p>
+            </div>
+          )}
         </div>
         <div className="w-4/12 hidden lg:block">
           <SpecialSection />

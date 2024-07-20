@@ -2,7 +2,6 @@ import { Viewport } from "next";
 import { Suspense } from "react";
 
 import Container from "@/components/container";
-import { getMostUsedTags, getPosts, getPostsByTags } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
 
 import {
@@ -10,18 +9,18 @@ import {
   HeadlinePostsSkeleton,
 } from "./components/headline-posts";
 import { Intro, IntroSkeleton } from "./components/intro";
+import {
+  HeroPostsFetcher,
+  PostsFetcher,
+  SecondTagsPostsFetcher,
+} from "./components/main-page-fetchers";
 import MiniFooter from "./components/mini-footer";
 import { MiniFooterSkeleton } from "./components/mini-footer";
 import { MoreStoriesSkeleton } from "./components/more-stories";
-import MoreStoriesFetcher from "./components/more-stories-fetcher";
-import PostVerticalCarousel, {
-  PostVerticalCarouselSkeleton,
-} from "./components/post-vertical-carousel";
+import { PostVerticalCarouselSkeleton } from "./components/post-vertical-carousel";
 import { PostCarouselSkeleton } from "./components/posts-carousel";
 import PostsCarouselFetcher from "./components/posts-carousel-fetcher";
-import SecondTagSection, {
-  SecondTagSectionSkeleton,
-} from "./components/second-tag-section";
+import { SecondTagSectionSkeleton } from "./components/second-tag-section";
 import { SpecialSection } from "./components/special-section";
 import { SpecialSectionSkeleton } from "./components/special-section";
 import TagSection from "./components/tag-section";
@@ -30,21 +29,6 @@ import { TagSectionSkeleton } from "./components/tag-section";
 export const viewport: Viewport = {
   themeColor: "#ffffff",
   colorScheme: "light",
-};
-
-const HeroPostsFetcher = async () => {
-  const { posts: heroPosts } = await getPosts({ page: 1, perPage: 10 });
-
-  return <PostVerticalCarousel posts={heroPosts} />;
-};
-
-const SecondTagsPostsFetcher = async () => {
-  const tags = await getMostUsedTags(2);
-  const postsByTags = await getPostsByTags([tags[1]], 3);
-
-  return (
-    <SecondTagSection secondMostUsedTag={[tags[1]]} postsByTags={postsByTags} />
-  );
 };
 
 export default async function Index() {
@@ -65,14 +49,8 @@ export default async function Index() {
               <Suspense fallback={<PostVerticalCarouselSkeleton />}>
                 <HeroPostsFetcher />
               </Suspense>
-              <Suspense
-                fallback={
-                  <div className="w-8/12">
-                    <MoreStoriesSkeleton repeat={4} />
-                  </div>
-                }
-              >
-                <MoreStoriesFetcher page={1} perPage={15} />
+              <Suspense fallback={<MoreStoriesSkeleton repeat={4} />}>
+                <PostsFetcher />
               </Suspense>
               <Suspense fallback={<SecondTagSectionSkeleton />}>
                 <SecondTagsPostsFetcher />
