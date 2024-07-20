@@ -5,7 +5,7 @@ import { getMostUsedTags } from "@/lib/api";
 import NavBar from "../components/navbar";
 
 async function NavBarComponent() {
-  const tagsMostUsed = await getMostUsedTags(6);
+  const tagsMostUsed = await getMostUsedTags(5);
 
   return (
     <nav className={"bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50"}>

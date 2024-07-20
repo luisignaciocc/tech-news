@@ -11,14 +11,6 @@ import { SITE_SHORT_NAME } from "@/lib/metadata";
 
 import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
-function sanitizeSearchTerm(term: string): string {
-  // Replace accented characters
-  term = term.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-  // Replace other unsupported characters
-  return term.replace(/[^a-zA-Z0-9-_\s]/g, "");
-}
-
 interface NavBarProps {
   isNavBar: boolean;
   tags: string[];
@@ -185,7 +177,7 @@ function NavBar({
             {tags.map((tag, index) => (
               <div key={tag} className="flex items-center">
                 <Link
-                  href={`/posts/tags/${sanitizeSearchTerm(tag)}`}
+                  href={`/posts/tags/${encodeURIComponent(tag)}`}
                   className={`${bgLinksColor} ${hoverLinksColor} px-3 py-2 rounded-md text-sm font-bold uppercase`}
                 >
                   {tag}
@@ -289,7 +281,7 @@ function NavBar({
               <React.Fragment key={tag}>
                 <div className="sm:px-6 px-3">
                   <Link
-                    href={`/posts/tags/${sanitizeSearchTerm(tag)}`}
+                    href={`/posts/tags/${encodeURIComponent(tag)}`}
                     className="text-white hover:text-gray-400 text-sm font-bold uppercase w-full block"
                   >
                     {tag}
