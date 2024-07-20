@@ -1,5 +1,5 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 import { PER_PAGE } from "./utils";
 
@@ -243,34 +243,35 @@ export const getPostsBySearchTerm = async (
   searchTerm: string = "",
   numberPosts: number,
 ) => {
+  const where: Prisma.PostWhereInput = {
+    OR: [
+      {
+        title: {
+          contains: searchTerm,
+          mode: "insensitive",
+        },
+      },
+      {
+        tags: {
+          some: {
+            name: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        },
+      },
+      {
+        content: {
+          contains: searchTerm,
+          mode: "insensitive",
+        },
+      },
+    ],
+  };
   const [posts, count] = await Promise.all([
     prisma.post.findMany({
-      where: {
-        OR: [
-          {
-            title: {
-              contains: searchTerm,
-              mode: "insensitive",
-            },
-          },
-          {
-            tags: {
-              some: {
-                name: {
-                  contains: searchTerm,
-                  mode: "insensitive",
-                },
-              },
-            },
-          },
-          {
-            content: {
-              contains: searchTerm,
-              mode: "insensitive",
-            },
-          },
-        ],
-      },
+      where,
       orderBy: {
         createdAt: "desc",
       },
@@ -286,24 +287,8 @@ export const getPostsBySearchTerm = async (
       },
       take: numberPosts,
     }),
-
     prisma.post.count({
-      where: {
-        OR: [
-          {
-            title: {
-              contains: searchTerm,
-            },
-          },
-          {
-            tags: {
-              some: {
-                name: searchTerm,
-              },
-            },
-          },
-        ],
-      },
+      where,
     }),
   ]);
 
