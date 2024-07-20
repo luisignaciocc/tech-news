@@ -71,14 +71,14 @@ export async function HeadlinePosts() {
                 {socialMediaLinks.map((socialMedia, index) => (
                   <div
                     className="relative group"
-                    key={`social-media-links-footer-${index}`}
+                    key={`social-media-links-navbar-${index}`}
                   >
-                    <Link href={socialMedia.url} target="_blank">
+                    <a href={socialMedia.url} target="_blank">
                       <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                       <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
                         <socialMedia.icon className="text-1xl text-gray-500 transition-color duration-300 group-hover:text-black" />
                       </div>
-                    </Link>
+                    </a>
                   </div>
                 ))}
               </div>
