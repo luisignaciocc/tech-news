@@ -26,14 +26,7 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default async function Index({
-  params,
-}: {
-  params?: { page?: string };
-}) {
-  const page = params?.page ? parseInt(params.page) : 1;
-  const perPage = PER_PAGE;
-
+export default async function Index() {
   return (
     <main>
       <Container>
@@ -54,7 +47,7 @@ export default async function Index({
                 </div>
               }
             >
-              <MoreStoriesFetcher page={page} perPage={perPage} />
+              <MoreStoriesFetcher page={1} perPage={PER_PAGE} />
             </Suspense>
             <div className="w-4/12 hidden lg:block">
               <Suspense fallback={<SpecialSectionSkeleton />}>

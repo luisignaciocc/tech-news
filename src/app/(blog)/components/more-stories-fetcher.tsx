@@ -10,7 +10,10 @@ interface MoreStoriesFetcherProps {
 }
 
 async function MoreStoriesFetcher({ page, perPage }: MoreStoriesFetcherProps) {
-  const { posts, count } = await getPosts({ page, perPage });
+  const [{ posts, count }, secondMostUsedTag] = await Promise.all([
+    getPosts({ page, perPage }),
+    getMostUsedTags(2),
+  ]);
 
   const heroPost = posts.slice(0, 9).map((post) => ({
     id: post.id,
@@ -25,10 +28,8 @@ async function MoreStoriesFetcher({ page, perPage }: MoreStoriesFetcherProps) {
   const morePosts = posts.slice(9);
   const hasMorePosts = page * perPage < count;
 
-  const [secondMostUsedTag] = await getMostUsedTags(2);
-
   const [secondPostsByTags] = await Promise.all([
-    getPostsByTags([secondMostUsedTag], 3),
+    getPostsByTags([secondMostUsedTag[0]], 3),
   ]);
 
   return (
@@ -37,7 +38,7 @@ async function MoreStoriesFetcher({ page, perPage }: MoreStoriesFetcherProps) {
       morePosts={morePosts}
       hasMorePosts={hasMorePosts}
       posts={posts}
-      secondMostUsedTag={[secondMostUsedTag]}
+      secondMostUsedTag={[secondMostUsedTag[0]]}
       postsByTags={secondPostsByTags}
     />
   );

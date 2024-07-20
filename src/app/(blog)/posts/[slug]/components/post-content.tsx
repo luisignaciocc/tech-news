@@ -12,8 +12,6 @@ const PostContent: React.FC<{
 }> = async ({ slug }) => {
   const post = await getPostBySlug(slug);
 
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-
   if (!post) {
     return notFound();
   }
