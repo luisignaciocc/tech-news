@@ -1,6 +1,9 @@
 "use client";
+import "react-loading-skeleton/dist/skeleton.css";
+
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import Skeleton from "react-loading-skeleton";
 
 import ZoomImage from "./zoom-image";
 
@@ -15,6 +18,15 @@ interface Post {
 
 interface PostCarouselProps {
   posts: Post[];
+}
+
+export function PostCarouselSkeleton() {
+  return (
+    <Fragment>
+      <Skeleton height={200} className="mt-10" />
+      <hr className="mt-4 w-full" />
+    </Fragment>
+  );
 }
 
 const PostCarousel = ({ posts }: PostCarouselProps) => {

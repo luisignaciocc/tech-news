@@ -24,7 +24,7 @@ export const socialMediaLinks = [
   },
   {
     name: "LinkedIn",
-    url: "https://www.linkedin.com/company/104021039/admin/feed/posts/",
+    url: "https://www.linkedin.com/company/104021039",
     icon: FaLinkedinIn,
   },
 ];

@@ -3,28 +3,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { getMostUsedTags } from "@/lib/api";
+import { getPostsByTags } from "@/lib/api";
+
 import { PostPreview } from "./post-preview";
 
-interface PostsByTags {
-  id: string;
-  title: string;
-  coverImage: string | null;
-  author: {
-    id: string;
-    name: string;
-    picture: string;
-  };
-  slug: string;
-  excerpt: string | null;
-  tags: {
-    name: string;
-  }[];
-  createdAt: Date;
-}
-
-interface MostUsedTagProps {
-  mostUsedTag: string[];
-  postsByTags: PostsByTags[];
+interface TagSectionProps {
+  searchTerm?: string;
 }
 
 export function TagSectionSkeleton() {
@@ -52,10 +37,22 @@ export function TagSectionSkeleton() {
   );
 }
 
-export default function TagSection({
-  mostUsedTag,
-  postsByTags,
-}: MostUsedTagProps) {
+export default async function TagSection({ searchTerm }: TagSectionProps) {
+  const mostUsedTags = await getMostUsedTags(2);
+
+  let mostUsedTag: string[];
+  if (
+    mostUsedTags[0] &&
+    searchTerm &&
+    mostUsedTags[0].toLowerCase().includes(searchTerm.toLowerCase())
+  ) {
+    mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
+  } else {
+    mostUsedTag = [mostUsedTags[0]];
+  }
+
+  const postsByTags = await getPostsByTags(mostUsedTag, 3);
+
   return (
     <div className="mt-10">
       <h2 className="text-3xl uppercase">{mostUsedTag}</h2>

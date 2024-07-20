@@ -2,56 +2,76 @@ import { Viewport } from "next";
 import { Suspense } from "react";
 
 import Container from "@/components/container";
-import { getPosts } from "@/lib/api";
 import { defaultMetadata } from "@/lib/metadata";
-import { PER_PAGE } from "@/lib/utils";
 
-import DashboardTagsFetcher from "./components/dashboard-tags-fetcher";
-import { HeroPost } from "./components/hero-post";
-import { Intro } from "./components/intro";
-import { MoreStories } from "./components/more-stories";
+import {
+  HeadlinePosts,
+  HeadlinePostsSkeleton,
+} from "./components/headline-posts";
+import { Intro, IntroSkeleton } from "./components/intro";
+import {
+  HeroPostsFetcher,
+  PostsFetcher,
+  SecondTagsPostsFetcher,
+} from "./components/main-page-fetchers";
+import MiniFooter from "./components/mini-footer";
+import { MiniFooterSkeleton } from "./components/mini-footer";
+import { MoreStoriesSkeleton } from "./components/more-stories";
+import { PostVerticalCarouselSkeleton } from "./components/post-vertical-carousel";
+import { PostCarouselSkeleton } from "./components/posts-carousel";
+import PostsCarouselFetcher from "./components/posts-carousel-fetcher";
+import { SecondTagSectionSkeleton } from "./components/second-tag-section";
+import { SpecialSection } from "./components/special-section";
+import { SpecialSectionSkeleton } from "./components/special-section";
+import TagSection from "./components/tag-section";
+import { TagSectionSkeleton } from "./components/tag-section";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
   colorScheme: "light",
 };
 
-export default async function Index({
-  params,
-}: {
-  params?: { page?: string };
-}) {
-  const page = params?.page ? parseInt(params.page) : 1;
-  const perPage = PER_PAGE;
-  const { posts, count } = await getPosts({ page, perPage });
-
-  const heroPost = posts[0];
-  const morePosts = posts.slice(1);
-  const hasMorePosts = page * perPage < count;
-
+export default async function Index() {
   return (
     <main>
-      <Suspense
-        fallback={
-          <div className="h-16 bg-gray-100 fixed top-0 left-0 right-0 z-50" />
-        }
-      >
-        <DashboardTagsFetcher />
-      </Suspense>
       <Container>
-        <div className="w-11/12 mx-auto justify-center">
+        <Suspense fallback={<IntroSkeleton />}>
           <Intro />
-          <HeroPost
-            title={heroPost.title}
-            coverImage={heroPost.coverImage}
-            date={heroPost.createdAt}
-            author={heroPost.author}
-            slug={heroPost.slug}
-            excerpt={heroPost.excerpt}
-          />
-          {morePosts.length > 0 && (
-            <MoreStories posts={morePosts} hasMorePosts={hasMorePosts} />
-          )}
+        </Suspense>
+        <Suspense fallback={<HeadlinePostsSkeleton />}>
+          <div className="flex flex-wrap justify-center mx-5 md:mx-8 xl:mx-14 mb-5">
+            <HeadlinePosts />
+          </div>
+        </Suspense>
+        <div className="w-11/12 mx-auto justify-center">
+          <div className="flex gap-8 mt-2">
+            <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
+              <Suspense fallback={<PostVerticalCarouselSkeleton />}>
+                <HeroPostsFetcher />
+              </Suspense>
+              <Suspense fallback={<MoreStoriesSkeleton repeat={4} />}>
+                <PostsFetcher />
+              </Suspense>
+              <Suspense fallback={<SecondTagSectionSkeleton />}>
+                <SecondTagsPostsFetcher />
+              </Suspense>
+            </div>
+            <div className="w-4/12 hidden lg:block">
+              <Suspense fallback={<SpecialSectionSkeleton />}>
+                <SpecialSection />
+              </Suspense>
+              <Suspense fallback={<TagSectionSkeleton />}>
+                <TagSection />
+              </Suspense>
+              <Suspense fallback={<PostCarouselSkeleton />}>
+                <PostsCarouselFetcher />
+              </Suspense>
+              <hr className="mt-4 w-full" />
+              <Suspense fallback={<MiniFooterSkeleton />}>
+                <MiniFooter />
+              </Suspense>
+            </div>
+          </div>
         </div>
       </Container>
     </main>

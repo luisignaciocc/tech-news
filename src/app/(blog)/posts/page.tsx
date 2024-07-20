@@ -1,17 +1,13 @@
 import React, { Fragment } from "react";
 
-import {
-  getMostUsedTags,
-  getPostsBySearchTerm,
-  getPostsByTags,
-  getRandomPosts,
-} from "@/lib/api";
+import { getPostsBySearchTerm, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
 
 import MiniFooter from "../components/mini-footer";
-import MoreStoriesSection from "../components/more-stories-section";
+import { MoreStories } from "../components/more-stories";
 import PostCarousel from "../components/posts-carousel";
 import { SpecialSection } from "../components/special-section";
 import TagSection from "../components/tag-section";
+
 interface SearchParams {
   s?: string;
 }
@@ -22,35 +18,10 @@ export default async function SearchPostContent({
   searchParams: SearchParams;
 }) {
   const searchTerm = searchParams.s;
-  const numberPosts = 11;
-  const [{ posts, count }, mostUsedTags] = await Promise.all([
-    getPostsBySearchTerm(searchTerm, numberPosts),
-    getMostUsedTags(2),
-  ]);
-
-  const morePosts = posts;
-  const page = 1;
-  const perPage = 6;
-  const hasMorePosts = page * perPage < count;
-
-  const postIds = posts.map((post) => post.id);
-
-  let mostUsedTag: string[];
-  const firstTag = mostUsedTags[0];
-  if (
-    firstTag &&
-    searchTerm &&
-    firstTag.toLowerCase().includes(searchTerm.toLowerCase())
-  ) {
-    mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
-  } else {
-    mostUsedTag = [firstTag];
-  }
-
-  const [specialPosts, postsByTags, postsForCarousel] = await Promise.all([
-    getRandomPosts(postIds, 5),
-    getPostsByTags(mostUsedTag, 3),
-    getRandomPosts(postIds, 3),
+  const perPage = 25;
+  const [{ posts }, postsForCarousel] = await Promise.all([
+    getPostsBySearchTerm(searchTerm, perPage),
+    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   return (
@@ -66,14 +37,22 @@ export default async function SearchPostContent({
         </span>
       </div>
       <div className="flex gap-8 mt-2">
-        <MoreStoriesSection
-          morePosts={morePosts}
-          hasMorePosts={hasMorePosts}
-          posts={posts}
-        />
+        <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
+          {posts.length > 0 ? (
+            <MoreStories posts={posts} hasMorePosts />
+          ) : (
+            <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
+              <p className="text-2xl">No hay publicaciones disponibles.</p>
+              <p className="mt-5">
+                Intenta con otro término de búsqueda, puedes utilizar palabras
+                claves o abreviaturas, ejemplo: `ARTIFICIAL` o `IA`.
+              </p>
+            </div>
+          )}
+        </div>
         <div className="w-4/12 hidden lg:block">
-          <SpecialSection specialPosts={specialPosts} />
-          <TagSection mostUsedTag={mostUsedTag} postsByTags={postsByTags} />
+          <SpecialSection />
+          <TagSection searchTerm={searchTerm} />
           <PostCarousel posts={postsForCarousel} />
           <hr className="mt-4 w-full" />
           <MiniFooter />

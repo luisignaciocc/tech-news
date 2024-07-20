@@ -3,23 +3,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
+
 import { SpecialCardPost } from "./special-card-post";
-
-interface SpecialPost {
-  id: string;
-  title: string;
-  slug: string;
-  coverImage: string | null;
-  publishedAt: Date | null;
-  tags: {
-    id: number;
-    name: string;
-  }[];
-}
-
-interface SpecialSectionProps {
-  specialPosts: SpecialPost[];
-}
 
 export function SpecialSectionSkeleton() {
   return (
@@ -50,7 +36,9 @@ export function SpecialSectionSkeleton() {
   );
 }
 
-export function SpecialSection({ specialPosts }: SpecialSectionProps) {
+export async function SpecialSection() {
+  const specialPosts = await getRandomPostsFromTwoWeeksAgo(5);
+
   return (
     <div>
       <h2 className="text-3xl uppercase font-bold">Especiales</h2>
