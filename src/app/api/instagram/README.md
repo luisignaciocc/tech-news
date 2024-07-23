@@ -2,7 +2,7 @@
 
 ## Image 01
 
-![image-01](./image-01/image-01.png)
+![image-01](./image-01/image-01.png =500x)
 
 ## Image 02
 
