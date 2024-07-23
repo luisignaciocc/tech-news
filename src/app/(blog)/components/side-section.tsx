@@ -1,12 +1,153 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Image from "next/image";
-import React from "react";
+import React, { Fragment } from "react";
+import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
 
+import { getMostUsedTags } from "@/lib/api";
+import { getPostsByTags } from "@/lib/api";
+import { getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
 import { SITE_AUTHOR, SITE_AUTHOR_URL } from "@/lib/metadata";
 
 import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
+import { PostPreview } from "./post-preview";
+import PostCarousel from "./posts-carousel";
+import { PostCarouselSkeleton } from "./posts-carousel";
+import { SpecialCardPost } from "./special-card-post";
+
+interface SideSectionProps {
+  searchTag?: string;
+}
+
+interface TagSectionProps {
+  searchTerm?: string;
+}
+
+export function SpecialSectionSkeleton() {
+  return (
+    <div>
+      <h2 className="text-3xl uppercase font-bold">
+        <Skeleton width={200} />
+      </h2>
+      <hr className="bg-black border-1 border-black" />
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div
+          key={index}
+          className="relative flex flex-col items-start w-full mt-3 mr-5"
+        >
+          <div className="flex flex-row w-full">
+            <div className="w-1/3 mr-2">
+              <Skeleton height={100} width={100} />
+            </div>
+            <div className="w-2/3">
+              <Skeleton height={20} />
+              <Skeleton height={20} />
+              <Skeleton height={20} />
+            </div>
+          </div>
+          <hr className="mt-6 w-full" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export async function SpecialSection() {
+  const specialPosts = await getRandomPostsFromTwoWeeksAgo(5);
+
+  return (
+    <div>
+      <h2 className="text-3xl uppercase font-bold">Especiales</h2>
+      <hr className="bg-black border-1 border-black" />
+      {specialPosts.map((post, index) => (
+        <div
+          key={index}
+          className="relative flex flex-col items-start w-full mt-3 mr-5"
+        >
+          <SpecialCardPost
+            key={index}
+            imageUrl={post.coverImage || ""}
+            title={post.title}
+            slug={post.slug}
+            number={`${(index + 1).toString().padStart(2, "0")}`}
+          />
+          {index !== specialPosts.length - 1 && <hr className="mt-6 w-full" />}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function TagSectionSkeleton() {
+  return (
+    <div className="mt-5">
+      <h2 className="text-3xl uppercase font-bold">
+        <Skeleton width={200} />
+      </h2>
+      <hr className="bg-black border-1 border-black" />
+      {Array.from({ length: 3 }).map((_, index) => (
+        <div key={index} className="mt-5">
+          <div className="mb-1">
+            <Skeleton height={200} />
+          </div>
+          <div>
+            <Skeleton height={15} width={250} />
+            <Skeleton height={30} className="mt-3" />
+            <Skeleton height={30} />
+            <Skeleton height={20} className="mt-3" />
+            <Skeleton height={20} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export async function TagSection({ searchTerm }: TagSectionProps) {
+  const mostUsedTags = await getMostUsedTags(2);
+
+  let mostUsedTag: string[];
+  if (
+    mostUsedTags[0] &&
+    searchTerm &&
+    mostUsedTags[0].toLowerCase().includes(searchTerm.toLowerCase())
+  ) {
+    mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
+  } else {
+    mostUsedTag = [mostUsedTags[0]];
+  }
+
+  const postsByTags = await getPostsByTags(mostUsedTag, 3);
+
+  return (
+    <div className="mt-10">
+      <h2 className="text-3xl uppercase">{mostUsedTag}</h2>
+      <hr className="bg-black border-1 border-black mb-6" />
+      {postsByTags.slice(0, 3).map((post) => (
+        <div key={post.id} className="mb-7">
+          <PostPreview
+            title={
+              <h3 className="text-xl hover:text-gray-400">{post.title}</h3>
+            }
+            coverImage={post.coverImage}
+            date={post.createdAt}
+            author={post.author}
+            excerpt={null}
+            slug={post.slug}
+            tags={post.tags}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export async function PostsCarouselFetcher() {
+  const posts = await getRandomPostsFromTwoWeeksAgo(3);
+
+  return <PostCarousel posts={posts} />;
+}
 
 export function MiniFooterSkeleton() {
   return (
@@ -53,7 +194,7 @@ export function MiniFooterSkeleton() {
   );
 }
 
-function MiniFooter() {
+export function MiniFooter() {
   return (
     <div className="mt-6">
       <div className="flex justify-center gap-4 mt-2 mb-4">
@@ -111,4 +252,22 @@ function MiniFooter() {
   );
 }
 
-export default MiniFooter;
+export default function SideSection({ searchTag }: SideSectionProps) {
+  return (
+    <Fragment>
+      <Suspense fallback={<SpecialSectionSkeleton />}>
+        <SpecialSection />
+      </Suspense>
+      <Suspense fallback={<TagSectionSkeleton />}>
+        <TagSection searchTerm={searchTag} />
+      </Suspense>
+      <Suspense fallback={<PostCarouselSkeleton />}>
+        <PostsCarouselFetcher />
+      </Suspense>
+      <hr className="mt-4 w-full" />
+      <Suspense fallback={<MiniFooterSkeleton />}>
+        <MiniFooter />
+      </Suspense>
+    </Fragment>
+  );
+}

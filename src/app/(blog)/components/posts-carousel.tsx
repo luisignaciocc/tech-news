@@ -56,7 +56,7 @@ const PostCarousel = ({ posts }: PostCarouselProps) => {
   };
 
   return (
-    <div className="relative w-full h-56 overflow-hidden">
+    <div className="relative w-full h-56 mt-4 overflow-hidden">
       {posts.map((post, index) => (
         <div
           key={post.id}
