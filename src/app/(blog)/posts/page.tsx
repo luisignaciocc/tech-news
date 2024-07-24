@@ -1,12 +1,9 @@
 import React, { Fragment } from "react";
 
-import { getPostsBySearchTerm, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
+import { getPostsBySearchTerm } from "@/lib/api";
 
-import MiniFooter from "../components/mini-footer";
 import { MoreStories } from "../components/more-stories";
-import PostCarousel from "../components/posts-carousel";
-import { SpecialSection } from "../components/special-section";
-import TagSection from "../components/tag-section";
+import SideSection from "../components/side-section";
 
 interface SearchParams {
   s?: string;
@@ -19,9 +16,8 @@ export default async function SearchPostContent({
 }) {
   const searchTerm = searchParams.s;
   const perPage = 25;
-  const [{ posts }, postsForCarousel] = await Promise.all([
+  const [{ posts }] = await Promise.all([
     getPostsBySearchTerm(searchTerm, perPage),
-    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   return (
@@ -51,11 +47,7 @@ export default async function SearchPostContent({
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SpecialSection />
-          <TagSection searchTerm={searchTerm} />
-          <PostCarousel posts={postsForCarousel} />
-          <hr className="mt-4 w-full" />
-          <MiniFooter />
+          <SideSection searchTag={searchTerm} />
         </div>
       </div>
     </div>

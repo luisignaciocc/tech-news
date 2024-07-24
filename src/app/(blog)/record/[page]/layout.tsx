@@ -1,8 +1,14 @@
+import { Metadata } from "next";
 import { Suspense } from "react";
 
 import { getMostUsedTags } from "@/lib/api";
 
 import NavBar from "../../components/navbar";
+
+export const metadata: Metadata = {
+  title: "Tecnobuc | Posts más Antiguos",
+  description: "Posts más Antiguos.",
+};
 
 async function NavBarComponent() {
   const tagsMostUsed = await getMostUsedTags(5);

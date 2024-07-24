@@ -39,6 +39,10 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
+export async function getTags() {
+  return prisma.tag.findMany();
+}
+
 export async function getPostsCards(slug: string, limit: number) {
   return prisma.post.findMany({
     where: {

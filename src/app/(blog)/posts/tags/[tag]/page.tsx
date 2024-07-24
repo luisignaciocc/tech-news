@@ -1,11 +1,8 @@
 import React, { Fragment } from "react";
 
-import MiniFooter from "@/app/(blog)/components/mini-footer";
 import { MoreStories } from "@/app/(blog)/components/more-stories";
-import PostCarousel from "@/app/(blog)/components/posts-carousel";
-import { SpecialSection } from "@/app/(blog)/components/special-section";
-import TagSection from "@/app/(blog)/components/tag-section";
-import { getPostsBySearchTerm, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
+import SideSection from "@/app/(blog)/components/side-section";
+import { getPostsBySearchTerm } from "@/lib/api";
 
 type Params = {
   params: {
@@ -18,10 +15,6 @@ export default async function TagsPage({ params }: Params) {
   const perPage = 25;
   const [{ posts }] = await Promise.all([
     getPostsBySearchTerm(searchTerm, perPage),
-  ]);
-
-  const [postsForCarousel] = await Promise.all([
-    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   return (
@@ -50,11 +43,7 @@ export default async function TagsPage({ params }: Params) {
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SpecialSection />
-          <TagSection searchTerm={searchTerm} />
-          <PostCarousel posts={postsForCarousel} />
-          <hr className="mt-4 w-full" />
-          <MiniFooter />
+          <SideSection searchTag={searchTerm} />
         </div>
       </div>
     </div>

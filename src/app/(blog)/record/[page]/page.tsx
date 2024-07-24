@@ -1,11 +1,9 @@
 import React from "react";
 
-import { getPosts, getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
+import { getPosts } from "@/lib/api";
 
-import MiniFooter from "../../components/mini-footer";
 import { MoreStories } from "../../components/more-stories";
-import PostCarousel from "../../components/posts-carousel";
-import { SpecialSection } from "../../components/special-section";
+import SideSection from "../../components/side-section";
 import PageNavigation from "./components/page-navigation";
 
 export default async function SearchPostContent({
@@ -17,12 +15,11 @@ export default async function SearchPostContent({
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
   const perPage = 30;
-  const [{ posts, count }, postsForCarousel] = await Promise.all([
+  const [{ posts, count }] = await Promise.all([
     getPosts({
       page,
       perPage,
     }),
-    getRandomPostsFromTwoWeeksAgo(3),
   ]);
 
   const hasMorePosts = page * perPage < count;
@@ -47,10 +44,7 @@ export default async function SearchPostContent({
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SpecialSection />
-          <PostCarousel posts={postsForCarousel} />
-          <hr className="mt-4 w-full" />
-          <MiniFooter />
+          <SideSection />
         </div>
       </div>
       <PageNavigation currentPage={page} hasMorePosts={hasMorePosts} />

@@ -3,10 +3,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
-import { MiniFooterSkeleton } from "./mini-footer";
 import { MoreStoriesSkeleton } from "./more-stories";
-import { SpecialSectionSkeleton } from "./special-section";
-import { TagSectionSkeleton } from "./tag-section";
+import { TagSectionSkeleton } from "./side-section";
+import { MiniFooterSkeleton } from "./side-section";
+import { SpecialSectionSkeleton } from "./side-section";
 
 function SearchPageSkeleton() {
   return (

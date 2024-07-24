@@ -14,17 +14,10 @@ import {
   PostsFetcher,
   SecondTagsPostsFetcher,
 } from "./components/main-page-fetchers";
-import MiniFooter from "./components/mini-footer";
-import { MiniFooterSkeleton } from "./components/mini-footer";
 import { MoreStoriesSkeleton } from "./components/more-stories";
 import { PostVerticalCarouselSkeleton } from "./components/post-vertical-carousel";
-import { PostCarouselSkeleton } from "./components/posts-carousel";
-import PostsCarouselFetcher from "./components/posts-carousel-fetcher";
 import { SecondTagSectionSkeleton } from "./components/second-tag-section";
-import { SpecialSection } from "./components/special-section";
-import { SpecialSectionSkeleton } from "./components/special-section";
-import TagSection from "./components/tag-section";
-import { TagSectionSkeleton } from "./components/tag-section";
+import SideSection from "./components/side-section";
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -57,19 +50,7 @@ export default async function Index() {
               </Suspense>
             </div>
             <div className="w-4/12 hidden lg:block">
-              <Suspense fallback={<SpecialSectionSkeleton />}>
-                <SpecialSection />
-              </Suspense>
-              <Suspense fallback={<TagSectionSkeleton />}>
-                <TagSection />
-              </Suspense>
-              <Suspense fallback={<PostCarouselSkeleton />}>
-                <PostsCarouselFetcher />
-              </Suspense>
-              <hr className="mt-4 w-full" />
-              <Suspense fallback={<MiniFooterSkeleton />}>
-                <MiniFooter />
-              </Suspense>
+              <SideSection />
             </div>
           </div>
         </div>
