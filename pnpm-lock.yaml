@@ -117,8 +117,8 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1
       react-day-picker:
-        specifier: ^9.0.3
-        version: 9.0.3(react@18.3.1)
+        specifier: ^9.0.4
+        version: 9.0.4(react@18.3.1)
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
@@ -3484,8 +3484,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  react-day-picker@9.0.3:
-    resolution: {integrity: sha512-/vz4hWvNWFzBAaxS/US9Q/Yj1tYMe6u5UgzAxy58XCSkEsldZ/jLb+mLSl9vdcmCkAbV846Ypb7R3FpKGrYPag==}
+  react-day-picker@9.0.4:
+    resolution: {integrity: sha512-hT4yv89vfXjxEu+TKGfRlhIDi8kipy/Z8XDglT1VeskaTzNNIGfB8eCfF2AqT/WT32rfD6et+q61hiZPJi8HZw==}
     peerDependencies:
       react: '>=16.8.0'
 
@@ -5198,7 +5198,7 @@ snapshots:
 
   '@types/react-day-picker@5.3.0(react@18.3.1)':
     dependencies:
-      react-day-picker: 9.0.3(react@18.3.1)
+      react-day-picker: 9.0.4(react@18.3.1)
     transitivePeerDependencies:
       - react
 
@@ -7856,7 +7856,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  react-day-picker@9.0.3(react@18.3.1):
+  react-day-picker@9.0.4(react@18.3.1):
     dependencies:
       date-fns: 3.6.0
       react: 18.3.1
