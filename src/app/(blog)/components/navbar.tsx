@@ -18,7 +18,7 @@ interface NavBarProps {
   theme?: "light" | "dark";
 }
 
-function NavBar({ isNavBar, tags, theme = "light" }: NavBarProps) {
+function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
   const [searchValue, setSearchValue] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
