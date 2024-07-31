@@ -28,16 +28,16 @@ const DashboardNavBar = ({ tags }: DashboardNavBarProps) => {
 
   return (
     <Fragment>
-      <nav
+      <div
         className={`
       fixed top-0 left-0 w-full z-50
       bg-white shadow-md
       transition-all duration-500 ease-in-out
-      ${showNavbar ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}
+      ${showNavbar ? "" : "-translate-y-full"}
     `}
       >
-        <nav
-          className={`bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50 ${showNavbar ? "" : "hidden"}`}
+        <div
+          className={`bg-primary shadow-2xl right-0 z-50 ${showNavbar ? "" : "hidden"}`}
         >
           <NavBar
             isNavBar={true}
@@ -46,8 +46,8 @@ const DashboardNavBar = ({ tags }: DashboardNavBarProps) => {
             hoverLinksColor="hover:text-gray-400"
             socialMediaColor="white"
           />
-        </nav>
-      </nav>
+        </div>
+      </div>
       <div className="w-full mr-5 ml-3">
         <NavBar
           isNavBar={false}
