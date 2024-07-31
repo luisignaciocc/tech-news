@@ -15,13 +15,7 @@ async function NavBarComponent() {
 
   return (
     <nav className={"bg-primary shadow-2xl fixed top-0 left-0 right-0 z-50"}>
-      <NavBar
-        isNavBar={true}
-        tags={tagsMostUsed}
-        bgLinksColor="text-white"
-        hoverLinksColor="hover:text-gray-400"
-        socialMediaColor="white"
-      />
+      <NavBar isNavBar={true} tags={tagsMostUsed} />
     </nav>
   );
 }

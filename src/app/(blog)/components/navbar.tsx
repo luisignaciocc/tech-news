@@ -8,24 +8,17 @@ import { BsList, BsSearch, BsX } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 
 import { SITE_SHORT_NAME } from "@/lib/metadata";
+import { cn } from "@/lib/utils";
 
 import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
 interface NavBarProps {
   isNavBar: boolean;
   tags: string[];
-  bgLinksColor: string;
-  hoverLinksColor: string;
-  socialMediaColor: string;
+  theme?: "light" | "dark";
 }
 
-function NavBar({
-  isNavBar,
-  tags,
-  bgLinksColor,
-  hoverLinksColor,
-  socialMediaColor,
-}: NavBarProps) {
+function NavBar({ isNavBar, tags, theme = "light" }: NavBarProps) {
   const [searchValue, setSearchValue] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -70,11 +63,25 @@ function NavBar({
     <Fragment>
       {/* Search box */}
       {isSearchOpen && (
-        <div className="bg-transparent w-full overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0">
+        <div
+          className={cn(
+            "bg-transparent w-full overflow-hidden transition-all duration-300 ease-in-out absolute top-0 left-0",
+            {
+              "bg-white": theme === "light",
+              "bg-black": theme === "dark",
+            },
+          )}
+        >
           <div className="h-14 flex items-center px-4 justify-between">
             <input
               type="text"
-              className={`w-full h-8 px-2 ${bgLinksColor} bg-transparent focus:outline-none`}
+              className={cn(
+                "w-full h-8 px-2 bg-transparent focus:outline-none",
+                {
+                  "text-black": theme === "light",
+                  "text-white": theme === "dark",
+                },
+              )}
               placeholder="Buscar..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -82,19 +89,25 @@ function NavBar({
               autoFocus={inputFocused}
             />
             <button
-              className={`${bgLinksColor} ${hoverLinksColor} px-3 py-2 rounded-md text-sm font-bold uppercase`}
+              className={cn(
+                "px-3 py-2 rounded-md text-sm font-bold uppercase",
+                {
+                  "text-black hover:text-red-400": theme === "light",
+                  "text-white hover:text-gray-400": theme === "dark",
+                },
+              )}
               onClick={handleSearch}
             >
               <BsSearch className="h-6 w-6" />
             </button>
           </div>
-          <hr className="border-gray-400" />
+          <hr className="border-white" />
         </div>
       )}
 
       <div
         className={`
-          ${isNavBar ? (isSearchOpen ? "mt-16" : "") : "mt-3"}
+          ${isNavBar ? (isSearchOpen ? "mt-14" : "") : "mt-3"}
           max-w-7xl mx-auto transition-all duration-300 ease-in-out
         `}
       >
@@ -104,7 +117,10 @@ function NavBar({
             <div className="hidden md:flex md:ml-4 items-center">
               <Link
                 href="/"
-                className={`${bgLinksColor} hover:text-gray-400 flex items-center`}
+                className={cn(`hover:text-gray-400 flex items-center`, {
+                  "text-white": theme === "dark",
+                  "text-black": theme === "light",
+                })}
               >
                 <div
                   className={`${isNavBar ? "w-10 h-10" : isMenuOpen ? "w-10 h-10" : "w-20 h-20"} rounded-full overflow-hidden flex items-center mr-2 mb-1`}
@@ -139,11 +155,23 @@ function NavBar({
                       >
                         <a href={socialMedia.url} target="_blank">
                           <div
-                            className={`absolute inset-0 border border-${socialMediaColor} rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500`}
+                            className={cn(
+                              `absolute inset-0 border rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500`,
+                              {
+                                " border-black": theme === "light",
+                                "border-white": theme === "dark",
+                              },
+                            )}
                           ></div>
                           <div className="bg-transparent rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
                             <socialMedia.icon
-                              className={`text-1xl sm:text-2xl text-${socialMediaColor} transition-color duration-300 group-hover:text-black`}
+                              className={cn(
+                                `text-1xl sm:text-2xl transition-color duration-300 group-hover:text-black`,
+                                {
+                                  "text-white": theme === "dark",
+                                  "text-black": theme === "light",
+                                },
+                              )}
                             />
                           </div>
                         </a>
@@ -178,18 +206,44 @@ function NavBar({
               <div key={tag} className="flex items-center">
                 <Link
                   href={`/posts/tags/${encodeURIComponent(tag)}`}
-                  className={`${bgLinksColor} ${hoverLinksColor} px-3 py-2 rounded-md text-sm font-bold uppercase`}
+                  className={cn(
+                    `px-3 py-2 rounded-md text-sm font-bold uppercase`,
+                    {
+                      "text-white hover:text-gray-400": theme === "dark",
+                      "text-black hover:text-red-400": theme === "light",
+                    },
+                  )}
                 >
                   {tag}
                 </Link>
                 {index < tags.length - 1 && (
-                  <span className={`${bgLinksColor}`}>|</span>
+                  <span
+                    className={cn({
+                      "text-white": theme === "dark",
+                      "text-black": theme === "light",
+                    })}
+                  >
+                    |
+                  </span>
                 )}
               </div>
             ))}
-            <span className={`${bgLinksColor}`}>|</span>
+            <span
+              className={cn({
+                "text-white": theme === "dark",
+                "text-black": theme === "light",
+              })}
+            >
+              |
+            </span>
             <button
-              className={`${bgLinksColor} ${hoverLinksColor} px-3 py-2 rounded-md text-sm font-bold uppercase`}
+              className={cn(
+                "px-3 py-2 rounded-md text-sm font-bold uppercase",
+                {
+                  "text-white hover:text-gray-400": theme === "dark",
+                  "text-black hover:text-red-400": theme === "light",
+                },
+              )}
             >
               {isSearchOpen ? (
                 <BsX
@@ -224,7 +278,13 @@ function NavBar({
           >
             <div className="lg:hidden flex items-center">
               <button
-                className={`${bgLinksColor} ${hoverLinksColor} sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase`}
+                className={cn(
+                  "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
+                  {
+                    "text-white hover:text-gray-400": theme === "dark",
+                    "text-black hover:text-red-400": theme === "light",
+                  },
+                )}
               >
                 {isSearchOpen ? (
                   <BsX
@@ -245,9 +305,22 @@ function NavBar({
                   />
                 )}
               </button>
-              <span className={`${bgLinksColor}`}>|</span>
+              <span
+                className={cn({
+                  "text-white": theme === "dark",
+                  "text-black": theme === "light",
+                })}
+              >
+                |
+              </span>
               <button
-                className={`${bgLinksColor} ${hoverLinksColor} sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase`}
+                className={cn(
+                  "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
+                  {
+                    "text-white hover:text-gray-400": theme === "dark",
+                    "text-black hover:text-red-400": theme === "light",
+                  },
+                )}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 {isMenuOpen ? (

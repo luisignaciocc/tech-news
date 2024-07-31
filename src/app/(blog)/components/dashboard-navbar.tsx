@@ -39,23 +39,11 @@ const DashboardNavBar = ({ tags }: DashboardNavBarProps) => {
         <div
           className={`bg-primary shadow-2xl right-0 z-50 ${showNavbar ? "" : "hidden"}`}
         >
-          <NavBar
-            isNavBar={true}
-            tags={tags}
-            bgLinksColor="text-white"
-            hoverLinksColor="hover:text-gray-400"
-            socialMediaColor="white"
-          />
+          <NavBar isNavBar={true} tags={tags} theme="dark" />
         </div>
       </div>
       <div className="w-full mr-5 ml-3">
-        <NavBar
-          isNavBar={false}
-          tags={tags}
-          bgLinksColor="text-black"
-          hoverLinksColor="hover:text-red-400"
-          socialMediaColor="black"
-        />
+        <NavBar isNavBar={false} tags={tags} theme="light" />
       </div>
     </Fragment>
   );
