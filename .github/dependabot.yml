@@ -16,5 +16,5 @@ updates:
     ignore:
       - dependency-name: "eslint"
         versions: ["9.x"]
-      - dependency-name: "typescript-eslint"
+      - dependency-name: "@typescript-eslint"
         versions: ["8.x"]
