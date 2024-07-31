@@ -163,8 +163,8 @@ importers:
         specifier: ^21.1.7
         version: 21.1.7
       '@types/node':
-        specifier: ^22.0.1
-        version: 22.0.1
+        specifier: ^22.0.2
+        version: 22.0.2
       '@types/node-telegram-bot-api':
         specifier: ^0.64.7
         version: 0.64.7
@@ -1200,8 +1200,8 @@ packages:
   '@types/node@18.19.42':
     resolution: {integrity: sha512-d2ZFc/3lnK2YCYhos8iaNIYu9Vfhr92nHiyJHRltXWjXUBjEE+A4I58Tdbnw4VhggSW+2j5y5gTrLs4biNnubg==}
 
-  '@types/node@22.0.1':
-    resolution: {integrity: sha512-RVKWL+s4ax6syie/ev3FXFIs38mke4ZsCDPBcLF2Gu6MbQXKe9Fo9iU0EPUxDB1mDVvC0vCgkV3lKa2f6xIuHg==}
+  '@types/node@22.0.2':
+    resolution: {integrity: sha512-yPL6DyFwY5PiMVEwymNeqUTKsDczQBJ/5T7W/46RwLU/VH+AA8aT5TZkvBviLKLbbm0hlfftEkGrNzfRk/fofQ==}
 
   '@types/pg@8.11.6':
     resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
@@ -5064,7 +5064,7 @@ snapshots:
 
   '@types/bcrypt@5.0.2':
     dependencies:
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
 
   '@types/caseless@0.12.5': {}
 
@@ -5102,7 +5102,7 @@ snapshots:
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
       '@types/tough-cookie': 4.0.5
       parse5: 7.1.2
 
@@ -5118,25 +5118,25 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
       form-data: 4.0.0
 
   '@types/node-telegram-bot-api@0.64.7':
     dependencies:
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
       '@types/request': 2.48.12
 
   '@types/node@18.19.42':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@22.0.1':
+  '@types/node@22.0.2':
     dependencies:
       undici-types: 6.11.1
 
   '@types/pg@8.11.6':
     dependencies:
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
       pg-protocol: 1.6.1
       pg-types: 4.0.2
 
@@ -5160,7 +5160,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
@@ -5174,7 +5174,7 @@ snapshots:
 
   '@types/xml2js@0.4.14':
     dependencies:
-      '@types/node': 22.0.1
+      '@types/node': 22.0.2
 
   '@typescript-eslint/eslint-plugin@7.18.0(@typescript-eslint/parser@7.18.0(eslint@8.57.0)(typescript@5.5.4))(eslint@8.57.0)(typescript@5.5.4)':
     dependencies:
