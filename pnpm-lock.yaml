@@ -93,8 +93,8 @@ importers:
         specifier: ^4.0.3
         version: 4.0.3
       lucide-react:
-        specifier: ^0.418.0
-        version: 0.418.0(react@18.3.1)
+        specifier: ^0.419.0
+        version: 0.419.0(react@18.3.1)
       next:
         specifier: ^14.2.5
         version: 14.2.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -202,8 +202,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.0)
       eslint-config-turbo:
-        specifier: ^2.0.10
-        version: 2.0.10(eslint@8.57.0)
+        specifier: ^2.0.11
+        version: 2.0.11(eslint@8.57.0)
       eslint-plugin-deprecation:
         specifier: ^3.0.0
         version: 3.0.0(eslint@8.57.0)(typescript@5.5.4)
@@ -2039,8 +2039,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.0.10:
-    resolution: {integrity: sha512-mMbaj/yQc5P2mY09iwlduZrU+FUvpSn0MdbntyTEE46zKATCoeLWNhOaQacTU6AnZRyfe/mGLVIjOl+9Hm4qBQ==}
+  eslint-config-turbo@2.0.11:
+    resolution: {integrity: sha512-hriQ+OQvKbtE1w7JH+w2X+Lh/9YPgnaNJmjrfhANWStFJTDa1NrJMCm2UaxHbDNKxFsr/mN9TTkVCRiTktIaqw==}
     peerDependencies:
       eslint: '>6.6.0'
 
@@ -2120,8 +2120,8 @@ packages:
     peerDependencies:
       eslint: '>=6'
 
-  eslint-plugin-turbo@2.0.10:
-    resolution: {integrity: sha512-6TR1Zu6UNRcvVvD/W+LUDjncGyr3I7oqRjVDvggPGSXs6Hbtk9Oc2GIPQji1JvWy8rzU59fFxrsTEgEKHFKlRA==}
+  eslint-plugin-turbo@2.0.11:
+    resolution: {integrity: sha512-cM2KRlC6zh8Y5pOpiGTkBMp3/V4f4sEebSYcHjotfc4VQziPXuZtf/4Si4pd6l1FpmYfkgE+AReZsRfEfK17bw==}
     peerDependencies:
       eslint: '>6.6.0'
 
@@ -2825,8 +2825,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-react@0.418.0:
-    resolution: {integrity: sha512-7TSd4CLfvT/U9504MSJ+e03pgAvqZQ5WbML4Pm+axjCbYBLTWuDu68bebFr/e51Z32uHMY7MO+SpaHX8NubveA==}
+  lucide-react@0.419.0:
+    resolution: {integrity: sha512-YkOHuc1uGH2A4G0NRZyeCW6mMFGb8z3amep0fARuKIri68nveAT5C8OuXOPJXpb/iIgSfsjdMjjII7bnEtGkvw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -6113,10 +6113,10 @@ snapshots:
     dependencies:
       eslint: 8.57.0
 
-  eslint-config-turbo@2.0.10(eslint@8.57.0):
+  eslint-config-turbo@2.0.11(eslint@8.57.0):
     dependencies:
       eslint: 8.57.0
-      eslint-plugin-turbo: 2.0.10(eslint@8.57.0)
+      eslint-plugin-turbo: 2.0.11(eslint@8.57.0)
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
@@ -6289,7 +6289,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-turbo@2.0.10(eslint@8.57.0):
+  eslint-plugin-turbo@2.0.11(eslint@8.57.0):
     dependencies:
       dotenv: 16.0.3
       eslint: 8.57.0
@@ -7103,7 +7103,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.418.0(react@18.3.1):
+  lucide-react@0.419.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
