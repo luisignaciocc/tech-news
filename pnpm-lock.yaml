@@ -108,8 +108,8 @@ importers:
         specifier: ^2.2.6
         version: 2.2.6
       openai:
-        specifier: ^4.55.5
-        version: 4.55.5(zod@3.23.8)
+        specifier: ^4.55.7
+        version: 4.55.7(zod@3.23.8)
       prisma:
         specifier: ^5.18.0
         version: 5.18.0
@@ -148,7 +148,7 @@ importers:
         version: 2.5.2
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@3.4.9)
+        version: 1.0.7(tailwindcss@3.4.10)
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -163,8 +163,8 @@ importers:
         specifier: ^21.1.7
         version: 21.1.7
       '@types/node':
-        specifier: ^22.2.0
-        version: 22.2.0
+        specifier: ^22.3.0
+        version: 22.3.0
       '@types/node-telegram-bot-api':
         specifier: ^0.64.7
         version: 0.64.7
@@ -199,8 +199,8 @@ importers:
         specifier: ^9.1.0
         version: 9.1.0(eslint@9.9.0(jiti@1.21.6))
       eslint-config-turbo:
-        specifier: ^2.0.12
-        version: 2.0.12(eslint@9.9.0(jiti@1.21.6))
+        specifier: ^2.0.13
+        version: 2.0.13(eslint@9.9.0(jiti@1.21.6))
       eslint-plugin-deprecation:
         specifier: ^3.0.0
         version: 3.0.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)
@@ -235,8 +235,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(react@18.3.1)
       tailwindcss:
-        specifier: ^3.4.9
-        version: 3.4.9
+        specifier: ^3.4.10
+        version: 3.4.10
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
@@ -1200,8 +1200,8 @@ packages:
   '@types/node@18.19.44':
     resolution: {integrity: sha512-ZsbGerYg72WMXUIE9fYxtvfzLEuq6q8mKERdWFnqTmOvudMxnz+CBNRoOwJ2kNpFOncrKjT1hZwxjlFgQ9qvQA==}
 
-  '@types/node@22.2.0':
-    resolution: {integrity: sha512-bm6EG6/pCpkxDf/0gDNDdtDILMOHgaQBVOJGdwsqClnxA3xL6jtMv76rLBc006RVMWbmaf0xbmom4Z/5o2nRkQ==}
+  '@types/node@22.3.0':
+    resolution: {integrity: sha512-nrWpWVaDZuaVc5X84xJ0vNrLvomM205oQyLsRt7OHNZbSHslcWsvgFR7O7hire2ZonjLrWBbedmotmIlJDVd6g==}
 
   '@types/pg@8.11.6':
     resolution: {integrity: sha512-/2WmmBXHLsfRqzfHW7BNZ8SbYzE8OSk7i3WjFYvfgRHj7S1xj+16Je5fUKv3lVdVzk/zn9TXOqf+avFCFIE0yQ==}
@@ -2060,8 +2060,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-turbo@2.0.12:
-    resolution: {integrity: sha512-3PUzoyeJi2SjsTSjfWgTUIHK7kOqsapDEaOT7sCjFnZXvuhYLKxW37lysjq7+55abGGm0yQTXxNFLjrQKUORag==}
+  eslint-config-turbo@2.0.13:
+    resolution: {integrity: sha512-GdWQa8OAnX7SnrUK49U4zEv6rglLogQs1HQZ56Y7jn87ohkaBQAUFtxjyTNNgcDlYqzT/6deRlEGsJ/maRU2Wg==}
     peerDependencies:
       eslint: '>6.6.0'
 
@@ -2141,8 +2141,8 @@ packages:
     peerDependencies:
       eslint: '>=6'
 
-  eslint-plugin-turbo@2.0.12:
-    resolution: {integrity: sha512-vXWKer7F0RPTcVy1B+hFTEK4mlEOpouB8MCAFD3WW4C6t98wvuDCsIPjxIldpxg7CnwmRxALpNWgNVkU2LVVEQ==}
+  eslint-plugin-turbo@2.0.13:
+    resolution: {integrity: sha512-hpHRtQVETm07OBvj8kFy/+sgts+i36wFM8xd4yr9Wt3TWtmC4mealtgSvSEx61vdkqbDhKMP4CftgpHj2DI4yw==}
     peerDependencies:
       eslint: '>6.6.0'
 
@@ -3186,8 +3186,8 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
-  openai@4.55.5:
-    resolution: {integrity: sha512-9OkMAMljFv1LxUFf5HLm/pw7zFd4yMgW+lKOYF80RBwuGWU+ZKF5BQGll+TEGAHu23YMeT8t6VSxI27c/DRAOA==}
+  openai@4.55.7:
+    resolution: {integrity: sha512-I2dpHTINt0Zk+Wlns6KzkKu77MmNW3VfIIQf5qYziEUI6t7WciG1zTobfKqdPzBmZi3TTM+3DtjPumxQdcvzwA==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -3324,8 +3324,8 @@ packages:
     peerDependencies:
       postcss: ^8.2.14
 
-  postcss-selector-parser@6.1.1:
-    resolution: {integrity: sha512-b4dlw/9V8A71rLIDsSwVmak9z2DuBUB7CA1/wSdelNEzqsjoSPeADTWNO09lpH49Diy3/JIZ2bSPB1dI3LJCHg==}
+  postcss-selector-parser@6.1.2:
+    resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
     engines: {node: '>=4'}
 
   postcss-value-parser@4.2.0:
@@ -3896,8 +3896,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss@3.4.9:
-    resolution: {integrity: sha512-1SEOvRr6sSdV5IDf9iC+NU4dhwdqzF4zKKq3sAbasUWHEM6lsMhX+eNN5gkPx1BvLFEnZQEUFbXnGj8Qlp83Pg==}
+  tailwindcss@3.4.10:
+    resolution: {integrity: sha512-KWZkVPm7yJRhdu4SRSl9d4AK2wM3a50UsvgHZO7xY77NQr2V+fIrEuoDGQcbvswWvFGbS2f6e+jC/6WJm1Dl0w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -4015,8 +4015,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici-types@6.13.0:
-    resolution: {integrity: sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg==}
+  undici-types@6.18.2:
+    resolution: {integrity: sha512-5ruQbENj95yDYJNS3TvcaxPMshV7aizdv/hWYjGIKoANWKjhWNBsr2YEuYZKodQulB1b8l7ILOuDQep3afowQQ==}
 
   undici@6.19.7:
     resolution: {integrity: sha512-HR3W/bMGPSr90i8AAp2C4DM3wChFdJPLrWYpIS++LxS8K+W535qftjt+4MyjNYHeWabMj1nvtmLIi7l++iq91A==}
@@ -5106,7 +5106,7 @@ snapshots:
 
   '@types/bcrypt@5.0.2':
     dependencies:
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
 
   '@types/caseless@0.12.5': {}
 
@@ -5144,7 +5144,7 @@ snapshots:
 
   '@types/jsdom@21.1.7':
     dependencies:
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
       '@types/tough-cookie': 4.0.5
       parse5: 7.1.2
 
@@ -5160,25 +5160,25 @@ snapshots:
 
   '@types/node-fetch@2.6.11':
     dependencies:
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
       form-data: 4.0.0
 
   '@types/node-telegram-bot-api@0.64.7':
     dependencies:
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
       '@types/request': 2.48.12
 
   '@types/node@18.19.44':
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@22.2.0':
+  '@types/node@22.3.0':
     dependencies:
-      undici-types: 6.13.0
+      undici-types: 6.18.2
 
   '@types/pg@8.11.6':
     dependencies:
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
       pg-protocol: 1.6.1
       pg-types: 4.0.2
 
@@ -5196,7 +5196,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
@@ -5210,7 +5210,7 @@ snapshots:
 
   '@types/xml2js@0.4.14':
     dependencies:
-      '@types/node': 22.2.0
+      '@types/node': 22.3.0
 
   '@typescript-eslint/eslint-plugin@8.1.0(@typescript-eslint/parser@8.1.0(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4))(eslint@9.9.0(jiti@1.21.6))(typescript@5.5.4)':
     dependencies:
@@ -6192,10 +6192,10 @@ snapshots:
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
 
-  eslint-config-turbo@2.0.12(eslint@9.9.0(jiti@1.21.6)):
+  eslint-config-turbo@2.0.13(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       eslint: 9.9.0(jiti@1.21.6)
-      eslint-plugin-turbo: 2.0.12(eslint@9.9.0(jiti@1.21.6))
+      eslint-plugin-turbo: 2.0.13(eslint@9.9.0(jiti@1.21.6))
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
@@ -6368,7 +6368,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-turbo@2.0.12(eslint@9.9.0(jiti@1.21.6)):
+  eslint-plugin-turbo@2.0.13(eslint@9.9.0(jiti@1.21.6)):
     dependencies:
       dotenv: 16.0.3
       eslint: 9.9.0(jiti@1.21.6)
@@ -7603,7 +7603,7 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
-  openai@4.55.5(zod@3.23.8):
+  openai@4.55.7(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.44
       '@types/node-fetch': 2.6.11
@@ -7739,9 +7739,9 @@ snapshots:
   postcss-nested@6.2.0(postcss@8.4.41):
     dependencies:
       postcss: 8.4.41
-      postcss-selector-parser: 6.1.1
+      postcss-selector-parser: 6.1.2
 
-  postcss-selector-parser@6.1.1:
+  postcss-selector-parser@6.1.2:
     dependencies:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
@@ -8332,11 +8332,11 @@ snapshots:
 
   tailwind-merge@2.5.2: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@3.4.9):
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.10):
     dependencies:
-      tailwindcss: 3.4.9
+      tailwindcss: 3.4.10
 
-  tailwindcss@3.4.9:
+  tailwindcss@3.4.10:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -8357,7 +8357,7 @@ snapshots:
       postcss-js: 4.0.1(postcss@8.4.41)
       postcss-load-config: 4.0.2(postcss@8.4.41)
       postcss-nested: 6.2.0(postcss@8.4.41)
-      postcss-selector-parser: 6.1.1
+      postcss-selector-parser: 6.1.2
       resolve: 1.22.8
       sucrase: 3.35.0
     transitivePeerDependencies:
@@ -8491,7 +8491,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici-types@6.13.0: {}
+  undici-types@6.18.2: {}
 
   undici@6.19.7: {}
 
