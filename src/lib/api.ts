@@ -40,7 +40,8 @@ export async function getPostBySlug(slug: string) {
 }
 
 export async function getTags() {
-  return prisma.tag.findMany();
+  const tags = await prisma.tag.findMany();
+  return tags.map((tag) => encodeURIComponent(tag.name));
 }
 
 export async function getPostsCards(slug: string, limit: number) {
