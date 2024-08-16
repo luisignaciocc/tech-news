@@ -28,9 +28,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   const tagUrls: MetadataRoute.Sitemap = tags.map((tag) => ({
-    url: `${SITE_URL}/posts/tags/${tag}`,
+    url: `${SITE_URL}/posts/tags/${tag.name}`,
     lastModified: new Date(),
-    changeFrequency: "daily",
+    changeFrequency: "hourly",
     priority: 0.7,
   }));
 
