@@ -166,7 +166,7 @@ export async function getRelatedPostFromPostSlug(slug: string) {
   }
 }
 
-async function getSimilarNews(newsId: string) {
+export async function getSimilarNews(newsId: string) {
   try {
     // Searching for similar news with newsId
     const similarNews: { id: string; similarity: number }[] =
