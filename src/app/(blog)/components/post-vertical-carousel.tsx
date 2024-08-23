@@ -160,6 +160,7 @@ export default function PostVerticalCarousel({ posts }: Props) {
                 onClick={() => handleIndexClick(index)}
                 onMouseEnter={() => handleIndexHover(index)}
                 onMouseLeave={handleIndexLeave}
+                tabIndex={0}
               >
                 {index + 1}
                 {index < posts.length - 1 && (
