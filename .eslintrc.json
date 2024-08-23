@@ -2,8 +2,6 @@
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
-    "plugin:testing-library/react",
-    "plugin: jest-dom/recommended",
     "prettier",
     "plugin:storybook/recommended",
     "plugin:deprecation/recommended"
