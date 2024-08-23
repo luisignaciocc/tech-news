@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${SITE_URL}/posts/${slug}`,
     lastModified: new Date(),
     changeFrequency: "never",
-    priority: 0.8,
+    priority: 0.9,
   }));
 
   const pagesUrls: MetadataRoute.Sitemap = Array.from({ length: pages }).map(
@@ -30,8 +30,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tagUrls: MetadataRoute.Sitemap = tags.map((tag) => ({
     url: `${SITE_URL}/posts/tags/${encodeURIComponent(tag.name)}`,
     lastModified: new Date(),
-    changeFrequency: "daily",
-    priority: 0.7,
+    changeFrequency: "hourly",
+    priority: 0.8,
   }));
 
   return [
@@ -45,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE_URL}/posts`,
       lastModified: new Date(),
       changeFrequency: "hourly",
-      priority: 0.9,
+      priority: 0.8,
     },
     ...postUrls,
     ...pagesUrls,
