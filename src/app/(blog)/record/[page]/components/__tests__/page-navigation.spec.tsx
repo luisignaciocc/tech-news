@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
-import PageNavigation from "../page-navigation";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
+
+import PageNavigation from "../page-navigation";
 
 describe("PageNavigation Component", () => {
   it("renders the 'Volver' button when currentPage is greater than 1", () => {
@@ -26,7 +27,7 @@ describe("PageNavigation Component", () => {
 
     const moreButton = screen.getByText("Más antiguos");
     expect(moreButton).toBeInTheDocument();
-    expect(moreButton).not.toBeDisabled();
+    expect(moreButton).toBeEnabled();
   });
 
   it("renders the 'Más antiguos' button but it is disabled when hasMorePosts is false", () => {
