@@ -1,13 +1,14 @@
 "use server";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 import { PER_PAGE } from "./utils";
-
-const prisma = new PrismaClient();
+import prisma from "./prisma";
 
 export const getPostPages = async () => {
   const perPage = PER_PAGE;
+  console.log("Counting posts...");
   const totalPosts = await prisma.post.count();
+  console.log(`Total posts: ${totalPosts}`);
 
   const numberOfPages = Math.ceil(totalPosts / perPage) - 1; // -1 to exclude the first page, which is the index page
 
