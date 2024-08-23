@@ -252,6 +252,9 @@ importers:
       jsdom:
         specifier: ^24.1.1
         version: 24.1.1(bufferutil@4.0.8)(utf-8-validate@6.0.4)
+      next-router-mock:
+        specifier: ^0.9.13
+        version: 0.9.13(next@14.2.6(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       postcss:
         specifier: ^8.4.41
         version: 8.4.41
@@ -3942,6 +3945,12 @@ packages:
     peerDependenciesMeta:
       nodemailer:
         optional: true
+
+  next-router-mock@0.9.13:
+    resolution: {integrity: sha512-906n2RRaE6Y28PfYJbaz5XZeJ6Tw8Xz1S6E31GGwZ0sXB6/XjldD1/2azn1ZmBmRk5PQRkzjg+n+RHZe5xQzWA==}
+    peerDependencies:
+      next: '>=10.0.0'
+      react: '>=17.0.0'
 
   next@14.2.6:
     resolution: {integrity: sha512-57Su7RqXs5CBKKKOagt8gPhMM3CpjgbeQhrtei2KLAA1vTNm7jfKS+uDARkSW8ZETUflDCBIsUKGSyQdRs4U4g==}
@@ -9856,6 +9865,11 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       uuid: 8.3.2
+
+  next-router-mock@0.9.13(next@14.2.6(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1):
+    dependencies:
+      next: 14.2.6(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
 
   next@14.2.6(@babel/core@7.25.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
