@@ -1,5 +1,5 @@
-import { getPostPages } from "../api";
 import { prismaMock } from "../../../singleton";
+import { getPostPages } from "../api";
 
 describe("Testing /api functions", () => {
   beforeEach(() => {
