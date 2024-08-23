@@ -7,14 +7,13 @@
     "lint": "next lint --fix",
     "format": "prettier --write . && prisma format",
     "type-check": "tsc --pretty --noEmit",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build && jest --coverage && cp -r coverage/lcov-report public/coverage",
     "prepare": "husky",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage && http-server coverage/lcov-report",
-    "postbuild": "jest --coverage && cp -r coverage/lcov-report public/coverage"
+    "test:coverage": "jest --coverage && http-server coverage/lcov-report"
   },
   "dependencies": {
     "@mozilla/readability": "^0.5.0",
