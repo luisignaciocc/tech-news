@@ -45,7 +45,7 @@ describe("PageNavigation Component", () => {
       wrapper: MemoryRouterProvider,
     });
 
-    const volverLink = screen.getByText("Volver").closest("a");
+    const volverLink = screen.getByRole("link", { name: "Volver" });
     expect(volverLink).toHaveAttribute("href", "/record/2");
   });
 
@@ -54,7 +54,7 @@ describe("PageNavigation Component", () => {
       wrapper: MemoryRouterProvider,
     });
 
-    const moreLink = screen.getByText("Más antiguos").closest("a");
+    const moreLink = screen.getByRole("link", { name: "Más antiguos" });
     expect(moreLink).toHaveAttribute("href", "/record/2");
   });
 });
