@@ -150,6 +150,7 @@ export default function PostVerticalCarousel({ posts }: Props) {
             {posts.map((post, index) => (
               <div
                 key={index}
+                role="button"
                 className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-sm sm:text-sm md:text-sm lg:text-lg xl:text-lg font-bold cursor-pointer relative flex justify-center items-center ${
                   index === activeIndex ? "text-red-500" : "text-gray-500"
                 }`}

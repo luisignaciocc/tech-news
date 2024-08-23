@@ -97,6 +97,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                 },
               )}
               onClick={handleSearch}
+              aria-label="Buscar"
             >
               <BsSearch className="h-6 w-6" />
             </button>

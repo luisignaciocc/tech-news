@@ -94,7 +94,9 @@ const PostCarousel = ({ posts }: PostCarouselProps) => {
               index === currentIndex ? "bg-gray-500" : "bg-white"
             }`}
             onClick={() => handleIndicatorClick(index)}
-          />
+          >
+            <span className="sr-only">Go to slide {index}</span>
+          </div>
         ))}
       </div>
     </div>
