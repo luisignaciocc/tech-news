@@ -1,4 +1,5 @@
 import "react-loading-skeleton/dist/skeleton.css";
+import Image from "next/image";
 
 import Link from "next/link";
 import React, { Fragment } from "react";
@@ -78,8 +79,7 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
       <div className="bg-gray-100 p-4 w-full hidden sm:flex items-start">
         <div className="w-1/3">
           <Link href={`/posts/${slug}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={imageUrl || ""}
               alt={title}
               className="w-full h-full object-cover"
@@ -123,8 +123,7 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
         <hr className="mb-6 w-full border-black" />
         <div className="w-full mb-4">
           <Link href={`/posts/${slug}`}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={imageUrl || ""}
               alt={title}
               className="w-full h-full object-cover"

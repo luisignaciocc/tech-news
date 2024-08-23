@@ -1,5 +1,6 @@
 "use client";
 import { useContext } from "react";
+import Image from "next/image";
 
 import {
   Table,
@@ -57,8 +58,7 @@ function PostsTable({ data }: DefaultTableProps) {
                 <div className="flex items-center">
                   <CheckboxColumn id={item.id} />
                   <div className="ml-4 flex items-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={item.coverImage}
                       alt=""
                       width={60}

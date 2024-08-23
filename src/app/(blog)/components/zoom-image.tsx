@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -16,8 +17,7 @@ const ZoomImage = ({ title, src, slug }: Props) => {
         "mx-auto": !slug,
       })}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={src}
         alt={`Cover Image for ${title}`}
         className={cn("transition-all duration-1000 hover:scale-105", {
