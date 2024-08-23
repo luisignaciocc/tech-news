@@ -153,7 +153,11 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                         className="relative group"
                         key={`social-media-links-header-${index}`}
                       >
-                        <a href={socialMedia.url} target="_blank">
+                        <a
+                          href={socialMedia.url}
+                          target="_blank"
+                          aria-label={`Link to ${socialMedia.name}`}
+                        >
                           <div
                             className={cn(
                               `absolute inset-0 border rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500`,

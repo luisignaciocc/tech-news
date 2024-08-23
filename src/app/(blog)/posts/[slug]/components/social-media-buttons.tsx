@@ -37,7 +37,11 @@ function SocialMediaButtons() {
         <div className="flex flex-col gap-4">
           {socialMediaLinks.map((socialMedia, index) => (
             <div className="relative group" key={`social-media-links-${index}`}>
-              <a href={socialMedia.url} target="_blank">
+              <a
+                href={socialMedia.url}
+                target="_blank"
+                aria-label={`Link to ${socialMedia.name}`}
+              >
                 <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                 <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
                   <socialMedia.icon className="text-1xl text-gray-500 transition-color duration-300 group-hover:text-black" />
@@ -53,7 +57,11 @@ function SocialMediaButtons() {
         <div className="flex items-start justify-start space-x-4">
           {socialMediaLinks.map((socialMedia, index) => (
             <div className="relative group" key={`social-media-links-${index}`}>
-              <a href={socialMedia.url} target="_blank">
+              <a
+                href={socialMedia.url}
+                target="_blank"
+                aria-label={`Link to ${socialMedia.name}`}
+              >
                 <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                 <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
                   <socialMedia.icon className="text-2xl text-gray-500 transition-color duration-300 group-hover:text-black" />
