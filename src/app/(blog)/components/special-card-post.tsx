@@ -1,6 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
-import Image from "next/image";
 
 interface SpecialCardPostProps {
   imageUrl: string | null;

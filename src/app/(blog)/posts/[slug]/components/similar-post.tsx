@@ -1,6 +1,6 @@
 import "react-loading-skeleton/dist/skeleton.css";
-import Image from "next/image";
 
+import Image from "next/image";
 import Link from "next/link";
 import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
