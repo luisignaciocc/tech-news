@@ -16,6 +16,15 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: "/coverage",
+        destination: "/coverage/index.html",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
