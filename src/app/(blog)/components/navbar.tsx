@@ -278,6 +278,11 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
           >
             <div className="lg:hidden flex items-center">
               <button
+                aria-label={
+                  isSearchOpen
+                    ? "Cerrar cuadro de búsqueda"
+                    : "Abrir cuadro de búsqueda"
+                }
                 className={cn(
                   "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
                   {
@@ -314,6 +319,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                 |
               </span>
               <button
+                aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
                 className={cn(
                   "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
                   {

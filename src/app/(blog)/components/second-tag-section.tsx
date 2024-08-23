@@ -138,6 +138,7 @@ function SecondTagSection({
           <div className="carousel-controls absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4 sm:px-6">
             <button
               id="prev-btn"
+              aria-label="Tag anterior"
               onClick={handlePrevClick}
               className="bg-black/50 text-white p-2 rounded-full hover:bg-black sm:p-3"
             >
@@ -145,6 +146,7 @@ function SecondTagSection({
             </button>
             <button
               id="next-btn"
+              aria-label="Siguiente tag"
               onClick={handleNextClick}
               className="bg-black/50 text-white p-2 rounded-full hover:bg-black sm:p-3"
             >
