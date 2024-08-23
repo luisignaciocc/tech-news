@@ -112,7 +112,10 @@ export default function PostVerticalCarousel({ posts }: Props) {
                     {tag.name}
                   </Link>
                 ))}
-                <span className="mr-2 border-r border border-black h-3"></span>
+                <span
+                  className="mr-2 border-r border border-black h-3"
+                  role="none"
+                />
                 <div className="text-gray-500">
                   <DateFormatter date={post.publishedAt || new Date()} />
                 </div>
@@ -160,7 +163,10 @@ export default function PostVerticalCarousel({ posts }: Props) {
               >
                 {index + 1}
                 {index < posts.length - 1 && (
-                  <span className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"></span>
+                  <span
+                    className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"
+                    role="none"
+                  />
                 )}
                 {hoveredIndex === index && activeIndex !== index && (
                   <div className="absolute bg-white shadow-lg p-2 rounded-md z-10 w-56 h-auto -top-48">

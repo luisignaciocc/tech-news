@@ -59,7 +59,7 @@ export function PostPreview({
             {tag.name}
           </Link>
         ))}
-        <span className="mr-2 border-r border border-black h-3"></span>
+        <span className="mr-2 border-r border border-black h-3" role="none" />
         <div className="text-gray-500">
           <DateFormatter date={date} />
         </div>

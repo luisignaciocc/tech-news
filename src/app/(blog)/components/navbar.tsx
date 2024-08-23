@@ -135,7 +135,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                   />
                 </div>
                 <h3
-                  className={`${isNavBar ? "text-xl font-bold" : isMenuOpen ? "text-xl font-bold" : "text-5xl md:text-7xl tracking-tighter leading-tight md:pr-8"} `}
+                  className={`${isNavBar ? "text-xl font-bold" : isMenuOpen ? "text-xl font-bold" : "text-5xl md:text-7xl tracking-tight leading-tight md:pr-8"} `}
                 >
                   {SITE_SHORT_NAME}
                 </h3>
