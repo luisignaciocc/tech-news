@@ -20,7 +20,7 @@ const nextConfig = {
     return [
       {
         source: "/coverage",
-        destination: "/coverage/index.html",
+        destination: "/coverage/lcov-report/index.html",
         permanent: true,
       },
     ];

@@ -12,7 +12,7 @@ const config: Config = {
   preset: "ts-jest",
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.{js,jsx,ts,tsx}"],
-  coverageDirectory: "coverage",
+  coverageDirectory: "public/coverage",
   coverageReporters: ["text", "lcov"],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
