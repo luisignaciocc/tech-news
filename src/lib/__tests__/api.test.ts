@@ -1,5 +1,5 @@
 import { prismaMock } from "../../../singleton";
-import { getPostPages, getPostSlugs } from "../api";
+import { getPostBySlug, getPostPages, getPostSlugs } from "../api";
 
 describe("Testing /api/getPostPages function", () => {
   beforeEach(() => {
@@ -71,5 +71,66 @@ describe("Testing /api/getPostSlugs function", () => {
       take: undefined,
     });
     expect(slugs).toEqual([]);
+  });
+});
+
+describe("Testing /api/getPostBySlug function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return a post by slug", async () => {
+    const mockPost = {
+      id: 1,
+      slug: "my-post",
+      title: "My Post",
+      content: "This is the content of my post.",
+      author: {
+        id: 1,
+        name: "John Doe",
+      },
+      tags: [
+        {
+          id: 1,
+          name: "tag1",
+        },
+        {
+          id: 2,
+          name: "tag2",
+        },
+      ],
+    };
+
+    (prismaMock.post.findUnique as jest.Mock).mockResolvedValue(mockPost);
+
+    const post = await getPostBySlug("my-post");
+
+    expect(prismaMock.post.findUnique).toHaveBeenCalledWith({
+      where: {
+        slug: "my-post",
+      },
+      include: {
+        author: true,
+        tags: true,
+      },
+    });
+    expect(post).toEqual(mockPost);
+  });
+
+  test("should return null when post does not exist", async () => {
+    (prismaMock.post.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const post = await getPostBySlug("non-existent-slug");
+
+    expect(prismaMock.post.findUnique).toHaveBeenCalledWith({
+      where: {
+        slug: "non-existent-slug",
+      },
+      include: {
+        author: true,
+        tags: true,
+      },
+    });
+    expect(post).toBeNull();
   });
 });
