@@ -1,5 +1,11 @@
 import { prismaMock } from "../../../singleton";
-import { getPostBySlug, getPostPages, getPostSlugs, getTags } from "../api";
+import {
+  getPostBySlug,
+  getPostPages,
+  getPostsCards,
+  getPostSlugs,
+  getTags,
+} from "../api";
 
 describe("Testing /api/getPostPages function", () => {
   beforeEach(() => {
@@ -162,5 +168,109 @@ describe("Testing /api/getTags function", () => {
 
     expect(prismaMock.tag.findMany).toHaveBeenCalledWith();
     expect(tags).toEqual(mockTags);
+  });
+});
+
+describe("Testing /api/getPostsCards function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return a list of post cards excluding the current post", async () => {
+    const mockPosts = [
+      {
+        id: 1,
+        coverImage: "image1.jpg",
+        title: "Post 1",
+        slug: "post-1",
+        publishedAt: new Date("2023-01-01"),
+        tags: [
+          {
+            id: 1,
+            name: "tag1",
+          },
+        ],
+      },
+      {
+        id: 2,
+        coverImage: "image2.jpg",
+        title: "Post 2",
+        slug: "post-2",
+        publishedAt: new Date("2023-02-01"),
+        tags: [
+          {
+            id: 2,
+            name: "tag2",
+          },
+        ],
+      },
+      {
+        id: 3,
+        coverImage: "image3.jpg",
+        title: "Post 3",
+        slug: "post-3",
+        publishedAt: new Date("2023-03-01"),
+        tags: [
+          {
+            id: 3,
+            name: "tag3",
+          },
+        ],
+      },
+    ];
+
+    (prismaMock.post.findMany as jest.Mock).mockResolvedValue(
+      mockPosts.filter((post) => post.slug !== "post-2"),
+    );
+
+    const posts = await getPostsCards("post-2", 2);
+
+    expect(prismaMock.post.findMany).toHaveBeenCalledWith({
+      where: {
+        slug: {
+          not: "post-2",
+        },
+      },
+      select: {
+        id: true,
+        coverImage: true,
+        title: true,
+        slug: true,
+        publishedAt: true,
+        tags: true,
+      },
+      take: 2,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    expect(posts).toEqual([
+      {
+        id: 1,
+        coverImage: "image1.jpg",
+        title: "Post 1",
+        slug: "post-1",
+        publishedAt: new Date("2023-01-01"),
+        tags: [
+          {
+            id: 1,
+            name: "tag1",
+          },
+        ],
+      },
+      {
+        id: 3,
+        coverImage: "image3.jpg",
+        title: "Post 3",
+        slug: "post-3",
+        publishedAt: new Date("2023-03-01"),
+        tags: [
+          {
+            id: 3,
+            name: "tag3",
+          },
+        ],
+      },
+    ]);
   });
 });
