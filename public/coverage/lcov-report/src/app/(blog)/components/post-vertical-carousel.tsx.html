@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/197</span>
+                <span class='fraction'>0/205</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/197</span>
+                <span class='fraction'>0/205</span>
             </div>
         
             
@@ -260,7 +260,23 @@
 <a name='L195'></a><a href='#L195'>195</a>
 <a name='L196'></a><a href='#L196'>196</a>
 <a name='L197'></a><a href='#L197'>197</a>
-<a name='L198'></a><a href='#L198'>198</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L198'></a><a href='#L198'>198</a>
+<a name='L199'></a><a href='#L199'>199</a>
+<a name='L200'></a><a href='#L200'>200</a>
+<a name='L201'></a><a href='#L201'>201</a>
+<a name='L202'></a><a href='#L202'>202</a>
+<a name='L203'></a><a href='#L203'>203</a>
+<a name='L204'></a><a href='#L204'>204</a>
+<a name='L205'></a><a href='#L205'>205</a>
+<a name='L206'></a><a href='#L206'>206</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -571,7 +587,10 @@
 <span class="cstat-no" title="statement not covered" >                    {tag.name}</span>
 <span class="cstat-no" title="statement not covered" >                  &lt;/Link&gt;</span>
 <span class="cstat-no" title="statement not covered" >                ))}</span>
-<span class="cstat-no" title="statement not covered" >                &lt;span className="mr-2 border-r border border-black h-3"&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;span</span>
+<span class="cstat-no" title="statement not covered" >                  className="mr-2 border-r border border-black h-3"</span>
+<span class="cstat-no" title="statement not covered" >                  role="none"</span>
+<span class="cstat-no" title="statement not covered" >                /&gt;</span>
 <span class="cstat-no" title="statement not covered" >                &lt;div className="text-gray-500"&gt;</span>
 <span class="cstat-no" title="statement not covered" >                  &lt;DateFormatter date={post.publishedAt || new Date()} /&gt;</span>
 <span class="cstat-no" title="statement not covered" >                &lt;/div&gt;</span>
@@ -609,16 +628,21 @@
 <span class="cstat-no" title="statement not covered" >            {posts.map((post, index) =&gt; (</span>
 <span class="cstat-no" title="statement not covered" >              &lt;div</span>
 <span class="cstat-no" title="statement not covered" >                key={index}</span>
+<span class="cstat-no" title="statement not covered" >                role="button"</span>
 <span class="cstat-no" title="statement not covered" >                className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-sm sm:text-sm md:text-sm lg:text-lg xl:text-lg font-bold cursor-pointer relative flex justify-center items-center ${</span>
 <span class="cstat-no" title="statement not covered" >                  index === activeIndex ? "text-red-500" : "text-gray-500"</span>
 <span class="cstat-no" title="statement not covered" >                }`}</span>
 <span class="cstat-no" title="statement not covered" >                onClick={() =&gt; handleIndexClick(index)}</span>
 <span class="cstat-no" title="statement not covered" >                onMouseEnter={() =&gt; handleIndexHover(index)}</span>
 <span class="cstat-no" title="statement not covered" >                onMouseLeave={handleIndexLeave}</span>
+<span class="cstat-no" title="statement not covered" >                tabIndex={0}</span>
 <span class="cstat-no" title="statement not covered" >              &gt;</span>
 <span class="cstat-no" title="statement not covered" >                {index + 1}</span>
 <span class="cstat-no" title="statement not covered" >                {index &lt; posts.length - 1 &amp;&amp; (</span>
-<span class="cstat-no" title="statement not covered" >                  &lt;span className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"&gt;&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >                  &lt;span</span>
+<span class="cstat-no" title="statement not covered" >                    className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"</span>
+<span class="cstat-no" title="statement not covered" >                    role="none"</span>
+<span class="cstat-no" title="statement not covered" >                  /&gt;</span>
 <span class="cstat-no" title="statement not covered" >                )}</span>
 <span class="cstat-no" title="statement not covered" >                {hoveredIndex === index &amp;&amp; activeIndex !== index &amp;&amp; (</span>
 <span class="cstat-no" title="statement not covered" >                  &lt;div className="absolute bg-white shadow-lg p-2 rounded-md z-10 w-56 h-auto -top-48"&gt;</span>
@@ -661,7 +685,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-23T21:36:26.181Z
+                at 2024-08-26T16:18:55.992Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
