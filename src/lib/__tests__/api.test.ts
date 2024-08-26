@@ -1,5 +1,5 @@
 import { prismaMock } from "../../../singleton";
-import { getPostBySlug, getPostPages, getPostSlugs } from "../api";
+import { getPostBySlug, getPostPages, getPostSlugs, getTags } from "../api";
 
 describe("Testing /api/getPostPages function", () => {
   beforeEach(() => {
@@ -132,5 +132,35 @@ describe("Testing /api/getPostBySlug function", () => {
       },
     });
     expect(post).toBeNull();
+  });
+});
+
+describe("Testing /api/getTags function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return a list of tags", async () => {
+    const mockTags = [
+      {
+        id: 1,
+        name: "tag1",
+      },
+      {
+        id: 2,
+        name: "tag2",
+      },
+      {
+        id: 3,
+        name: "tag3",
+      },
+    ];
+
+    (prismaMock.tag.findMany as jest.Mock).mockResolvedValue(mockTags);
+
+    const tags = await getTags();
+
+    expect(prismaMock.tag.findMany).toHaveBeenCalledWith();
+    expect(tags).toEqual(mockTags);
   });
 });
