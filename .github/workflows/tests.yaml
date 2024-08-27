@@ -35,5 +35,5 @@ jobs:
           BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
           git add public/coverage/
           git commit -m "Add updated coverage results [skip ci]"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${GITHUB_REF_NAME}
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${GITHUB_HEAD_REF}
         if: success()
