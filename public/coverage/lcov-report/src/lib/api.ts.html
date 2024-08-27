@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.92% </span>
+                <span class="strong">29.12% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>83/333</span>
+                <span class='fraction'>97/333</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/7</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/12</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">24.92% </span>
+                <span class="strong">29.12% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>83/333</span>
+                <span class='fraction'>97/333</span>
             </div>
         
             
@@ -591,20 +591,20 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -923,21 +923,21 @@ export <span class="fstat-no" title="function not covered" >async function getSi
 <span class="cstat-no" title="statement not covered" >  }</span>
 <span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;
-export <span class="fstat-no" title="function not covered" >async function getMostUsedTags(limit: number) {</span>
-<span class="cstat-no" title="statement not covered" >  const mostUsedTags = await prisma.tag.findMany({</span>
-<span class="cstat-no" title="statement not covered" >    orderBy: {</span>
-<span class="cstat-no" title="statement not covered" >      posts: {</span>
-<span class="cstat-no" title="statement not covered" >        _count: "desc",</span>
-<span class="cstat-no" title="statement not covered" >      },</span>
-<span class="cstat-no" title="statement not covered" >    },</span>
-<span class="cstat-no" title="statement not covered" >    select: {</span>
-<span class="cstat-no" title="statement not covered" >      name: true,</span>
-<span class="cstat-no" title="statement not covered" >    },</span>
-<span class="cstat-no" title="statement not covered" >    take: limit,</span>
-<span class="cstat-no" title="statement not covered" >  });</span>
-<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >  return mostUsedTags.map((tag) =&gt; tag.name);</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+export async function getMostUsedTags(limit: number) {
+  const mostUsedTags = await prisma.tag.findMany({
+    orderBy: {
+      posts: {
+        _count: "desc",
+      },
+    },
+    select: {
+      name: true,
+    },
+    take: limit,
+  });
+&nbsp;
+  return mostUsedTags.map((tag) =&gt; tag.name);
+}
 &nbsp;
 export <span class="fstat-no" title="function not covered" >async function getPostsByTags(tags: string[], limit: number) {</span>
 <span class="cstat-no" title="statement not covered" >  const posts = await prisma.post.findMany({</span>
@@ -1069,7 +1069,7 @@ export type Post = PostsData["posts"][number];
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-26T17:17:55.974Z
+                at 2024-08-27T15:23:00.455Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

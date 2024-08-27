@@ -1,5 +1,6 @@
 import { prismaMock } from "../../../singleton";
 import {
+  getMostUsedTags,
   getPostBySlug,
   getPostPages,
   getPostsCards,
@@ -272,5 +273,35 @@ describe("Testing /api/getPostsCards function", () => {
         ],
       },
     ]);
+  });
+});
+
+// Testing /api/getRandomPostsFromTwoWeeksAgo function
+
+// Testing /api/getRelatedPostFromPostSlug and  /api/getSimilarNews functions
+
+describe("Testing /api/getMostUsedTags function", () => {
+  test("should return the most used tags", async () => {
+    const mockTags = [
+      { id: 1, name: "tag1", posts: { _count: 10 } },
+      { id: 2, name: "tag2", posts: { _count: 8 } },
+      { id: 3, name: "tag3", posts: { _count: 5 } },
+    ];
+    prismaMock.tag.findMany.mockResolvedValue(mockTags);
+
+    const result = await getMostUsedTags(3);
+
+    expect(prismaMock.tag.findMany).toHaveBeenCalledWith({
+      orderBy: {
+        posts: {
+          _count: "desc",
+        },
+      },
+      select: {
+        name: true,
+      },
+      take: 3,
+    });
+    expect(result).toEqual(["tag1", "tag2", "tag3"]);
   });
 });
