@@ -24,4 +24,13 @@ jobs:
           pnpm install
 
       - name: Run tests
-        run: pnpm test
+        run: pnpm test:coverage
+
+      - name: Commit coverage results
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add public/coverage/
+          git commit -m "Add updated coverage results [skip ci]"
+          git push
+        if: success()
