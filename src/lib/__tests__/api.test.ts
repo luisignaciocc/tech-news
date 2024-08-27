@@ -3,6 +3,7 @@ import {
   getMostUsedTags,
   getPostBySlug,
   getPostPages,
+  getPostsByTags,
   getPostsCards,
   getPostSlugs,
   getTags,
@@ -303,5 +304,227 @@ describe("Testing /api/getMostUsedTags function", () => {
       take: 3,
     });
     expect(result).toEqual(["tag1", "tag2", "tag3"]);
+  });
+});
+
+describe("Testing /api/getPostsByTags function", () => {
+  test("should return posts by tags", async () => {
+    const mockPosts: {
+      id: string;
+      slug: string;
+      title: string;
+      content: string;
+      createdAt: Date;
+      coverImage: string | null;
+      authorId: string;
+      excerpt: string | null;
+      publishedAt: Date | null;
+      newId: string | null;
+      postedToTwitter: boolean;
+      tweetId: string | null;
+      postedToLinkedin: boolean;
+      linkedinPostId: string | null;
+      facebookPostId: string | null;
+      postedToInstagram: boolean;
+      instagramMediaId: string | null;
+      postedToFacebook: boolean;
+      tags: { name: string }[];
+      author: { name: string };
+    }[] = [
+      {
+        id: "1",
+        slug: "post-1",
+        title: "Post 1",
+        content: "Content 1",
+        createdAt: new Date("2023-01-01"),
+        coverImage: "https://example.com/image1.jpg",
+        authorId: "author1",
+        excerpt: "Excerpt 1",
+        publishedAt: new Date("2023-01-01"),
+        newId: null,
+        postedToTwitter: true,
+        tweetId: "tweet1",
+        postedToLinkedin: false,
+        linkedinPostId: null,
+        facebookPostId: null,
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        tags: [{ name: "tag1" }, { name: "tag2" }],
+        author: { name: "Author 1" },
+      },
+      {
+        id: "2",
+        slug: "post-2",
+        title: "Post 2",
+        content: "Content 2",
+        createdAt: new Date("2023-02-01"),
+        coverImage: "https://example.com/image2.jpg",
+        authorId: "author2",
+        excerpt: "Excerpt 2",
+        publishedAt: new Date("2023-02-01"),
+        newId: null,
+        postedToTwitter: false,
+        tweetId: null,
+        postedToLinkedin: true,
+        linkedinPostId: "linkedin1",
+        facebookPostId: null,
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        tags: [{ name: "tag2" }, { name: "tag3" }],
+        author: { name: "Author 2" },
+      },
+      {
+        id: "3",
+        slug: "post-3",
+        title: "Post 3",
+        content: "Content 3",
+        createdAt: new Date("2023-03-01"),
+        coverImage: "https://example.com/image3.jpg",
+        authorId: "author3",
+        excerpt: "Excerpt 3",
+        publishedAt: new Date("2023-03-01"),
+        newId: null,
+        postedToTwitter: true,
+        tweetId: "tweet2",
+        postedToLinkedin: false,
+        linkedinPostId: null,
+        facebookPostId: "facebook1",
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        tags: [{ name: "tag3" }, { name: "tag4" }],
+        author: { name: "Author 3" },
+      },
+    ];
+    prismaMock.post.findMany.mockResolvedValue(mockPosts);
+
+    const result = await getPostsByTags(["tag2", "tag3"], 2);
+
+    expect(prismaMock.post.findMany).toHaveBeenCalledWith({
+      where: {
+        tags: {
+          some: {
+            name: {
+              in: ["tag2", "tag3"],
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        coverImage: true,
+        title: true,
+        slug: true,
+        createdAt: true,
+        excerpt: true,
+        tags: {
+          select: {
+            name: true,
+          },
+        },
+        author: true,
+      },
+      take: 2,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    expect(result).toEqual([
+      {
+        author: {
+          name: "Author 1",
+        },
+        authorId: "author1",
+        content: "Content 1",
+        coverImage: "https://example.com/image1.jpg",
+        createdAt: new Date("2023-01-01T00:00:00.000Z"),
+        excerpt: "Excerpt 1",
+        facebookPostId: null,
+        id: "1",
+        instagramMediaId: null,
+        linkedinPostId: null,
+        newId: null,
+        postedToFacebook: false,
+        postedToInstagram: false,
+        postedToLinkedin: false,
+        postedToTwitter: true,
+        publishedAt: new Date("2023-01-01T00:00:00.000Z"),
+        slug: "post-1",
+        tags: [
+          {
+            name: "tag1",
+          },
+          {
+            name: "tag2",
+          },
+        ],
+        title: "Post 1",
+        tweetId: "tweet1",
+      },
+      {
+        author: {
+          name: "Author 2",
+        },
+        authorId: "author2",
+        content: "Content 2",
+        coverImage: "https://example.com/image2.jpg",
+        createdAt: new Date("2023-02-01T00:00:00.000Z"),
+        excerpt: "Excerpt 2",
+        facebookPostId: null,
+        id: "2",
+        instagramMediaId: null,
+        linkedinPostId: "linkedin1",
+        newId: null,
+        postedToFacebook: false,
+        postedToInstagram: false,
+        postedToLinkedin: true,
+        postedToTwitter: false,
+        publishedAt: new Date("2023-02-01T00:00:00.000Z"),
+        slug: "post-2",
+        tags: [
+          {
+            name: "tag2",
+          },
+          {
+            name: "tag3",
+          },
+        ],
+        title: "Post 2",
+        tweetId: null,
+      },
+      {
+        author: {
+          name: "Author 3",
+        },
+        authorId: "author3",
+        content: "Content 3",
+        coverImage: "https://example.com/image3.jpg",
+        createdAt: new Date("2023-03-01T00:00:00.000Z"),
+        excerpt: "Excerpt 3",
+        facebookPostId: "facebook1",
+        id: "3",
+        instagramMediaId: null,
+        linkedinPostId: null,
+        newId: null,
+        postedToFacebook: false,
+        postedToInstagram: false,
+        postedToLinkedin: false,
+        postedToTwitter: true,
+        publishedAt: new Date("2023-03-01T00:00:00.000Z"),
+        slug: "post-3",
+        tags: [
+          {
+            name: "tag3",
+          },
+          {
+            name: "tag4",
+          },
+        ],
+        title: "Post 3",
+        tweetId: "tweet2",
+      },
+    ]);
   });
 });
