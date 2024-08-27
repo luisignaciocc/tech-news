@@ -13,7 +13,8 @@
     "prisma:migrate": "prisma migrate dev",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage && http-server public/coverage/lcov-report"
+    "test:coverage": "jest --coverage",
+    "coverage:server": " http-server public/coverage/lcov-report"
   },
   "dependencies": {
     "@mozilla/readability": "^0.5.0",
