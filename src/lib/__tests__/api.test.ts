@@ -3,6 +3,7 @@ import {
   getMostUsedTags,
   getPostBySlug,
   getPostPages,
+  getPosts,
   getPostsBySearchTerm,
   getPostsByTags,
   getPostsCards,
@@ -535,7 +536,7 @@ describe("Testing /api/getPostsBySearchTerm function", () => {
     jest.clearAllMocks();
   });
 
-  it("should return posts with the given search term in the title", async () => {
+  test("should return posts with the given search term in the title", async () => {
     const searchTerm = "javascript";
     const numberPosts = 10;
     const mockPosts: {
@@ -691,5 +692,110 @@ describe("Testing /api/getPostsBySearchTerm function", () => {
         ],
       },
     });
+  });
+});
+
+describe("Testing /api/getPosts function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should return the correct posts and count", async () => {
+    const mockPosts: {
+      id: string;
+      slug: string;
+      title: string;
+      content: string;
+      createdAt: Date;
+      coverImage: string | null;
+      authorId: string;
+      excerpt: string | null;
+      publishedAt: Date | null;
+      newId: string | null;
+      postedToTwitter: boolean;
+      tweetId: string | null;
+      postedToLinkedin: boolean;
+      linkedinPostId: string | null;
+      postedToInstagram: boolean;
+      instagramMediaId: string | null;
+      postedToFacebook: boolean;
+      facebookPostId: string | null;
+      author: {
+        name: string;
+      };
+      tags: {
+        name: string;
+      }[];
+    }[] = [
+      {
+        id: "1",
+        slug: "post-1",
+        title: "JavaScript for beginners",
+        content: "Content for post 1",
+        createdAt: new Date(),
+        coverImage: "post-1.jpg",
+        authorId: "author1",
+        excerpt: "This is an excerpt",
+        publishedAt: new Date(),
+        newId: null,
+        postedToTwitter: false,
+        tweetId: null,
+        postedToLinkedin: false,
+        linkedinPostId: null,
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        facebookPostId: null,
+        author: { name: "John Doe" },
+        tags: [{ name: "javascript" }],
+      },
+      {
+        id: "2",
+        slug: "post-2",
+        title: "React for beginners",
+        content: "Content for post 2",
+        createdAt: new Date(),
+        coverImage: "post-2.jpg",
+        authorId: "author2",
+        excerpt: "This is another excerpt",
+        publishedAt: new Date(),
+        newId: null,
+        postedToTwitter: false,
+        tweetId: null,
+        postedToLinkedin: false,
+        linkedinPostId: null,
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        facebookPostId: null,
+        author: { name: "Jane Doe" },
+        tags: [{ name: "react" }],
+      },
+    ];
+
+    prismaMock.post.findMany.mockResolvedValue(mockPosts);
+    prismaMock.post.count.mockResolvedValue(2);
+
+    const response = await getPosts({
+      page: 1,
+      perPage: 10,
+    });
+
+    expect(response.posts).toEqual(mockPosts);
+    expect(response.count).toEqual(2);
+
+    expect(prismaMock.post.findMany).toHaveBeenCalledWith({
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        author: true,
+        tags: true,
+      },
+      skip: 0,
+      take: 10,
+    });
+
+    expect(prismaMock.post.count).toHaveBeenCalledTimes(1);
   });
 });
