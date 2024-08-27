@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/375</span>
+                <span class='fraction'>0/386</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/375</span>
+                <span class='fraction'>0/386</span>
             </div>
         
             
@@ -438,7 +438,29 @@
 <a name='L373'></a><a href='#L373'>373</a>
 <a name='L374'></a><a href='#L374'>374</a>
 <a name='L375'></a><a href='#L375'>375</a>
-<a name='L376'></a><a href='#L376'>376</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<a name='L376'></a><a href='#L376'>376</a>
+<a name='L377'></a><a href='#L377'>377</a>
+<a name='L378'></a><a href='#L378'>378</a>
+<a name='L379'></a><a href='#L379'>379</a>
+<a name='L380'></a><a href='#L380'>380</a>
+<a name='L381'></a><a href='#L381'>381</a>
+<a name='L382'></a><a href='#L382'>382</a>
+<a name='L383'></a><a href='#L383'>383</a>
+<a name='L384'></a><a href='#L384'>384</a>
+<a name='L385'></a><a href='#L385'>385</a>
+<a name='L386'></a><a href='#L386'>386</a>
+<a name='L387'></a><a href='#L387'>387</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -912,6 +934,7 @@
 <span class="cstat-no" title="statement not covered" >                },</span>
 <span class="cstat-no" title="statement not covered" >              )}</span>
 <span class="cstat-no" title="statement not covered" >              onClick={handleSearch}</span>
+<span class="cstat-no" title="statement not covered" >              aria-label="Buscar"</span>
 <span class="cstat-no" title="statement not covered" >            &gt;</span>
 <span class="cstat-no" title="statement not covered" >              &lt;BsSearch className="h-6 w-6" /&gt;</span>
 <span class="cstat-no" title="statement not covered" >            &lt;/button&gt;</span>
@@ -949,7 +972,7 @@
 <span class="cstat-no" title="statement not covered" >                  /&gt;</span>
 <span class="cstat-no" title="statement not covered" >                &lt;/div&gt;</span>
 <span class="cstat-no" title="statement not covered" >                &lt;h3</span>
-<span class="cstat-no" title="statement not covered" >                  className={`${isNavBar ? "text-xl font-bold" : isMenuOpen ? "text-xl font-bold" : "text-5xl md:text-7xl tracking-tighter leading-tight md:pr-8"} `}</span>
+<span class="cstat-no" title="statement not covered" >                  className={`${isNavBar ? "text-xl font-bold" : isMenuOpen ? "text-xl font-bold" : "text-5xl md:text-7xl tracking-tight leading-tight md:pr-8"} `}</span>
 <span class="cstat-no" title="statement not covered" >                &gt;</span>
 <span class="cstat-no" title="statement not covered" >                  {SITE_SHORT_NAME}</span>
 <span class="cstat-no" title="statement not covered" >                &lt;/h3&gt;</span>
@@ -968,7 +991,11 @@
 <span class="cstat-no" title="statement not covered" >                        className="relative group"</span>
 <span class="cstat-no" title="statement not covered" >                        key={`social-media-links-header-${index}`}</span>
 <span class="cstat-no" title="statement not covered" >                      &gt;</span>
-<span class="cstat-no" title="statement not covered" >                        &lt;a href={socialMedia.url} target="_blank"&gt;</span>
+<span class="cstat-no" title="statement not covered" >                        &lt;a</span>
+<span class="cstat-no" title="statement not covered" >                          href={socialMedia.url}</span>
+<span class="cstat-no" title="statement not covered" >                          target="_blank"</span>
+<span class="cstat-no" title="statement not covered" >                          aria-label={`Link to ${socialMedia.name}`}</span>
+<span class="cstat-no" title="statement not covered" >                        &gt;</span>
 <span class="cstat-no" title="statement not covered" >                          &lt;div</span>
 <span class="cstat-no" title="statement not covered" >                            className={cn(</span>
 <span class="cstat-no" title="statement not covered" >                              `absolute inset-0 border rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500`,</span>
@@ -1093,6 +1120,11 @@
 <span class="cstat-no" title="statement not covered" >          &gt;</span>
 <span class="cstat-no" title="statement not covered" >            &lt;div className="lg:hidden flex items-center"&gt;</span>
 <span class="cstat-no" title="statement not covered" >              &lt;button</span>
+<span class="cstat-no" title="statement not covered" >                aria-label={</span>
+<span class="cstat-no" title="statement not covered" >                  isSearchOpen</span>
+<span class="cstat-no" title="statement not covered" >                    ? "Cerrar cuadro de búsqueda"</span>
+<span class="cstat-no" title="statement not covered" >                    : "Abrir cuadro de búsqueda"</span>
+<span class="cstat-no" title="statement not covered" >                }</span>
 <span class="cstat-no" title="statement not covered" >                className={cn(</span>
 <span class="cstat-no" title="statement not covered" >                  "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",</span>
 <span class="cstat-no" title="statement not covered" >                  {</span>
@@ -1129,6 +1161,7 @@
 <span class="cstat-no" title="statement not covered" >                |</span>
 <span class="cstat-no" title="statement not covered" >              &lt;/span&gt;</span>
 <span class="cstat-no" title="statement not covered" >              &lt;button</span>
+<span class="cstat-no" title="statement not covered" >                aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}</span>
 <span class="cstat-no" title="statement not covered" >                className={cn(</span>
 <span class="cstat-no" title="statement not covered" >                  "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",</span>
 <span class="cstat-no" title="statement not covered" >                  {</span>
@@ -1195,7 +1228,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-23T21:36:26.181Z
+                at 2024-08-27T17:12:55.363Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
