@@ -3,6 +3,7 @@ import {
   getMostUsedTags,
   getPostBySlug,
   getPostPages,
+  getPostsBySearchTerm,
   getPostsByTags,
   getPostsCards,
   getPostSlugs,
@@ -526,5 +527,169 @@ describe("Testing /api/getPostsByTags function", () => {
         tweetId: "tweet2",
       },
     ]);
+  });
+});
+
+describe("Testing /api/getPostsBySearchTerm function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("should return posts with the given search term in the title", async () => {
+    const searchTerm = "javascript";
+    const numberPosts = 10;
+    const mockPosts: {
+      id: string;
+      slug: string;
+      title: string;
+      content: string;
+      createdAt: Date;
+      coverImage: string | null;
+      authorId: string;
+      excerpt: string | null;
+      publishedAt: Date | null;
+      newId: string | null;
+      postedToTwitter: boolean;
+      tweetId: string | null;
+      postedToLinkedin: boolean;
+      linkedinPostId: string | null;
+      postedToInstagram: boolean;
+      instagramMediaId: string | null;
+      postedToFacebook: boolean;
+      facebookPostId: string | null;
+      author: {
+        name: string;
+      };
+      tags: {
+        name: string;
+      }[];
+    }[] = [
+      {
+        id: "1",
+        slug: "post-1",
+        title: "JavaScript for beginners",
+        content: "Content for post 1",
+        createdAt: new Date(),
+        coverImage: "post-1.jpg",
+        authorId: "author1",
+        excerpt: "This is an excerpt",
+        publishedAt: new Date(),
+        newId: null,
+        postedToTwitter: false,
+        tweetId: null,
+        postedToLinkedin: false,
+        linkedinPostId: null,
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        facebookPostId: null,
+        author: { name: "John Doe" },
+        tags: [{ name: "javascript" }],
+      },
+      {
+        id: "2",
+        slug: "post-2",
+        title: "React for beginners",
+        content: "Content for post 2",
+        createdAt: new Date(),
+        coverImage: "post-2.jpg",
+        authorId: "author2",
+        excerpt: "This is another excerpt",
+        publishedAt: new Date(),
+        newId: null,
+        postedToTwitter: false,
+        tweetId: null,
+        postedToLinkedin: false,
+        linkedinPostId: null,
+        postedToInstagram: false,
+        instagramMediaId: null,
+        postedToFacebook: false,
+        facebookPostId: null,
+        author: { name: "Jane Doe" },
+        tags: [{ name: "react" }],
+      },
+    ];
+    const mockCount = 20;
+
+    prismaMock.post.findMany.mockResolvedValue(mockPosts);
+    prismaMock.post.count.mockResolvedValue(mockCount);
+
+    const { posts, count } = await getPostsBySearchTerm(
+      searchTerm,
+      numberPosts,
+    );
+
+    expect(posts).toEqual(mockPosts);
+    expect(count).toBe(mockCount);
+    expect(prismaMock.post.findMany).toHaveBeenCalledWith({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+          {
+            tags: {
+              some: {
+                name: {
+                  contains: searchTerm,
+                  mode: "insensitive",
+                },
+              },
+            },
+          },
+          {
+            content: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        coverImage: true,
+        createdAt: true,
+        excerpt: true,
+        author: true,
+        tags: true,
+      },
+      take: numberPosts,
+    });
+    expect(prismaMock.post.count).toHaveBeenCalledWith({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+          {
+            tags: {
+              some: {
+                name: {
+                  contains: searchTerm,
+                  mode: "insensitive",
+                },
+              },
+            },
+          },
+          {
+            content: {
+              contains: searchTerm,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    });
   });
 });
