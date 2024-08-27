@@ -61,15 +61,15 @@ export async function POST(request: Request) {
     );
 
     const imageTemplates = [
-      "image-01",
-      "image-02",
-      "image-03",
-      "image-04",
-      "image-05",
-      "image-06",
-      "image-07",
-      "image-08",
-      "image-09",
+      // "image-01",
+      // "image-02",
+      // "image-03",
+      // "image-04",
+      // "image-05",
+      // "image-06",
+      // "image-07",
+      // "image-08",
+      // "image-09",
       "image-10",
     ];
 
