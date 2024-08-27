@@ -27,11 +27,13 @@ jobs:
         run: pnpm test:coverage
 
       - name: Commit coverage results
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
           git add public/coverage/
           git commit -m "Add updated coverage results [skip ci]"
-          git push origin $BRANCH_NAME
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:$GITHUB_REF
         if: success()
