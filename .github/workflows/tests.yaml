@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -30,10 +32,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'actions@github.com'
-          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          git config --global user.name 'Luis Ignacio'
+          git config --global user.email 'luisignacioccp@gmail.com'
           git add public/coverage/
           git commit -m "Add updated coverage results [skip ci]"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${GITHUB_HEAD_REF}
+          git push
         if: success()
