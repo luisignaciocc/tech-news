@@ -55,7 +55,6 @@ export async function POST(request: Request) {
       });
     }
 
-    const titleUrlEncoded = encodeURIComponent(lastPost.title);
     const coverImageUrlEncoded = encodeURIComponent(
       lastPost.coverImage || `${SITE_URL}/icon.png`,
     );
@@ -76,33 +75,60 @@ export async function POST(request: Request) {
     const randomImageTemplate =
       imageTemplates[Math.floor(Math.random() * imageTemplates.length)];
 
-    const imageUrl = `${SITE_URL}/api/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
-
-    const completion = await openai.chat.completions.create({
-      messages: [
-        {
-          role: "system",
-          content: `
+    const [completionDescription, completionTitle] = await Promise.all([
+      openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: `
             Eres un asistente que crea resúmenes concisos y atractivos para publicaciones en Instagram. 
             Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
             La cuenta de Instagram es un sitio de noticias de tecnología llamado Tecnobuc.
             Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional.
           `,
-        },
-        {
-          role: "user",
-          content: `
+          },
+          {
+            role: "user",
+            content: `
             Aquí tienes un artículo sobre tecnología:
             ${lastPost.content}
             
             Por favor, proporciona un resumen adecuado para una publicación en Instagram.
           `,
-        },
-      ],
-      model: "gpt-4o-mini",
-    });
+          },
+        ],
+        model: "gpt-4o-mini",
+      }),
+      openai.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content: `
+            Eres un asistente que crea titulos concisos y atractivos a partir de un artículo. 
+            Los titulos deben tener máximo 90 caracteres
+            Solo responde con el titulo del artículo, sin ninguna introducción o comentario adicional.
+          `,
+          },
+          {
+            role: "user",
+            content: `
+            Aquí tienes un artículo sobre tecnología:
+            ${lastPost.content}
+            
+            Por favor, proporciona un titulo adecuado.
+          `,
+          },
+        ],
+        model: "gpt-4o-mini",
+      }),
+    ]);
 
-    const summary = completion.choices[0].message.content;
+    const summary = completionDescription.choices[0].message.content;
+    const title =
+      completionTitle?.choices?.[0]?.message?.content || lastPost.title;
+    const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
+
+    const imageUrl = `${SITE_URL}/api/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
 
     if (!summary) {
       await notifyProblem("Generating a summary for a new post on Instagram");
