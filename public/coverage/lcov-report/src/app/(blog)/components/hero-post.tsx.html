@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>54/54</span>
+                <span class='fraction'>0/54</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>54/54</span>
+                <span class='fraction'>0/54</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -117,114 +117,114 @@
 <a name='L52'></a><a href='#L52'>52</a>
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
-<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import Link from "next/link";
-&nbsp;
-import Avatar from "@/components/avatar";
-import CoverImage from "@/components/cover-image";
-import { DateFormatter } from "@/components/date-formatter";
-&nbsp;
-type Props = {
-  title: string;
-  coverImage: string | null;
-  date: Date;
-  excerpt: string | null;
-  author: {
-    name: string;
-    picture: string;
-  };
-  slug: string;
-};
-&nbsp;
-export function HeroPost({
-  title,
-  coverImage,
-  date,
-  excerpt,
-  author,
-  slug,
-}: Props) {
-  return (
-    &lt;section&gt;
-      &lt;div className="mb-8 md:mb-16"&gt;
-        &lt;CoverImage
-          title={title}
-          src={<span class="branch-0 cbranch-no" title="branch not covered" >coverImage || "/api/preview-image"}</span>
-          slug={slug}
-        /&gt;
-      &lt;/div&gt;
-      &lt;div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28"&gt;
-        &lt;div&gt;
-          &lt;h3 className="mb-4 text-4xl lg:text-5xl leading-tight"&gt;
-            &lt;Link href={`/posts/${slug}`} className="hover:underline"&gt;
-              {title}
-            &lt;/Link&gt;
-          &lt;/h3&gt;
-          &lt;div className="mb-4 md:mb-0 text-lg"&gt;
-            &lt;DateFormatter date={date} /&gt;
-          &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div&gt;
-          &lt;p className="text-lg leading-relaxed mb-4"&gt;{excerpt}&lt;/p&gt;
-          &lt;Avatar name={author.name} picture={author.picture} /&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/section&gt;
-  );
-}
+<a name='L55'></a><a href='#L55'>55</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import Link from "next/link";</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import Avatar from "@/components/avatar";</span>
+<span class="cstat-no" title="statement not covered" >import CoverImage from "@/components/cover-image";</span>
+<span class="cstat-no" title="statement not covered" >import { DateFormatter } from "@/components/date-formatter";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >type Props = {</span>
+<span class="cstat-no" title="statement not covered" >  title: string;</span>
+<span class="cstat-no" title="statement not covered" >  coverImage: string | null;</span>
+<span class="cstat-no" title="statement not covered" >  date: Date;</span>
+<span class="cstat-no" title="statement not covered" >  excerpt: string | null;</span>
+<span class="cstat-no" title="statement not covered" >  author: {</span>
+<span class="cstat-no" title="statement not covered" >    name: string;</span>
+<span class="cstat-no" title="statement not covered" >    picture: string;</span>
+<span class="cstat-no" title="statement not covered" >  };</span>
+<span class="cstat-no" title="statement not covered" >  slug: string;</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export function HeroPost({</span>
+<span class="cstat-no" title="statement not covered" >  title,</span>
+<span class="cstat-no" title="statement not covered" >  coverImage,</span>
+<span class="cstat-no" title="statement not covered" >  date,</span>
+<span class="cstat-no" title="statement not covered" >  excerpt,</span>
+<span class="cstat-no" title="statement not covered" >  author,</span>
+<span class="cstat-no" title="statement not covered" >  slug,</span>
+<span class="cstat-no" title="statement not covered" >}: Props) {</span>
+<span class="cstat-no" title="statement not covered" >  return (</span>
+<span class="cstat-no" title="statement not covered" >    &lt;section&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div className="mb-8 md:mb-16"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;CoverImage</span>
+<span class="cstat-no" title="statement not covered" >          title={title}</span>
+<span class="cstat-no" title="statement not covered" >          src={coverImage || "/api/preview-image"}</span>
+<span class="cstat-no" title="statement not covered" >          slug={slug}</span>
+<span class="cstat-no" title="statement not covered" >        /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div className="md:grid md:grid-cols-2 md:gap-x-16 lg:gap-x-8 mb-20 md:mb-28"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;h3 className="mb-4 text-4xl lg:text-5xl leading-tight"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;Link href={`/posts/${slug}`} className="hover:underline"&gt;</span>
+<span class="cstat-no" title="statement not covered" >              {title}</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/Link&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/h3&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;div className="mb-4 md:mb-0 text-lg"&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;DateFormatter date={date} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;p className="text-lg leading-relaxed mb-4"&gt;{excerpt}&lt;/p&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;Avatar name={author.name} picture={author.picture} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/section&gt;</span>
+<span class="cstat-no" title="statement not covered" >  );</span>
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -232,7 +232,7 @@ export function HeroPost({
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-28T15:49:28.153Z
+                at 2024-08-28T16:07:36.226Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
