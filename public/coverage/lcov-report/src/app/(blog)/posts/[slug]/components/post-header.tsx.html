@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>49/84</span>
+                <span class='fraction'>0/84</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>49/84</span>
+                <span class='fraction'>0/84</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -147,27 +147,7 @@
 <a name='L82'></a><a href='#L82'>82</a>
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -203,55 +183,75 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import "react-loading-skeleton/dist/skeleton.css";
-&nbsp;
-import Link from "next/link";
-import React, { Fragment } from "react";
-import Skeleton from "react-loading-skeleton";
-&nbsp;
-import CoverImage from "@/components/cover-image";
-import { DateFormatter } from "@/components/date-formatter";
-&nbsp;
-import markdownStyles from "./markdown-styles.module.css";
-import SocialMediaButtons from "./social-media-buttons";
-&nbsp;
-type Props = {
-  title: string;
-  coverImage: string | null;
-  date: Date;
-  tags: { id: number; name: string }[];
-  excerpt: string | null;
-};
-&nbsp;
-export <span class="fstat-no" title="function not covered" >function PostHeaderSkeleton() {</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >import "react-loading-skeleton/dist/skeleton.css";</span></span></span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import Link from "next/link";</span>
+<span class="cstat-no" title="statement not covered" >import React, { Fragment } from "react";</span>
+<span class="cstat-no" title="statement not covered" >import Skeleton from "react-loading-skeleton";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import CoverImage from "@/components/cover-image";</span>
+<span class="cstat-no" title="statement not covered" >import { DateFormatter } from "@/components/date-formatter";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import markdownStyles from "./markdown-styles.module.css";</span>
+<span class="cstat-no" title="statement not covered" >import SocialMediaButtons from "./social-media-buttons";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >type Props = {</span>
+<span class="cstat-no" title="statement not covered" >  title: string;</span>
+<span class="cstat-no" title="statement not covered" >  coverImage: string | null;</span>
+<span class="cstat-no" title="statement not covered" >  date: Date;</span>
+<span class="cstat-no" title="statement not covered" >  tags: { id: number; name: string }[];</span>
+<span class="cstat-no" title="statement not covered" >  excerpt: string | null;</span>
+<span class="cstat-no" title="statement not covered" >};</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export function PostHeaderSkeleton() {</span>
 <span class="cstat-no" title="statement not covered" >  return (</span>
 <span class="cstat-no" title="statement not covered" >    &lt;Fragment&gt;</span>
 <span class="cstat-no" title="statement not covered" >      &lt;div className="hidden sm:block mb-6 md:mb-6"&gt;</span>
@@ -287,34 +287,34 @@ export <span class="fstat-no" title="function not covered" >function PostHeaderS
 <span class="cstat-no" title="statement not covered" >    &lt;/Fragment&gt;</span>
 <span class="cstat-no" title="statement not covered" >  );</span>
 <span class="cstat-no" title="statement not covered" >}</span>
-&nbsp;
-export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
-  return (
-    &lt;Fragment&gt;
-      &lt;div className="mb-6 md:mb-6"&gt;
-        &lt;CoverImage title={title} src={coverImage!} /&gt;
-      &lt;/div&gt;
-      &lt;div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start"&gt;
-        &lt;div className="text-red-600 flex flex-wrap"&gt;
-          {tags.length &gt; 0 &amp;&amp; (
-            &lt;React.Fragment&gt;
-              &lt;Link href={`/posts/tags/${tags[0].name}`}&gt;
-                &lt;span&gt;{tags[0].name.toUpperCase()}&lt;/span&gt;
-              &lt;/Link&gt;
-            &lt;/React.Fragment&gt;
-          )}
-        &lt;/div&gt;
-        &lt;span className="ml-2 mr-2 hidden sm:inline"&gt;|&lt;/span&gt;
-        &lt;div className="flex items-start"&gt;
-          &lt;DateFormatter date={date} /&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-      &lt;h1 className="text-4xl font-bold mb-4"&gt;{title}&lt;/h1&gt;
-      &lt;SocialMediaButtons /&gt;
-      &lt;h2 className={markdownStyles["markdown"]}&gt;{excerpt}&lt;/h2&gt;
-    &lt;/Fragment&gt;
-  );
-}
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {</span>
+<span class="cstat-no" title="statement not covered" >  return (</span>
+<span class="cstat-no" title="statement not covered" >    &lt;Fragment&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div className="mb-6 md:mb-6"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;CoverImage title={title} src={coverImage!} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;div className="mb-6 text-lg flex flex-col sm:flex-row items-start justify-start"&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div className="text-red-600 flex flex-wrap"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          {tags.length &gt; 0 &amp;&amp; (</span>
+<span class="cstat-no" title="statement not covered" >            &lt;React.Fragment&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;Link href={`/posts/tags/${tags[0].name}`}&gt;</span>
+<span class="cstat-no" title="statement not covered" >                &lt;span&gt;{tags[0].name.toUpperCase()}&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >              &lt;/Link&gt;</span>
+<span class="cstat-no" title="statement not covered" >            &lt;/React.Fragment&gt;</span>
+<span class="cstat-no" title="statement not covered" >          )}</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;span className="ml-2 mr-2 hidden sm:inline"&gt;|&lt;/span&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;div className="flex items-start"&gt;</span>
+<span class="cstat-no" title="statement not covered" >          &lt;DateFormatter date={date} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;h1 className="text-4xl font-bold mb-4"&gt;{title}&lt;/h1&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;SocialMediaButtons /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;h2 className={markdownStyles["markdown"]}&gt;{excerpt}&lt;/h2&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/Fragment&gt;</span>
+<span class="cstat-no" title="statement not covered" >  );</span>
+<span class="cstat-no" title="statement not covered" >}</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -322,7 +322,7 @@ export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-08-28T14:38:41.042Z
+                at 2024-08-28T14:41:31.087Z
             </div>
         <script src="../../../../../../prettify.js"></script>
         <script>
