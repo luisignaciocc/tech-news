@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 
 import { render, screen } from "@testing-library/react";
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { CheckboxContext } from "../../context/checkbox-context";
 import { CheckboxColumn } from "../checkbox-column";
@@ -11,7 +11,7 @@ const mockHandleCheckboxChange = jest.fn();
 const mockHandleSelectAll = jest.fn();
 const mockHandleClearAll = jest.fn();
 
-// Defines the type for the context
+// Define el tipo para el contexto
 const mockContextValue: {
   handleCheckboxChange: (id: string, checked: boolean) => void;
   selectedIds: string[];
@@ -24,7 +24,10 @@ const mockContextValue: {
   handleClearAll: mockHandleClearAll,
 };
 
-const MockCheckboxContextProvider = ({ children }) => (
+// Define el tipo para los props del proveedor
+const MockCheckboxContextProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => (
   <CheckboxContext.Provider value={mockContextValue}>
     {children}
   </CheckboxContext.Provider>
