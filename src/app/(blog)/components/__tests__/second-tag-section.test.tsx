@@ -1,6 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import SecondTagSection from "../second-tag-section"; // Asegúrate de que la ruta sea correcta
+import SecondTagSection from "../second-tag-section";
 
 const mockPosts = [
   {
