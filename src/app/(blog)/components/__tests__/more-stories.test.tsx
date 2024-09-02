@@ -8,24 +8,24 @@ describe("Testing MoreStories Component", () => {
     {
       slug: "post-1",
       title: "Post 1",
-      coverImage: "/images/image1.jpg", // Ruta corregida
+      coverImage: "/images/image1.jpg",
       createdAt: new Date(),
       excerpt: "Excerpt 1",
       author: {
         name: "Author 1",
-        picture: "/images/author1.jpg", // Ruta corregida
+        picture: "/images/author1.jpg",
       },
       tags: [{ name: "Tag1" }],
     },
     {
       slug: "post-2",
       title: "Post 2",
-      coverImage: "/images/image2.jpg", // Ruta corregida
+      coverImage: "/images/image2.jpg",
       createdAt: new Date(),
       excerpt: "Excerpt 2",
       author: {
         name: "Author 2",
-        picture: "/images/author2.jpg", // Ruta corregida
+        picture: "/images/author2.jpg",
       },
       tags: [{ name: "Tag2" }],
     },
