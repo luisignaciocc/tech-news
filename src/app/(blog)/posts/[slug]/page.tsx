@@ -66,6 +66,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     keywords: post.tags.map((tag) => tag.name),
     creator: post.author.name,
     publisher: post.author.name,
+    alternates: { canonical: new URL(`${SITE_URL}/posts/${params.slug}`) },
     openGraph: {
       type: "website",
       url: new URL(`${SITE_URL}/posts/${params.slug}`),
@@ -73,7 +74,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       description,
       siteName: SITE_SHORT_NAME,
       images: [
-        { url: `/posts/${params.slug}/og.png`, width: 1200, height: 630 },
+        {
+          url: new URL(`${SITE_URL}/posts/${params.slug}/og.png`),
+          width: 1200,
+          height: 630,
+        },
       ],
     },
     twitter: {
@@ -83,7 +88,11 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
       site: SITE_HANDLER,
       creator: PERSONAL_HANDLER,
       images: [
-        { url: `/posts/${params.slug}/og.png`, width: 1200, height: 630 },
+        {
+          url: new URL(`${SITE_URL}/posts/${params.slug}/og.png`),
+          width: 1200,
+          height: 630,
+        },
       ],
     },
   };
