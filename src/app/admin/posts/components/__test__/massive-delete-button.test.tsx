@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 
 import { CheckboxContext } from "@/app/admin/context/checkbox-context";
 
-import DeleteButton from "../delete-button";
+import MassiveDeleteButton from "../massive-delete-button";
 
 jest.mock("next/navigation");
 
@@ -29,7 +29,7 @@ const MockCheckboxContextProvider = ({ children }: { children: ReactNode }) => (
   </CheckboxContext.Provider>
 );
 
-describe("Testing DeleteButton Component", () => {
+describe("Testing MassiveDeleteButton Component", () => {
   const mockOnDelete = jest.fn();
 
   beforeEach(() => {
@@ -37,10 +37,10 @@ describe("Testing DeleteButton Component", () => {
     jest.clearAllMocks();
   });
 
-  it("should render the delete button", () => {
+  it("should render the massive delete button", () => {
     render(
       <MockCheckboxContextProvider>
-        <DeleteButton postId="1" onDelete={mockOnDelete} />
+        <MassiveDeleteButton postsIds={["1", "2"]} onDelete={mockOnDelete} />
       </MockCheckboxContextProvider>,
     );
 
@@ -53,7 +53,7 @@ describe("Testing DeleteButton Component", () => {
 
     render(
       <MockCheckboxContextProvider>
-        <DeleteButton postId="1" onDelete={mockOnDelete} />
+        <MassiveDeleteButton postsIds={["1", "2"]} onDelete={mockOnDelete} />
       </MockCheckboxContextProvider>,
     );
 
@@ -61,7 +61,7 @@ describe("Testing DeleteButton Component", () => {
     fireEvent.click(button);
 
     await waitFor(() => {
-      expect(mockOnDelete).toHaveBeenCalledWith("1");
+      expect(mockOnDelete).toHaveBeenCalledWith(["1", "2"]);
     });
   });
 
@@ -70,7 +70,7 @@ describe("Testing DeleteButton Component", () => {
 
     render(
       <MockCheckboxContextProvider>
-        <DeleteButton postId="1" onDelete={mockOnDelete} />
+        <MassiveDeleteButton postsIds={["1", "2"]} onDelete={mockOnDelete} />
       </MockCheckboxContextProvider>,
     );
 
@@ -85,7 +85,7 @@ describe("Testing DeleteButton Component", () => {
 
     render(
       <MockCheckboxContextProvider>
-        <DeleteButton postId="1" onDelete={mockOnDelete} />
+        <MassiveDeleteButton postsIds={["1", "2"]} onDelete={mockOnDelete} />
       </MockCheckboxContextProvider>,
     );
 
@@ -102,7 +102,7 @@ describe("Testing DeleteButton Component", () => {
 
     render(
       <MockCheckboxContextProvider>
-        <DeleteButton postId="1" onDelete={mockOnDelete} />
+        <MassiveDeleteButton postsIds={["1", "2"]} onDelete={mockOnDelete} />
       </MockCheckboxContextProvider>,
     );
 
@@ -115,6 +115,23 @@ describe("Testing DeleteButton Component", () => {
 
     await waitFor(() => {
       expect(button).toBeEnabled();
+    });
+  });
+
+  it("should refresh the router on successful delete", async () => {
+    mockOnDelete.mockResolvedValue({ success: true, message: "Deleted" });
+
+    render(
+      <MockCheckboxContextProvider>
+        <MassiveDeleteButton postsIds={["1", "2"]} onDelete={mockOnDelete} />
+      </MockCheckboxContextProvider>,
+    );
+
+    const button = screen.getByRole("button");
+    fireEvent.click(button);
+
+    await waitFor(() => {
+      expect(mockRouter.refresh).toHaveBeenCalled();
     });
   });
 });
