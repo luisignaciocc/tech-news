@@ -151,7 +151,7 @@ export async function POST(request: Request) {
         Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
         La cuenta de Instagram es un sitio de noticias de tecnología llamado Tecnobuc.
         La publicacion consiste de varias noticias de tecnología en un carrusel, así que se te proporcionarán varior artículos y deberás crear una descripción general para el carrusel.
-        Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional.
+        Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional. La descripción debe tener máximo 2200 caracteres.
       `,
         },
         {
@@ -187,11 +187,11 @@ export async function POST(request: Request) {
       },
     );
 
-    const {
-      id: media_id,
-    }: {
+    const data: {
       id: string;
     } = await res2.json();
+
+    console.log(data);
 
     await prisma.post.updateMany({
       where: {
@@ -201,7 +201,7 @@ export async function POST(request: Request) {
       },
       data: {
         postedToInstagram: true,
-        instagramMediaId: media_id,
+        instagramMediaId: data.id,
       },
     });
 
