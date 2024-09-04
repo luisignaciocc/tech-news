@@ -65,22 +65,6 @@ export async function POST(request: Request) {
         lastPost.coverImage || `${SITE_URL}/icon.png`,
       );
 
-      const imageTemplates = [
-        // "image-01",
-        // "image-02",
-        // "image-03",
-        // "image-04",
-        // "image-05",
-        // "image-06",
-        // "image-07",
-        // "image-08",
-        // "image-09",
-        "image-10",
-      ];
-
-      const randomImageTemplate =
-        imageTemplates[Math.floor(Math.random() * imageTemplates.length)];
-
       const [completionTitle] = await Promise.all([
         openai.chat.completions.create({
           messages: [
@@ -110,7 +94,7 @@ export async function POST(request: Request) {
         completionTitle?.choices?.[0]?.message?.content || lastPost.title;
       const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
 
-      const imageUrl = `${SITE_URL}/api/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+      const imageUrl = `${SITE_URL}/api/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
 
       const res = await fetch(
         `https://graph.facebook.com/v19.0/${igUserId}/media`,
@@ -171,8 +155,8 @@ export async function POST(request: Request) {
       completionDescription.choices[0].message.content ||
       "Las últimas noticias de tecnología en Tecnobuc";
 
-    const res2 = await fetch(
-      `https://graph.facebook.com/${apiVersion}/${igUserId}/media_publish`,
+    const carouselResponse = await fetch(
+      `https://graph.facebook.com/${apiVersion}/${igUserId}/media`,
       {
         method: "POST",
         headers: {
@@ -187,12 +171,38 @@ export async function POST(request: Request) {
       },
     );
 
+    if (!carouselResponse.ok) {
+      const error = await carouselResponse.json();
+      console.error(error);
+      return NextResponse.json(
+        { error: "Error creating carousel post" },
+        { status: 500 },
+      );
+    }
+
+    const {
+      id: creation_id,
+    }: {
+      id: string;
+    } = await carouselResponse.json();
+
+    const res2 = await fetch(
+      `https://graph.facebook.com/${apiVersion}/${igUserId}/media_publish`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          creation_id,
+          access_token,
+        }),
+      },
+    );
+
     const data: {
       id: string;
     } = await res2.json();
-
-    // eslint-disable-next-line no-console
-    console.log(data);
 
     await prisma.post.updateMany({
       where: {
@@ -206,7 +216,7 @@ export async function POST(request: Request) {
       },
     });
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error) {
     await notifyProblem("Publishing a new post to Instagram");
     if (error instanceof Error) {
