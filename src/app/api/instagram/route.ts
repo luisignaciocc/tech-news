@@ -38,7 +38,7 @@ export async function POST(request: Request) {
       left join "News" n on n.id = p."newId" 
       where p."createdAt" >= NOW() - INTERVAL '24 HOURS' and p."postedToInstagram" = false
       order by similarity desc 
-      limit 8
+      limit 7
     `;
 
     const lastPosts = await prisma.post.findMany({
