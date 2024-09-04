@@ -45,7 +45,7 @@ export async function POST(request: Request) {
         coverImage: true,
         content: true,
       },
-      take: 10,
+      take: 5,
     });
 
     if (!lastPosts.length) {
