@@ -65,7 +65,7 @@ export async function GET(request: Request) {
             WebkitBoxOrient: "vertical",
           }}
         >
-          {title || SITE_NAME}
+          {title?.replaceAll(`"`, "") || SITE_NAME}
         </div>
         <div
           style={{
