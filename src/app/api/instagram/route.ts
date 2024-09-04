@@ -191,6 +191,7 @@ export async function POST(request: Request) {
       id: string;
     } = await res2.json();
 
+    // eslint-disable-next-line no-console
     console.log(data);
 
     await prisma.post.updateMany({
