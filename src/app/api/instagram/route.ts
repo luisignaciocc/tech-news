@@ -36,7 +36,7 @@ export async function POST(request: Request) {
       select p.id, 1-(n.embedding <=> ${embedding}::vector) as similarity 
       from "Post" p 
       left join "News" n on n.id = p."newId" 
-      where p."createdAt" >= NOW() - INTERVAL '24 HOURS' and p."postedToInstagram" = false
+      where p."createdAt" >= NOW() - INTERVAL '36 HOURS' and p."postedToInstagram" = false
       order by similarity desc 
       limit 10
     `;
