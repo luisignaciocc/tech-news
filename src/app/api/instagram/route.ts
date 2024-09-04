@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       });
     }
 
-    const lastPost = await prisma.post.findFirst({
+    const lastPosts = await prisma.post.findMany({
       where: {
         postedToInstagram: false,
       },
@@ -45,9 +45,10 @@ export async function POST(request: Request) {
         coverImage: true,
         content: true,
       },
+      take: 10,
     });
 
-    if (!lastPost) {
+    if (!lastPosts.length) {
       return NextResponse.json({
         ok: false,
         message:
@@ -55,112 +56,120 @@ export async function POST(request: Request) {
       });
     }
 
-    const coverImageUrlEncoded = encodeURIComponent(
-      lastPost.coverImage || `${SITE_URL}/icon.png`,
-    );
+    const creationIds = [];
+    const articlesIds = [];
+    let articles = "";
+    let idx = 1;
+    for (const lastPost of lastPosts) {
+      const coverImageUrlEncoded = encodeURIComponent(
+        lastPost.coverImage || `${SITE_URL}/icon.png`,
+      );
 
-    const imageTemplates = [
-      // "image-01",
-      // "image-02",
-      // "image-03",
-      // "image-04",
-      // "image-05",
-      // "image-06",
-      // "image-07",
-      // "image-08",
-      // "image-09",
-      "image-10",
-    ];
+      const imageTemplates = [
+        // "image-01",
+        // "image-02",
+        // "image-03",
+        // "image-04",
+        // "image-05",
+        // "image-06",
+        // "image-07",
+        // "image-08",
+        // "image-09",
+        "image-10",
+      ];
 
-    const randomImageTemplate =
-      imageTemplates[Math.floor(Math.random() * imageTemplates.length)];
+      const randomImageTemplate =
+        imageTemplates[Math.floor(Math.random() * imageTemplates.length)];
 
-    const [completionDescription, completionTitle] = await Promise.all([
-      openai.chat.completions.create({
-        messages: [
-          {
-            role: "system",
-            content: `
-            Eres un asistente que crea resúmenes concisos y atractivos para publicaciones en Instagram. 
-            Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
-            La cuenta de Instagram es un sitio de noticias de tecnología llamado Tecnobuc.
-            Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional.
-          `,
-          },
-          {
-            role: "user",
-            content: `
-            Aquí tienes un artículo sobre tecnología:
-            ${lastPost.content}
-            
-            Por favor, proporciona un resumen adecuado para una publicación en Instagram.
-          `,
-          },
-        ],
-        model: "gpt-4o-mini",
-      }),
-      openai.chat.completions.create({
-        messages: [
-          {
-            role: "system",
-            content: `
+      const [completionTitle] = await Promise.all([
+        openai.chat.completions.create({
+          messages: [
+            {
+              role: "system",
+              content: `
             Eres un asistente que crea titulos concisos y atractivos a partir de un artículo. 
             Los titulos deben tener máximo 90 caracteres
             Solo responde con el titulo del artículo, sin ninguna introducción o comentario adicional.
           `,
-          },
-          {
-            role: "user",
-            content: `
+            },
+            {
+              role: "user",
+              content: `
             Aquí tienes un artículo sobre tecnología:
             ${lastPost.content}
             
             Por favor, proporciona un titulo adecuado.
           `,
-          },
-        ],
-        model: "gpt-4o-mini",
-      }),
-    ]);
-
-    const summary = completionDescription.choices[0].message.content;
-    const title =
-      completionTitle?.choices?.[0]?.message?.content || lastPost.title;
-    const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
-
-    const imageUrl = `${SITE_URL}/api/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
-
-    if (!summary) {
-      await notifyProblem("Generating a summary for a new post on Instagram");
-      return NextResponse.json({ error: "No summary found" }, { status: 404 });
-    }
-
-    const res = await fetch(
-      `https://graph.facebook.com/v19.0/${igUserId}/media`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          image_url: imageUrl || "",
-          caption: summary || "",
-          access_token,
+            },
+          ],
+          model: "gpt-4o-mini",
         }),
-      },
-    );
+      ]);
 
-    if (!res.ok) {
-      const error = await res.json();
-      await notifyProblem("Creating a new media on Instagram", error);
-      return NextResponse.json({ error }, { status: 500 });
+      const title =
+        completionTitle?.choices?.[0]?.message?.content || lastPost.title;
+      const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
+
+      const imageUrl = `${SITE_URL}/api/instagram/${randomImageTemplate}?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+
+      const res = await fetch(
+        `https://graph.facebook.com/v19.0/${igUserId}/media`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            image_url: imageUrl,
+            is_carousel_item: "true",
+            access_token,
+          }),
+        },
+      );
+
+      if (!res.ok) {
+        continue;
+      }
+
+      const {
+        id,
+      }: {
+        id: string;
+      } = await res.json();
+      creationIds.push(id);
+      articlesIds.push(lastPost.id);
+      articles += `${idx}. ${title}\n`;
+      idx++;
     }
 
-    const {
-      id: creation_id,
-    }: {
-      id: string;
-    } = await res.json();
+    const completionDescription = await openai.chat.completions.create({
+      messages: [
+        {
+          role: "system",
+          content: `
+        Eres un asistente que crea descripciones concisas y atractivas para publicaciones en Instagram. 
+        Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
+        La cuenta de Instagram es un sitio de noticias de tecnología llamado Tecnobuc.
+        La publicacion consiste de varias noticias de tecnología en un carrusel, así que se te proporcionarán varior artículos y deberás crear una descripción general para el carrusel.
+        Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional.
+      `,
+        },
+        {
+          role: "user",
+          content: `
+        Aquí tienes varios artículos sobre tecnología:
+        ${articles}
+        
+        Por favor, proporciona un resumen adecuado para una publicación en Instagram.
+      `,
+        },
+      ],
+      model: "gpt-4o-mini",
+    });
+
+    const caption =
+      completionDescription.choices[0].message.content ||
+      "Las últimas noticias de tecnología en Tecnobuc";
 
     const res2 = await fetch(
       `https://graph.facebook.com/${apiVersion}/${igUserId}/media_publish`,
@@ -170,8 +179,10 @@ export async function POST(request: Request) {
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: new URLSearchParams({
-          creation_id,
           access_token,
+          media_type: "CAROUSEL",
+          children: creationIds.join(","),
+          caption,
         }),
       },
     );
@@ -182,9 +193,11 @@ export async function POST(request: Request) {
       id: string;
     } = await res2.json();
 
-    await prisma.post.update({
+    await prisma.post.updateMany({
       where: {
-        id: lastPost.id,
+        id: {
+          in: articlesIds,
+        },
       },
       data: {
         postedToInstagram: true,
