@@ -14,6 +14,10 @@ export async function GET(request: Request) {
   //   return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
   // }
 
+  const colors = ["#003366", "#114912", "#3E1D71", "#952812"];
+
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
   return new ImageResponse(
     (
       <div
@@ -49,7 +53,7 @@ export async function GET(request: Request) {
             bottom: "20px",
             marginBottom: "8%",
             fontWeight: 900,
-            background: "#003366",
+            background: color,
             padding: "20px",
             textShadow:
               "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
@@ -87,7 +91,7 @@ export async function GET(request: Request) {
               objectFit: "contain",
             }}
           />
-          <div style={{ marginLeft: "-10px", fontSize: 40 }}>| TECNOLOGÍA</div>
+          <div style={{ fontSize: 40 }}>| TECNOBUC</div>
           <div
             style={{
               position: "absolute",
@@ -123,7 +127,7 @@ export async function GET(request: Request) {
               letterSpacing: "0.1em",
             }}
           >
-            ENTÉRATE DE TODOS LOS DETALLES EN&nbsp;
+            ENTÉRATE DE TODOS LOS DETALLES EN
             <img
               src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
               alt="Flecha"
@@ -131,6 +135,7 @@ export async function GET(request: Request) {
                 width: "1.5em",
                 height: "1em",
                 marginRight: "-1em",
+                marginTop: "-0.1em",
               }}
             />
             <img
@@ -140,6 +145,7 @@ export async function GET(request: Request) {
                 width: "1.5em",
                 height: "1em",
                 marginRight: "-1em",
+                marginTop: "-0.1em",
               }}
             />
             <img
@@ -148,9 +154,10 @@ export async function GET(request: Request) {
               style={{
                 width: "1.5em",
                 height: "1em",
+                marginTop: "-0.1em",
               }}
             />
-            &nbsp;{SITE_SHORT_NAME}
+            www.tecnobuc.com
           </span>
         </div>
       </div>
