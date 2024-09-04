@@ -1,10 +1,9 @@
-// components/DeletedTable.test.js
 import { render, screen } from "@testing-library/react";
-import { useRouter } from "next/navigation"; // Importar useRouter para mockearlo
+import { useRouter } from "next/navigation";
 
 import { CheckboxContext } from "@/app/admin/context/checkbox-context";
 
-import DeletedTable from "../deleted-table"; // Asegúrate de que la ruta sea correcta
+import DeletedTable from "../deleted-table";
 
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn(),

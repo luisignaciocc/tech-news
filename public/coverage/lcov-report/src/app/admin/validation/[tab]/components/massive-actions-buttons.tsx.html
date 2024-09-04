@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.03% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>47/77</span>
+                <span class='fraction'>0/77</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">61.03% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/77</span>
+                <span class='fraction'>0/77</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -140,29 +140,7 @@
 <a name='L75'></a><a href='#L75'>75</a>
 <a name='L76'></a><a href='#L76'>76</a>
 <a name='L77'></a><a href='#L77'>77</a>
-<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<a name='L78'></a><a href='#L78'>78</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -178,8 +156,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -195,51 +171,75 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use client";
-import { useRouter } from "next/navigation";
-import { useContext, useState } from "react";
-import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-&nbsp;
-import { CheckboxContext } from "../../../context/checkbox-context";
-&nbsp;
-interface MassiveActionsButtonsProps {
-  newsIds: string[];
-  onUpdate: (ids: string[]) =&gt; Promise&lt;{ success: boolean; message: string }&gt;;
-  onDelete: (ids: string[]) =&gt; Promise&lt;{ success: boolean; message: string }&gt;;
-}
-&nbsp;
-function MassiveActionsButtons({
-  newsIds,
-  onUpdate,
-  onDelete,
-}: MassiveActionsButtonsProps) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const { handleClearAll } = useContext(CheckboxContext);
-&nbsp;
-  const handleUpdate = <span class="fstat-no" title="function not covered" >async () =&gt; {</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" >"use client";</span></span></span>
+<span class="cstat-no" title="statement not covered" >import { useRouter } from "next/navigation";</span>
+<span class="cstat-no" title="statement not covered" >import { useContext, useState } from "react";</span>
+<span class="cstat-no" title="statement not covered" >import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >import { CheckboxContext } from "../../../context/checkbox-context";</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >interface MassiveActionsButtonsProps {</span>
+<span class="cstat-no" title="statement not covered" >  newsIds: string[];</span>
+<span class="cstat-no" title="statement not covered" >  onUpdate: (ids: string[]) =&gt; Promise&lt;{ success: boolean; message: string }&gt;;</span>
+<span class="cstat-no" title="statement not covered" >  onDelete: (ids: string[]) =&gt; Promise&lt;{ success: boolean; message: string }&gt;;</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >function MassiveActionsButtons({</span>
+<span class="cstat-no" title="statement not covered" >  newsIds,</span>
+<span class="cstat-no" title="statement not covered" >  onUpdate,</span>
+<span class="cstat-no" title="statement not covered" >  onDelete,</span>
+<span class="cstat-no" title="statement not covered" >}: MassiveActionsButtonsProps) {</span>
+<span class="cstat-no" title="statement not covered" >  const router = useRouter();</span>
+<span class="cstat-no" title="statement not covered" >  const [isLoading, setIsLoading] = useState(false);</span>
+<span class="cstat-no" title="statement not covered" >  const { handleClearAll } = useContext(CheckboxContext);</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const handleUpdate = async () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      setIsLoading(true);</span>
 <span class="cstat-no" title="statement not covered" >      const { success, message } = await onUpdate(newsIds);</span>
@@ -255,8 +255,8 @@ function MassiveActionsButtons({
 <span class="cstat-no" title="statement not covered" >      setIsLoading(false);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
-&nbsp;
-  const handleDelete = <span class="fstat-no" title="function not covered" >async () =&gt; {</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  const handleDelete = async () =&gt; {</span>
 <span class="cstat-no" title="statement not covered" >    try {</span>
 <span class="cstat-no" title="statement not covered" >      setIsLoading(true);</span>
 <span class="cstat-no" title="statement not covered" >      const { success, message } = await onDelete(newsIds);</span>
@@ -272,28 +272,28 @@ function MassiveActionsButtons({
 <span class="cstat-no" title="statement not covered" >      setIsLoading(false);</span>
 <span class="cstat-no" title="statement not covered" >    }</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
-&nbsp;
-  return (
-    &lt;div className="flex justify-end space-x-2"&gt;
-      &lt;button
-        onClick={handleUpdate}
-        disabled={isLoading}
-        className={`${<span class="branch-0 cbranch-no" title="branch not covered" >isLoading ? "text-gray-400 hover:text-gray-400" : "</span>text-green-500 hover:text-green-600"}`}
-      &gt;
-        &lt;FaCheckCircle size={24} /&gt;
-      &lt;/button&gt;
-      &lt;button
-        onClick={handleDelete}
-        disabled={isLoading}
-        className={`${<span class="branch-0 cbranch-no" title="branch not covered" >isLoading ? "text-gray-400 hover:text-gray-400" : "</span>text-red-500 hover:text-red-600"}`}
-      &gt;
-        &lt;FaTimesCircle size={24} /&gt;
-      &lt;/button&gt;
-    &lt;/div&gt;
-  );
-}
-&nbsp;
-export default MassiveActionsButtons;
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >  return (</span>
+<span class="cstat-no" title="statement not covered" >    &lt;div className="flex justify-end space-x-2"&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;button</span>
+<span class="cstat-no" title="statement not covered" >        onClick={handleUpdate}</span>
+<span class="cstat-no" title="statement not covered" >        disabled={isLoading}</span>
+<span class="cstat-no" title="statement not covered" >        className={`${isLoading ? "text-gray-400 hover:text-gray-400" : "text-green-500 hover:text-green-600"}`}</span>
+<span class="cstat-no" title="statement not covered" >      &gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;FaCheckCircle size={24} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;button</span>
+<span class="cstat-no" title="statement not covered" >        onClick={handleDelete}</span>
+<span class="cstat-no" title="statement not covered" >        disabled={isLoading}</span>
+<span class="cstat-no" title="statement not covered" >        className={`${isLoading ? "text-gray-400 hover:text-gray-400" : "text-red-500 hover:text-red-600"}`}</span>
+<span class="cstat-no" title="statement not covered" >      &gt;</span>
+<span class="cstat-no" title="statement not covered" >        &lt;FaTimesCircle size={24} /&gt;</span>
+<span class="cstat-no" title="statement not covered" >      &lt;/button&gt;</span>
+<span class="cstat-no" title="statement not covered" >    &lt;/div&gt;</span>
+<span class="cstat-no" title="statement not covered" >  );</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export default MassiveActionsButtons;</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -301,7 +301,7 @@ export default MassiveActionsButtons;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-09-04T19:40:25.505Z
+                at 2024-09-04T19:43:14.465Z
             </div>
         <script src="../../../../../../prettify.js"></script>
         <script>
