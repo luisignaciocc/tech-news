@@ -143,30 +143,33 @@ export async function POST(request: Request): Promise<NextResponse> {
             }
 
             if (answer.startsWith("y")) {
-              const bot = new TelegramBot(TOKEN);
-              const message = await bot.sendMessage(
-                TELEGRAM_PERSONAL_CHAT_ID,
-                `${autoApprove ? "✅" : "❔"} ${article.title}`,
-                {
-                  parse_mode: "Markdown",
-                  reply_markup: autoApprove
-                    ? undefined
-                    : {
-                        inline_keyboard: [
-                          [
-                            {
-                              text: "Aprovar",
-                              callback_data: `approve:accept:${article.id}`,
-                            },
-                            {
-                              text: "Eliminar",
-                              callback_data: `approve:delete:${article.id}`,
-                            },
+              let message: TelegramBot.Message | undefined;
+              if (!autoApprove) {
+                const bot = new TelegramBot(TOKEN);
+                message = await bot.sendMessage(
+                  TELEGRAM_PERSONAL_CHAT_ID,
+                  `${autoApprove ? "✅" : "❔"} ${article.title}`,
+                  {
+                    parse_mode: "Markdown",
+                    reply_markup: autoApprove
+                      ? undefined
+                      : {
+                          inline_keyboard: [
+                            [
+                              {
+                                text: "Aprovar",
+                                callback_data: `approve:accept:${article.id}`,
+                              },
+                              {
+                                text: "Eliminar",
+                                callback_data: `approve:delete:${article.id}`,
+                              },
+                            ],
                           ],
-                        ],
-                      },
-                },
-              );
+                        },
+                  },
+                );
+              }
 
               await prisma.news.update({
                 where: {
@@ -175,8 +178,8 @@ export async function POST(request: Request): Promise<NextResponse> {
                 data: {
                   sentToApproval: true,
                   filtered: autoApprove ? true : undefined,
-                  telegramChatId: message.chat.id.toString(),
-                  telegramMessageId: message.message_id.toString(),
+                  telegramChatId: message?.chat.id.toString(),
+                  telegramMessageId: message?.message_id.toString(),
                 },
               });
             } else {
