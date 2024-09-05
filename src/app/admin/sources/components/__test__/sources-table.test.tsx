@@ -50,9 +50,6 @@ describe("Testing SourcesTable Component", () => {
     expect(screen.getByText("Source 1")).toBeInTheDocument();
     expect(screen.getByText("Source 2")).toBeInTheDocument();
 
-    // expect(screen.getByText("1/9/2023, 8:00:00 a. m.")).toBeInTheDocument();
-    // expect(screen.getByText("2/9/2023, 8:00:00 a. m.")).toBeInTheDocument();
-
     expect(screen.getByText("5")).toBeInTheDocument();
     expect(screen.getByText("2")).toBeInTheDocument();
 
