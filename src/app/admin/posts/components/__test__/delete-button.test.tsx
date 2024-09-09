@@ -75,9 +75,14 @@ describe("Testing DeleteButton Component", () => {
     );
 
     const button = screen.getByRole("button");
+
+    // Simulates a click on the button
     fireEvent.click(button);
 
-    expect(button).toBeDisabled();
+    // Waits for the button to be disabled
+    await waitFor(() => {
+      expect(button).toBeDisabled();
+    });
   });
 
   it("should call handleClearAll after deletion", async () => {
@@ -100,6 +105,11 @@ describe("Testing DeleteButton Component", () => {
   it("should handle error correctly", async () => {
     mockOnDelete.mockRejectedValue(new Error("Error occurred"));
 
+    // Spies on the console.error function
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+
     render(
       <MockCheckboxContextProvider>
         <DeleteButton postId="1" onDelete={mockOnDelete} />
@@ -109,12 +119,20 @@ describe("Testing DeleteButton Component", () => {
     const button = screen.getByRole("button");
     fireEvent.click(button);
 
+    // Waits for handleClearAll to be called
     await waitFor(() => {
       expect(mockHandleClearAll).toHaveBeenCalled();
     });
 
+    // Verifies that the button is enabled again
     await waitFor(() => {
       expect(button).toBeEnabled();
     });
+
+    // Verifies that console.error was called with the correct error message
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.any(Error));
+
+    // Restores the original implementation of console.error
+    consoleErrorSpy.mockRestore();
   });
 });
