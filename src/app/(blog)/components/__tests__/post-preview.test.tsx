@@ -30,7 +30,7 @@ describe("Testing PostPreview Component", () => {
       `Cover Image for ${mockProps.title}`,
     ) as HTMLImageElement;
     expect(coverImage).toBeInTheDocument();
-    expect(coverImage.src).toBe(mockProps.coverImage); // Cambiado aquí
+    expect(coverImage.src).toBe(mockProps.coverImage);
 
     const dateElement = screen.getByText(/agosto/i);
     expect(dateElement).toBeInTheDocument();
