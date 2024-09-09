@@ -30,9 +30,10 @@ describe("Testing SpecialCardPost Component", () => {
   it("should render the component correctly", () => {
     render(<SpecialCardPost {...props} />);
 
-    // Verify that the mock image renders correctly
-    const image = screen.getByTestId("mock-image");
+    // Verify that the image renders correctly
+    const image = screen.getByAltText(props.title);
     expect(image).toBeInTheDocument();
+    expect(image).toHaveAttribute("src", props.imageUrl);
 
     // Verify that the title renders and is a link
     const titleLink = screen.getByRole("link", { name: props.title });
