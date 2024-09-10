@@ -66,4 +66,4 @@ jobs:
         env:
           BASE_URL: ${{ github.event.deployment_status.environment_url }}
         run: |
-          npx cypress run --config baseUrl=$BASE_URL
+          npx xvfb-maybe npx cypress run --config baseUrl=$BASE_URL
