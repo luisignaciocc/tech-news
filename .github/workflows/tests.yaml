@@ -62,8 +62,21 @@ jobs:
           npm install -g pnpm
           pnpm install
 
-      - name: Install Xvfb and xvfb-run
-        run: sudo apt-get install -y xvfb
+      - name: Install required libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            xvfb \
+            libgtk2.0-0 \
+            libgtk-3-0 \
+            libgbm-dev \
+            libnotify-dev \
+            libnss3 \
+            libxss1 \
+            libasound2 \
+            libxtst6 \
+            xauth \
+            libatk1.0-0  # Agrega esta línea para instalar libatk-1.0
 
       - name: Run Cypress tests
         env:
