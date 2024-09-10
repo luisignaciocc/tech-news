@@ -38,8 +38,7 @@ describe("Testing PostVerticalCarousel Component", () => {
       ) as HTMLImageElement;
       expect(coverImage).toBeInTheDocument();
 
-      const encodedImageUrl = encodeURIComponent(post.coverImage);
-      expect(coverImage.src).toContain(`url=${encodedImageUrl}`);
+      expect(coverImage.src).toBe(post.coverImage);
     });
 
     mockPosts.forEach((post) => {

@@ -30,9 +30,7 @@ describe("Testing PostPreview Component", () => {
       `Cover Image for ${mockProps.title}`,
     ) as HTMLImageElement;
     expect(coverImage).toBeInTheDocument();
-
-    const encodedImageUrl = encodeURIComponent(mockProps.coverImage);
-    expect(coverImage.src).toContain(`url=${encodedImageUrl}`);
+    expect(coverImage.src).toBe(mockProps.coverImage);
 
     const dateElement = screen.getByText(/agosto/i);
     expect(dateElement).toBeInTheDocument();

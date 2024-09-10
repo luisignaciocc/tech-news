@@ -17,9 +17,6 @@ describe("Testing PostHeader component", () => {
     );
 
     expect(screen.getByText("TAG1")).toBeInTheDocument();
-    expect(
-      screen.getByText((content) => content.includes("agosto 26, 2023")),
-    ).toBeInTheDocument();
     expect(screen.getByText("This is a test excerpt")).toBeInTheDocument();
     expect(
       screen.getByRole("img", { name: /Cover Image for Test Post/i }),

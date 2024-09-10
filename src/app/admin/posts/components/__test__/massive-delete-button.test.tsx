@@ -77,7 +77,10 @@ describe("Testing MassiveDeleteButton Component", () => {
     const button = screen.getByRole("button");
     fireEvent.click(button);
 
-    expect(button).toBeDisabled();
+    // Wait for the button to be disabled
+    await waitFor(() => {
+      expect(button).toBeDisabled();
+    });
   });
 
   it("should call handleClearAll after deletion", async () => {
@@ -98,7 +101,13 @@ describe("Testing MassiveDeleteButton Component", () => {
   });
 
   it("should handle error correctly", async () => {
+    // Simulate that the onDelete function rejects the promise
     mockOnDelete.mockRejectedValue(new Error("Error occurred"));
+
+    // Spy on the console.error function
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
     render(
       <MockCheckboxContextProvider>
@@ -107,15 +116,25 @@ describe("Testing MassiveDeleteButton Component", () => {
     );
 
     const button = screen.getByRole("button");
+
+    // Simulate clicking the button
     fireEvent.click(button);
 
+    // Wait for handleClearAll to be called
     await waitFor(() => {
       expect(mockHandleClearAll).toHaveBeenCalled();
     });
 
+    // Wait for the button to be enabled again
     await waitFor(() => {
       expect(button).toBeEnabled();
     });
+
+    // Verify that console.error was called with the correct error message
+    expect(consoleErrorSpy).toHaveBeenCalledWith(expect.any(Error));
+
+    // Restore the original implementation of console.error
+    consoleErrorSpy.mockRestore();
   });
 
   it("should refresh the router on successful delete", async () => {
