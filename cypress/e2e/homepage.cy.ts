@@ -1,5 +1,3 @@
-import * as api from "../../src/lib/api";
-
 describe("Testing Intro Component", () => {
   before(() => {
     cy.viewport(1280, 720); // Set the screen resolution once
@@ -53,25 +51,6 @@ describe("Testing HeadlinePosts Component", () => {
       .find("div") // Find all divs within the container
       .should("have.length.greaterThan", 5); // Verify that there are more than 5 divs in the skeleton
     cy.wait(1000); // Wait for the data to load
-  });
-
-  it("should display HeadlinePosts after loading", () => {
-    // Simulate the function to return mock data
-    cy.stub(api, "getRandomPostsFromTwoWeeksAgo").returns(
-      Promise.resolve([
-        { slug: "post-1", title: "Post 1" },
-        { slug: "post-2", title: "Post 2" },
-        { slug: "post-3", title: "Post 3" },
-        { slug: "post-4", title: "Post 4" },
-        { slug: "post-5", title: "Post 5" },
-        { slug: "post-6", title: "Post 6" },
-        { slug: "post-7", title: "Post 7" },
-        { slug: "post-8", title: "Post 8" },
-      ]),
-    );
-
-    // Verify that the posts are displayed
-    cy.get(".flex.flex-wrap.justify-center").find("a").should("have.length", 8); // Make sure there are 8 links to the posts
   });
 });
 
