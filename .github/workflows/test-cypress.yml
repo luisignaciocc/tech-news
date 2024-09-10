@@ -1,0 +1,49 @@
+name: Run Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: self-hosted
+    if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+
+      - name: Install dependencies using pnpm
+        run: |
+          npm install -g pnpm
+          pnpm install
+
+      - name: Install required libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            xvfb \
+            libgtk2.0-0 \
+            libgtk-3-0 \
+            libgbm-dev \
+            libnotify-dev \
+            libnss3 \
+            libxss1 \
+            libasound2 \
+            libxtst6 \
+            xauth \
+            libatk1.0-0
+
+      - name: Run Cypress tests
+        env:
+          BASE_URL: "https://www.tecnobuc.com"
+        run: |
+          npx xvfb-maybe npx cypress run --config baseUrl=$BASE_URL
