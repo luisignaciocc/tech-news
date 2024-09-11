@@ -122,3 +122,33 @@ describe("Testing PostContent Component", () => {
     cy.get("div.flex.flex-wrap a").should("have.length.greaterThan", 0); // Ensures that there is at least one link
   });
 });
+
+describe("Testing SimilarPosts Component", () => {
+  before(() => {
+    cy.viewport(1280, 720); // Set the screen resolution once
+  });
+
+  beforeEach(() => {
+    // Simulate a slug parameter for the test
+    const slug = "las-aplicaciones-que-apple-desplaz-en-la-wwdc-2024"; // Place a valid slug
+    cy.visit(`/posts/${slug}`); // Change this to your app URL
+  });
+
+  it("should render SimilarPosts and its internal components", () => {
+    // Verifies that the SimilarPosts container is rendered
+    cy.get("div.mx-auto.max-w-2xl").should("exist");
+
+    // Verifies that there is a container for the similar posts cards
+    cy.get("div.grid.lg\\:grid-cols-5").should("exist");
+
+    // Verifies that the similar posts cards are rendered
+    cy.get("div.lg\\:col-span-4")
+      .find("div")
+      .should("have.length.greaterThan", 0); // Ensures that there is at least one card container
+
+    // Verifies that each card contains a container with the Link component
+    cy.get("div.lg\\:col-span-4")
+      .find("div.bg-gray-100, div.bg-white")
+      .should("have.length.greaterThan", 0); // Ensures that there is at least one card container
+  });
+});
