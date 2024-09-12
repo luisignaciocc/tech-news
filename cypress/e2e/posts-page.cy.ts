@@ -247,3 +247,20 @@ describe("Testing SideSection Component", () => {
     });
   });
 });
+
+describe("Testing PageNavigation Component", () => {
+  before(() => {
+    cy.viewport(1280, 720); // Set the screen resolution once
+  });
+
+  beforeEach(() => {
+    const page = "2";
+    // Visit the page that should include SearchPostContent
+    cy.visit(`/record/${page}`); // Change this to your app URL
+  });
+
+  it("should render the PageNavigation component", () => {
+    // Verifies that the component structure is present
+    cy.get("div.flex.justify-between.mb-5").should("exist"); // Checks that the main container is present
+  });
+});
