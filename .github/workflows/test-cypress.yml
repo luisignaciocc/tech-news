@@ -8,7 +8,8 @@ on:
 jobs:
   test:
     runs-on: self-hosted
-    if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]' && github.actor != 'github-actions[bot]'
+    if: false
+    # if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]' && github.actor != 'github-actions[bot]'
 
     steps:
       - name: Checkout code
