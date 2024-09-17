@@ -15,14 +15,13 @@ const meta: Meta = {
 
 export default meta;
 
-// Definimos la historia
+// We define the story
 const Template: StoryFn<{ title: string; src: string; slug?: string }> = (
   args,
 ) => {
   return <ZoomImage {...args} />;
 };
-
-// Historia con enlace
+// Story with link
 export const WithLink = Template.bind({});
 WithLink.args = {
   title: "Sample Image with Link",
@@ -30,7 +29,7 @@ WithLink.args = {
   slug: "sample-image",
 };
 
-// Historia sin enlace
+// Story without link
 export const WithoutLink = Template.bind({});
 WithoutLink.args = {
   title: "Sample Image without Link",
