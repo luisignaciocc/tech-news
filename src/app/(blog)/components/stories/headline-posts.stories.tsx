@@ -33,26 +33,28 @@ const Template: StoryFn<{ posts: { slug: string; title: string }[] }> = (
   const postsForHeadline = getRandomPostsFromTwoWeeksAgo(args.posts);
 
   return (
-    <Fragment>
-      {postsForHeadline.map((post, index) => (
-        <div key={index}>
-          <Link href={`/posts/${post.slug}`}>
-            <div className="mr-5 text-xs font-bold hover:text-gray-400 leading-tight tracking-tight">
-              {post.title}
-            </div>
-          </Link>
-        </div>
-      ))}
-    </Fragment>
+    <div className="flex flex-wrap justify-center mx-5 md:mx-8 xl:mx-14 mb-5">
+      <Fragment>
+        {postsForHeadline.map((post, index) => (
+          <div key={index}>
+            <Link href={`/posts/${post.slug}`}>
+              <div className="mr-5 text-xs font-bold hover:text-gray-400 leading-tight tracking-tight">
+                {post.title}
+              </div>
+            </Link>
+          </div>
+        ))}
+      </Fragment>
+    </div>
   );
 };
 
 export const Default = Template.bind({});
 Default.args = {
   posts: [
-    { slug: "post-1", title: "Post 1" },
-    { slug: "post-2", title: "Post 2" },
-    { slug: "post-3", title: "Post 3" },
-    { slug: "post-4", title: "Post 4" },
+    { slug: "post-1", title: "Titulo del Post numero 1" },
+    { slug: "post-2", title: "Titulo del Post numero 2" },
+    { slug: "post-3", title: "Titulo del Post numero 3" },
+    { slug: "post-4", title: "Titulo del Post numero 4" },
   ],
 };
