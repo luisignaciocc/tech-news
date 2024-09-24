@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import React, { Fragment } from "react";
 
@@ -49,4 +50,17 @@ export default async function TagsPage({ params }: Params) {
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const tag = decodeURIComponent(params.tag);
+  const t = await getTranslations("tag");
+
+  const title = `${t("title")} "${tag}" | Tecnobuc`;
+  const description = `${t("description")} "${tag}"`;
+
+  return {
+    title,
+    description,
+  };
 }
