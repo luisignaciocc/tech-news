@@ -1,7 +1,4 @@
 {
-  "HomePage": {
-    "title": "Hello world!"
-  },
   "Footer": {
     "description": "Automatically Generated with Artificial Intelligence.",
     "learn-more": "Learn more",
@@ -53,5 +50,14 @@
     "search": "Searching",
     "undefined": "There are no posts available.",
     "suggestion": "Try another search term; you can use keywords or abbreviations, for example: ARTIFICIAL or AI."
+  },
+  "Page-navigation": {
+    "prev-button": "Back",
+    "next-button": "Older"
+  },
+  "Record-page": {
+    "title": "Older Posts",
+    "description": "Older Posts",
+    "undefined": "There are no more posts."
   }
 }

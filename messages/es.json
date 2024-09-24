@@ -1,7 +1,4 @@
 {
-  "HomePage": {
-    "title": "Hola mundo!"
-  },
   "Footer": {
     "description": "Automáticamente Generado con Inteligencia Artificial.",
     "learn-more": "Saber más",
@@ -53,5 +50,14 @@
     "search": "Buscando",
     "undefined": "No hay publicaciones disponibles.",
     "suggestion": "Intenta con otro término de búsqueda, puedes utilizar palabras claves o abreviaturas, ejemplo: `ARTIFICIAL` o `IA`."
+  },
+  "Page-navigation": {
+    "prev-button": "Volver",
+    "next-button": "Más antiguos"
+  },
+  "Record-page": {
+    "title": "Posts más Antiguos",
+    "description": "Posts más Antiguos",
+    "undefined": "No hay mas publicaciones."
   }
 }
