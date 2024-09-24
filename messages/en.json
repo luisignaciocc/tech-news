@@ -59,5 +59,8 @@
     "title": "Older Posts",
     "description": "Older Posts",
     "undefined": "There are no more posts."
+  },
+  "Special-section": {
+    "title": "Specials"
   }
 }

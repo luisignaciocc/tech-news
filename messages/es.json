@@ -59,5 +59,8 @@
     "title": "Posts más Antiguos",
     "description": "Posts más Antiguos",
     "undefined": "No hay mas publicaciones."
+  },
+  "Special-section": {
+    "title": "Especiales"
   }
 }

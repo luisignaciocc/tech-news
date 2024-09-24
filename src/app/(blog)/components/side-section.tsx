@@ -2,6 +2,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import React, { Fragment } from "react";
 import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -56,10 +57,11 @@ export function SpecialSectionSkeleton() {
 
 export async function SpecialSection() {
   const specialPosts = await getRandomPostsFromTwoWeeksAgo(5);
+  const t = await getTranslations("Special-section");
 
   return (
     <div>
-      <h2 className="text-3xl uppercase font-bold">Especiales</h2>
+      <h2 className="text-3xl uppercase font-bold">{t("title")}</h2>
       <hr className="bg-black border-1 border-black" />
       {specialPosts.map((post, index) => (
         <div
