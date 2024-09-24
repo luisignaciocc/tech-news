@@ -46,5 +46,12 @@
     "description": "Search",
     "undefined": "There are no posts available.",
     "suggestion": "Try another tag or search for a different term."
+  },
+  "posts": {
+    "title": "Post Search",
+    "description": "Post Search.",
+    "search": "Searching",
+    "undefined": "There are no posts available.",
+    "suggestion": "Try another search term; you can use keywords or abbreviations, for example: ARTIFICIAL or AI."
   }
 }

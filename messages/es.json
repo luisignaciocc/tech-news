@@ -46,5 +46,12 @@
     "description": "Buscar",
     "undefined": "No hay publicaciones disponibles.",
     "suggestion": "Intenta con otro tag o busca un término diferente."
+  },
+  "posts": {
+    "title": "Busqueda de Posts",
+    "description": "Busqueda de Posts.",
+    "search": "Buscando",
+    "undefined": "No hay publicaciones disponibles.",
+    "suggestion": "Intenta con otro término de búsqueda, puedes utilizar palabras claves o abreviaturas, ejemplo: `ARTIFICIAL` o `IA`."
   }
 }
