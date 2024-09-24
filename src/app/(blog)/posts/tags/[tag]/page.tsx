@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import React, { Fragment } from "react";
 
 import { MoreStories } from "@/app/(blog)/components/more-stories";
@@ -17,6 +18,8 @@ export default async function TagsPage({ params }: Params) {
     getPostsBySearchTerm(searchTerm, perPage),
   ]);
 
+  const t = await getTranslations("tag");
+
   return (
     <div className="mt-10 mx-6 xl:mx-auto mb-10 xl:max-w-6xl ">
       <div className="flex items-center">
@@ -35,10 +38,8 @@ export default async function TagsPage({ params }: Params) {
             <MoreStories posts={posts} hasMorePosts />
           ) : (
             <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
-              <p className="text-2xl">No hay publicaciones disponibles.</p>
-              <p className="mt-5">
-                Intenta con otro tag o busca un término diferente.
-              </p>
+              <p className="text-2xl">{t("undefined")} </p>
+              <p className="mt-5">{t("suggestion")}</p>
             </div>
           )}
         </div>

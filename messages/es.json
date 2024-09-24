@@ -1,5 +1,50 @@
 {
   "HomePage": {
     "title": "Hola mundo!"
+  },
+  "Footer": {
+    "description": "Automáticamente Generado con Inteligencia Artificial.",
+    "learn-more": "Saber más",
+    "view-github": "Ver repo en GitHub"
+  },
+  "More-stories": {
+    "more-posts": "Ver posts mas antiguos"
+  },
+  "Navbar": {
+    "search": "Buscar",
+    "logo": "Logotipo de Tecnobuc",
+    "link": "Link a",
+    "search-open": "Cerrar cuadro de búsqueda",
+    "search-close": "Abrir cuadro de búsqueda",
+    "menu-open": "Cerrar menú",
+    "menu-close": "Abrir menú"
+  },
+  "Headline-posts": {
+    "link": "Link a"
+  },
+  "Second-tag-section": {
+    "prev-button": "Tag anterior",
+    "next-button": "Siguiente tag"
+  },
+  "Side-section": {
+    "link": "Link a",
+    "description": "Un noticiero digital de tecnología con contenido generado automáticamente.",
+    "copyright": "Todos los derechos reservados.",
+    "made-by": "Hecho por"
+  },
+  "Zoom-image": {
+    "alt": "Imagen de portada para"
+  },
+  "Similiar-post": {
+    "related": "Relacionado"
+  },
+  "Social-media": {
+    "link": "Link a"
+  },
+  "tag": {
+    "title": "Buscar",
+    "description": "Buscar",
+    "undefined": "No hay publicaciones disponibles.",
+    "suggestion": "Intenta con otro tag o busca un término diferente."
   }
 }

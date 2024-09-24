@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
@@ -9,6 +10,8 @@ type Props = {
 };
 
 const ZoomImage = ({ title, src, slug }: Props) => {
+  const t = useTranslations("Zoom-image");
+
   const image = (
     <div
       className={cn("relative overflow-hidden", {
@@ -19,7 +22,7 @@ const ZoomImage = ({ title, src, slug }: Props) => {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
-        alt={`Cover Image for ${title}`}
+        alt={`${t("alt")} ${title}`}
         className={cn("transition-all duration-1000 hover:scale-105", {
           "mx-auto": !slug,
         })}
@@ -28,6 +31,7 @@ const ZoomImage = ({ title, src, slug }: Props) => {
       />
     </div>
   );
+
   return (
     <div className="sm:mx-0">
       {slug ? (

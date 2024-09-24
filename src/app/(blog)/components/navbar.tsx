@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
@@ -59,6 +60,8 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
     }
   }, [isDesktopScreen]);
 
+  const t = useTranslations("Navbar");
+
   return (
     <Fragment>
       {/* Search box */}
@@ -82,7 +85,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                   "text-white": theme === "dark",
                 },
               )}
-              placeholder="Buscar..."
+              placeholder={`${t("search")}...`}
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -97,7 +100,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                 },
               )}
               onClick={handleSearch}
-              aria-label="Buscar"
+              aria-label={t("search")}
             >
               <BsSearch className="h-6 w-6" />
             </button>
@@ -130,7 +133,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                     src="/icon.png"
                     width="150"
                     height="150"
-                    alt="Logotipo de Tecnobuc"
+                    alt={t("logo")}
                     className={`${isNavBar ? "w-14 h-14" : isMenuOpen ? "w-14 h-14" : "w-28 h-28"} object-cover`}
                   />
                 </div>
@@ -157,7 +160,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                         <a
                           href={socialMedia.url}
                           target="_blank"
-                          aria-label={`Link to ${socialMedia.name}`}
+                          aria-label={`${t("link")} ${socialMedia.name}`}
                         >
                           <div
                             className={cn(
@@ -197,7 +200,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                     src="/icon.png"
                     width="50"
                     height="50"
-                    alt="Logotipo de Tecnobuc"
+                    alt={t("logo")}
                     className="w-14 h-14 object-cover"
                   />
                 </div>
@@ -283,11 +286,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
           >
             <div className="lg:hidden flex items-center">
               <button
-                aria-label={
-                  isSearchOpen
-                    ? "Cerrar cuadro de búsqueda"
-                    : "Abrir cuadro de búsqueda"
-                }
+                aria-label={isSearchOpen ? t("search-open") : t("search-close")}
                 className={cn(
                   "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
                   {
@@ -324,7 +323,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                 |
               </span>
               <button
-                aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+                aria-label={isMenuOpen ? t("menu-open") : t("menu-close")}
                 className={cn(
                   "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
                   {
@@ -354,7 +353,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                 src="/icon.png"
                 width="100"
                 height="100"
-                alt="Logotipo de Tecnobuc"
+                alt={t("logo")}
                 className="w-24 h-24 object-cover"
               />
             </div>

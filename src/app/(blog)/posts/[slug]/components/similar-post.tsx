@@ -1,6 +1,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
@@ -72,6 +73,8 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
   slug,
   publishedAt,
 }) => {
+  const t = useTranslations("Similiar-post");
+
   return (
     <Fragment>
       {/* Version for large screens */}
@@ -91,7 +94,7 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
         <div className="w-2/3 p-2 flex flex-col justify-between">
           <div>
             <p className="text-xs font-bold mb-2 uppercase text-gray-400">
-              Relacionado
+              {t("related")}
             </p>
             <h3 className="text-base font-bold mb-1 line-clamp-3">
               <Link href={`/posts/${slug}`}>{title}</Link>

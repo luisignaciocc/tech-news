@@ -1,5 +1,50 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "Footer": {
+    "description": "Automatically Generated with Artificial Intelligence.",
+    "learn-more": "Learn more",
+    "view-github": "View repo on GitHub"
+  },
+  "More-stories": {
+    "more-posts": "View older posts"
+  },
+  "Navbar": {
+    "search": "Search",
+    "logo": "Tecnobuc Logo",
+    "link": "Link to",
+    "search-open": "Close search box",
+    "search-close": "Open search box",
+    "menu-open": "Close menu",
+    "menu-close": "Open menu"
+  },
+  "Headline-posts": {
+    "link": "Link to"
+  },
+  "Second-tag-section": {
+    "prev-button": "Previous tag",
+    "next-button": "Next tag"
+  },
+  "Side-section": {
+    "link": "Link to",
+    "description": "A digital technology news outlet with automatically generated content.",
+    "copyright": "All rights reserved.",
+    "made-by": "Made by"
+  },
+  "Zoom-image": {
+    "alt": "Cover Image for"
+  },
+  "Similiar-post": {
+    "related": "Related"
+  },
+  "Social-media": {
+    "link": "Link to"
+  },
+  "tag": {
+    "title": "Search",
+    "description": "Search",
+    "undefined": "There are no posts available.",
+    "suggestion": "Try another tag or search for a different term."
   }
 }
