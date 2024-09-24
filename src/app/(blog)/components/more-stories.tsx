@@ -1,6 +1,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 
@@ -54,6 +55,8 @@ export function MoreStoriesSkeleton({ repeat }: MoreStoriesSkeletonProps) {
 }
 
 export function MoreStories({ posts, hasMorePosts }: Props) {
+  const t = useTranslations("More-stories");
+
   return (
     <section>
       <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:gap-x-6 gap-y-20 md:gap-y-8 mb-8">
@@ -74,7 +77,7 @@ export function MoreStories({ posts, hasMorePosts }: Props) {
           <Link href="/record/2">
             <div className="h-full flex items-center justify-center group ">
               <div className="mx-3 bg-primary border border-primary text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0 group-hover:bg-white group-hover:text-black">
-                Ver posts mas antiguos
+                {t("more-posts")}
               </div>
             </div>
           </Link>

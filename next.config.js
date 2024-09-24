@@ -27,13 +27,13 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
-
 // Injected content via Sentry wizard below
+const createNextIntlPlugin = require("next-intl/plugin");
+const withNextIntl = createNextIntlPlugin();
 
 const { withSentryConfig } = require("@sentry/nextjs");
 
-module.exports = withSentryConfig(module.exports, {
+module.exports = withSentryConfig(withNextIntl(nextConfig), {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 

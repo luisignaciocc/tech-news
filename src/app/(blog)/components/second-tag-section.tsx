@@ -2,6 +2,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import React, { Fragment, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
@@ -61,6 +62,8 @@ function SecondTagSection({
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % postsByTags.length);
   };
+
+  const t = useTranslations("Second-tag-section");
 
   return (
     <Fragment>
@@ -138,7 +141,7 @@ function SecondTagSection({
           <div className="carousel-controls absolute top-1/2 -translate-y-1/2 w-full flex justify-between px-4 sm:px-6">
             <button
               id="prev-btn"
-              aria-label="Tag anterior"
+              aria-label={t("prev-button")}
               onClick={handlePrevClick}
               className="bg-black/50 text-white p-2 rounded-full hover:bg-black sm:p-3"
             >
@@ -146,7 +149,7 @@ function SecondTagSection({
             </button>
             <button
               id="next-btn"
-              aria-label="Siguiente tag"
+              aria-label={t("next-button")}
               onClick={handleNextClick}
               className="bg-black/50 text-white p-2 rounded-full hover:bg-black sm:p-3"
             >

@@ -1,6 +1,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
@@ -39,6 +40,7 @@ export function HeadlinePostsSkeleton() {
 
 export async function HeadlinePosts() {
   const postsForHeadline = await getRandomPostsFromTwoWeeksAgo(4);
+  const t = await getTranslations("Headline-posts");
 
   return (
     <Fragment>
@@ -76,7 +78,7 @@ export async function HeadlinePosts() {
                     <a
                       href={socialMedia.url}
                       target="_blank"
-                      aria-label={`Link to ${socialMedia.name}`}
+                      aria-label={`${t("link")} ${socialMedia.name}`}
                     >
                       <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                       <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">

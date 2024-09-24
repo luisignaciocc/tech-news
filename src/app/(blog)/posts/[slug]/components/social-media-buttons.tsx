@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import React, { Fragment } from "react";
 import {
   FaFacebookF,
@@ -30,6 +31,8 @@ export const socialMediaLinks = [
 ];
 
 function SocialMediaButtons() {
+  const t = useTranslations("Social-media");
+
   return (
     <Fragment>
       {/* Version for large screens */}
@@ -40,7 +43,7 @@ function SocialMediaButtons() {
               <a
                 href={socialMedia.url}
                 target="_blank"
-                aria-label={`Link to ${socialMedia.name}`}
+                aria-label={`${t("link")} ${socialMedia.name}`}
               >
                 <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                 <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
@@ -60,7 +63,7 @@ function SocialMediaButtons() {
               <a
                 href={socialMedia.url}
                 target="_blank"
-                aria-label={`Link to ${socialMedia.name}`}
+                aria-label={`${t("link")} ${socialMedia.name}`}
               >
                 <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                 <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">

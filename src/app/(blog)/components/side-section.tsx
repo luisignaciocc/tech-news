@@ -1,6 +1,8 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import React, { Fragment } from "react";
 import { Suspense } from "react";
 import Skeleton from "react-loading-skeleton";
@@ -55,10 +57,11 @@ export function SpecialSectionSkeleton() {
 
 export async function SpecialSection() {
   const specialPosts = await getRandomPostsFromTwoWeeksAgo(5);
+  const t = await getTranslations("Special-section");
 
   return (
     <div>
-      <h2 className="text-3xl uppercase font-bold">Especiales</h2>
+      <h2 className="text-3xl uppercase font-bold">{t("title")}</h2>
       <hr className="bg-black border-1 border-black" />
       {specialPosts.map((post, index) => (
         <div
@@ -195,6 +198,8 @@ export function MiniFooterSkeleton() {
 }
 
 export function MiniFooter() {
+  const t = useTranslations("Side-section");
+
   return (
     <div className="mt-6">
       <div className="flex justify-center gap-4 mt-2 mb-4">
@@ -207,7 +212,7 @@ export function MiniFooter() {
               <a
                 href={socialMedia.url}
                 target="_blank"
-                aria-label={`Link to ${socialMedia.name}`}
+                aria-label={`${t("link")} ${socialMedia.name}`}
               >
                 <div className="absolute inset-0 border border-gray-500 rounded-full scale-100 transition-transform duration-300 group-hover:scale-125 group-hover:opacity-0 group-hover:duration-500"></div>
                 <div className="bg-white rounded-full p-2 transition-transform duration-300 group-hover:scale-125">
@@ -221,14 +226,10 @@ export function MiniFooter() {
 
       <div className="flex flex-col justify-center items-center ml-4">
         <span className="uppercase text-sm">
-          Tecnobuc -{" "}
-          <span className="text-gray-700">
-            Un noticiero digital de tecnología con contenido generado
-            automáticamente.
-          </span>
+          Tecnobuc - <span className="text-gray-700">{t("description")}</span>
         </span>
         <span className="uppercase text-sm text-gray-700">
-          Todos los derechos reservados.
+          {t("copyright")}
         </span>
         <span className="uppercase text-sm text-gray-700">&copy; 2024</span>
         <div className="w-10 h-10 rounded-full overflow-hidden flex items-center my-2 ml-2">
@@ -241,7 +242,7 @@ export function MiniFooter() {
           />
         </div>
         <span className="uppercase text-xs">
-          Hecho por{" "}
+          {t("made-by")}{" "}
           <a
             href={SITE_AUTHOR_URL}
             className="underline hover:text-blue-600 duration-200 transition-colors"

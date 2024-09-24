@@ -4,6 +4,8 @@ import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 import { SITE_URL } from "@/lib/metadata";
 
@@ -20,20 +22,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <head>
         <GoogleTagManager gtmId="GTM-WKN32H7F" />
       </head>
       <body className={inter.className}>
         <Analytics />
         <SpeedInsights />
-        {children}
+        <NextIntlClientProvider messages={messages}>
+          {children}
+        </NextIntlClientProvider>
       </body>
       <GoogleAnalytics gaId="G-0NYZMYCD8C" />
     </html>

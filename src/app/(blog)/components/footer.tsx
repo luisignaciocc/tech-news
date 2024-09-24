@@ -1,12 +1,16 @@
+import { useTranslations } from "next-intl";
+
 import Container from "@/components/container";
 
 export function Footer() {
+  const t = useTranslations("Footer");
+
   return (
     <footer className="bg-neutral-50 border-t border-neutral-200">
       <Container>
         <div className="py-28 flex flex-col lg:flex-row items-center">
           <h1 className="text-4xl lg:text-5xl font-bold tracking-tighter leading-tight text-center lg:text-left mb-10 lg:mb-0 lg:pr-4 lg:w-1/2">
-            Automáticamente Generado con Inteligencia Artificial.
+            {t("description")}
           </h1>
           <div className="flex flex-col lg:flex-row justify-center items-center lg:pl-4 lg:w-1/2">
             <a
@@ -15,7 +19,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="mx-3 bg-primary hover:bg-white hover:text-black border border-black text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0"
             >
-              Saber más
+              {t("learn-more")}
             </a>
             <a
               href={`https://github.com/luisignaciocc/tech-news`}
@@ -23,7 +27,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="mx-3 font-bold hover:underline"
             >
-              Ver repo en GitHub
+              {t("view-github")}
             </a>
           </div>
         </div>

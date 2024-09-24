@@ -1,3 +1,5 @@
+import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import React from "react";
 
 import { getPosts } from "@/lib/api";
@@ -23,14 +25,13 @@ export default async function SearchPostContent({
   ]);
 
   const hasMorePosts = page * perPage < count;
+  const t = await getTranslations("Record-page");
 
   return (
     <div className="mt-10 mx-6 xl:mx-auto mb-10 xl:max-w-6xl ">
       <div className="flex items-center">
         <span className="uppercase text-4xl mt-4 flex items-center leading-tight tracking-tighter">
-          <span className="hidden md:inline-block mr-2">
-            Posts más antiguos
-          </span>
+          <span className="hidden md:inline-block mr-2">{t("title")}</span>
         </span>
       </div>
       <div className="flex gap-8 mt-2">
@@ -39,7 +40,7 @@ export default async function SearchPostContent({
             <MoreStories posts={posts} />
           ) : (
             <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
-              <p className="text-2xl">No hay mas publicaciones.</p>
+              <p className="text-2xl">{t("undefined")}</p>
             </div>
           )}
         </div>
@@ -50,4 +51,16 @@ export default async function SearchPostContent({
       <PageNavigation currentPage={page} hasMorePosts={hasMorePosts} />
     </div>
   );
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Record-page");
+
+  const title = `Tecnobuc | ${t("title")}`;
+  const description = `${t("description")}.`;
+
+  return {
+    title,
+    description,
+  };
 }
