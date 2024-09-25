@@ -1,9 +1,10 @@
 "use client";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+
+import { Link } from "@/i18n/routing";
 
 import ZoomImage from "./zoom-image";
 
