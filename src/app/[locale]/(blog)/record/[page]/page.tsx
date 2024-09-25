@@ -49,11 +49,7 @@ export default async function SearchPostContent({
           <SideSection locale={params.locale} />
         </div>
       </div>
-      <PageNavigation
-        currentPage={page}
-        hasMorePosts={hasMorePosts}
-        locale={params.locale}
-      />
+      <PageNavigation currentPage={page} hasMorePosts={hasMorePosts} />
     </div>
   );
 }

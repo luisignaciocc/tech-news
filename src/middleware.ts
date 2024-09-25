@@ -5,14 +5,14 @@ import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
 export default async function middleware(req: NextRequestWithAuth) {
-  // Calls the next-auth middleware
-  await nextAuthMiddleware(req);
-
-  // Calls the next-intl middleware
-  return createMiddleware(routing)(req);
+  const path = req.nextUrl.pathname;
+  if (path.startsWith("/admin")) {
+    return nextAuthMiddleware(req);
+  } else {
+    return createMiddleware(routing)(req);
+  }
 }
 
 export const config = {
-  // Combines the matchers
   matcher: ["/", "/(es|en)/:path*", "/admin/:path*"],
 };
