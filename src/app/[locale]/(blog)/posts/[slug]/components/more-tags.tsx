@@ -1,7 +1,8 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
+
+import { Link } from "@/i18n/routing";
 
 interface Tag {
   id: number;
