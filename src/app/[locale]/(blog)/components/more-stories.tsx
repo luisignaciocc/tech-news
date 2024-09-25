@@ -23,7 +23,6 @@ type Props = {
     }[];
   }[];
   hasMorePosts?: boolean;
-  locale: string;
 };
 
 interface MoreStoriesSkeletonProps {
@@ -55,7 +54,7 @@ export function MoreStoriesSkeleton({ repeat }: MoreStoriesSkeletonProps) {
   );
 }
 
-export function MoreStories({ posts, hasMorePosts, locale }: Props) {
+export function MoreStories({ posts, hasMorePosts }: Props) {
   const t = useTranslations("More-stories");
 
   return (
@@ -72,11 +71,10 @@ export function MoreStories({ posts, hasMorePosts, locale }: Props) {
             excerpt={post.excerpt}
             tags={post.tags}
             titleLinkClassName="hover:underline"
-            locale={locale}
           />
         ))}
         {hasMorePosts && (
-          <Link href={`${locale}/record/2`}>
+          <Link href="/record/2">
             <div className="h-full flex items-center justify-center group ">
               <div className="mx-3 bg-primary border border-primary text-white font-bold py-3 px-12 lg:px-8 duration-200 transition-colors mb-6 lg:mb-0 group-hover:bg-white group-hover:text-black">
                 {t("more-posts")}

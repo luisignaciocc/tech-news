@@ -11,8 +11,7 @@ import PageNavigation from "./components/page-navigation";
 export default async function SearchPostContent({
   params,
 }: {
-  params: {
-    locale: string;
+  params?: {
     page?: string;
   };
 }) {
@@ -38,7 +37,7 @@ export default async function SearchPostContent({
       <div className="flex gap-8 mt-2">
         <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
           {posts.length > 0 ? (
-            <MoreStories posts={posts} locale={params.locale} />
+            <MoreStories posts={posts} />
           ) : (
             <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
               <p className="text-2xl">{t("undefined")}</p>
@@ -46,7 +45,7 @@ export default async function SearchPostContent({
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SideSection locale={params.locale} />
+          <SideSection />
         </div>
       </div>
       <PageNavigation currentPage={page} hasMorePosts={hasMorePosts} />

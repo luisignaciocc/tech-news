@@ -5,10 +5,6 @@ import Skeleton from "react-loading-skeleton";
 
 import DashboardTagsFetcher from "./dashboard-tags-fetcher";
 
-interface IntroProps {
-  locale: string;
-}
-
 export function IntroSkeleton() {
   return (
     <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-6 md:mb-10">
@@ -19,10 +15,10 @@ export function IntroSkeleton() {
   );
 }
 
-export function Intro({ locale }: IntroProps) {
+export function Intro() {
   return (
     <section className="flex-col md:flex-row flex items-center md:justify-between mt-16 mb-6 md:mb-10">
-      <DashboardTagsFetcher locale={locale} />
+      <DashboardTagsFetcher />
     </section>
   );
 }

@@ -5,10 +5,9 @@ import NavBar from "./navbar";
 
 interface DashboardNavBarProps {
   tags: string[];
-  locale: string;
 }
 
-const DashboardNavBar = ({ tags, locale }: DashboardNavBarProps) => {
+const DashboardNavBar = ({ tags }: DashboardNavBarProps) => {
   const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
@@ -40,11 +39,11 @@ const DashboardNavBar = ({ tags, locale }: DashboardNavBarProps) => {
         <div
           className={`bg-primary shadow-2xl right-0 z-50 ${showNavbar ? "" : "hidden"}`}
         >
-          <NavBar isNavBar={true} tags={tags} theme="dark" locale={locale} />
+          <NavBar isNavBar={true} tags={tags} theme="dark" />
         </div>
       </div>
       <div className="w-full mr-5 ml-3">
-        <NavBar isNavBar={false} tags={tags} theme="light" locale={locale} />
+        <NavBar isNavBar={false} tags={tags} theme="light" />
       </div>
     </Fragment>
   );

@@ -19,7 +19,6 @@ type Props = {
     name: string;
   }[];
   titleLinkClassName?: string;
-  locale: string;
 };
 
 export function PostPreview({
@@ -30,7 +29,6 @@ export function PostPreview({
   slug,
   tags,
   titleLinkClassName,
-  locale,
 }: Props) {
   const getTitleAsString = (): string => {
     if (typeof title === "string") {
@@ -49,13 +47,12 @@ export function PostPreview({
           slug={slug}
           title={getTitleAsString()}
           src={coverImage || "/api/preview-image"}
-          locale={locale}
         />
       </div>
       <div className="text-sm flex items-center">
         {tags.slice(0, 1).map((tag) => (
           <Link
-            href={`${locale}/posts/tags/${tag.name}`}
+            href={`/posts/tags/${tag.name}`}
             key={tag.name}
             className="uppercase text-gray-800 mr-2"
           >
@@ -68,10 +65,7 @@ export function PostPreview({
         </div>
       </div>
       <h3 className="text-2xl leading-tight tracking-tighter">
-        <Link
-          href={`${locale}/posts/${slug}`}
-          className={`${titleLinkClassName}`}
-        >
+        <Link href={`/posts/${slug}`} className={`${titleLinkClassName}`}>
           {title}
         </Link>
       </h3>

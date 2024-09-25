@@ -9,10 +9,6 @@ import { getRandomPostsFromTwoWeeksAgo } from "@/lib/api";
 
 import { socialMediaLinks } from "../posts/[slug]/components/social-media-buttons";
 
-interface HeadlinePostsProps {
-  locale: string;
-}
-
 export function HeadlinePostsSkeleton() {
   return (
     <div className="flex flex-wrap justify-center mx-10 my-4">
@@ -42,7 +38,7 @@ export function HeadlinePostsSkeleton() {
   );
 }
 
-export async function HeadlinePosts({ locale }: HeadlinePostsProps) {
+export async function HeadlinePosts() {
   const postsForHeadline = await getRandomPostsFromTwoWeeksAgo(4);
   const t = await getTranslations("Headline-posts");
 
@@ -66,7 +62,7 @@ export async function HeadlinePosts({ locale }: HeadlinePostsProps) {
           }`}
         >
           {index < postsForHeadline.length ? (
-            <Link href={`${locale}/posts/${postsForHeadline[index].slug}`}>
+            <Link href={`/posts/${postsForHeadline[index].slug}`}>
               <div className="mr-5 text-xs font-bold hover:text-gray-400 leading-tight tracking-tight">
                 {postsForHeadline[index].title}
               </div>
