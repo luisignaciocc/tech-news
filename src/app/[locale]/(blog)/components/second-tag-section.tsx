@@ -29,6 +29,7 @@ interface PostsByTags {
 interface SecondTagSectionProps {
   secondMostUsedTag: string[];
   postsByTags: PostsByTags[];
+  locale: string;
 }
 
 export function SecondTagSectionSkeleton() {
@@ -50,6 +51,7 @@ export function SecondTagSectionSkeleton() {
 function SecondTagSection({
   secondMostUsedTag,
   postsByTags,
+  locale,
 }: SecondTagSectionProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -76,11 +78,12 @@ function SecondTagSection({
                 title={postsByTags[0].title}
                 src={postsByTags[0].coverImage || ""}
                 slug={postsByTags[0].slug}
+                locale={locale}
               />
               <div className="absolute top-4 left-0 pl-6 pr-2 bg-black text-white py-1 rounded text-sm uppercase font-bold">
                 {secondMostUsedTag}
               </div>
-              <Link href={`/posts/${postsByTags[0].slug}`}>
+              <Link href={`${locale}/posts/${postsByTags[0].slug}`}>
                 <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
                 <div className="absolute bottom-0 left-0 w-full px-4 pt-2 text-white overflow-hidden text-ellipsis line-clamp-3 hover:text-red-500">
                   {postsByTags[0].title}
@@ -95,8 +98,9 @@ function SecondTagSection({
                   title={post.title}
                   src={post.coverImage || ""}
                   slug={post.slug}
+                  locale={locale}
                 />
-                <Link href={`/posts/${post.slug}`}>
+                <Link href={`${locale}/posts/${post.slug}`}>
                   <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
                   <div className="absolute bottom-0 left-0 w-full px-4 pt-2 text-white overflow-hidden text-ellipsis line-clamp-3 hover:text-red-500">
                     {post.title}
@@ -124,12 +128,13 @@ function SecondTagSection({
                     title={post.title}
                     src={post.coverImage || ""}
                     slug={post.slug}
+                    locale={locale}
                   />
                 </div>
                 <div className="absolute top-4 left-0 pl-6 pr-2 bg-black text-white py-1 rounded text-sm uppercase font-bold sm:text-base">
                   {secondMostUsedTag}
                 </div>
-                <Link href={`/posts/${post.slug}`}>
+                <Link href={`${locale}/posts/${post.slug}`}>
                   <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
                   <div className="absolute bottom-0 left-0 w-full px-4 pt-2 text-white overflow-hidden text-ellipsis line-clamp-3 hover:text-red-500 text-sm sm:text-base">
                     {post.title}

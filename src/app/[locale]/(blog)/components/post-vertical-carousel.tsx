@@ -22,6 +22,7 @@ interface Post {
 
 type Props = {
   posts: Post[];
+  locale: string;
 };
 
 export function PostVerticalCarouselSkeleton() {
@@ -41,7 +42,7 @@ export function PostVerticalCarouselSkeleton() {
   );
 }
 
-export default function PostVerticalCarousel({ posts }: Props) {
+export default function PostVerticalCarousel({ posts, locale }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -100,12 +101,13 @@ export default function PostVerticalCarousel({ posts }: Props) {
                   slug={post.slug}
                   title={post.title}
                   src={post.coverImage || "/api/preview-image"}
+                  locale={locale}
                 />
               </div>
               <div className="text-sm flex items-center">
                 {post.tags.slice(0, 1).map((tag) => (
                   <Link
-                    href={`/posts/tags/${tag.name}`}
+                    href={`${locale}/posts/tags/${tag.name}`}
                     key={tag.id}
                     className="uppercase text-gray-800 mr-2"
                   >
@@ -121,7 +123,7 @@ export default function PostVerticalCarousel({ posts }: Props) {
                 </div>
               </div>
               <h3 className="text-2xl leading-tight tracking-tighter">
-                <Link href={`/posts/${post.slug}`} className={``}>
+                <Link href={`${locale}/posts/${post.slug}`} className={``}>
                   {post.title}
                 </Link>
               </h3>
@@ -175,6 +177,7 @@ export default function PostVerticalCarousel({ posts }: Props) {
                       slug={post.slug}
                       title={post.title}
                       src={post.coverImage || "/api/preview-image"}
+                      locale={locale}
                     />
                     <p className="text-xs font-bold mt-2 overflow-hidden text-ellipsis -mb-1 line-clamp-3">
                       {post.title}

@@ -20,10 +20,16 @@ import { SpecialCardPost } from "./special-card-post";
 
 interface SideSectionProps {
   searchTag?: string;
+  locale: string;
 }
 
 interface TagSectionProps {
   searchTerm?: string;
+  locale: string;
+}
+
+interface Props {
+  locale: string;
 }
 
 export function SpecialSectionSkeleton() {
@@ -55,7 +61,7 @@ export function SpecialSectionSkeleton() {
   );
 }
 
-export async function SpecialSection() {
+export async function SpecialSection({ locale }: Props) {
   const specialPosts = await getRandomPostsFromTwoWeeksAgo(5);
   const t = await getTranslations("Special-section");
 
@@ -74,6 +80,7 @@ export async function SpecialSection() {
             title={post.title}
             slug={post.slug}
             number={`${(index + 1).toString().padStart(2, "0")}`}
+            locale={locale}
           />
           {index !== specialPosts.length - 1 && <hr className="mt-6 w-full" />}
         </div>
@@ -107,7 +114,7 @@ export function TagSectionSkeleton() {
   );
 }
 
-export async function TagSection({ searchTerm }: TagSectionProps) {
+export async function TagSection({ searchTerm, locale }: TagSectionProps) {
   const mostUsedTags = await getMostUsedTags(2);
 
   let mostUsedTag: string[];
@@ -139,6 +146,7 @@ export async function TagSection({ searchTerm }: TagSectionProps) {
             excerpt={null}
             slug={post.slug}
             tags={post.tags}
+            locale={locale}
           />
         </div>
       ))}
@@ -146,10 +154,10 @@ export async function TagSection({ searchTerm }: TagSectionProps) {
   );
 }
 
-export async function PostsCarouselFetcher() {
+export async function PostsCarouselFetcher({ locale }: Props) {
   const posts = await getRandomPostsFromTwoWeeksAgo(3);
 
-  return <PostCarousel posts={posts} />;
+  return <PostCarousel posts={posts} locale={locale} />;
 }
 
 export function MiniFooterSkeleton() {
@@ -257,17 +265,17 @@ export function MiniFooter() {
   );
 }
 
-export default function SideSection({ searchTag }: SideSectionProps) {
+export default function SideSection({ searchTag, locale }: SideSectionProps) {
   return (
     <Fragment>
       <Suspense fallback={<SpecialSectionSkeleton />}>
-        <SpecialSection />
+        <SpecialSection locale={locale} />
       </Suspense>
       <Suspense fallback={<TagSectionSkeleton />}>
-        <TagSection searchTerm={searchTag} />
+        <TagSection searchTerm={searchTag} locale={locale} />
       </Suspense>
       <Suspense fallback={<PostCarouselSkeleton />}>
-        <PostsCarouselFetcher />
+        <PostsCarouselFetcher locale={locale} />
       </Suspense>
       <hr className="mt-4 w-full" />
       <Suspense fallback={<MiniFooterSkeleton />}>

@@ -24,33 +24,37 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default async function Index() {
+export default async function Index({
+  params,
+}: {
+  params: { locale: string };
+}) {
   return (
     <main>
       <Container>
         <Suspense fallback={<IntroSkeleton />}>
-          <Intro />
+          <Intro locale={params.locale} />
         </Suspense>
         <Suspense fallback={<HeadlinePostsSkeleton />}>
           <div className="flex flex-wrap justify-center mx-5 md:mx-8 xl:mx-14 mb-5">
-            <HeadlinePosts />
+            <HeadlinePosts locale={params.locale} />
           </div>
         </Suspense>
         <div className="w-11/12 mx-auto justify-center">
           <div className="flex gap-8 mt-2">
             <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
               <Suspense fallback={<PostVerticalCarouselSkeleton />}>
-                <HeroPostsFetcher />
+                <HeroPostsFetcher locale={params.locale} />
               </Suspense>
               <Suspense fallback={<MoreStoriesSkeleton repeat={4} />}>
-                <PostsFetcher />
+                <PostsFetcher locale={params.locale} />
               </Suspense>
               <Suspense fallback={<SecondTagSectionSkeleton />}>
-                <SecondTagsPostsFetcher />
+                <SecondTagsPostsFetcher locale={params.locale} />
               </Suspense>
             </div>
             <div className="w-4/12 hidden lg:block">
-              <SideSection />
+              <SideSection locale={params.locale} />
             </div>
           </div>
         </div>

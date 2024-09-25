@@ -6,6 +6,7 @@ interface SpecialCardPostProps {
   title: string;
   slug: string;
   number: string;
+  locale: string;
 }
 
 export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
@@ -13,11 +14,12 @@ export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
   title,
   slug,
   number,
+  locale,
 }) => {
   return (
     <Fragment>
       <div className="flex flex-row items-start w-full mt-3">
-        <Link href={`/posts/${slug}`}>
+        <Link href={`${locale}/posts/${slug}`}>
           <div className="w-24 h-24 rounded-md overflow-hidden mr-2 relative">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -35,7 +37,7 @@ export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
         </Link>
         <div className="flex-1">
           <h3 className="mb-1 line-clamp-4 hover:text-gray-400 leading-tight tracking-tighter">
-            <Link href={`/posts/${slug}`}>{title}</Link>
+            <Link href={`${locale}/posts/${slug}`}>{title}</Link>
           </h3>
         </div>
       </div>

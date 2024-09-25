@@ -18,6 +18,7 @@ interface Post {
 
 interface PostCarouselProps {
   posts: Post[];
+  locale: string;
 }
 
 export function PostCarouselSkeleton() {
@@ -29,7 +30,7 @@ export function PostCarouselSkeleton() {
   );
 }
 
-const PostCarousel = ({ posts }: PostCarouselProps) => {
+const PostCarousel = ({ posts, locale }: PostCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | undefined>(
     undefined,
@@ -73,10 +74,11 @@ const PostCarousel = ({ posts }: PostCarouselProps) => {
               src={post.coverImage || ""}
               title={post.title}
               slug={post.slug}
+              locale={locale}
             />
             <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2">
               <Link
-                href={`/posts/${post.slug}`}
+                href={`${locale}/posts/${post.slug}`}
                 className="text-lg hover:text-red-400"
               >
                 {post.title}

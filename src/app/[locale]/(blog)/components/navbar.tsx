@@ -17,9 +17,10 @@ interface NavBarProps {
   isNavBar: boolean;
   tags: string[];
   theme?: "light" | "dark";
+  locale: string;
 }
 
-function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
+function NavBar({ isNavBar, tags, theme = "dark", locale }: NavBarProps) {
   const [searchValue, setSearchValue] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -39,9 +40,9 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
 
   const handleSearch = () => {
     if (searchValue) {
-      router.push(`/posts?s=${searchValue}`);
+      router.push(`${locale}/posts?s=${searchValue}`);
     } else {
-      router.push("/posts");
+      router.push(`${locale}/posts`);
     }
     setSearchValue("");
     setIsMenuOpen(false);
@@ -213,7 +214,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
             {tags.map((tag, index) => (
               <div key={tag} className="flex items-center">
                 <Link
-                  href={`/posts/tags/${encodeURIComponent(tag)}`}
+                  href={`${locale}/posts/tags/${encodeURIComponent(tag)}`}
                   className={cn(
                     `px-3 py-2 rounded-md text-sm font-bold uppercase`,
                     {
@@ -364,7 +365,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
               <React.Fragment key={tag}>
                 <div className="sm:px-6 px-3">
                   <Link
-                    href={`/posts/tags/${encodeURIComponent(tag)}`}
+                    href={`${locale}/posts/tags/${encodeURIComponent(tag)}`}
                     className="text-white hover:text-gray-400 text-sm font-bold uppercase w-full block"
                   >
                     {tag}

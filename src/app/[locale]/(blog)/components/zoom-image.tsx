@@ -7,9 +7,10 @@ type Props = {
   title: string;
   src: string;
   slug?: string;
+  locale: string;
 };
 
-const ZoomImage = ({ title, src, slug }: Props) => {
+const ZoomImage = ({ title, src, slug, locale }: Props) => {
   const t = useTranslations("Zoom-image");
 
   const image = (
@@ -35,7 +36,7 @@ const ZoomImage = ({ title, src, slug }: Props) => {
   return (
     <div className="sm:mx-0">
       {slug ? (
-        <Link href={`/posts/${slug}`} aria-label={title}>
+        <Link href={`${locale}/posts/${slug}`} aria-label={title}>
           {image}
         </Link>
       ) : (
