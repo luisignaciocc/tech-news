@@ -1,5 +1,6 @@
-import Link from "next/link";
 import React, { Fragment } from "react";
+
+import { Link } from "@/i18n/routing";
 
 interface SpecialCardPostProps {
   imageUrl: string | null;

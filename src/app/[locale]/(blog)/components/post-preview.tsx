@@ -1,7 +1,7 @@
-import Link from "next/link";
 import React from "react";
 
 import { DateFormatter } from "@/components/date-formatter";
+import { Link } from "@/i18n/routing";
 
 import ZoomImage from "./zoom-image";
 

@@ -1,11 +1,12 @@
 "use client";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React, { Fragment, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
+
+import { Link } from "@/i18n/routing";
 
 import ZoomImage from "./zoom-image";
 

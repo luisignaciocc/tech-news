@@ -1,13 +1,14 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import React, { Fragment } from "react";
 import { useEffect, useState } from "react";
 import { BsList, BsSearch, BsX } from "react-icons/bs";
 import { useMediaQuery } from "react-responsive";
 
+import { useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { SITE_SHORT_NAME } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 

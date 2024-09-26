@@ -1,4 +1,8 @@
 {
+  "Root-layout": {
+    "title": "AI-Generated Technology News",
+    "description": "A digital technology news outlet with automatically generated content."
+  },
   "Footer": {
     "description": "Automatically Generated with Artificial Intelligence.",
     "learn-more": "Learn more",

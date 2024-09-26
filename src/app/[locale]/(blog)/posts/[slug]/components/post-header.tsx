@@ -1,11 +1,11 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
+import { Link } from "@/i18n/routing";
 
 import markdownStyles from "./markdown-styles.module.css";
 import SocialMediaButtons from "./social-media-buttons";

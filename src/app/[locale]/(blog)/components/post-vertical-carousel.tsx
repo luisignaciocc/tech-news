@@ -1,12 +1,12 @@
 "use client";
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 
 import { DateFormatter } from "@/components/date-formatter";
+import { Link } from "@/i18n/routing";
 
 import ZoomImage from "./zoom-image";
 

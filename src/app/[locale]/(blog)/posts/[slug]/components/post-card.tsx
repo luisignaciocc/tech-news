@@ -1,8 +1,9 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+
+import { Link } from "@/i18n/routing";
 
 interface PostCardProps {
   imageUrl: string | null;

@@ -1,11 +1,11 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React, { Fragment } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import { DateFormatter } from "@/components/date-formatter";
+import { Link } from "@/i18n/routing";
 import { getRelatedPostFromPostSlug } from "@/lib/api";
 
 interface SimilarPostsProps {

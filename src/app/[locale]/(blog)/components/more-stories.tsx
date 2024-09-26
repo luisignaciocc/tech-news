@@ -1,9 +1,10 @@
 import "react-loading-skeleton/dist/skeleton.css";
 
-import Link from "next/link";
 import { useTranslations } from "next-intl";
 import React from "react";
 import Skeleton from "react-loading-skeleton";
+
+import { Link } from "@/i18n/routing";
 
 import { PostPreview } from "./post-preview";
 
