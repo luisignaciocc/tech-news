@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import Container from "@/components/container";
+import { defaultMetadata } from "@/lib/metadata";
 import { SITE_URL } from "@/lib/metadata";
 
 import {
@@ -65,6 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Root-layout");
 
   return {
+    ...defaultMetadata,
     metadataBase: new URL(SITE_URL),
     title: `Tecnobuc | ${t("title")}`,
     description: `${t("description")}`,
