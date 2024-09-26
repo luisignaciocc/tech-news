@@ -2,10 +2,9 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import React, { Fragment } from "react";
 
+import { MoreStories } from "@/app/[locale]/components/more-stories";
+import SideSection from "@/app/[locale]/components/side-section";
 import { getPostsBySearchTerm } from "@/lib/api";
-
-import { MoreStories } from "../../../components/more-stories";
-import SideSection from "../../../components/side-section";
 
 type Params = {
   params: {

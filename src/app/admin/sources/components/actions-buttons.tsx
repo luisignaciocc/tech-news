@@ -4,12 +4,12 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { FaCheckCircle, FaEdit, FaTimesCircle } from "react-icons/fa";
 
+import Modal from "@/app/admin/components/modal";
+import { CheckboxContext } from "@/app/admin/context/checkbox-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import Modal from "../../components/modal";
-import { CheckboxContext } from "../../context/checkbox-context";
 import { updateNewsSource } from "../utils/actions";
 
 interface ActionsButtonsProps {

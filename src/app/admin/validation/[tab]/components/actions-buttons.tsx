@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 
-import { CheckboxContext } from "../../../context/checkbox-context";
+import { CheckboxContext } from "@/app/admin/context/checkbox-context";
 
 interface ActionsButtonsProps {
   newsId: string;

@@ -1,4 +1,5 @@
-import { CheckboxProvider } from "../../../context/checkbox-context";
+import { CheckboxProvider } from "@/app/admin/context/checkbox-context";
+
 import { getToPublishData } from "../@topublish/utils/prisma";
 import PaginationButtons from "../components/pagination-buttons";
 import ToPublishTable from "./components/topublish-table";

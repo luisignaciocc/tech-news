@@ -3,12 +3,12 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
+import Modal from "@/app/admin/components/modal";
+import { CheckboxContext } from "@/app/admin/context/checkbox-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import Modal from "../../components/modal";
-import { CheckboxContext } from "../../context/checkbox-context";
 import { createSource } from "../utils/actions";
 
 interface FormData extends FieldValues {

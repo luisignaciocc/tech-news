@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import React from "react";
 
+import { MoreStories } from "@/app/[locale]/components/more-stories";
+import SideSection from "@/app/[locale]/components/side-section";
 import { getPosts } from "@/lib/api";
 
-import { MoreStories } from "../../components/more-stories";
-import SideSection from "../../components/side-section";
 import PageNavigation from "./components/page-navigation";
 
 export default async function SearchPostContent({

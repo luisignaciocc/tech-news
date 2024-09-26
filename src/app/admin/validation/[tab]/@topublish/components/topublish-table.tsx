@@ -1,6 +1,11 @@
 "use client";
 import { useContext } from "react";
 
+import { CheckboxColumn } from "@/app/admin/components/checkbox-column";
+import SelectAll from "@/app/admin/components/select-all";
+import { CheckboxContext } from "@/app/admin/context/checkbox-context";
+import ActionsButtons from "@/app/admin/validation/[tab]/components/actions-buttons";
+import MassiveActionsButtons from "@/app/admin/validation/[tab]/components/massive-actions-buttons";
 import {
   Table,
   TableBody,
@@ -10,11 +15,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { CheckboxColumn } from "../../../../components/checkbox-column";
-import SelectAll from "../../../../components/select-all";
-import { CheckboxContext } from "../../../../context/checkbox-context";
-import ActionsButtons from "../../components/actions-buttons";
-import MassiveActionsButtons from "../../components/massive-actions-buttons";
 import {
   updateDeletedAtNotNull,
   updateDeletedAtNotNullMany,

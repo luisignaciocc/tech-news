@@ -2,6 +2,9 @@
 import Image from "next/image";
 import { useContext } from "react";
 
+import { CheckboxColumn } from "@/app/admin/components/checkbox-column";
+import SelectAll from "@/app/admin/components/select-all";
+import { CheckboxContext } from "@/app/admin/context/checkbox-context";
 import {
   Table,
   TableBody,
@@ -11,9 +14,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { CheckboxColumn } from "../../components/checkbox-column";
-import SelectAll from "../../components/select-all";
-import { CheckboxContext } from "../../context/checkbox-context";
 import {
   deletedPostUpdateNews,
   deletedPostUpdateNewsMany,
