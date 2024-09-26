@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import { Viewport } from "next";
+import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import Container from "@/components/container";
-import { defaultMetadata } from "@/lib/metadata";
+import { SITE_URL } from "@/lib/metadata";
 
 import {
   HeadlinePosts,
@@ -59,4 +61,15 @@ export default async function Index() {
   );
 }
 
-export const metadata = defaultMetadata;
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Root-layout");
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: `Tecnobuc | ${t("title")}`,
+    description: `${t("description")}`,
+    openGraph: {
+      images: [{ url: "/api/og?title=Tecnobuc" }],
+    },
+  };
+}

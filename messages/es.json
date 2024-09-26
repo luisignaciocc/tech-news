@@ -1,4 +1,8 @@
 {
+  "Root-layout": {
+    "title": "Noticiero de tecnología generado por IA",
+    "description": "Un noticiero digital de tecnología con contenido generado automáticamente."
+  },
   "Footer": {
     "description": "Automáticamente Generado con Inteligencia Artificial.",
     "learn-more": "Saber más",
