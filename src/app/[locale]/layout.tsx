@@ -1,6 +1,7 @@
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 
 import { Analytics } from "./components/analytics";
 import Footer from "./components/footer";
@@ -26,7 +27,9 @@ export default function RootLayout({
         <InternacionalizationProvider>
           <div>
             <div className="mt-16">{children}</div>
-            <Footer />
+            <Suspense>
+              <Footer />
+            </Suspense>
           </div>
         </InternacionalizationProvider>
       </body>
