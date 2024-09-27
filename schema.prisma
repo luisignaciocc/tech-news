@@ -77,6 +77,17 @@ model Post {
   facebookPostId    String?
   new               News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
   tags              Tag[]
+  languages         Languages[] @relation("PostLanguages")
+}
+
+model Languages {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String
+  excerpt   String?
+  locale    String
+  postId    String
+  post      Post      @relation("PostLanguages", fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
