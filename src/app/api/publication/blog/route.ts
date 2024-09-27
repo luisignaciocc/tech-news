@@ -83,13 +83,14 @@ export async function POST(request: Request): Promise<NextResponse> {
       await notifyProblem("retrieving the body of the article from OpenAI");
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
-    const tagsRegex = /<!-- tags: ([\s\S]*?) -->/;
+    const tagsRegex = /<!-- tags: -->([\s\S]*?)$/;
     const tagsMatch = body.match(tagsRegex);
     const tags = tagsMatch
       ? tagsMatch[1]
           .trim()
-          .split(/,\s*|\n/)
-          .map((tag) => tag.trim())
+          .split(/\n/) // Split by new lines
+          .map((tag) => tag.trim().replace(/^-\s*/, "")) // Remove the '-' character at the beginning
+          .filter((tag) => tag) // Filter out empty values
       : [];
 
     const articleMarkdown = body.replace(tagsRegex, "").trim();
