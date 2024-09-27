@@ -91,9 +91,10 @@ model Languages {
 }
 
 model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  posts Post[]
+  id      Int    @id @default(autoincrement())
+  nameEs  String @unique
+  nameEn  String @unique
+  posts   Post[]
 }
 
 model Author {
