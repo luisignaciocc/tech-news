@@ -80,7 +80,6 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     const body = bodyCompletion.choices[0].message.content;
-    console.log("body: " + body);
 
     if (!body) {
       await notifyProblem("retrieving the body of the article from OpenAI");
@@ -100,7 +99,6 @@ export async function POST(request: Request): Promise<NextResponse> {
             return { nameEs, nameEn }; // Retornar un objeto con ambas etiquetas
           })
       : [];
-    console.log("tags:" + tags);
 
     const articleMarkdown = body.replace(tagsRegex, "").trim();
 
