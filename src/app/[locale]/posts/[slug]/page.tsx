@@ -63,7 +63,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title,
     description,
-    keywords: post.tags.map((tag) => tag.name),
+    keywords: post.tags.map((tag) => tag.nameEs),
     creator: post.author.name,
     publisher: post.author.name,
     alternates: { canonical: new URL(`${SITE_URL}/posts/${params.slug}`) },
