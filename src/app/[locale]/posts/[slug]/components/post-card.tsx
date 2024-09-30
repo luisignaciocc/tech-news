@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 interface PostCardProps {
   imageUrl: string | null;
   title: string;
-  tags: { id: number; nameEs: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
   slug: string;
 }
 

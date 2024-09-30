@@ -14,7 +14,7 @@ type Props = {
   title: string;
   coverImage: string | null;
   date: Date;
-  tags: { id: number; nameEs: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
   excerpt: string | null;
 };
 

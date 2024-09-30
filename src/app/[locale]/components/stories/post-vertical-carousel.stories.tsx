@@ -18,7 +18,7 @@ const posts = [
     excerpt: "Resumen del Post 1",
     coverImage: "https://via.placeholder.com/800x400",
     publishedAt: new Date("2023-09-01"),
-    tags: [{ id: 1, name: "tag1" }],
+    tags: [{ id: 1, nameEs: "Etiqueta1", nameEn: "tag1" }],
   },
   {
     id: "2",
@@ -27,7 +27,7 @@ const posts = [
     excerpt: "Resumen del Post 2",
     coverImage: "https://via.placeholder.com/800x400",
     publishedAt: new Date("2023-09-02"),
-    tags: [{ id: 2, name: "tag2" }],
+    tags: [{ id: 2, nameEs: "Etiqueta2", nameEn: "tag2" }],
   },
   {
     id: "3",
@@ -36,7 +36,7 @@ const posts = [
     excerpt: "Resumen del Post 3",
     coverImage: "https://via.placeholder.com/800x400",
     publishedAt: new Date("2023-09-03"),
-    tags: [{ id: 3, name: "tag3" }],
+    tags: [{ id: 3, nameEs: "Etiqueta3", nameEn: "tag3" }],
   },
 ];
 

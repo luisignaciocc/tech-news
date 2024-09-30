@@ -9,7 +9,7 @@ const mockPosts = [
     title: "Sample Post 1",
     coverImage: "https://example.com/image1.jpg",
     publishedAt: new Date("2023-08-28"),
-    tags: [{ id: 1, name: "Tech" }],
+    tags: [{ id: 1, nameEs: "Tecnología", nameEn: "Tech" }],
   },
   {
     id: "2",
@@ -17,7 +17,7 @@ const mockPosts = [
     title: "Sample Post 2",
     coverImage: "https://example.com/image2.jpg",
     publishedAt: new Date("2023-08-29"),
-    tags: [{ id: 2, name: "Health" }],
+    tags: [{ id: 2, nameEs: "Salud", nameEn: "Health" }],
   },
 ];
 

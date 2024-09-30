@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import MoreTags from "../more-tags";
 
 const mockTags = [
-  { id: 1, nameEs: "Tag 1" },
-  { id: 2, nameEs: "Tag 2" },
-  { id: 3, nameEs: "Tag 3" },
+  { id: 1, nameEs: "Etiqueta1", nameEn: "Tag 1" },
+  { id: 2, nameEs: "Etiqueta2", nameEn: "Tag 2" },
+  { id: 3, nameEs: "Etiqueta3", nameEn: "Tag 3" },
 ];
 
 describe("Testing MoreTags component", () => {

@@ -11,7 +11,7 @@ describe("Testing PostVerticalCarousel Component", () => {
       excerpt: "This is the first sample post.",
       coverImage: "https://example.com/image1.jpg",
       publishedAt: new Date("2023-08-28"),
-      tags: [{ id: 1, name: "Tech" }],
+      tags: [{ id: 1, nameEs: "Tecnología", nameEn: "Tech" }],
     },
     {
       id: "2",
@@ -20,7 +20,7 @@ describe("Testing PostVerticalCarousel Component", () => {
       excerpt: "This is the second sample post.",
       coverImage: "https://example.com/image2.jpg",
       publishedAt: new Date("2023-08-29"),
-      tags: [{ id: 2, name: "Health" }],
+      tags: [{ id: 2, nameEs: "Salud", nameEn: "Health" }],
     },
   ];
 
@@ -47,11 +47,11 @@ describe("Testing PostVerticalCarousel Component", () => {
     });
 
     mockPosts.forEach((post) => {
-      const tagLink = screen.getByRole("link", { name: post.tags[0].name });
+      const tagLink = screen.getByRole("link", { name: post.tags[0].nameEs });
       expect(tagLink).toBeInTheDocument();
       expect(tagLink).toHaveAttribute(
         "href",
-        `/posts/tags/${post.tags[0].name}`,
+        `/posts/tags/${post.tags[0].nameEs}`,
       );
     });
   });

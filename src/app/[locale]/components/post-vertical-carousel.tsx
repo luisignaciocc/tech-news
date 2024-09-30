@@ -17,7 +17,7 @@ interface Post {
   excerpt: string | null;
   coverImage: string | null;
   publishedAt: Date | null;
-  tags: { id: number; nameEs: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
 }
 
 type Props = {

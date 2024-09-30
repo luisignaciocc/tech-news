@@ -7,8 +7,8 @@ const mockProps = {
   imageUrl: "https://example.com/image.jpg",
   title: "Example Post",
   tags: [
-    { id: 1, nameEs: "tag1" },
-    { id: 2, nameEs: "tag2" },
+    { id: 1, nameEs: "Etiqueta1", nameEn: "tag1" },
+    { id: 2, nameEs: "Etiqueta2", nameEn: "tag2" },
   ],
   slug: "example-post",
 };

@@ -7,6 +7,7 @@ import { Link } from "@/i18n/routing";
 interface Tag {
   id: number;
   nameEs: string;
+  nameEn: string;
 }
 
 interface MoreTagsProps {

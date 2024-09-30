@@ -201,6 +201,7 @@ export async function getMostUsedTags(limit: number) {
     },
     select: {
       nameEs: true,
+      nameEn: true,
     },
     take: limit,
   });
@@ -229,6 +230,7 @@ export async function getPostsByTags(tags: string[], limit: number) {
       tags: {
         select: {
           nameEs: true,
+          nameEn: true,
         },
       },
       author: true,

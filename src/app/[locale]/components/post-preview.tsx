@@ -17,6 +17,7 @@ type Props = {
   slug: string;
   tags: {
     nameEs: string;
+    nameEn: string;
   }[];
   titleLinkClassName?: string;
 };

@@ -9,7 +9,7 @@ describe("Testing PostPreview Component", () => {
     date: new Date("2023-08-28"),
     excerpt: "This is a sample excerpt for the post.",
     slug: "sample-post",
-    tags: [{ nameEs: "Tech" }],
+    tags: [{ nameEs: "Tecnología", nameEn: "Tech" }],
     author: {
       name: "Author Name",
       picture: "https://example.com/avatar.jpg",

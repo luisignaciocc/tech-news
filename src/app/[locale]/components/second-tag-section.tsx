@@ -23,6 +23,7 @@ interface PostsByTags {
   excerpt: string | null;
   tags: {
     nameEs: string;
+    nameEn: string;
   }[];
   createdAt: Date;
 }

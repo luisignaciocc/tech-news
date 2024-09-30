@@ -11,7 +11,7 @@ import { getRelatedPostFromPostSlug } from "@/lib/api";
 interface SimilarPostsProps {
   imageUrl: string | null;
   title: string;
-  tags: { id: number; nameEs: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
   slug: string;
   publishedAt: Date | null;
 }
