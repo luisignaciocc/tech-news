@@ -14,7 +14,7 @@ type Props = {
   title: string;
   coverImage: string | null;
   date: Date;
-  tags: { id: number; name: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
   excerpt: string | null;
 };
 
@@ -65,8 +65,8 @@ export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
         <div className="text-red-600 flex flex-wrap">
           {tags.length > 0 && (
             <React.Fragment>
-              <Link href={`/posts/tags/${tags[0].name}`}>
-                <span>{tags[0].name.toUpperCase()}</span>
+              <Link href={`/posts/tags/${tags[0].nameEs}`}>
+                <span>{tags[0].nameEs.toUpperCase()}</span>
               </Link>
             </React.Fragment>
           )}

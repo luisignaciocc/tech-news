@@ -20,7 +20,8 @@ interface PostPreviewProps {
   };
   slug: string;
   tags: {
-    name: string;
+    nameEs: string;
+    nameEn: string;
   }[];
 }
 
@@ -35,7 +36,7 @@ const post = {
     picture: "https://via.placeholder.com/100",
   },
   slug: "titulo-del-post",
-  tags: [{ name: "tag1" }],
+  tags: [{ nameEs: "Etiqueta1", nameEn: "tag1" }],
 };
 
 // We define the story

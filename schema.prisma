@@ -56,33 +56,45 @@ model NewsSource {
 }
 
 model Post {
-  id                String    @id @default(cuid())
-  slug              String    @unique
+  id                String      @id @default(cuid())
+  slug              String      @unique
   title             String
   content           String
-  createdAt         DateTime  @default(now())
+  createdAt         DateTime    @default(now())
   coverImage        String?
-  author            Author    @relation(fields: [authorId], references: [id])
+  author            Author      @relation(fields: [authorId], references: [id])
   authorId          String
   excerpt           String?
   publishedAt       DateTime?
   newId             String?
-  postedToTwitter   Boolean   @default(false)
+  postedToTwitter   Boolean     @default(false)
   tweetId           String?
-  postedToLinkedin  Boolean   @default(false)
+  postedToLinkedin  Boolean     @default(false)
   linkedinPostId    String?
-  postedToInstagram Boolean   @default(false)
+  postedToInstagram Boolean     @default(false)
   instagramMediaId  String?
-  postedToFacebook  Boolean   @default(false)
+  postedToFacebook  Boolean     @default(false)
   facebookPostId    String?
-  new               News?     @relation(fields: [newId], references: [id], onDelete: Cascade)
+  new               News?       @relation(fields: [newId], references: [id], onDelete: Cascade)
   tags              Tag[]
+  languages         Languages[] @relation("PostLanguages")
+}
+
+model Languages {
+  id      Int     @id @default(autoincrement())
+  title   String
+  content String
+  excerpt String?
+  locale  String
+  postId  String
+  post    Post    @relation("PostLanguages", fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Tag {
-  id    Int    @id @default(autoincrement())
-  name  String @unique
-  posts Post[]
+  id     Int    @id @default(autoincrement())
+  nameEs String @unique
+  nameEn String @unique
+  posts  Post[]
 }
 
 model Author {

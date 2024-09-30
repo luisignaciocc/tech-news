@@ -8,7 +8,7 @@ import { Link } from "@/i18n/routing";
 interface PostCardProps {
   imageUrl: string | null;
   title: string;
-  tags: { id: number; name: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
   slug: string;
 }
 
@@ -55,9 +55,9 @@ export const PostCard: React.FC<PostCardProps> = ({
         <p className="text-red-600 text-xs line-clamp-2">
           {tags.map((tag, index) => (
             <React.Fragment key={index}>
-              <Link href={`/posts/tags/${tag.name}`}>
+              <Link href={`/posts/tags/${tag.nameEs}`}>
                 <span className="hover:underline">
-                  {tag.name.toLocaleLowerCase()}
+                  {tag.nameEs.toLocaleLowerCase()}
                 </span>
               </Link>
               {index < tags.length - 1 && ", "}

@@ -17,7 +17,7 @@ interface Post {
   excerpt: string | null;
   coverImage: string | null;
   publishedAt: Date | null;
-  tags: { id: number; name: string }[];
+  tags: { id: number; nameEs: string; nameEn: string }[];
 }
 
 type Props = {
@@ -105,11 +105,11 @@ export default function PostVerticalCarousel({ posts }: Props) {
               <div className="text-sm flex items-center">
                 {post.tags.slice(0, 1).map((tag) => (
                   <Link
-                    href={`/posts/tags/${tag.name}`}
+                    href={`/posts/tags/${tag.nameEs}`}
                     key={tag.id}
                     className="uppercase text-gray-800 mr-2"
                   >
-                    {tag.name}
+                    {tag.nameEs}
                   </Link>
                 ))}
                 <span

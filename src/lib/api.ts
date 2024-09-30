@@ -200,12 +200,13 @@ export async function getMostUsedTags(limit: number) {
       },
     },
     select: {
-      name: true,
+      nameEs: true,
+      nameEn: true,
     },
     take: limit,
   });
 
-  return mostUsedTags.map((tag) => tag.name);
+  return mostUsedTags.map((tag) => tag.nameEs);
 }
 
 export async function getPostsByTags(tags: string[], limit: number) {
@@ -213,7 +214,7 @@ export async function getPostsByTags(tags: string[], limit: number) {
     where: {
       tags: {
         some: {
-          name: {
+          nameEs: {
             in: tags,
           },
         },
@@ -228,7 +229,8 @@ export async function getPostsByTags(tags: string[], limit: number) {
       excerpt: true,
       tags: {
         select: {
-          name: true,
+          nameEs: true,
+          nameEn: true,
         },
       },
       author: true,
@@ -257,7 +259,7 @@ export const getPostsBySearchTerm = async (
       {
         tags: {
           some: {
-            name: {
+            nameEs: {
               contains: searchTerm,
               mode: "insensitive",
             },

@@ -22,7 +22,8 @@ interface PostsByTags {
   slug: string;
   excerpt: string | null;
   tags: {
-    name: string;
+    nameEs: string;
+    nameEn: string;
   }[];
   createdAt: Date;
 }

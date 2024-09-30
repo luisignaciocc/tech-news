@@ -66,7 +66,9 @@ export async function POST(request: Request): Promise<NextResponse> {
             No incluyas un título al comienzo del artículo.
             No traduzcas ni modifiques los nombres propios, marcas o nombres de entidades.
             Al final del artículo, dentro de <!-- tags: -->, 
-            genera una lista de 3 etiquetas (tags) relevantes relacionadas con el contenido del artículo.
+            genera una lista de 3 etiquetas (tags) relevantes relacionadas con el contenido del artículo, 
+            proporcionando cada etiqueta en español y en inglés, 
+            separadas por un guion. Por ejemplo: "Etiqueta en español - Tag in English".
           `,
         },
         {
@@ -83,13 +85,19 @@ export async function POST(request: Request): Promise<NextResponse> {
       await notifyProblem("retrieving the body of the article from OpenAI");
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
-    const tagsRegex = /<!-- tags: ([\s\S]*?) -->/;
+    // Regex para capturar las etiquetas
+    const tagsRegex = /<!-- tags: -->([\s\S]*?)$/;
     const tagsMatch = body.match(tagsRegex);
     const tags = tagsMatch
       ? tagsMatch[1]
           .trim()
-          .split(/,\s*|\n/)
-          .map((tag) => tag.trim())
+          .split(/\n/) // Dividir por nuevas líneas
+          .map((tag) => tag.trim().replace(/^-\s*/, "")) // Eliminar el carácter '-' al principio
+          .filter((tag) => tag) // Filtrar valores vacíos
+          .map((tag) => {
+            const [nameEs, nameEn] = tag.split(" - ").map((t) => t.trim()); // Separar etiquetas
+            return { nameEs, nameEn }; // Retornar un objeto con ambas etiquetas
+          })
       : [];
 
     const articleMarkdown = body.replace(tagsRegex, "").trim();
@@ -155,11 +163,12 @@ export async function POST(request: Request): Promise<NextResponse> {
         publishedAt: article.publishedAt,
         tags: {
           connectOrCreate: tags.map((tag) => ({
-            create: {
-              name: tag.toLowerCase(),
-            },
             where: {
-              name: tag.toLowerCase(),
+              nameEs: tag.nameEs.toLowerCase(), // Usar nameEs para buscar
+            },
+            create: {
+              nameEs: tag.nameEs.toLowerCase(), // Crear el nombre en español
+              nameEn: tag.nameEn.toLowerCase(), // Crear el nombre en inglés
             },
           })),
         },
