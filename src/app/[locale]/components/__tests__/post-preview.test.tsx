@@ -9,7 +9,7 @@ describe("Testing PostPreview Component", () => {
     date: new Date("2023-08-28"),
     excerpt: "This is a sample excerpt for the post.",
     slug: "sample-post",
-    tags: [{ name: "Tech" }],
+    tags: [{ nameEs: "Tech" }],
     author: {
       name: "Author Name",
       picture: "https://example.com/avatar.jpg",
@@ -38,11 +38,13 @@ describe("Testing PostPreview Component", () => {
     const excerptElement = screen.getByText(mockProps.excerpt);
     expect(excerptElement).toBeInTheDocument();
 
-    const tagLink = screen.getByRole("link", { name: mockProps.tags[0].name });
+    const tagLink = screen.getByRole("link", {
+      name: mockProps.tags[0].nameEs,
+    });
     expect(tagLink).toBeInTheDocument();
     expect(tagLink).toHaveAttribute(
       "href",
-      `/posts/tags/${mockProps.tags[0].name}`,
+      `/posts/tags/${mockProps.tags[0].nameEs}`,
     );
   });
 });

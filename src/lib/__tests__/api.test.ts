@@ -286,9 +286,9 @@ describe("Testing /api/getPostsCards function", () => {
 describe("Testing /api/getMostUsedTags function", () => {
   test("should return the most used tags", async () => {
     const mockTags = [
-      { id: 1, name: "tag1", posts: { _count: 10 } },
-      { id: 2, name: "tag2", posts: { _count: 8 } },
-      { id: 3, name: "tag3", posts: { _count: 5 } },
+      { id: 1, nameEs: "tag1", nameEn: "tag1", posts: { _count: 10 } },
+      { id: 2, nameEs: "tag2", nameEn: "tag2", posts: { _count: 8 } },
+      { id: 3, nameEs: "tag3", nameEn: "tag3", posts: { _count: 5 } },
     ];
     prismaMock.tag.findMany.mockResolvedValue(mockTags);
 
