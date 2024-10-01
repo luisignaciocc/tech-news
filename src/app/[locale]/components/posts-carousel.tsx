@@ -14,7 +14,7 @@ interface Post {
   title: string;
   coverImage: string | null;
   publishedAt: Date | null;
-  tags: { id: number; nameEs: string; nameEn: string }[];
+  tags: { id: number; name: string }[];
 }
 
 interface PostCarouselProps {

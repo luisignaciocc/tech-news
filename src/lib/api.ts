@@ -4,6 +4,10 @@ import { Prisma } from "@prisma/client";
 import prisma from "./prisma";
 import { PER_PAGE } from "./utils";
 
+const normalizeLocale = (locale: string) => {
+  return locale.charAt(0).toUpperCase() + locale.slice(1); // Convert the first letter to uppercase
+};
+
 export const getPostPages = async () => {
   const perPage = PER_PAGE;
   const totalPosts = await prisma.post.count();
@@ -26,24 +30,65 @@ export const getPostSlugs = async (params?: { limit?: number }) => {
   });
 };
 
-export async function getPostBySlug(slug: string) {
-  return prisma.post.findUnique({
+export async function getPostBySlug(slug: string, locale: string) {
+  const normalizedLocale = normalizeLocale(locale);
+
+  const post = await prisma.post.findUnique({
     where: {
       slug,
     },
     include: {
       author: true,
-      tags: true,
+      tags: {
+        select: {
+          id: true,
+          [`name${normalizedLocale}`]: true,
+        },
+      },
     },
   });
+
+  // Transform the post if it exists
+  if (post) {
+    const transformedPost = {
+      id: post.id,
+      slug: post.slug,
+      title: post.title,
+      content: post.content,
+      createdAt: post.createdAt,
+      coverImage: post.coverImage,
+      authorId: post.authorId,
+      excerpt: post.excerpt,
+      publishedAt: post.publishedAt,
+      author: {
+        id: post.author.id,
+        name: post.author.name,
+        picture: post.author.picture,
+      },
+      tags: post.tags.map((tag) => ({
+        id: Number(tag.id),
+        name: tag[`name${normalizedLocale}`] as unknown as string,
+      })),
+    };
+
+    return transformedPost; // Return the transformed post
+  }
+
+  return null; // Return null if the post is not found
 }
 
 export async function getTags() {
   return prisma.tag.findMany();
 }
 
-export async function getPostsCards(slug: string, limit: number) {
-  return prisma.post.findMany({
+export async function getPostsCards(
+  slug: string,
+  limit: number,
+  locale: string,
+) {
+  const normalizedLocale = normalizeLocale(locale);
+
+  const posts = await prisma.post.findMany({
     where: {
       slug: {
         not: slug,
@@ -55,16 +100,39 @@ export async function getPostsCards(slug: string, limit: number) {
       title: true,
       slug: true,
       publishedAt: true,
-      tags: true,
+      tags: {
+        select: {
+          id: true,
+          [`name${normalizedLocale}`]: true,
+        },
+      },
     },
     take: limit,
     orderBy: {
       createdAt: "desc",
     },
   });
+
+  // Transform the posts to adjust the tag structure
+  const transformedPosts = posts.map((post) => ({
+    id: post.id,
+    coverImage: post.coverImage,
+    title: post.title,
+    slug: post.slug,
+    publishedAt: post.publishedAt,
+    tags: post.tags.map((tag) => ({
+      id: Number(tag.id),
+      name: tag[`name${normalizedLocale}`] as unknown as string,
+    })),
+  }));
+
+  return transformedPosts;
 }
 
-export async function getRandomPostsFromTwoWeeksAgo(limit: number) {
+export async function getRandomPostsFromTwoWeeksAgo(
+  limit: number,
+  locale: string,
+) {
   const twoWeeksAgo = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
 
   const totalCount = await prisma.post.count({
@@ -98,6 +166,8 @@ export async function getRandomPostsFromTwoWeeksAgo(limit: number) {
     }
   }
 
+  const normalizedLocale = normalizeLocale(locale);
+
   // Get the posts with random IDs
   const randomPosts = await prisma.post.findMany({
     where: {
@@ -111,14 +181,31 @@ export async function getRandomPostsFromTwoWeeksAgo(limit: number) {
       title: true,
       slug: true,
       publishedAt: true,
-      tags: true,
+      tags: {
+        select: {
+          id: true,
+          [`name${normalizedLocale}`]: true,
+        },
+      },
     },
   });
 
-  return randomPosts;
+  const transformedPosts = randomPosts.map((post) => ({
+    id: post.id,
+    coverImage: post.coverImage,
+    title: post.title,
+    slug: post.slug,
+    publishedAt: post.publishedAt,
+    tags: post.tags.map((tag) => ({
+      id: Number(tag.id),
+      name: tag[`name${normalizedLocale}`] as unknown as string, // Asigna el nombre según el locale
+    })),
+  }));
+
+  return transformedPosts;
 }
 
-export async function getRelatedPostFromPostSlug(slug: string) {
+export async function getRelatedPostFromPostSlug(slug: string, locale: string) {
   try {
     // Step 1: Finding news related to postId
     const post = await prisma.post.findUnique({
@@ -143,6 +230,8 @@ export async function getRelatedPostFromPostSlug(slug: string) {
     const randomIndex = Math.floor(Math.random() * similarNews.length);
     const selectedSimilarNews = similarNews[randomIndex];
 
+    const normalizedLocale = normalizeLocale(locale);
+
     // Paso 4: Find the post related to the selected news
     const relatedPost = await prisma.post.findFirst({
       where: {
@@ -154,11 +243,30 @@ export async function getRelatedPostFromPostSlug(slug: string) {
         title: true,
         slug: true,
         publishedAt: true,
-        tags: true,
+        tags: {
+          select: {
+            id: true,
+            [`name${normalizedLocale}`]: true,
+          },
+        },
       },
     });
 
-    return relatedPost ? [relatedPost] : [];
+    return relatedPost
+      ? [
+          {
+            id: relatedPost.id,
+            coverImage: relatedPost.coverImage,
+            title: relatedPost.title,
+            slug: relatedPost.slug,
+            publishedAt: relatedPost.publishedAt,
+            tags: relatedPost.tags.map((tag) => ({
+              id: Number(tag.id),
+              name: tag[`name${normalizedLocale}`] as unknown as string,
+            })),
+          },
+        ]
+      : [];
   } catch (error) {
     console.error("Error getting related post:", error);
     return [];
@@ -192,7 +300,8 @@ export async function getSimilarNews(newsId: string) {
   }
 }
 
-export async function getMostUsedTags(limit: number) {
+export async function getMostUsedTags(limit: number, locale: string) {
+  const normalizedLocale = normalizeLocale(locale);
   const mostUsedTags = await prisma.tag.findMany({
     orderBy: {
       posts: {
@@ -200,21 +309,27 @@ export async function getMostUsedTags(limit: number) {
       },
     },
     select: {
-      nameEs: true,
-      nameEn: true,
+      [`name${normalizedLocale}`]: true,
     },
     take: limit,
   });
 
-  return mostUsedTags.map((tag) => tag.nameEs);
+  return mostUsedTags.map((tag) => ({
+    name: tag[`name${normalizedLocale}`] as unknown as string,
+  }));
 }
 
-export async function getPostsByTags(tags: string[], limit: number) {
+export async function getPostsByTags(
+  tags: string[],
+  limit: number,
+  locale: string,
+) {
+  const normalizedLocale = normalizeLocale(locale);
   const posts = await prisma.post.findMany({
     where: {
       tags: {
         some: {
-          nameEs: {
+          [`name${normalizedLocale}`]: {
             in: tags,
           },
         },
@@ -227,13 +342,18 @@ export async function getPostsByTags(tags: string[], limit: number) {
       slug: true,
       createdAt: true,
       excerpt: true,
-      tags: {
+      author: {
         select: {
-          nameEs: true,
-          nameEn: true,
+          id: true,
+          name: true,
+          picture: true,
         },
       },
-      author: true,
+      tags: {
+        select: {
+          [`name${normalizedLocale}`]: true,
+        },
+      },
     },
     take: limit,
     orderBy: {
@@ -241,13 +361,32 @@ export async function getPostsByTags(tags: string[], limit: number) {
     },
   });
 
-  return posts;
+  // Maps the posts to match the structure of PostsByTags
+  return posts.map((post) => ({
+    id: post.id,
+    title: post.title,
+    coverImage: post.coverImage,
+    slug: post.slug,
+    createdAt: post.createdAt,
+    excerpt: post.excerpt,
+    author: {
+      id: post.author.id,
+      name: post.author.name,
+      picture: post.author.picture,
+    },
+    tags: post.tags.map((tag) => ({
+      name: tag[`name${normalizedLocale}`] as unknown as string,
+    })),
+  }));
 }
 
 export const getPostsBySearchTerm = async (
   searchTerm: string = "",
   numberPosts: number,
+  locale: string,
 ) => {
+  const normalizedLocale = normalizeLocale(locale);
+
   const where: Prisma.PostWhereInput = {
     OR: [
       {
@@ -259,7 +398,7 @@ export const getPostsBySearchTerm = async (
       {
         tags: {
           some: {
-            nameEs: {
+            [`name${normalizedLocale}`]: {
               contains: searchTerm,
               mode: "insensitive",
             },
@@ -288,7 +427,12 @@ export const getPostsBySearchTerm = async (
         createdAt: true,
         excerpt: true,
         author: true,
-        tags: true,
+        tags: {
+          select: {
+            id: true,
+            [`name${normalizedLocale}`]: true,
+          },
+        },
       },
       take: numberPosts,
     }),
@@ -297,8 +441,17 @@ export const getPostsBySearchTerm = async (
     }),
   ]);
 
+  // Transform the posts to adjust the structure of tags
+  const transformedPosts = posts.map((post) => ({
+    ...post,
+    tags: post.tags.map((tag) => ({
+      id: tag.id,
+      name: tag[`name${normalizedLocale}`] as unknown as string,
+    })),
+  }));
+
   return {
-    posts,
+    posts: transformedPosts,
     count,
   };
 };
@@ -306,9 +459,12 @@ export const getPostsBySearchTerm = async (
 export const getPosts = async (params?: {
   page?: number;
   perPage?: number;
+  locale?: string;
 }) => {
   const limit = params?.perPage || PER_PAGE;
   const offset = ((params?.page || 1) - 1) * limit;
+  const normalizedLocale = normalizeLocale(params?.locale || "es");
+
   const [posts, count] = await Promise.all([
     prisma.post.findMany({
       orderBy: {
@@ -316,7 +472,12 @@ export const getPosts = async (params?: {
       },
       include: {
         author: true,
-        tags: true,
+        tags: {
+          select: {
+            id: true,
+            [`name${normalizedLocale}`]: true,
+          },
+        },
       },
       skip: offset,
       take: limit,
@@ -324,8 +485,16 @@ export const getPosts = async (params?: {
     prisma.post.count(),
   ]);
 
+  const transformedPosts = posts.map((post) => ({
+    ...post,
+    tags: post.tags.map((tag) => ({
+      id: Number(tag.id),
+      name: tag[`name${normalizedLocale}`] as unknown as string,
+    })),
+  }));
+
   return {
-    posts,
+    posts: transformedPosts,
     count,
   };
 };

@@ -13,14 +13,17 @@ export default async function SearchPostContent({
 }: {
   params?: {
     page?: string;
+    locale?: string;
   };
 }) {
   const page = params?.page ? parseInt(params.page) : 1;
   const perPage = 30;
+  const locale = params?.locale || "es";
   const [{ posts, count }] = await Promise.all([
     getPosts({
       page,
       perPage,
+      locale,
     }),
   ]);
 
@@ -45,7 +48,7 @@ export default async function SearchPostContent({
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SideSection />
+          <SideSection locale={locale} />
         </div>
       </div>
       <PageNavigation currentPage={page} hasMorePosts={hasMorePosts} />

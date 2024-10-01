@@ -2,8 +2,14 @@ import { getMostUsedTags } from "@/lib/api";
 
 import DashboardNavBar from "./dashboard-navbar";
 
-export default async function DashboardTagsFetcher() {
-  const tagsMostUsed = await getMostUsedTags(4);
+export default async function DashboardTagsFetcher({
+  locale,
+}: {
+  locale: string;
+}) {
+  const tagsMostUsed = await getMostUsedTags(4, locale);
 
-  return <DashboardNavBar tags={tagsMostUsed} />;
+  const tagNames = tagsMostUsed.map((tag) => tag.name);
+
+  return <DashboardNavBar tags={tagNames} />;
 }

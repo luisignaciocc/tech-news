@@ -6,9 +6,13 @@ import { MoreStories } from "./more-stories";
 import PostVerticalCarousel from "./post-vertical-carousel";
 import SecondTagSection from "./second-tag-section";
 
-export async function PostsFetcher() {
+interface SecondTagsPostsFetcherProps {
+  locale: string;
+}
+
+export async function PostsFetcher({ locale }: { locale: string }) {
   const [{ posts, count }] = await Promise.all([
-    getPosts({ page: 1, perPage: 21 }),
+    getPosts({ page: 1, perPage: 21, locale }),
   ]);
 
   const hasMorePosts = 21 < count;
@@ -18,17 +22,27 @@ export async function PostsFetcher() {
   );
 }
 
-export const HeroPostsFetcher = async () => {
-  const { posts: heroPosts } = await getPosts({ page: 1, perPage: 10 });
+export const HeroPostsFetcher = async ({ locale }: { locale: string }) => {
+  const { posts: heroPosts } = await getPosts({ page: 1, perPage: 10, locale });
 
   return <PostVerticalCarousel posts={heroPosts} />;
 };
 
-export const SecondTagsPostsFetcher = async () => {
-  const tags = await getMostUsedTags(2);
-  const postsByTags = await getPostsByTags([tags[1]], 3);
+export const SecondTagsPostsFetcher = async ({
+  locale,
+}: SecondTagsPostsFetcherProps) => {
+  const tags = await getMostUsedTags(2, locale);
+
+  // Extrae los nombres de las etiquetas para pasarlos a getPostsByTags
+  const tagNames = tags.map((tag) => tag.name); // Obtener solo los nombres
+
+  // Llama a getPostsByTags pasando los nombres de las etiquetas
+  const postsByTags = await getPostsByTags([tagNames[1]], 3, locale);
 
   return (
-    <SecondTagSection secondMostUsedTag={[tags[1]]} postsByTags={postsByTags} />
+    <SecondTagSection
+      secondMostUsedTag={[tagNames[1]]}
+      postsByTags={postsByTags}
+    />
   );
 };

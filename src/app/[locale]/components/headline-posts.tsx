@@ -38,8 +38,8 @@ export function HeadlinePostsSkeleton() {
   );
 }
 
-export async function HeadlinePosts() {
-  const postsForHeadline = await getRandomPostsFromTwoWeeksAgo(4);
+export async function HeadlinePosts({ locale }: { locale: string }) {
+  const postsForHeadline = await getRandomPostsFromTwoWeeksAgo(4, locale);
   const t = await getTranslations("Headline-posts");
 
   return (

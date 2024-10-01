@@ -20,10 +20,12 @@ import { SpecialCardPost } from "./special-card-post";
 
 interface SideSectionProps {
   searchTag?: string;
+  locale: string;
 }
 
 interface TagSectionProps {
   searchTerm?: string;
+  locale: string;
 }
 
 export function SpecialSectionSkeleton() {
@@ -55,8 +57,8 @@ export function SpecialSectionSkeleton() {
   );
 }
 
-export async function SpecialSection() {
-  const specialPosts = await getRandomPostsFromTwoWeeksAgo(5);
+export async function SpecialSection({ locale }: { locale: string }) {
+  const specialPosts = await getRandomPostsFromTwoWeeksAgo(5, locale);
   const t = await getTranslations("Special-section");
 
   return (
@@ -107,25 +109,31 @@ export function TagSectionSkeleton() {
   );
 }
 
-export async function TagSection({ searchTerm }: TagSectionProps) {
-  const mostUsedTags = await getMostUsedTags(2);
+export async function TagSection({ searchTerm, locale }: TagSectionProps) {
+  const mostUsedTags = await getMostUsedTags(2, locale);
 
-  let mostUsedTag: string[];
+  let mostUsedTag: { name: string }[];
   if (
     mostUsedTags[0] &&
     searchTerm &&
-    mostUsedTags[0].toLowerCase().includes(searchTerm.toLowerCase())
+    mostUsedTags[0].name.toLowerCase().includes(searchTerm.toLowerCase())
   ) {
     mostUsedTag = mostUsedTags[1] ? [mostUsedTags[1]] : [];
   } else {
     mostUsedTag = [mostUsedTags[0]];
   }
 
-  const postsByTags = await getPostsByTags(mostUsedTag, 3);
+  const postsByTags = await getPostsByTags(
+    mostUsedTag.map((tag) => tag.name),
+    3,
+    locale,
+  );
 
   return (
     <div className="mt-10">
-      <h2 className="text-3xl uppercase">{mostUsedTag}</h2>
+      <h2 className="text-3xl uppercase">
+        {mostUsedTag.map((tag) => tag.name).join(", ")}
+      </h2>
       <hr className="bg-black border-1 border-black mb-6" />
       {postsByTags.slice(0, 3).map((post) => (
         <div key={post.id} className="mb-7">
@@ -146,8 +154,8 @@ export async function TagSection({ searchTerm }: TagSectionProps) {
   );
 }
 
-export async function PostsCarouselFetcher() {
-  const posts = await getRandomPostsFromTwoWeeksAgo(3);
+export async function PostsCarouselFetcher({ locale }: { locale: string }) {
+  const posts = await getRandomPostsFromTwoWeeksAgo(3, locale);
 
   return <PostCarousel posts={posts} />;
 }
@@ -257,17 +265,17 @@ export function MiniFooter() {
   );
 }
 
-export default function SideSection({ searchTag }: SideSectionProps) {
+export default function SideSection({ searchTag, locale }: SideSectionProps) {
   return (
     <Fragment>
       <Suspense fallback={<SpecialSectionSkeleton />}>
-        <SpecialSection />
+        <SpecialSection locale={locale} />
       </Suspense>
       <Suspense fallback={<TagSectionSkeleton />}>
-        <TagSection searchTerm={searchTag} />
+        <TagSection searchTerm={searchTag} locale={locale} />
       </Suspense>
       <Suspense fallback={<PostCarouselSkeleton />}>
-        <PostsCarouselFetcher />
+        <PostsCarouselFetcher locale={locale} />
       </Suspense>
       <hr className="mt-4 w-full" />
       <Suspense fallback={<MiniFooterSkeleton />}>
