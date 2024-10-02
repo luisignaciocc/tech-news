@@ -185,6 +185,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const excerptEn = excerptEnCompletion.choices[0].message.content || "";
     const bodyEn = bodyEnCompletion.choices[0].message.content || "";
 
+    // Save slug in English
     const slug = titleEn
       .toLowerCase()
       .trim()
