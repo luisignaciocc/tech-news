@@ -85,18 +85,19 @@ export async function POST(request: Request): Promise<NextResponse> {
       await notifyProblem("retrieving the body of the article from OpenAI");
       return NextResponse.json({ error: "No body found" }, { status: 404 });
     }
-    // Regex para capturar las etiquetas
+
+    // Regex to capture the tags
     const tagsRegex = /<!-- tags: -->([\s\S]*?)$/;
     const tagsMatch = body.match(tagsRegex);
     const tags = tagsMatch
       ? tagsMatch[1]
           .trim()
-          .split(/\n/) // Dividir por nuevas líneas
-          .map((tag) => tag.trim().replace(/^-\s*/, "")) // Eliminar el carácter '-' al principio
-          .filter((tag) => tag) // Filtrar valores vacíos
+          .split(/\n/) // Split by new lines
+          .map((tag) => tag.trim().replace(/^-\s*/, "")) // Remove the '-' character at the beginning
+          .filter((tag) => tag !== "") // Filter empty values
           .map((tag) => {
-            const [nameEs, nameEn] = tag.split(" - ").map((t) => t.trim()); // Separar etiquetas
-            return { nameEs, nameEn }; // Retornar un objeto con ambas etiquetas
+            const [nameEn, nameEs] = tag.split(" - ").map((t) => t.trim()); // Separate tags
+            return { nameEs, nameEn }; // Return an object with both tags
           })
       : [];
 
@@ -133,21 +134,69 @@ export async function POST(request: Request): Promise<NextResponse> {
       }),
     ]);
 
-    const title = titleCompletion.choices[0].message.content || article.title;
-    const excerpt = excerptCompletion.choices[0].message.content;
+    const titleEs = titleCompletion.choices[0].message.content || article.title;
+    const excerptEs = excerptCompletion.choices[0].message.content;
 
-    const slug = title
+    // Translation to English
+    const [titleEnCompletion, excerptEnCompletion, bodyEnCompletion] =
+      await Promise.all([
+        openai.chat.completions.create({
+          messages: [
+            {
+              role: "system",
+              content: "Eres un asistente que traduce texto al inglés.",
+            },
+            {
+              role: "user",
+              content: `Traduce al inglés el siguiente título: ${titleEs}`,
+            },
+          ],
+          model: "gpt-4o-mini",
+        }),
+        openai.chat.completions.create({
+          messages: [
+            {
+              role: "system",
+              content: "Eres un asistente que traduce texto al inglés.",
+            },
+            {
+              role: "user",
+              content: `Traduce al inglés el siguiente resumen: ${excerptEs}`,
+            },
+          ],
+          model: "gpt-4o-mini",
+        }),
+        openai.chat.completions.create({
+          messages: [
+            {
+              role: "system",
+              content: "Eres un asistente que traduce texto al inglés.",
+            },
+            {
+              role: "user",
+              content: `Traduce al inglés el siguiente contenido: ${articleMarkdown}`,
+            },
+          ],
+          model: "gpt-4o-mini",
+        }),
+      ]);
+
+    const titleEn = titleEnCompletion.choices[0].message.content || "";
+    const excerptEn = excerptEnCompletion.choices[0].message.content || "";
+    const bodyEn = bodyEnCompletion.choices[0].message.content || "";
+
+    const slug = titleEn
       .toLowerCase()
       .trim()
       .replace(/[^a-z0-9\s-]/g, "")
       .replace(/\s+/g, "-")
       .replace(/-+/g, "-");
 
-    await prisma.post.create({
+    const post = await prisma.post.create({
       data: {
-        title: title,
+        title: titleEs,
         content: articleMarkdown,
-        excerpt: excerpt || article.excerpt,
+        excerpt: excerptEs || article.excerpt,
         author: {
           connect: {
             id: author.id,
@@ -164,16 +213,38 @@ export async function POST(request: Request): Promise<NextResponse> {
         tags: {
           connectOrCreate: tags.map((tag) => ({
             where: {
-              nameEs: tag.nameEs.toLowerCase(), // Usar nameEs para buscar
+              nameEn: tag.nameEn.toLowerCase(), // Use nameEn to search
             },
             create: {
-              nameEs: tag.nameEs.toLowerCase(), // Crear el nombre en español
-              nameEn: tag.nameEn.toLowerCase(), // Crear el nombre en inglés
+              nameEs: tag.nameEs.toLowerCase(), // Create the name in Spanish
+              nameEn: tag.nameEn.toLowerCase(), // Create the name in English
             },
           })),
         },
       },
     });
+
+    // Register translations in the Languages table
+    await Promise.all([
+      prisma.languages.create({
+        data: {
+          title: titleEs,
+          content: articleMarkdown,
+          excerpt: excerptEs || article.excerpt,
+          locale: "es",
+          postId: post.id,
+        },
+      }),
+      prisma.languages.create({
+        data: {
+          title: titleEn,
+          content: bodyEn,
+          excerpt: excerptEn || excerptEs || article.excerpt,
+          locale: "en",
+          postId: post.id,
+        },
+      }),
+    ]);
 
     revalidatePath(`/`);
     revalidatePath(`/record/[page]/page`, "page");
