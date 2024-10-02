@@ -5,7 +5,7 @@ import { PostHeader } from "../post-header";
 describe("Testing PostHeader component", () => {
   it("should render the post header correctly", () => {
     const date = new Date("2023-08-27");
-    const tags = [{ id: 1, nameEs: "Etiqueta1", nameEn: "TAG1" }];
+    const tags = [{ id: 1, name: "TAG1" }];
     render(
       <PostHeader
         title="Test Post"

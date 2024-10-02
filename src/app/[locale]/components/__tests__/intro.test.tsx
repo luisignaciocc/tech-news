@@ -13,7 +13,7 @@ jest.mock("../dashboard-tags-fetcher", () => {
 
 describe("Testing Intro component", () => {
   it("should render the Intro component correctly", () => {
-    render(<Intro />);
+    render(<Intro locale={"es"} />);
 
     // Verify that the mock component renders
     expect(screen.getByRole("navigation")).toBeInTheDocument();

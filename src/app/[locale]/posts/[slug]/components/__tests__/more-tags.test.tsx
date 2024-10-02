@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import MoreTags from "../more-tags";
 
 const mockTags = [
-  { id: 1, nameEs: "Etiqueta1", nameEn: "Tag 1" },
-  { id: 2, nameEs: "Etiqueta2", nameEn: "Tag 2" },
-  { id: 3, nameEs: "Etiqueta3", nameEn: "Tag 3" },
+  { id: 1, name: "Tag 1" },
+  { id: 2, name: "Tag 2" },
+  { id: 3, name: "Tag 3" },
 ];
 
 describe("Testing MoreTags component", () => {
@@ -14,10 +14,10 @@ describe("Testing MoreTags component", () => {
 
     mockTags.forEach((tag) => {
       const tagLink = screen.getByRole("link", {
-        name: tag.nameEs.toLowerCase(),
+        name: tag.name.toLowerCase(),
       });
       expect(tagLink).toBeInTheDocument();
-      expect(tagLink).toHaveAttribute("href", `/posts/tags/${tag.nameEs}`);
+      expect(tagLink).toHaveAttribute("href", `/posts/tags/${tag.name}`);
     });
   });
 });

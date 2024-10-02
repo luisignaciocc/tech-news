@@ -7,9 +7,9 @@ import { SITE_URL } from "@/lib/metadata";
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } },
+  { params }: { params: { slug: string; locale: string } },
 ) {
-  const post = await getPostBySlug(params.slug);
+  const post = await getPostBySlug(params.slug, params.locale);
 
   if (!post) {
     return notFound();

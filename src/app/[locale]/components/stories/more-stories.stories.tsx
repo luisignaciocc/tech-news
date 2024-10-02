@@ -21,7 +21,7 @@ const posts = [
       name: "Autor 1",
       picture: "https://via.placeholder.com/100",
     },
-    tags: [{ nameEs: "Etiqueta1", nameEn: "tag1" }],
+    tags: [{ name: "tag1" }],
   },
   {
     slug: "post-2",
@@ -33,7 +33,7 @@ const posts = [
       name: "Autor 2",
       picture: "https://via.placeholder.com/100",
     },
-    tags: [{ nameEs: "Etiqueta2", nameEn: "tag2" }],
+    tags: [{ name: "tag2" }],
   },
   {
     slug: "post-3",
@@ -45,7 +45,7 @@ const posts = [
       name: "Autor 3",
       picture: "https://via.placeholder.com/100",
     },
-    tags: [{ nameEs: "Etiqueta3", nameEn: "tag3" }],
+    tags: [{ name: "tag3" }],
   },
 ];
 
