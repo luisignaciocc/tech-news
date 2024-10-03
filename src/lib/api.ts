@@ -218,17 +218,33 @@ export async function getRandomPostsFromTwoWeeksAgo(
     },
   });
 
-  const transformedPosts = randomPosts.map((post) => ({
-    id: post.id,
-    coverImage: post.coverImage,
-    title: post.title,
-    slug: post.slug,
-    publishedAt: post.publishedAt,
-    tags: post.tags.map((tag) => ({
-      id: Number(tag.id),
-      name: tag[`name${normalizedLocale}`] as unknown as string, // Asigna el nombre según el locale
-    })),
-  }));
+  // Get the title in the corresponding locale
+  const transformedPosts = await Promise.all(
+    randomPosts.map(async (post) => {
+      // Find the corresponding language record
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+
+      // Translate the data
+      return {
+        id: post.id,
+        coverImage: post.coverImage,
+        title,
+        slug: post.slug,
+        publishedAt: post.publishedAt,
+        tags: post.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return transformedPosts;
 }
