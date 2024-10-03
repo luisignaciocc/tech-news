@@ -14,6 +14,7 @@ type Props = {
     picture: string;
   };
   slug: string;
+  locale: string;
 };
 
 export function HeroPost({
@@ -23,6 +24,7 @@ export function HeroPost({
   excerpt,
   author,
   slug,
+  locale,
 }: Props) {
   return (
     <section>
@@ -41,7 +43,11 @@ export function HeroPost({
             </Link>
           </h3>
           <div className="mb-4 md:mb-0 text-lg">
-            <DateFormatter date={date} />
+            {locale === "es" ? (
+              <DateFormatter date={date} />
+            ) : (
+              date.toDateString()
+            )}
           </div>
         </div>
         <div>

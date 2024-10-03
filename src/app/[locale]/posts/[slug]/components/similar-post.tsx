@@ -14,6 +14,7 @@ interface SimilarPostsProps {
   tags: { id: number; name: string }[];
   slug: string;
   publishedAt: Date | null;
+  locale: string;
 }
 
 export function SimilarPostsSkeleton() {
@@ -72,6 +73,7 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
   tags,
   slug,
   publishedAt,
+  locale,
 }) => {
   const t = useTranslations("Similiar-post");
 
@@ -114,7 +116,11 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
             {publishedAt && (
               <div className="text-gray-600 text-xs line-clamp-1 w-1/2 text-left">
                 <span className="mr-2">|</span>{" "}
-                <DateFormatter date={publishedAt} />
+                {locale === "es" ? (
+                  <DateFormatter date={publishedAt} />
+                ) : (
+                  publishedAt.toDateString()
+                )}
               </div>
             )}
           </div>
@@ -159,7 +165,11 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
             {publishedAt && (
               <div className="text-gray-600 text-xs line-clamp-1 w-full mt-2">
                 <span className="mr-2">|</span>{" "}
-                <DateFormatter date={publishedAt} />
+                {locale === "es" ? (
+                  <DateFormatter date={publishedAt} />
+                ) : (
+                  publishedAt.toDateString()
+                )}
               </div>
             )}
           </div>
@@ -189,6 +199,7 @@ export default async function SimilarPosts({
               tags={post.tags}
               slug={post.slug}
               publishedAt={post.publishedAt}
+              locale={locale}
             />
           ))}
         </div>

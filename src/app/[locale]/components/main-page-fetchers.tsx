@@ -18,14 +18,18 @@ export async function PostsFetcher({ locale }: { locale: string }) {
   const hasMorePosts = 21 < count;
 
   return (
-    <MoreStories hasMorePosts={hasMorePosts} posts={posts.slice(10, 25)} />
+    <MoreStories
+      hasMorePosts={hasMorePosts}
+      posts={posts.slice(10, 25)}
+      locale={locale}
+    />
   );
 }
 
 export const HeroPostsFetcher = async ({ locale }: { locale: string }) => {
   const { posts: heroPosts } = await getPosts({ page: 1, perPage: 10, locale });
 
-  return <PostVerticalCarousel posts={heroPosts} />;
+  return <PostVerticalCarousel posts={heroPosts} locale={locale} />;
 };
 
 export const SecondTagsPostsFetcher = async ({

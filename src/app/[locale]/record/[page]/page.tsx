@@ -40,7 +40,7 @@ export default async function SearchPostContent({
       <div className="flex gap-8 mt-2">
         <div className="w-full lg:w-8/12 mt-6 lg:mt-14">
           {posts.length > 0 ? (
-            <MoreStories posts={posts} />
+            <MoreStories posts={posts} locale={locale} />
           ) : (
             <div className="bg-gray-900 text-white w-full h-auto py-10 px-12">
               <p className="text-2xl">{t("undefined")}</p>

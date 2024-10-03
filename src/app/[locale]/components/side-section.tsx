@@ -147,6 +147,7 @@ export async function TagSection({ searchTerm, locale }: TagSectionProps) {
             excerpt={null}
             slug={post.slug}
             tags={post.tags}
+            locale={locale}
           />
         </div>
       ))}

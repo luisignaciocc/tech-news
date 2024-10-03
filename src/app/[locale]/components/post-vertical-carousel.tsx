@@ -22,6 +22,7 @@ interface Post {
 
 type Props = {
   posts: Post[];
+  locale: string;
 };
 
 export function PostVerticalCarouselSkeleton() {
@@ -41,7 +42,7 @@ export function PostVerticalCarouselSkeleton() {
   );
 }
 
-export default function PostVerticalCarousel({ posts }: Props) {
+export default function PostVerticalCarousel({ posts, locale }: Props) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -52,7 +53,7 @@ export default function PostVerticalCarousel({ posts }: Props) {
       setCurrentIndex((prevIndex) =>
         prevIndex === posts.length - 1 ? 0 : prevIndex + 1,
       );
-    }, 5000); // Cambiar cada 5 segundos
+    }, 5000); // Change every 5 seconds
     intervalRef.current = interval;
 
     return () => clearInterval(interval);
@@ -117,7 +118,15 @@ export default function PostVerticalCarousel({ posts }: Props) {
                   role="none"
                 />
                 <div className="text-gray-500">
-                  <DateFormatter date={post.publishedAt || new Date()} />
+                  {locale === "es" ? (
+                    <DateFormatter date={post.publishedAt || new Date()} />
+                  ) : (
+                    <span>
+                      {post.publishedAt
+                        ? post.publishedAt.toDateString()
+                        : new Date().toDateString()}
+                    </span>
+                  )}
                 </div>
               </div>
               <h3 className="text-2xl leading-tight tracking-tighter">
