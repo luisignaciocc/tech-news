@@ -488,6 +488,7 @@ export const getPostsBySearchTerm = async (
       },
     ],
   };
+
   const [posts, count] = await Promise.all([
     prisma.post.findMany({
       where,
@@ -516,14 +517,32 @@ export const getPostsBySearchTerm = async (
     }),
   ]);
 
-  // Transform the posts to adjust the structure of tags
-  const transformedPosts = posts.map((post) => ({
-    ...post,
-    tags: post.tags.map((tag) => ({
-      id: tag.id,
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title and excerpt in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record for the title and the excerpt
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+      const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
+      // Transform the data
+      return {
+        ...post,
+        title,
+        excerpt,
+        tags: post.tags.map((tag) => ({
+          id: tag.id,
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return {
     posts: transformedPosts,
