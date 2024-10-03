@@ -14,6 +14,7 @@ describe("Testing PostPreview Component", () => {
       name: "Author Name",
       picture: "https://example.com/avatar.jpg",
     },
+    locale: "es",
   };
 
   it("should render the PostPreview correctly", () => {

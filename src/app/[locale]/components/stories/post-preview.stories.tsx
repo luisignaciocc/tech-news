@@ -39,7 +39,9 @@ const post = {
 };
 
 // We define the story
-const Template: StoryFn<PostPreviewProps> = (args) => <PostPreview {...args} />;
+const Template: StoryFn<PostPreviewProps> = (args) => (
+  <PostPreview {...args} locale={"es"} />
+);
 
 export const Default = Template.bind({});
 Default.args = {

@@ -52,7 +52,7 @@ const posts = [
 // We define the story
 const Template: StoryFn<{ posts: typeof posts; hasMorePosts?: boolean }> = (
   args,
-) => <MoreStories {...args} />;
+) => <MoreStories {...args} locale={"es"} />;
 
 export const Default = Template.bind({});
 Default.args = {

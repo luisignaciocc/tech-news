@@ -13,6 +13,7 @@ describe("Testing HeroPost component", () => {
       picture: "https://example.com/avatar.jpg",
     },
     slug: "sample-post",
+    locale: "es",
   };
 
   it("should render the HeroPost correctly", () => {

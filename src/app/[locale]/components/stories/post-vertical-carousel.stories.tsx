@@ -45,7 +45,9 @@ type Props = {
 };
 
 // We define the story
-const Template: StoryFn<Props> = (args) => <PostVerticalCarousel {...args} />;
+const Template: StoryFn<Props> = (args) => (
+  <PostVerticalCarousel {...args} locale={"es"} />
+);
 
 export const Default = Template.bind({});
 Default.args = {

@@ -24,7 +24,9 @@ type Props = {
 };
 
 // We define the story
-const Template: StoryFn<Props> = (args: Props) => <HeroPost {...args} />;
+const Template: StoryFn<Props> = (args: Props) => (
+  <HeroPost {...args} locale={"es"} />
+);
 
 export const Default = Template.bind({});
 Default.args = {
