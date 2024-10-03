@@ -50,7 +50,7 @@ export async function getPostBySlug(slug: string, locale: string) {
 
   // Transform the post if it exists
   if (post) {
-    // Buscar el registro de idiomas correspondiente
+    // Find the corresponding language record
     const languageRecord = await prisma.languages.findFirst({
       where: {
         postId: post.id,
@@ -58,7 +58,7 @@ export async function getPostBySlug(slug: string, locale: string) {
       },
     });
 
-    // Si hay un registro de idiomas, usar esos valores; de lo contrario, usar los del post
+    // If there is a language record, use those values; otherwise, use the post's values
     const title = languageRecord ? languageRecord.title : post.title;
     const content = languageRecord ? languageRecord.content : post.content;
     const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
@@ -126,18 +126,33 @@ export async function getPostsCards(
     },
   });
 
-  // Transform the posts to adjust the tag structure
-  const transformedPosts = posts.map((post) => ({
-    id: post.id,
-    coverImage: post.coverImage,
-    title: post.title,
-    slug: post.slug,
-    publishedAt: post.publishedAt,
-    tags: post.tags.map((tag) => ({
-      id: Number(tag.id),
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+
+      // Transform the data
+      return {
+        id: post.id,
+        coverImage: post.coverImage,
+        title,
+        slug: post.slug,
+        publishedAt: post.publishedAt,
+        tags: post.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return transformedPosts;
 }
