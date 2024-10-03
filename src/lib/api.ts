@@ -270,13 +270,13 @@ export async function getRelatedPostFromPostSlug(slug: string, locale: string) {
       return null;
     }
 
-    // Paso 3: Select a random number of similar news items
+    // Step 3: Select a random number of similar news items
     const randomIndex = Math.floor(Math.random() * similarNews.length);
     const selectedSimilarNews = similarNews[randomIndex];
 
     const normalizedLocale = normalizeLocale(locale);
 
-    // Paso 4: Find the post related to the selected news
+    // Step 4: Find the post related to the selected news
     const relatedPost = await prisma.post.findFirst({
       where: {
         newId: selectedSimilarNews.id,
@@ -296,21 +296,34 @@ export async function getRelatedPostFromPostSlug(slug: string, locale: string) {
       },
     });
 
-    return relatedPost
-      ? [
-          {
-            id: relatedPost.id,
-            coverImage: relatedPost.coverImage,
-            title: relatedPost.title,
-            slug: relatedPost.slug,
-            publishedAt: relatedPost.publishedAt,
-            tags: relatedPost.tags.map((tag) => ({
-              id: Number(tag.id),
-              name: tag[`name${normalizedLocale}`] as unknown as string,
-            })),
-          },
-        ]
-      : [];
+    if (!relatedPost) {
+      return [];
+    }
+
+    // Find the corresponding language record
+    const languageRecord = await prisma.languages.findFirst({
+      where: {
+        postId: relatedPost.id,
+        locale: locale,
+      },
+    });
+
+    const title = languageRecord ? languageRecord.title : relatedPost.title;
+
+    // Transform the data
+    return [
+      {
+        id: relatedPost.id,
+        coverImage: relatedPost.coverImage,
+        title,
+        slug: relatedPost.slug,
+        publishedAt: relatedPost.publishedAt,
+        tags: relatedPost.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      },
+    ];
   } catch (error) {
     console.error("Error getting related post:", error);
     return [];
@@ -405,23 +418,41 @@ export async function getPostsByTags(
     },
   });
 
-  // Maps the posts to match the structure of PostsByTags
-  return posts.map((post) => ({
-    id: post.id,
-    title: post.title,
-    coverImage: post.coverImage,
-    slug: post.slug,
-    createdAt: post.createdAt,
-    excerpt: post.excerpt,
-    author: {
-      id: post.author.id,
-      name: post.author.name,
-      picture: post.author.picture,
-    },
-    tags: post.tags.map((tag) => ({
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title and excerpt in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record for the title and excerpt
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+      const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
+      // Transform the data
+      return {
+        id: post.id,
+        title,
+        coverImage: post.coverImage,
+        slug: post.slug,
+        createdAt: post.createdAt,
+        excerpt,
+        author: {
+          id: post.author.id,
+          name: post.author.name,
+          picture: post.author.picture,
+        },
+        tags: post.tags.map((tag) => ({
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
+
+  return transformedPosts;
 }
 
 export const getPostsBySearchTerm = async (
