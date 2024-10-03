@@ -94,10 +94,10 @@ export async function POST(request: Request): Promise<NextResponse> {
           .trim()
           .split(/\n/) // Split by new lines
           .map((tag) => tag.trim().replace(/^-\s*/, "")) // Remove the '-' character at the beginning
-          .filter((tag) => tag !== "") // Filter empty values
+          .filter((tag) => tag) // Filter empty values
           .map((tag) => {
-            const [nameEn, nameEs] = tag.split(" - ").map((t) => t.trim()); // Separate tags
-            return { nameEs, nameEn }; // Return an object with both tags
+            const [nameEs, nameEn] = tag.split(" - ").map((t) => t.trim()); // Separate tags
+            return { nameEs, nameEn }; // Return an object with both labels
           })
       : [];
 

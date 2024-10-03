@@ -50,15 +50,28 @@ export async function getPostBySlug(slug: string, locale: string) {
 
   // Transform the post if it exists
   if (post) {
+    // Buscar el registro de idiomas correspondiente
+    const languageRecord = await prisma.languages.findFirst({
+      where: {
+        postId: post.id,
+        locale: locale,
+      },
+    });
+
+    // Si hay un registro de idiomas, usar esos valores; de lo contrario, usar los del post
+    const title = languageRecord ? languageRecord.title : post.title;
+    const content = languageRecord ? languageRecord.content : post.content;
+    const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
     const transformedPost = {
       id: post.id,
       slug: post.slug,
-      title: post.title,
-      content: post.content,
+      title,
+      content,
       createdAt: post.createdAt,
       coverImage: post.coverImage,
       authorId: post.authorId,
-      excerpt: post.excerpt,
+      excerpt,
       publishedAt: post.publishedAt,
       author: {
         id: post.author.id,
