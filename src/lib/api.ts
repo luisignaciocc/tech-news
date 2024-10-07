@@ -557,7 +557,8 @@ export const getPosts = async (params?: {
 }) => {
   const limit = params?.perPage || PER_PAGE;
   const offset = ((params?.page || 1) - 1) * limit;
-  const normalizedLocale = normalizeLocale(params?.locale || "es");
+  const locale = params?.locale || "es";
+  const normalizedLocale = normalizeLocale(locale);
 
   const [posts, count] = await Promise.all([
     prisma.post.findMany({
@@ -586,7 +587,7 @@ export const getPosts = async (params?: {
       const languageRecord = await prisma.languages.findFirst({
         where: {
           postId: post.id,
-          locale: normalizedLocale,
+          locale: locale,
         },
       });
 
