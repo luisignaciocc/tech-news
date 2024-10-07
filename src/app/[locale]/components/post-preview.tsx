@@ -19,6 +19,7 @@ type Props = {
     name: string;
   }[];
   titleLinkClassName?: string;
+  locale: string;
 };
 
 export function PostPreview({
@@ -29,6 +30,7 @@ export function PostPreview({
   slug,
   tags,
   titleLinkClassName,
+  locale,
 }: Props) {
   const getTitleAsString = (): string => {
     if (typeof title === "string") {
@@ -61,7 +63,11 @@ export function PostPreview({
         ))}
         <span className="mr-2 border-r border border-black h-3" role="none" />
         <div className="text-gray-500">
-          <DateFormatter date={date} />
+          {locale === "es" ? (
+            <DateFormatter date={date} />
+          ) : (
+            <span>{date.toDateString()}</span>
+          )}
         </div>
       </div>
       <h3 className="text-2xl leading-tight tracking-tighter">

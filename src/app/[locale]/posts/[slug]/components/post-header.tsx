@@ -16,6 +16,7 @@ type Props = {
   date: Date;
   tags: { id: number; name: string }[];
   excerpt: string | null;
+  locale: string;
 };
 
 export function PostHeaderSkeleton() {
@@ -55,7 +56,14 @@ export function PostHeaderSkeleton() {
   );
 }
 
-export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
+export function PostHeader({
+  title,
+  coverImage,
+  date,
+  tags,
+  excerpt,
+  locale,
+}: Props) {
   return (
     <Fragment>
       <div className="mb-6 md:mb-6">
@@ -73,7 +81,11 @@ export function PostHeader({ title, coverImage, date, tags, excerpt }: Props) {
         </div>
         <span className="ml-2 mr-2 hidden sm:inline">|</span>
         <div className="flex items-start">
-          <DateFormatter date={date} />
+          {locale === "es" ? (
+            <DateFormatter date={date} />
+          ) : (
+            date.toDateString()
+          )}
         </div>
       </div>
       <h1 className="text-4xl font-bold mb-4">{title}</h1>

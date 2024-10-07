@@ -13,6 +13,7 @@ describe("Testing PostHeader component", () => {
         date={date}
         tags={tags}
         excerpt="This is a test excerpt"
+        locale={"es"}
       />,
     );
 

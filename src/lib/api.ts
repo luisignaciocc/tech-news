@@ -50,15 +50,28 @@ export async function getPostBySlug(slug: string, locale: string) {
 
   // Transform the post if it exists
   if (post) {
+    // Find the corresponding language record
+    const languageRecord = await prisma.languages.findFirst({
+      where: {
+        postId: post.id,
+        locale: locale,
+      },
+    });
+
+    // If there is a language record, use those values; otherwise, use the post's values
+    const title = languageRecord ? languageRecord.title : post.title;
+    const content = languageRecord ? languageRecord.content : post.content;
+    const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
     const transformedPost = {
       id: post.id,
       slug: post.slug,
-      title: post.title,
-      content: post.content,
+      title,
+      content,
       createdAt: post.createdAt,
       coverImage: post.coverImage,
       authorId: post.authorId,
-      excerpt: post.excerpt,
+      excerpt,
       publishedAt: post.publishedAt,
       author: {
         id: post.author.id,
@@ -113,18 +126,33 @@ export async function getPostsCards(
     },
   });
 
-  // Transform the posts to adjust the tag structure
-  const transformedPosts = posts.map((post) => ({
-    id: post.id,
-    coverImage: post.coverImage,
-    title: post.title,
-    slug: post.slug,
-    publishedAt: post.publishedAt,
-    tags: post.tags.map((tag) => ({
-      id: Number(tag.id),
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+
+      // Transform the data
+      return {
+        id: post.id,
+        coverImage: post.coverImage,
+        title,
+        slug: post.slug,
+        publishedAt: post.publishedAt,
+        tags: post.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return transformedPosts;
 }
@@ -190,17 +218,33 @@ export async function getRandomPostsFromTwoWeeksAgo(
     },
   });
 
-  const transformedPosts = randomPosts.map((post) => ({
-    id: post.id,
-    coverImage: post.coverImage,
-    title: post.title,
-    slug: post.slug,
-    publishedAt: post.publishedAt,
-    tags: post.tags.map((tag) => ({
-      id: Number(tag.id),
-      name: tag[`name${normalizedLocale}`] as unknown as string, // Asigna el nombre según el locale
-    })),
-  }));
+  // Get the title in the corresponding locale
+  const transformedPosts = await Promise.all(
+    randomPosts.map(async (post) => {
+      // Find the corresponding language record
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+
+      // Translate the data
+      return {
+        id: post.id,
+        coverImage: post.coverImage,
+        title,
+        slug: post.slug,
+        publishedAt: post.publishedAt,
+        tags: post.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return transformedPosts;
 }
@@ -226,13 +270,13 @@ export async function getRelatedPostFromPostSlug(slug: string, locale: string) {
       return null;
     }
 
-    // Paso 3: Select a random number of similar news items
+    // Step 3: Select a random number of similar news items
     const randomIndex = Math.floor(Math.random() * similarNews.length);
     const selectedSimilarNews = similarNews[randomIndex];
 
     const normalizedLocale = normalizeLocale(locale);
 
-    // Paso 4: Find the post related to the selected news
+    // Step 4: Find the post related to the selected news
     const relatedPost = await prisma.post.findFirst({
       where: {
         newId: selectedSimilarNews.id,
@@ -252,21 +296,34 @@ export async function getRelatedPostFromPostSlug(slug: string, locale: string) {
       },
     });
 
-    return relatedPost
-      ? [
-          {
-            id: relatedPost.id,
-            coverImage: relatedPost.coverImage,
-            title: relatedPost.title,
-            slug: relatedPost.slug,
-            publishedAt: relatedPost.publishedAt,
-            tags: relatedPost.tags.map((tag) => ({
-              id: Number(tag.id),
-              name: tag[`name${normalizedLocale}`] as unknown as string,
-            })),
-          },
-        ]
-      : [];
+    if (!relatedPost) {
+      return [];
+    }
+
+    // Find the corresponding language record
+    const languageRecord = await prisma.languages.findFirst({
+      where: {
+        postId: relatedPost.id,
+        locale: locale,
+      },
+    });
+
+    const title = languageRecord ? languageRecord.title : relatedPost.title;
+
+    // Transform the data
+    return [
+      {
+        id: relatedPost.id,
+        coverImage: relatedPost.coverImage,
+        title,
+        slug: relatedPost.slug,
+        publishedAt: relatedPost.publishedAt,
+        tags: relatedPost.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      },
+    ];
   } catch (error) {
     console.error("Error getting related post:", error);
     return [];
@@ -361,23 +418,41 @@ export async function getPostsByTags(
     },
   });
 
-  // Maps the posts to match the structure of PostsByTags
-  return posts.map((post) => ({
-    id: post.id,
-    title: post.title,
-    coverImage: post.coverImage,
-    slug: post.slug,
-    createdAt: post.createdAt,
-    excerpt: post.excerpt,
-    author: {
-      id: post.author.id,
-      name: post.author.name,
-      picture: post.author.picture,
-    },
-    tags: post.tags.map((tag) => ({
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title and excerpt in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record for the title and excerpt
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+      const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
+      // Transform the data
+      return {
+        id: post.id,
+        title,
+        coverImage: post.coverImage,
+        slug: post.slug,
+        createdAt: post.createdAt,
+        excerpt,
+        author: {
+          id: post.author.id,
+          name: post.author.name,
+          picture: post.author.picture,
+        },
+        tags: post.tags.map((tag) => ({
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
+
+  return transformedPosts;
 }
 
 export const getPostsBySearchTerm = async (
@@ -413,6 +488,7 @@ export const getPostsBySearchTerm = async (
       },
     ],
   };
+
   const [posts, count] = await Promise.all([
     prisma.post.findMany({
       where,
@@ -441,14 +517,32 @@ export const getPostsBySearchTerm = async (
     }),
   ]);
 
-  // Transform the posts to adjust the structure of tags
-  const transformedPosts = posts.map((post) => ({
-    ...post,
-    tags: post.tags.map((tag) => ({
-      id: tag.id,
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title and excerpt in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record for the title and the excerpt
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: locale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+      const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
+      // Transform the data
+      return {
+        ...post,
+        title,
+        excerpt,
+        tags: post.tags.map((tag) => ({
+          id: tag.id,
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return {
     posts: transformedPosts,
@@ -485,13 +579,32 @@ export const getPosts = async (params?: {
     prisma.post.count(),
   ]);
 
-  const transformedPosts = posts.map((post) => ({
-    ...post,
-    tags: post.tags.map((tag) => ({
-      id: Number(tag.id),
-      name: tag[`name${normalizedLocale}`] as unknown as string,
-    })),
-  }));
+  // Get the title and excerpt in the corresponding locale
+  const transformedPosts = await Promise.all(
+    posts.map(async (post) => {
+      // Find the corresponding language record for the title and the excerpt
+      const languageRecord = await prisma.languages.findFirst({
+        where: {
+          postId: post.id,
+          locale: normalizedLocale,
+        },
+      });
+
+      const title = languageRecord ? languageRecord.title : post.title;
+      const excerpt = languageRecord ? languageRecord.excerpt : post.excerpt;
+
+      // Transform the data
+      return {
+        ...post,
+        title,
+        excerpt,
+        tags: post.tags.map((tag) => ({
+          id: Number(tag.id),
+          name: tag[`name${normalizedLocale}`] as unknown as string,
+        })),
+      };
+    }),
+  );
 
   return {
     posts: transformedPosts,

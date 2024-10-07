@@ -32,7 +32,7 @@ describe("Testing MoreStories Component", () => {
   ];
 
   it("should render all post previews correctly", () => {
-    render(<MoreStories posts={mockPosts} />, {
+    render(<MoreStories posts={mockPosts} locale={"es"} />, {
       wrapper: MemoryRouterProvider,
     });
 
@@ -41,9 +41,12 @@ describe("Testing MoreStories Component", () => {
   });
 
   it("should render the 'Ver posts mas antiguos' button when hasMorePosts is true", () => {
-    render(<MoreStories posts={mockPosts} hasMorePosts={true} />, {
-      wrapper: MemoryRouterProvider,
-    });
+    render(
+      <MoreStories posts={mockPosts} hasMorePosts={true} locale={"es"} />,
+      {
+        wrapper: MemoryRouterProvider,
+      },
+    );
 
     const moreButton = screen.getByRole("link", {
       name: "Ver posts mas antiguos",
@@ -53,9 +56,12 @@ describe("Testing MoreStories Component", () => {
   });
 
   it("should not render the 'Ver posts mas antiguos' button when hasMorePosts is false", () => {
-    render(<MoreStories posts={mockPosts} hasMorePosts={false} />, {
-      wrapper: MemoryRouterProvider,
-    });
+    render(
+      <MoreStories posts={mockPosts} hasMorePosts={false} locale={"es"} />,
+      {
+        wrapper: MemoryRouterProvider,
+      },
+    );
 
     expect(
       screen.queryByText("Ver posts mas antiguos"),

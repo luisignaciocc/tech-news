@@ -25,7 +25,7 @@ describe("Testing PostVerticalCarousel Component", () => {
   ];
 
   it("should render the PostVerticalCarousel correctly", () => {
-    render(<PostVerticalCarousel posts={mockPosts} />);
+    render(<PostVerticalCarousel posts={mockPosts} locale={"es"} />);
 
     mockPosts.forEach((post) => {
       const titleElement = screen.getByText(post.title);
@@ -57,7 +57,7 @@ describe("Testing PostVerticalCarousel Component", () => {
   });
 
   it("should change the active post when clicking on index buttons", () => {
-    render(<PostVerticalCarousel posts={mockPosts} />);
+    render(<PostVerticalCarousel posts={mockPosts} locale={"es"} />);
 
     // Verify that the first post is displayed initially
     expect(screen.getByText("Sample Post 1")).toBeVisible();

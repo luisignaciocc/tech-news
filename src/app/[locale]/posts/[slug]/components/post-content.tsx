@@ -27,6 +27,7 @@ const PostContent: React.FC<{
         date={post.createdAt}
         tags={post.tags}
         excerpt={post.excerpt}
+        locale={locale}
       />
       <div className="grid lg:grid-cols-5">
         <div className="lg:col-span-4">
