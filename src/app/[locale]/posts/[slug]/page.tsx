@@ -1,7 +1,9 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { unstable_setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
+import { routing } from "@/i18n/routing";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import {
   defaultMetadata,
@@ -20,6 +22,10 @@ import PostContent, {
 } from "./components/post-content";
 import SimilarPosts from "./components/similar-post";
 
+interface ExtendedMetadata extends Metadata {
+  "html:lang"?: string;
+}
+
 type Params = {
   params: {
     slug: string;
@@ -28,6 +34,8 @@ type Params = {
 };
 
 export default async function PostPageContent({ params }: Params) {
+  unstable_setRequestLocale(params.locale);
+
   return (
     <main>
       <article className="mb-8 relative">
@@ -49,7 +57,9 @@ export default async function PostPageContent({ params }: Params) {
   );
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: Params): Promise<ExtendedMetadata> {
   const post = await getPostBySlug(params.slug, params.locale);
 
   if (!post) {
@@ -96,13 +106,22 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
         },
       ],
     },
+    "html:lang": params.locale,
   };
 }
 
 export async function generateStaticParams() {
   const slugs = await getPostSlugs({ limit: 100 });
 
-  return slugs.map(({ slug }) => ({
-    slug,
-  }));
+  // Generar las combinaciones de slugs y locales
+  const staticParams = [];
+
+  // Crear combinaciones de slugs y locales
+  for (const slug of slugs) {
+    for (const locale of routing.locales) {
+      staticParams.push({ slug: slug.slug, locale });
+    }
+  }
+
+  return staticParams;
 }
