@@ -23,7 +23,7 @@ import PostContent, {
 import SimilarPosts from "./components/similar-post";
 
 interface ExtendedMetadata extends Metadata {
-  "html:lang"?: string;
+  "html:lang"?: string; // Add html:lang to the metadata interface
 }
 
 type Params = {
@@ -106,17 +106,17 @@ export async function generateMetadata({
         },
       ],
     },
-    "html:lang": params.locale,
+    "html:lang": params.locale, // Add locale to metadata
   };
 }
 
 export async function generateStaticParams() {
   const slugs = await getPostSlugs({ limit: 100 });
 
-  // Generar las combinaciones de slugs y locales
+  // Generate slug and local combinations
   const staticParams = [];
 
-  // Crear combinaciones de slugs y locales
+  // Create slug and local combinations
   for (const slug of slugs) {
     for (const locale of routing.locales) {
       staticParams.push({ slug: slug.slug, locale });
