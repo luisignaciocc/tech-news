@@ -27,8 +27,14 @@ export function HeaderPostLoadingSkeleton() {
   );
 }
 
-export default async function HeaderPosts({ slug }: { slug: string }) {
-  const slugsCard = await getPostsCards(slug, 4);
+export default async function HeaderPosts({
+  slug,
+  locale,
+}: {
+  slug: string;
+  locale: string;
+}) {
+  const slugsCard = await getPostsCards(slug, 4, locale);
 
   return (
     <div className="flex flex-wrap justify-center mx-4 my-4">

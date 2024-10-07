@@ -23,6 +23,7 @@ import SimilarPosts from "./components/similar-post";
 type Params = {
   params: {
     slug: string;
+    locale: string;
   };
 };
 
@@ -31,17 +32,17 @@ export default async function PostPageContent({ params }: Params) {
     <main>
       <article className="mb-8 relative">
         <Suspense fallback={<HeaderPostLoadingSkeleton />}>
-          <HeaderPosts slug={params.slug} />
+          <HeaderPosts slug={params.slug} locale={params.locale} />
         </Suspense>
         <div className="w-full h-14 bg-gray-100 mb-8"></div>
 
         <div className="mx-auto px-4 max-w-2xl lg:max-w-4xl xl:max-w-5xl">
           <Suspense fallback={<PostContentLoadigSkeleton />}>
-            <PostContent slug={params.slug} />
+            <PostContent slug={params.slug} locale={params.locale} />
           </Suspense>
         </div>
         <Suspense>
-          <SimilarPosts slug={params.slug} />
+          <SimilarPosts slug={params.slug} locale={params.locale} />
         </Suspense>
       </article>
     </main>
@@ -49,7 +50,7 @@ export default async function PostPageContent({ params }: Params) {
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
+  const post = await getPostBySlug(params.slug, params.locale);
 
   if (!post) {
     return notFound();
@@ -63,7 +64,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
     metadataBase: new URL(SITE_URL),
     title,
     description,
-    keywords: post.tags.map((tag) => tag.nameEs),
+    keywords: post.tags.map((tag) => tag.name),
     creator: post.author.name,
     publisher: post.author.name,
     alternates: { canonical: new URL(`${SITE_URL}/posts/${params.slug}`) },

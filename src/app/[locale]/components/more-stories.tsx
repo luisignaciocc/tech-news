@@ -20,8 +20,7 @@ type Props = {
       picture: string;
     };
     tags: {
-      nameEs: string;
-      nameEn: string;
+      name: string;
     }[];
   }[];
   hasMorePosts?: boolean;

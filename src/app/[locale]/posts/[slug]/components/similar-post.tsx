@@ -11,7 +11,7 @@ import { getRelatedPostFromPostSlug } from "@/lib/api";
 interface SimilarPostsProps {
   imageUrl: string | null;
   title: string;
-  tags: { id: number; nameEs: string; nameEn: string }[];
+  tags: { id: number; name: string }[];
   slug: string;
   publishedAt: Date | null;
 }
@@ -104,8 +104,8 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
             <div className="text-gray-700 text-xs line-clamp-2 w-1/2">
               {tags.map((tag, index) => (
                 <React.Fragment key={index}>
-                  <Link href={`/posts/tags/${tag.nameEs}`}>
-                    <span>{tag.nameEs.toUpperCase()}</span>
+                  <Link href={`/posts/tags/${tag.name}`}>
+                    <span>{tag.name.toUpperCase()}</span>
                   </Link>
                   {index < tags.length - 1 && ", "}
                 </React.Fragment>
@@ -149,8 +149,8 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
             <div className="text-gray-700 text-xs line-clamp-2 w-full">
               {tags.map((tag, index) => (
                 <React.Fragment key={index}>
-                  <Link href={`/posts/tags/${tag.nameEs}`}>
-                    <span>{tag.nameEs.toUpperCase()}</span>
+                  <Link href={`/posts/tags/${tag.name}`}>
+                    <span>{tag.name.toUpperCase()}</span>
                   </Link>
                   {index < tags.length - 1 && ", "}
                 </React.Fragment>
@@ -169,8 +169,14 @@ export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
   );
 };
 
-export default async function SimilarPosts({ slug }: { slug: string }) {
-  const similarPosts = await getRelatedPostFromPostSlug(slug);
+export default async function SimilarPosts({
+  slug,
+  locale,
+}: {
+  slug: string;
+  locale: string;
+}) {
+  const similarPosts = await getRelatedPostFromPostSlug(slug, locale);
   return (
     <div className="mx-auto px-4 max-w-2xl lg:max-w-4xl xl:max-w-5xl mt-4">
       <div className="grid lg:grid-cols-5">

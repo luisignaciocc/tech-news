@@ -113,7 +113,7 @@ describe("Testing /api/getPostBySlug function", () => {
 
     (prismaMock.post.findUnique as jest.Mock).mockResolvedValue(mockPost);
 
-    const post = await getPostBySlug("my-post");
+    const post = await getPostBySlug("my-post", "es");
 
     expect(prismaMock.post.findUnique).toHaveBeenCalledWith({
       where: {
@@ -130,7 +130,7 @@ describe("Testing /api/getPostBySlug function", () => {
   test("should return null when post does not exist", async () => {
     (prismaMock.post.findUnique as jest.Mock).mockResolvedValue(null);
 
-    const post = await getPostBySlug("non-existent-slug");
+    const post = await getPostBySlug("non-existent-slug", "es");
 
     expect(prismaMock.post.findUnique).toHaveBeenCalledWith({
       where: {
@@ -227,7 +227,7 @@ describe("Testing /api/getPostsCards function", () => {
       mockPosts.filter((post) => post.slug !== "post-2"),
     );
 
-    const posts = await getPostsCards("post-2", 2);
+    const posts = await getPostsCards("post-2", 2, "es");
 
     expect(prismaMock.post.findMany).toHaveBeenCalledWith({
       where: {
@@ -292,7 +292,7 @@ describe("Testing /api/getMostUsedTags function", () => {
     ];
     prismaMock.tag.findMany.mockResolvedValue(mockTags);
 
-    const result = await getMostUsedTags(3);
+    const result = await getMostUsedTags(3, "Es");
 
     expect(prismaMock.tag.findMany).toHaveBeenCalledWith({
       orderBy: {
@@ -301,7 +301,7 @@ describe("Testing /api/getMostUsedTags function", () => {
         },
       },
       select: {
-        name: true,
+        nameEs: true,
       },
       take: 3,
     });
@@ -402,7 +402,7 @@ describe("Testing /api/getPostsByTags function", () => {
     ];
     prismaMock.post.findMany.mockResolvedValue(mockPosts);
 
-    const result = await getPostsByTags(["tag2", "tag3"], 2);
+    const result = await getPostsByTags(["tag2", "tag3"], 2, "es");
 
     expect(prismaMock.post.findMany).toHaveBeenCalledWith({
       where: {
@@ -618,6 +618,7 @@ describe("Testing /api/getPostsBySearchTerm function", () => {
     const { posts, count } = await getPostsBySearchTerm(
       searchTerm,
       numberPosts,
+      "es",
     );
 
     expect(posts).toEqual(mockPosts);

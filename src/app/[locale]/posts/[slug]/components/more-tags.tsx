@@ -6,8 +6,7 @@ import { Link } from "@/i18n/routing";
 
 interface Tag {
   id: number;
-  nameEs: string;
-  nameEn: string;
+  name: string;
 }
 
 interface MoreTagsProps {
@@ -29,11 +28,11 @@ const MoreTags: React.FC<MoreTagsProps> = ({ tags }) => {
     <div className="flex flex-wrap gap-2">
       {tags.map((tag) => (
         <Link
-          href={`/posts/tags/${tag.nameEs}`}
+          href={`/posts/tags/${tag.name}`}
           key={tag.id}
           className="bg-white text-sm text-gray-400 border border-gray-400 px-4 py-0.5 rounded-full hover:border-red-600 hover:text-red-600 transition-colors duration-200 cursor-pointer"
         >
-          <span>{tag.nameEs.toLowerCase()}</span>
+          <span>{tag.name.toLowerCase()}</span>
         </Link>
       ))}
     </div>

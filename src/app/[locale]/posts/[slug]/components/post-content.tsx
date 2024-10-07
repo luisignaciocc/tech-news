@@ -9,8 +9,9 @@ import { PostHeader, PostHeaderSkeleton } from "./post-header";
 
 const PostContent: React.FC<{
   slug: string;
-}> = async ({ slug }) => {
-  const post = await getPostBySlug(slug);
+  locale: string;
+}> = async ({ slug, locale }) => {
+  const post = await getPostBySlug(slug, locale);
 
   if (!post) {
     return notFound();

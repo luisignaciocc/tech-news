@@ -13,13 +13,15 @@ interface SearchParams {
 
 export default async function SearchPostContent({
   searchParams,
+  params: { locale },
 }: {
   searchParams: SearchParams;
+  params: { locale: string };
 }) {
   const searchTerm = searchParams.s;
   const perPage = 25;
   const [{ posts }] = await Promise.all([
-    getPostsBySearchTerm(searchTerm, perPage),
+    getPostsBySearchTerm(searchTerm, perPage, locale),
   ]);
 
   const t = await getTranslations("posts");
@@ -48,7 +50,7 @@ export default async function SearchPostContent({
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SideSection searchTag={searchTerm} />
+          <SideSection searchTag={searchTerm} locale={locale} />
         </div>
       </div>
     </div>

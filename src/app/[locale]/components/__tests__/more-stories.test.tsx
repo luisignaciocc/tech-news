@@ -15,7 +15,7 @@ describe("Testing MoreStories Component", () => {
         name: "Author 1",
         picture: "/images/author1.jpg",
       },
-      tags: [{ nameEs: "Etiqueta1", nameEn: "Tag2" }],
+      tags: [{ name: "Tag1" }],
     },
     {
       slug: "post-2",
@@ -27,7 +27,7 @@ describe("Testing MoreStories Component", () => {
         name: "Author 2",
         picture: "/images/author2.jpg",
       },
-      tags: [{ nameEs: "Etiqueta1", nameEn: "Tag2" }],
+      tags: [{ name: "Tag2" }],
     },
   ];
 

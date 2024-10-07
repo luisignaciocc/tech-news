@@ -16,8 +16,7 @@ type Props = {
   };
   slug: string;
   tags: {
-    nameEs: string;
-    nameEn: string;
+    name: string;
   }[];
   titleLinkClassName?: string;
 };
@@ -53,11 +52,11 @@ export function PostPreview({
       <div className="text-sm flex items-center">
         {tags.slice(0, 1).map((tag) => (
           <Link
-            href={`/posts/tags/${tag.nameEs}`}
-            key={tag.nameEs}
+            href={`/posts/tags/${tag.name}`}
+            key={tag.name}
             className="uppercase text-gray-800 mr-2"
           >
-            {tag.nameEs}
+            {tag.name}
           </Link>
         ))}
         <span className="mr-2 border-r border border-black h-3" role="none" />

@@ -9,14 +9,16 @@ import { getPostsBySearchTerm } from "@/lib/api";
 type Params = {
   params: {
     tag: string;
+    locale: string;
   };
 };
 
 export default async function TagsPage({ params }: Params) {
   const searchTerm = decodeURIComponent(params.tag);
+  const locale = params.locale;
   const perPage = 25;
   const [{ posts }] = await Promise.all([
-    getPostsBySearchTerm(searchTerm, perPage),
+    getPostsBySearchTerm(searchTerm, perPage, locale),
   ]);
 
   const t = await getTranslations("tag");
@@ -45,7 +47,7 @@ export default async function TagsPage({ params }: Params) {
           )}
         </div>
         <div className="w-4/12 hidden lg:block">
-          <SideSection searchTag={searchTerm} />
+          <SideSection searchTag={searchTerm} locale={locale} />
         </div>
       </div>
     </div>

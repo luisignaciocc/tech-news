@@ -22,7 +22,7 @@ const postsByTags = [
     },
     slug: "titulo-del-post-1",
     excerpt: "Resumen del Post 1.",
-    tags: [{ nameEs: "Etiqueta1", nameEn: "tag1" }],
+    tags: [{ name: "tag1" }],
     createdAt: new Date("2023-09-01"),
   },
   {
@@ -36,7 +36,7 @@ const postsByTags = [
     },
     slug: "titulo-del-post-2",
     excerpt: "Resumen del Post 2.",
-    tags: [{ nameEs: "Etiqueta2", nameEn: "tag2" }],
+    tags: [{ name: "tag2" }],
     createdAt: new Date("2023-09-02"),
   },
   {
@@ -50,7 +50,7 @@ const postsByTags = [
     },
     slug: "titulo-del-post-3",
     excerpt: "Resumen del Post 3.",
-    tags: [{ nameEs: "Etiqueta3", nameEn: "tag3" }],
+    tags: [{ name: "tag3" }],
     createdAt: new Date("2023-09-03"),
   },
 ];
