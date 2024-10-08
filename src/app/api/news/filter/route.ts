@@ -16,6 +16,14 @@ const bannedWords = [
   "review",
   "deal",
   "apk teardown",
+  "pornography", // Add pornographic terms to the list
+  "porn",
+  "sex",
+  "fetish",
+  "pornhub",
+  "xvideos",
+  "xnxx",
+  "hentai",
 ];
 
 const openai = new OpenAI({
