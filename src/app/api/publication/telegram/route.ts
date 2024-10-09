@@ -48,7 +48,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const bot = new TelegramBot(TOKEN);
 
-    const postUrl = `${SITE_URL}/posts/${article.slug}`;
+    const postUrl = `${SITE_URL}/es/posts/${article.slug}`;
 
     let text = `📰Nuevo post: [${article.title}](${postUrl})\n\n`;
 
