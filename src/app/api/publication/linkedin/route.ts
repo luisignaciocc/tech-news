@@ -41,7 +41,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const CLIENT_SECRET = process.env.LINKEDIN_CLIENT_SECRET;
     const ACESS_TOKEN = process.env.LINKEDIN_ACCESS_TOKEN;
     const ORGANIZATION_ID = "104021039";
-    const postUrl = `${SITE_URL}/posts/${article.slug}`;
+    const postUrl = `${SITE_URL}/es/posts/${article.slug}`;
 
     if (!CLIENT_ID || !CLIENT_SECRET || !ACESS_TOKEN) {
       return NextResponse.json(

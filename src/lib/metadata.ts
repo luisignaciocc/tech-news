@@ -61,7 +61,7 @@ export const defaultMetadata: Metadata = {
   itunes: null,
   abstract: null,
   appLinks: null,
-  archives: `${SITE_URL}/record/2`,
+  archives: `${SITE_URL}/es/record/2`, // Add "es" locale by default
   assets: null,
   bookmarks: null,
   category: "Tecnología",

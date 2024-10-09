@@ -77,16 +77,20 @@ export async function generateMetadata({
     keywords: post.tags.map((tag) => tag.name),
     creator: post.author.name,
     publisher: post.author.name,
-    alternates: { canonical: new URL(`${SITE_URL}/posts/${params.slug}`) },
+    alternates: {
+      canonical: new URL(`${SITE_URL}/${params.locale}/posts/${params.slug}`),
+    },
     openGraph: {
       type: "website",
-      url: new URL(`${SITE_URL}/posts/${params.slug}`),
+      url: new URL(`${SITE_URL}/${params.locale}/posts/${params.slug}`),
       title,
       description,
       siteName: SITE_SHORT_NAME,
       images: [
         {
-          url: new URL(`${SITE_URL}/posts/${params.slug}/og.png`),
+          url: new URL(
+            `${SITE_URL}/${params.locale}/posts/${params.slug}/og.png`,
+          ),
           width: 1200,
           height: 630,
         },
@@ -100,7 +104,9 @@ export async function generateMetadata({
       creator: PERSONAL_HANDLER,
       images: [
         {
-          url: new URL(`${SITE_URL}/posts/${params.slug}/og.png`),
+          url: new URL(
+            `${SITE_URL}/${params.locale}/posts/${params.slug}/og.png`,
+          ),
           width: 1200,
           height: 630,
         },
