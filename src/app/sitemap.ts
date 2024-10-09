@@ -12,7 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = Math.ceil(slugs.length / PER_PAGE) - 1; // -1 because the first page is handled by the index page
 
   const postUrls: MetadataRoute.Sitemap = slugs.map(({ slug }) => ({
-    url: `${SITE_URL}/posts/${slug}`,
+    url: `${SITE_URL}/es/posts/${slug}`,
     lastModified: new Date(),
     changeFrequency: "never",
     priority: 0.9,
@@ -20,7 +20,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const pagesUrls: MetadataRoute.Sitemap = Array.from({ length: pages }).map(
     (_, index) => ({
-      url: `${SITE_URL}/page/${index + 2}`,
+      url: `${SITE_URL}/es/record/${index + 2}`,
       lastModified: new Date(),
       changeFrequency: "hourly",
       priority: 0.5,
@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   const tagUrls: MetadataRoute.Sitemap = tags.map((tag) => ({
-    url: `${SITE_URL}/posts/tags/${encodeURIComponent(tag.nameEs)}`,
+    url: `${SITE_URL}/es/posts/tags/${encodeURIComponent(tag.nameEs)}`,
     lastModified: new Date(),
     changeFrequency: "hourly",
     priority: 0.8,
@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${SITE_URL}/posts`,
+      url: `${SITE_URL}/es/posts`,
       lastModified: new Date(),
       changeFrequency: "hourly",
       priority: 0.8,
