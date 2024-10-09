@@ -58,10 +58,10 @@ export async function POST(request: Request) {
         {
           role: "system",
           content: `
-            Eres un asistente que crea resúmenes concisos y atractivos para publicaciones en Facebook. 
+            Eres un asistente que crea resúmenes concisos y atractivos en inglés para publicaciones en Facebook. 
             Las publicaciones deben estar diseñadas para atraer la atención de los seguidores interesados en noticias de tecnología. 
             La cuenta de Facebook es un sitio de noticias de tecnología llamado Tecnobuc.
-            Solo responde con el texto del resumen, sin ninguna introducción o comentario adicional.
+            A continuación, recibirás un artículo en español. Por favor, proporciona un resumen en inglés, respondiendo con el texto del resumen sin ninguna introducción o comentario adicional.
           `,
         },
         {
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     });
 
     const summary = completion.choices[0].message.content;
-    const postUrl = `${SITE_URL}/posts/${lastPost.slug}`;
+    const postUrl = `${SITE_URL}/en/posts/${lastPost.slug}`;
 
     if (!summary) {
       await notifyProblem("Generating a summary for a new post on Facebook");
