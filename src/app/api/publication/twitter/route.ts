@@ -49,7 +49,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
 
     const endpointURL = `https://api.twitter.com/2/tweets`;
-    const postUrl = `${SITE_URL}/posts/${article.slug}`;
+    const postUrl = `${SITE_URL}/es/posts/${article.slug}`;
 
     const oauth = new OAuth({
       consumer: {
