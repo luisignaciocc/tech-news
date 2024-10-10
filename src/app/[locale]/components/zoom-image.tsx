@@ -34,13 +34,7 @@ const ZoomImage = ({ title, src, slug }: Props) => {
 
   return (
     <div className="sm:mx-0">
-      {slug ? (
-        <Link href={`/posts/${slug}`} aria-label={title}>
-          {image}
-        </Link>
-      ) : (
-        image
-      )}
+      {slug ? <Link href={`/posts/${slug}`}>{image}</Link> : image}
     </div>
   );
 };

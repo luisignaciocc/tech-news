@@ -113,10 +113,7 @@ export default function PostVerticalCarousel({ posts, locale }: Props) {
                     {tag.name}
                   </Link>
                 ))}
-                <span
-                  className="mr-2 border-r border border-black h-3"
-                  role="none"
-                />
+                <span className="mr-2 border-r border border-black h-3" />
                 <div className="text-gray-500">
                   {locale === "es" ? (
                     <DateFormatter date={post.publishedAt || new Date()} />
