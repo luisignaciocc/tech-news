@@ -164,12 +164,11 @@ export default function PostVerticalCarousel({ posts, locale }: Props) {
                 key={index}
                 role="button"
                 className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-sm sm:text-sm md:text-sm lg:text-lg xl:text-lg font-bold cursor-pointer relative flex justify-center items-center ${
-                  index === activeIndex ? "text-red-500" : "text-gray-500"
+                  index === activeIndex ? "text-red-600" : "text-gray-500"
                 }`}
                 onClick={() => handleIndexClick(index)}
                 onMouseEnter={() => handleIndexHover(index)}
                 onMouseLeave={handleIndexLeave}
-                tabIndex={0}
               >
                 {index + 1}
                 {index < posts.length - 1 && (
