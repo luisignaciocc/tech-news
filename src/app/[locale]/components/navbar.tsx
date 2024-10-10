@@ -92,7 +92,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
               onKeyDown={handleKeyDown}
               autoFocus={inputFocused}
             />
-            <button
+            <span
               className={cn(
                 "px-3 py-2 rounded-md text-sm font-bold uppercase",
                 {
@@ -104,7 +104,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
               aria-label={t("search")}
             >
               <BsSearch className="h-6 w-6" />
-            </button>
+            </span>
           </div>
           <hr className="border-white" />
         </div>
@@ -245,7 +245,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
             >
               |
             </span>
-            <button
+            <span
               className={cn(
                 "px-3 py-2 rounded-md text-sm font-bold uppercase",
                 {
@@ -272,7 +272,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                   }}
                 />
               )}
-            </button>
+            </span>
           </div>
 
           {/* Button to open mobile menu */}
@@ -286,7 +286,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
             `}
           >
             <div className="lg:hidden flex items-center">
-              <button
+              <span
                 aria-label={isSearchOpen ? t("search-open") : t("search-close")}
                 className={cn(
                   "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
@@ -314,7 +314,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                     }}
                   />
                 )}
-              </button>
+              </span>
               <span
                 className={cn({
                   "text-white": theme === "dark",
@@ -323,7 +323,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
               >
                 |
               </span>
-              <button
+              <span
                 aria-label={isMenuOpen ? t("menu-open") : t("menu-close")}
                 className={cn(
                   "sm:px-3 px-2 py-2 rounded-md text-sm font-bold uppercase",
@@ -339,7 +339,7 @@ function NavBar({ isNavBar, tags, theme = "dark" }: NavBarProps) {
                 ) : (
                   <BsList className="h-8 w-8" />
                 )}
-              </button>
+              </span>
             </div>
           </div>
         </div>
