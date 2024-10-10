@@ -31,8 +31,8 @@ export const SpecialCardPost: React.FC<SpecialCardPostProps> = ({
             height={100}
           />
           <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-gray-900 to-transparent" />
-          <div className="absolute bottom-2 left-4 text-white text-2xl font-bold">
-            {number}
+          <div className="absolute bottom-0 left-0 bg-black bg-opacity-70 p-1 rounded">
+            <span className="text-white text-2xl font-bold">{number}</span>
           </div>
         </div>
         <div className="flex-1">
