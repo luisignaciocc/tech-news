@@ -113,10 +113,7 @@ export default function PostVerticalCarousel({ posts, locale }: Props) {
                     {tag.name}
                   </Link>
                 ))}
-                <span
-                  className="mr-2 border-r border border-black h-3"
-                  role="none"
-                />
+                <span className="mr-2 border-r border border-black h-3" />
                 <div className="text-gray-500">
                   {locale === "es" ? (
                     <DateFormatter date={post.publishedAt || new Date()} />
@@ -160,23 +157,18 @@ export default function PostVerticalCarousel({ posts, locale }: Props) {
         <div className="flex items-center relative">
           <div className="flex items-center">
             {posts.map((post, index) => (
-              <div
+              <button
                 key={index}
-                role="button"
                 className={`px-1 sm:px-1 md:px-1 lg:px-2 xl:px-2 py-1 text-sm sm:text-sm md:text-sm lg:text-lg xl:text-lg font-bold cursor-pointer relative flex justify-center items-center ${
-                  index === activeIndex ? "text-red-500" : "text-gray-500"
+                  index === activeIndex ? "text-red-600" : "text-gray-500"
                 }`}
                 onClick={() => handleIndexClick(index)}
                 onMouseEnter={() => handleIndexHover(index)}
                 onMouseLeave={handleIndexLeave}
-                tabIndex={0}
               >
                 {index + 1}
                 {index < posts.length - 1 && (
-                  <span
-                    className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4"
-                    role="none"
-                  />
+                  <span className="ml-1 sm:ml-1 md:ml-1 lg:ml-4 xl:ml-4 border-r border-gray-400 h-4" />
                 )}
                 {hoveredIndex === index && activeIndex !== index && (
                   <div className="absolute bg-white shadow-lg p-2 rounded-md z-10 w-56 h-auto -top-48">
@@ -190,7 +182,7 @@ export default function PostVerticalCarousel({ posts, locale }: Props) {
                     </p>
                   </div>
                 )}
-              </div>
+              </button>
             ))}
           </div>
         </div>
