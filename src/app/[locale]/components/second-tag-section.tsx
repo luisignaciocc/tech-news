@@ -81,12 +81,14 @@ function SecondTagSection({
               <div className="absolute top-4 left-0 pl-6 pr-2 bg-black text-white py-1 rounded text-sm uppercase font-bold">
                 {secondMostUsedTag}
               </div>
-              <Link href={`/posts/${postsByTags[0].slug}`}>
-                <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
-                <div className="absolute bottom-0 left-0 w-full px-4 pt-2 text-white overflow-hidden text-ellipsis line-clamp-3 hover:text-red-500">
+              <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2">
+                <Link
+                  href={`/posts/${postsByTags[0].slug}`}
+                  className="text-lg hover:text-red-400 line-clamp-3"
+                >
                   {postsByTags[0].title}
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="w-4/12 flex flex-col justify-between">
@@ -97,12 +99,14 @@ function SecondTagSection({
                   src={post.coverImage || ""}
                   slug={post.slug}
                 />
-                <Link href={`/posts/${post.slug}`}>
-                  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-full px-4 pt-2 text-white overflow-hidden text-ellipsis line-clamp-3 hover:text-red-500">
+                <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2">
+                  <Link
+                    href={`/posts/${post.slug}`}
+                    className="text-lg hover:text-red-400 line-clamp-2"
+                  >
                     {post.title}
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
@@ -130,12 +134,14 @@ function SecondTagSection({
                 <div className="absolute top-4 left-0 pl-6 pr-2 bg-black text-white py-1 rounded text-sm uppercase font-bold sm:text-base">
                   {secondMostUsedTag}
                 </div>
-                <Link href={`/posts/${post.slug}`}>
-                  <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 w-full px-4 pt-2 text-white overflow-hidden text-ellipsis line-clamp-3 hover:text-red-500 text-sm sm:text-base">
+                <div className="absolute bottom-0 left-0 w-full bg-black bg-opacity-50 text-white p-2">
+                  <Link
+                    href={`/posts/${post.slug}`}
+                    className="text-lg hover:text-red-400 line-clamp-3"
+                  >
                     {post.title}
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
