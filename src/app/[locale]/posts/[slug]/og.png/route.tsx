@@ -51,7 +51,8 @@ export async function GET(
             }}
           />
         )}
-        {/* Cuadro de texto en la parte inferior */}
+
+        {/* Cuadro de texto en la parte inferior con ícono y título de la página */}
         <div
           style={{
             position: "absolute",
@@ -69,17 +70,55 @@ export async function GET(
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            textShadow:
-              "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
             overflow: "hidden",
             textOverflow: "ellipsis",
             WebkitLineClamp: 3,
             WebkitBoxOrient: "vertical",
           }}
         >
+          {/* Título de la noticia */}
           <span style={{ fontSize: 40, color: "white", fontWeight: 900 }}>
             {post.title}
           </span>
+        </div>
+
+        {/* Cuadro con ícono y título de la página en la parte superior derecha */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "230px",
+            right: "140px",
+            display: "flex",
+            alignItems: "center",
+            zIndex: 3,
+            backgroundColor: "white",
+            height: "60px",
+            width: "260px",
+          }}
+        >
+          <img
+            alt="Logo"
+            src={`${SITE_URL}/icon-accent.png`}
+            style={{
+              width: "60px",
+              height: "60px",
+              objectFit: "contain",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              bottom: "-10px",
+              right: "30px",
+              width: "30px",
+              height: "30px",
+              backgroundColor: "#fff",
+              transform: "rotate(45deg)",
+            }}
+          />
+          <div style={{ fontSize: 30, fontWeight: 700, color: "black" }}>
+            | TECNOBUC
+          </div>
         </div>
         {/* Texto de URL en la parte inferior de la imagen */}
         <div
