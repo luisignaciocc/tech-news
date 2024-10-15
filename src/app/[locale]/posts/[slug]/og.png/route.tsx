@@ -15,6 +15,10 @@ export async function GET(
     return notFound();
   }
 
+  const colors = ["#003366", "#114912", "#3E1D71", "#952812"];
+
+  const color = colors[Math.floor(Math.random() * colors.length)];
+
   return new ImageResponse(
     (
       <div
@@ -29,7 +33,7 @@ export async function GET(
           letterSpacing: "-.02em",
           fontWeight: 700,
           background: "white",
-          position: "relative", // Asegúrate de que el contenedor sea relativo
+          position: "relative",
         }}
       >
         {post.coverImage && (
@@ -43,11 +47,10 @@ export async function GET(
               marginBottom: 20,
               position: "absolute",
               top: 0,
-              zIndex: 1, // Imagen detrás del texto
+              zIndex: 1,
             }}
           />
         )}
-
         <div
           style={{
             left: 42,
@@ -55,7 +58,7 @@ export async function GET(
             position: "absolute",
             display: "flex",
             alignItems: "center",
-            zIndex: 2, // Asegúrate de que esté en frente
+            zIndex: 2,
           }}
         >
           <span
@@ -75,21 +78,35 @@ export async function GET(
             {SITE_URL}
           </span>
         </div>
-
+        {/* Cuadro de texto en la parte inferior */}
         <div
           style={{
-            fontSize: 24,
-            color: "black",
-            width: "100%",
-            height: "100%",
+            position: "absolute",
+            bottom: "55px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "90%",
+            height: "195px",
+            backgroundColor: color,
+            padding: "20px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+            zIndex: 2,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            position: "relative",
-            zIndex: 2, // Asegúrate de que esté en frente
+            textAlign: "center",
+            textShadow:
+              "-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
           }}
         >
-          {post.title}
+          <span style={{ fontSize: 40, color: "white", fontWeight: 900 }}>
+            {post.title}
+          </span>
         </div>
       </div>
     ),
