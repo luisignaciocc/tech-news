@@ -29,8 +29,25 @@ export async function GET(
           letterSpacing: "-.02em",
           fontWeight: 700,
           background: "white",
+          position: "relative", // Asegúrate de que el contenedor sea relativo
         }}
       >
+        {post.coverImage && (
+          <img
+            alt={post.title}
+            src={post.coverImage}
+            style={{
+              width: "100%",
+              height: "80%",
+              objectFit: "cover",
+              marginBottom: 20,
+              position: "absolute",
+              top: 0,
+              zIndex: 1, // Imagen detrás del texto
+            }}
+          />
+        )}
+
         <div
           style={{
             left: 42,
@@ -38,6 +55,7 @@ export async function GET(
             position: "absolute",
             display: "flex",
             alignItems: "center",
+            zIndex: 2, // Asegúrate de que esté en frente
           }}
         >
           <span
@@ -57,6 +75,7 @@ export async function GET(
             {SITE_URL}
           </span>
         </div>
+
         <div
           style={{
             fontSize: 24,
@@ -66,22 +85,12 @@ export async function GET(
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            position: "relative",
+            zIndex: 2, // Asegúrate de que esté en frente
           }}
         >
           {post.title}
         </div>
-        {post.coverImage && (
-          <img
-            alt={post.title}
-            height={200}
-            src={post.coverImage}
-            style={{
-              height: "80%",
-              border: "10px solid white",
-              marginBottom: 20,
-            }}
-          />
-        )}
       </div>
     ),
     {
