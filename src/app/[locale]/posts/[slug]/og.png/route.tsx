@@ -135,7 +135,9 @@ export async function GET(
           }}
         >
           <span style={{ fontSize: 26 }}>
-            ENTÉRATE DE TODOS LOS DETALLES EN
+            {params.locale === "es"
+              ? "ENTÉRATE DE TODOS LOS DETALLES EN"
+              : "GET ALL THE DETAILS AT"}
             <img
               src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
               alt="Flecha"
