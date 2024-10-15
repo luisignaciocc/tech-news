@@ -98,6 +98,20 @@ export async function POST(request: Request): Promise<NextResponse> {
             }
           }
 
+          // Check if the image is in WebP format
+          if (image.endsWith(".webp")) {
+            await prisma.news.update({
+              where: {
+                id: item.id,
+              },
+              data: {
+                deletedAt: new Date(),
+                deletionReason: "Image format is WebP",
+              },
+            });
+            return false;
+          }
+
           const imageUrl = await cloudinary.uploader.upload(image, {
             folder: "posts_previews",
           });
