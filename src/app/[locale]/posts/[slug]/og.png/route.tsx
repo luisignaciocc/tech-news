@@ -32,7 +32,7 @@ export async function GET(
           justifyContent: "center",
           letterSpacing: "-.02em",
           fontWeight: 700,
-          background: "white",
+          background: "black",
           position: "relative",
         }}
       >
@@ -51,33 +51,6 @@ export async function GET(
             }}
           />
         )}
-        <div
-          style={{
-            left: 42,
-            top: 30,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            zIndex: 2,
-          }}
-        >
-          <span
-            style={{
-              fontSize: 16,
-              display: "flex",
-              flexWrap: "wrap",
-              justifyContent: "center",
-              padding: "10px 16px",
-              width: "auto",
-              textAlign: "center",
-              backgroundColor: "black",
-              color: "white",
-              lineHeight: 0.6,
-            }}
-          >
-            {SITE_URL}
-          </span>
-        </div>
         {/* Cuadro de texto en la parte inferior */}
         <div
           style={{
@@ -106,6 +79,53 @@ export async function GET(
         >
           <span style={{ fontSize: 40, color: "white", fontWeight: 900 }}>
             {post.title}
+          </span>
+        </div>
+        {/* Texto de URL en la parte inferior de la imagen */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 3,
+            color: "white",
+            textAlign: "center",
+            display: "flex",
+          }}
+        >
+          <span style={{ fontSize: 26 }}>
+            ENTÉRATE DE TODOS LOS DETALLES EN
+            <img
+              src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
+              alt="Flecha"
+              style={{
+                width: "1.5em",
+                height: "1em",
+                marginRight: "-1em",
+                marginTop: "0.2em",
+              }}
+            />
+            <img
+              src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
+              alt="Flecha"
+              style={{
+                width: "1.5em",
+                height: "1em",
+                marginRight: "-1em",
+                marginTop: "0.2em",
+              }}
+            />
+            <img
+              src="data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z' fill='white'/%3E%3C/svg%3E"
+              alt="Flecha"
+              style={{
+                width: "1.5em",
+                height: "1em",
+                marginTop: "0.2em",
+              }}
+            />
+            {SITE_URL}
           </span>
         </div>
       </div>
