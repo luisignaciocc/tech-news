@@ -67,7 +67,7 @@ export function SimilarPostsSkeleton() {
   );
 }
 
-export const SimilarPostsCard: React.FC<SimilarPostsProps> = async ({
+export const SimilarPostsCard: React.FC<SimilarPostsProps> = ({
   imageUrl,
   title,
   tags,
