@@ -12,11 +12,10 @@ interface PostsData {
   newId: string;
 }
 
-async function PostsPage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
+async function PostsPage(props: {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const searchParams = await props.searchParams;
   const perPage = 10;
   const response = await getPostsData(Number(searchParams?.page), perPage);
 

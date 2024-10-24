@@ -7,13 +7,14 @@ import SideSection from "@/app/[locale]/components/side-section";
 import { getPostsBySearchTerm } from "@/lib/api";
 
 type Params = {
-  params: {
+  params: Promise<{
     tag: string;
     locale: string;
-  };
+  }>;
 };
 
-export default async function TagsPage({ params }: Params) {
+export default async function TagsPage(props: Params) {
+  const params = await props.params;
   const searchTerm = decodeURIComponent(params.tag);
   const locale = params.locale;
   const perPage = 25;
@@ -54,7 +55,8 @@ export default async function TagsPage({ params }: Params) {
   );
 }
 
-export async function generateMetadata({ params }: Params): Promise<Metadata> {
+export async function generateMetadata(props: Params): Promise<Metadata> {
+  const params = await props.params;
   const tag = decodeURIComponent(params.tag);
   const t = await getTranslations("tag");
 

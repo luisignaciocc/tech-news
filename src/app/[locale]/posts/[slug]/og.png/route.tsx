@@ -8,8 +8,9 @@ import { SITE_URL } from "@/lib/metadata";
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string; locale: string } },
+  props: { params: Promise<{ slug: string; locale: string }> },
 ) {
+  const params = await props.params;
   const post = await getPostBySlug(params.slug, params.locale);
 
   if (!post) {
@@ -184,7 +185,7 @@ export async function GET(
 }
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs({ limit: 100 });
+  const slugs = await getPostSlugs({ limit: 20 });
 
   // Generate slug and local combinations
   const staticParams = [];

@@ -10,11 +10,10 @@ interface DeletedData {
   deletionReason: string;
 }
 
-async function DeletedPage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
+async function DeletedPage(props: {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const searchParams = await props.searchParams;
   const perPage = 10;
   const response = await getDeletedData(Number(searchParams?.page), perPage);
 
