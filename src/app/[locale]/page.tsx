@@ -27,11 +27,17 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
-export default async function Index({
-  params: { locale },
-}: {
-  params: { locale: string };
-}) {
+export default async function Index(
+  props: {
+    params: Promise<{ locale: string }>;
+  }
+) {
+  const params = await props.params;
+
+  const {
+    locale
+  } = params;
+
   return (
     <main>
       <Container>

@@ -27,13 +27,14 @@ interface ExtendedMetadata extends Metadata {
 }
 
 type Params = {
-  params: {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
+  }>;
 };
 
-export default async function PostPageContent({ params }: Params) {
+export default async function PostPageContent(props: Params) {
+  const params = await props.params;
   unstable_setRequestLocale(params.locale);
 
   return (
@@ -57,9 +58,8 @@ export default async function PostPageContent({ params }: Params) {
   );
 }
 
-export async function generateMetadata({
-  params,
-}: Params): Promise<ExtendedMetadata> {
+export async function generateMetadata(props: Params): Promise<ExtendedMetadata> {
+  const params = await props.params;
   const post = await getPostBySlug(params.slug, params.locale);
 
   if (!post) {

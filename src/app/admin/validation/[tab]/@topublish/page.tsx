@@ -14,11 +14,12 @@ interface ToPublishData {
   title: string;
 }
 
-async function ToPublishPage({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
-}) {
+async function ToPublishPage(
+  props: {
+    searchParams?: Promise<{ [key: string]: string | undefined }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const perPage = 15;
   let response: ToPublishDataResponse = {
     data: [],
