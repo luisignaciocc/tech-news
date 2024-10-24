@@ -2,8 +2,7 @@
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
-import { routing } from "@/i18n/routing";
-import { getPostBySlug, getPostSlugs } from "@/lib/api";
+import { getPostBySlug } from "@/lib/api";
 import { SITE_URL } from "@/lib/metadata";
 
 export async function GET(
@@ -184,18 +183,18 @@ export async function GET(
   );
 }
 
-export async function generateStaticParams() {
-  const slugs = await getPostSlugs({ limit: 20 });
+// export async function generateStaticParams() {
+//   const slugs = await getPostSlugs({ limit: 20 });
 
-  // Generate slug and local combinations
-  const staticParams = [];
+//   // Generate slug and local combinations
+//   const staticParams = [];
 
-  // Create slug and local combinations
-  for (const slug of slugs) {
-    for (const locale of routing.locales) {
-      staticParams.push({ slug: slug.slug, locale });
-    }
-  }
+//   // Create slug and local combinations
+//   for (const slug of slugs) {
+//     for (const locale of routing.locales) {
+//       staticParams.push({ slug: slug.slug, locale });
+//     }
+//   }
 
-  return staticParams;
-}
+//   return staticParams;
+// }
