@@ -6,7 +6,10 @@ import { routing } from "@/i18n/routing";
 import { getPostBySlug, getPostSlugs } from "@/lib/api";
 import { SITE_URL } from "@/lib/metadata";
 
-export async function GET(req: Request, props: { params: Promise<{ slug: string; locale: string }> }) {
+export async function GET(
+  req: Request,
+  props: { params: Promise<{ slug: string; locale: string }> },
+) {
   const params = await props.params;
   const post = await getPostBySlug(params.slug, params.locale);
 

@@ -12,11 +12,9 @@ interface NotAproved {
   title: string;
 }
 
-async function NotAprovedPage(
-  props: {
-    searchParams?: Promise<{ [key: string]: string | undefined }>;
-  }
-) {
+async function NotAprovedPage(props: {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
+}) {
   const searchParams = await props.searchParams;
   const perPage = 15;
   let response: NotAprovedResponse = {

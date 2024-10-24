@@ -13,17 +13,13 @@ export default async function RootLayout(
   props: Readonly<{
     children: React.ReactNode;
     params: { locale: string };
-  }>
+  }>,
 ) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   return (
     <html lang={locale}>

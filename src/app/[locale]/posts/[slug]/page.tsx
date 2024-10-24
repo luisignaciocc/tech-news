@@ -58,7 +58,9 @@ export default async function PostPageContent(props: Params) {
   );
 }
 
-export async function generateMetadata(props: Params): Promise<ExtendedMetadata> {
+export async function generateMetadata(
+  props: Params,
+): Promise<ExtendedMetadata> {
   const params = await props.params;
   const post = await getPostBySlug(params.slug, params.locale);
 

@@ -20,17 +20,13 @@ export default async function Layout(
   props: Readonly<{
     children: React.ReactNode;
     params: { locale: string };
-  }>
+  }>,
 ) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
-  const {
-    children
-  } = props;
+  const { children } = props;
 
   return (
     <div>

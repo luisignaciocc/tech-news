@@ -11,17 +11,13 @@ interface SearchParams {
   s?: string;
 }
 
-export default async function SearchPostContent(
-  props: {
-    searchParams: Promise<SearchParams>;
-    params: Promise<{ locale: string }>;
-  }
-) {
+export default async function SearchPostContent(props: {
+  searchParams: Promise<SearchParams>;
+  params: Promise<{ locale: string }>;
+}) {
   const params = await props.params;
 
-  const {
-    locale
-  } = params;
+  const { locale } = params;
 
   const searchParams = await props.searchParams;
   const searchTerm = searchParams.s;

@@ -8,14 +8,12 @@ import { getPosts } from "@/lib/api";
 
 import PageNavigation from "./components/page-navigation";
 
-export default async function SearchPostContent(
-  props: {
-    params?: Promise<{
-      page?: string;
-      locale?: string;
-    }>;
-  }
-) {
+export default async function SearchPostContent(props: {
+  params?: Promise<{
+    page?: string;
+    locale?: string;
+  }>;
+}) {
   const params = await props.params;
   const page = params?.page ? parseInt(params.page) : 1;
   const perPage = 30;
