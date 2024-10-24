@@ -184,7 +184,7 @@ export async function GET(
 }
 
 export async function generateStaticParams() {
-  const slugs = await getPostSlugs({ limit: 100 });
+  const slugs = await getPostSlugs({ limit: 20 });
 
   // Generate slug and local combinations
   const staticParams = [];

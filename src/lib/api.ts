@@ -27,6 +27,9 @@ export const getPostSlugs = async (params?: { limit?: number }) => {
       slug: true,
     },
     take: params?.limit,
+    orderBy: {
+      createdAt: "desc",
+    },
   });
 };
 
