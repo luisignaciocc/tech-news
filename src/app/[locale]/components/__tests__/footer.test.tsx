@@ -15,7 +15,7 @@ describe("Testing Footer component", () => {
     expect(learnMoreLink).toBeInTheDocument();
     expect(learnMoreLink).toHaveAttribute(
       "href",
-      "https://www.bocono-labs.com/work",
+      "https://www.bocono-labs.com/work/tecnobuc",
     );
 
     const githubLink = screen.getByRole("link", {
