@@ -102,7 +102,7 @@
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.0.3",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-config-turbo": "^2.3.0",
+    "eslint-config-turbo": "^2.3.1",
     "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest-dom": "^5.5.0",
