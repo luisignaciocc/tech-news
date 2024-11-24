@@ -26,7 +26,7 @@ export const getPostSlugs = async (params?: { limit?: number }) => {
     select: {
       slug: true,
     },
-    take: params?.limit,
+    take: params?.limit || 100,
     orderBy: {
       createdAt: "desc",
     },
@@ -93,8 +93,15 @@ export async function getPostBySlug(slug: string, locale: string) {
   return null; // Return null if the post is not found
 }
 
-export async function getTags() {
-  return prisma.tag.findMany();
+export async function getTags(params?: { limit?: number }) {
+  return prisma.tag.findMany({
+    orderBy: {
+      posts: {
+        _count: "desc",
+      },
+    },
+    take: params?.limit || 5,
+  });
 }
 
 export async function getPostsCards(

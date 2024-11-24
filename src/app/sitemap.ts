@@ -6,8 +6,7 @@ import { PER_PAGE } from "@/lib/utils";
 
 // Google's limit is 50,000 URLs per sitemap
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const slugs = await getPostSlugs();
-  const tags = await getTags();
+  const [slugs, tags] = await Promise.all([getPostSlugs(), getTags()]);
 
   const pages = Math.ceil(slugs.length / PER_PAGE) - 1; // -1 because the first page is handled by the index page
 
