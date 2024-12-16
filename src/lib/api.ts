@@ -26,7 +26,7 @@ export const getPostSlugs = async (params?: { limit?: number }) => {
     select: {
       slug: true,
     },
-    take: params?.limit || 100,
+    take: params?.limit || 10000,
     orderBy: {
       createdAt: "desc",
     },
@@ -100,7 +100,7 @@ export async function getTags(params?: { limit?: number }) {
         _count: "desc",
       },
     },
-    take: params?.limit || 5,
+    take: params?.limit || 100,
   });
 }
 
