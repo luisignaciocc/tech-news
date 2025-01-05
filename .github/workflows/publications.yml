@@ -14,35 +14,35 @@ jobs:
           --url 'https://www.tecnobuc.com/api/publication/blog' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  twitter:
-    runs-on: self-hosted
-    needs: blog
-    steps:
-      - name: Generate a twitter post from an article
-        run: |
-          curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/twitter' \
-          --header 'x-api-key: ${{ secrets.API_KEY }}'
+  # twitter:
+  #   runs-on: self-hosted
+  #   needs: blog
+  #   steps:
+  #     - name: Generate a twitter post from an article
+  #       run: |
+  #         curl --request POST \
+  #         --url 'https://www.tecnobuc.com/api/publication/twitter' \
+  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  linkedin:
-    runs-on: self-hosted
-    needs: blog
-    steps:
-      - name: Generate a linkedin post from an article
-        run: |
-          curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/linkedin' \
-          --header 'x-api-key: ${{ secrets.API_KEY }}'
+  # linkedin:
+  #   runs-on: self-hosted
+  #   needs: blog
+  #   steps:
+  #     - name: Generate a linkedin post from an article
+  #       run: |
+  #         curl --request POST \
+  #         --url 'https://www.tecnobuc.com/api/publication/linkedin' \
+  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  facebook:
-    runs-on: self-hosted
-    needs: blog
-    steps:
-      - name: Generate a facebook post from an article
-        run: |
-          curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/facebook' \
-          --header 'x-api-key: ${{ secrets.API_KEY }}'
+  # facebook:
+  #   runs-on: self-hosted
+  #   needs: blog
+  #   steps:
+  #     - name: Generate a facebook post from an article
+  #       run: |
+  #         curl --request POST \
+  #         --url 'https://www.tecnobuc.com/api/publication/facebook' \
+  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   # telegram:
   #   runs-on: self-hosted
