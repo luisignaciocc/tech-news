@@ -14,15 +14,15 @@ jobs:
           --url 'https://www.tecnobuc.com/api/publication/blog' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  # twitter:
-  #   runs-on: self-hosted
-  #   needs: blog
-  #   steps:
-  #     - name: Generate a twitter post from an article
-  #       run: |
-  #         curl --request POST \
-  #         --url 'https://www.tecnobuc.com/api/publication/twitter' \
-  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
+  twitter:
+    runs-on: self-hosted
+    needs: blog
+    steps:
+      - name: Generate a twitter post from an article
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/publication/twitter' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   # linkedin:
   #   runs-on: self-hosted
