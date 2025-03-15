@@ -24,6 +24,7 @@ const bannedWords = [
   "xvideos",
   "xnxx",
   "hentai",
+  "kardashian",
 ];
 
 const openai = new OpenAI({
