@@ -13,10 +13,3 @@ updates:
       all:
         patterns:
           - "*"
-    ignore:
-      - dependency-name: "eslint"
-        versions: ["9.x"]
-      - dependency-name: "@typescript-eslint/eslint-plugin"
-        versions: ["8.x"]
-      - dependency-name: "@typescript-eslint/parser"
-        versions: ["8.x"]
