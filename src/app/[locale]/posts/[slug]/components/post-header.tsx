@@ -7,7 +7,7 @@ import CoverImage from "@/components/cover-image";
 import { DateFormatter } from "@/components/date-formatter";
 import { Link } from "@/i18n/routing";
 
-import markdownStyles from "./markdown-styles.module.css";
+import "./markdown-styles.css";
 import SocialMediaButtons from "./social-media-buttons";
 
 type Props = {
@@ -90,7 +90,7 @@ export function PostHeader({
       </div>
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
       <SocialMediaButtons />
-      <h2 className={markdownStyles["markdown"]}>{excerpt}</h2>
+      <h2 className="markdown">{excerpt}</h2>
     </Fragment>
   );
 }

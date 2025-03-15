@@ -2,7 +2,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import Skeleton from "react-loading-skeleton";
 
-import markdownStyles from "./markdown-styles.module.css";
+import "./markdown-styles.css";
 
 type Props = {
   content: string;
@@ -31,7 +31,7 @@ export function PostBody({ content }: Props) {
   return (
     <div className="text-gray-600 w-full">
       <div
-        className={markdownStyles["markdown"]}
+        className={"markdown"}
         dangerouslySetInnerHTML={{ __html: content }}
       />
     </div>
