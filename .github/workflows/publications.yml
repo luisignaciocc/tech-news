@@ -24,15 +24,15 @@ jobs:
           --url 'https://www.tecnobuc.com/api/publication/twitter' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
-  # linkedin:
-  #   runs-on: self-hosted
-  #   needs: blog
-  #   steps:
-  #     - name: Generate a linkedin post from an article
-  #       run: |
-  #         curl --request POST \
-  #         --url 'https://www.tecnobuc.com/api/publication/linkedin' \
-  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
+  linkedin:
+    runs-on: self-hosted
+    needs: blog
+    steps:
+      - name: Generate a linkedin post from an article
+        run: |
+          curl --request POST \
+          --url 'https://www.tecnobuc.com/api/publication/linkedin' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   # facebook:
   #   runs-on: self-hosted
