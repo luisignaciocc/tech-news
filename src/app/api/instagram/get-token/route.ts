@@ -1,4 +1,4 @@
-// http://localhost:3000/api/instagram/get-token?slt=
+// http://localhost:3000/api/instagram/get-token?slt=EAAGBo1mosPsBO4ZC0VAxtOLOHZCT7sekgml3FCGOOG5RDJIXqPjuZBPvpZBsVj6ZBtc8lUC3OegZBnUSLnDD3XZB9fn4HWMMoZARjzHHXsvFGzQsyEaXsaEtovwBgtxSGnvMOCPLy8mKVuTh7KTxOLmW0khggwItvOLHZCwqvEoJ9v2CxjGIT41gaGHUOX9XmFMRrwmQPagqlaXxFIQj8Oq6MomuVRhDGEzdNYNMgb1pMzL4ZD
 // get short lived token on https://developers.facebook.com/tools/explorer/
 import { NextResponse } from "next/server";
 
@@ -15,8 +15,9 @@ import { NextResponse } from "next/server";
 
 // to get ig account id first -> /me/accounts -> get ig account id -> /{ig_account_id}?fields=instagram_business_account -> get ig business account id -> /{ig_business_account_id}?fields=instagram_accounts -> get ig account id
 
-export async function GET(_request: Request): Promise<NextResponse> {
-  const shortLivedToken = process.env.FACEBOOK_SHORT_LIVE_TOKEN;
+export async function GET(request: Request): Promise<NextResponse> {
+  const { searchParams } = new URL(request.url);
+  const shortLivedToken = searchParams.get("slt");
 
   if (!shortLivedToken) {
     return NextResponse.json({
