@@ -164,7 +164,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         return NextResponse.json({ success: true }, { status: 200 });
       },
       {
-        timeout: 30000, // Aumentar timeout a 30 segundos
+        timeout: 50000, // Aumentar timeout a 30 segundos
       },
     );
   } catch (error: unknown) {

@@ -130,7 +130,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         return NextResponse.json({ success: true }, { status: 200 });
       },
       {
-        timeout: 30000, // Increase timeout to 30 seconds
+        timeout: 50000, // Increase timeout to 30 seconds
       },
     );
   } catch (error: unknown) {
