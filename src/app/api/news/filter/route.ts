@@ -8,17 +8,7 @@ import { notifyProblem } from "@/lib/utils";
 
 export const maxDuration = 60;
 
-// Initialize Prisma Client as a singleton
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
-
 const _SIMILARITY_THRESHOLD = 0.8;
-const _BATCH_SIZE = 10;
 const bannedWords = [
   "wordle",
   "quordle",
@@ -34,7 +24,6 @@ const bannedWords = [
   "xvideos",
   "xnxx",
   "hentai",
-  "kardashian",
 ];
 
 const openai = new OpenAI({
@@ -49,97 +38,76 @@ export async function POST(request: Request): Promise<NextResponse> {
   }
 
   try {
-    // Use transaction to ensure data consistency and reduce number of connections
-    return await prisma.$transaction(
-      async (tx) => {
-        const news = await tx.news.findMany({
-          where: {
-            coverImage: {
-              not: null,
-            },
-            deletedAt: null,
-            sentToApproval: false,
-          },
-          orderBy: {
-            createdAt: "desc",
-          },
-          take: _BATCH_SIZE,
-          select: {
-            id: true,
-            title: true,
-          },
-        });
+    const prisma = new PrismaClient();
 
-        if (news.length === 0) {
-          return NextResponse.json({ success: true }, { status: 200 });
-        }
+    const news = await prisma.news.findMany({
+      where: {
+        coverImage: {
+          not: null,
+        },
+        deletedAt: null,
+        sentToApproval: false,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 20,
+      select: {
+        id: true,
+        title: true,
+      },
+    });
 
-        // Optimized similarity query with index hint
-        const newsIds = news.map((n) => n.id);
-        const similarNewsResults: Array<{
+    for (const article of news) {
+      const similarNews: [
+        {
           id: string;
-          similar_to: string;
           similarity: number;
-        }> = await tx.$queryRaw`
-        WITH batch_news AS (
-          SELECT id, embedding
+        },
+      ] = await prisma.$queryRaw`
+        WITH comparation AS (
+          SELECT embedding AS comparation_embedding
           FROM "News"
-          WHERE id = ANY(${newsIds})
+          WHERE id = ${article.id}
         )
-        SELECT DISTINCT ON (bn.id)
-          bn.id,
-          n.id as similar_to,
-          1 - (n.embedding <=> bn.embedding) as similarity
-        FROM batch_news bn
-        INNER JOIN "News" n ON n.id != bn.id
-        WHERE n.embedding IS NOT NULL
-          AND n."deletedAt" IS NULL
-          AND 1 - (n.embedding <=> bn.embedding) > ${_SIMILARITY_THRESHOLD}
-        ORDER BY bn.id, (n.embedding <=> bn.embedding) ASC;
+        SELECT n.id,
+              1 - (n.embedding <=> c.comparation_embedding) AS similarity
+        FROM "News" n,
+              comparation c
+        WHERE n.id != ${article.id}
+        AND n.embedding IS NOT NULL
+        ORDER BY similarity DESC
+        LIMIT 1;
       `;
 
-        // Batch update similar articles
-        if (similarNewsResults.length > 0) {
-          await tx.news.updateMany({
-            where: {
-              id: {
-                in: similarNewsResults.map((r) => r.id),
-              },
-            },
+      if (similarNews[0].similarity > _SIMILARITY_THRESHOLD) {
+        await prisma.news.update({
+          data: {
+            deletedAt: new Date(),
+            deletionReason: `Similar to ${similarNews[0].id} (${similarNews[0].similarity})`,
+          },
+          where: {
+            id: article.id,
+          },
+        });
+      } else {
+        if (
+          bannedWords.some((word) => article.title.toLowerCase().includes(word))
+        ) {
+          await prisma.news.update({
             data: {
               deletedAt: new Date(),
-              deletionReason: "Similar to existing article",
+              deletionReason: `Contains banned word`,
+            },
+            where: {
+              id: article.id,
             },
           });
-        }
-
-        // Process remaining articles
-        const nonSimilarArticles = news.filter(
-          (article) => !similarNewsResults.find((r) => r.id === article.id),
-        );
-
-        for (const article of nonSimilarArticles) {
-          if (
-            bannedWords.some((word) =>
-              article.title.toLowerCase().includes(word),
-            )
-          ) {
-            await tx.news.update({
-              data: {
-                deletedAt: new Date(),
-                deletionReason: `Contains banned word`,
-              },
-              where: {
-                id: article.id,
-              },
-            });
-            continue;
-          }
-
+        } else {
           const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
           if (!TOKEN) {
-            await tx.news.update({
+            await prisma.news.update({
               where: {
                 id: article.id,
               },
@@ -158,17 +126,17 @@ export async function POST(request: Request): Promise<NextResponse> {
                     {
                       role: "system",
                       content: `
-                    You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
-                    Respond with "yes" if it is related to technology, otherwise respond with "no" and explain the reasons why it is not considered a technology news.
-                  `,
+                      You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
+                      Respond with "yes" if it is related to technology, otherwise respond with "no" and explain the reasons why it is not considered a technology news.
+                    `,
                     },
                     {
                       role: "user",
                       content: `
-                    Title: "${article.title}"
-                    
-                    Is this news related to technology?
-                `,
+                      Title: "${article.title}"
+                      
+                      Is this news related to technology?
+                  `,
                     },
                   ],
                   max_tokens: 10,
@@ -211,7 +179,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 );
               }
 
-              await tx.news.update({
+              await prisma.news.update({
                 where: {
                   id: article.id,
                 },
@@ -223,7 +191,7 @@ export async function POST(request: Request): Promise<NextResponse> {
                 },
               });
             } else {
-              await tx.news.update({
+              await prisma.news.update({
                 data: {
                   deletedAt: new Date(),
                   deletionReason: `Not detected as related to technology (${answer})`,
@@ -235,13 +203,10 @@ export async function POST(request: Request): Promise<NextResponse> {
             }
           }
         }
+      }
+    }
 
-        return NextResponse.json({ success: true }, { status: 200 });
-      },
-      {
-        timeout: 50000, // Increase timeout to 30 seconds
-      },
-    );
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error: unknown) {
     await notifyProblem("Filtering news", error);
     if (error instanceof Error) {

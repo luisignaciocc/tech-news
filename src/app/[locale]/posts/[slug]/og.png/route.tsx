@@ -60,9 +60,10 @@ export async function GET(
             bottom: "55px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: "85%",
+            width: "90%",
+            height: "195px",
             backgroundColor: color,
-            padding: "30px",
+            padding: "20px",
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
             zIndex: 2,
             display: "flex",
@@ -70,32 +71,23 @@ export async function GET(
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            height: "150px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
           }}
         >
           {/* Título de la noticia */}
-          <div
-            style={{
-              fontSize: 32,
-              lineHeight: "1.4",
-              color: "white",
-              fontWeight: 900,
-              maxWidth: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              height: "100%",
-            }}
-          >
+          <span style={{ fontSize: 40, color: "white", fontWeight: 900 }}>
             {post.title}
-          </div>
+          </span>
         </div>
 
         {/* Cuadro con ícono y título de la página en la parte superior derecha */}
         <div
           style={{
             position: "absolute",
-            bottom: "200px",
+            bottom: "230px",
             right: "140px",
             display: "flex",
             alignItems: "center",
