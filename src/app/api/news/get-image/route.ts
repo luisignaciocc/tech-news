@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import * as cheerio from "cheerio";
-import { v2 as cloudinary } from "cloudinary";
 import { NextResponse } from "next/server";
 
 import { notifyProblem } from "@/lib/utils";
@@ -13,23 +12,6 @@ export async function POST(request: Request): Promise<NextResponse> {
   if (apiKey !== process.env.API_KEY) {
     return NextResponse.json({ error: "Invalid API key" }, { status: 401 });
   }
-
-  const cloud_name = process.env.CLOUDINARY_CLOUD_NAME;
-  const api_key = process.env.CLOUDINARY_API_KEY;
-  const api_secret = process.env.CLOUDINARY_API_SECRET;
-
-  if (!cloud_name || !api_key || !api_secret) {
-    return NextResponse.json({
-      ok: false,
-      message: "Cloudinary credentials not found",
-    });
-  }
-
-  cloudinary.config({
-    cloud_name,
-    api_key,
-    api_secret,
-  });
 
   try {
     const prisma = new PrismaClient();
@@ -112,16 +94,12 @@ export async function POST(request: Request): Promise<NextResponse> {
             return false;
           }
 
-          const imageUrl = await cloudinary.uploader.upload(image, {
-            folder: "posts_previews",
-          });
-
           await prisma.news.update({
             where: {
               id: item.id,
             },
             data: {
-              coverImage: imageUrl.secure_url,
+              coverImage: image,
             },
           });
 
