@@ -28,6 +28,14 @@ describe("Testing /api/getPostPages function", () => {
       { params: { page: "4" } },
     ]);
   });
+
+  test("should return an empty array when there is only one page", async () => {
+    (prismaMock.post.count as jest.Mock).mockResolvedValue(20);
+
+    const pages = await getPostPages();
+
+    expect(pages).toEqual([]);
+  });
 });
 
 describe("Testing /api/getPostSlugs function", () => {

@@ -12,7 +12,7 @@ export const getPostPages = async () => {
   const perPage = PER_PAGE;
   const totalPosts = await prisma.post.count();
 
-  const numberOfPages = Math.ceil(totalPosts / perPage) - 1; // -1 to exclude the first page, which is the index page
+  const numberOfPages = Math.max(0, Math.ceil(totalPosts / perPage) - 1); // -1 to exclude the first page, which is the index page
 
   return Array.from({ length: numberOfPages }, (_, i) => ({
     params: {
