@@ -11,7 +11,7 @@ jobs:
       - name: Generate the publication from a new
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/blog' \
+          --url 'https://tech-news.bocono-labs.com/api/publication/blog' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   twitter:
@@ -21,7 +21,7 @@ jobs:
       - name: Generate a twitter post from an article
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/twitter' \
+          --url 'https://tech-news.bocono-labs.com/api/publication/twitter' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   linkedin:
@@ -31,7 +31,7 @@ jobs:
       - name: Generate a linkedin post from an article
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/publication/linkedin' \
+          --url 'https://tech-news.bocono-labs.com/api/publication/linkedin' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   # facebook:
@@ -41,7 +41,7 @@ jobs:
   #     - name: Generate a facebook post from an article
   #       run: |
   #         curl --request POST \
-  #         --url 'https://www.tecnobuc.com/api/publication/facebook' \
+  #         --url 'https://tech-news.bocono-labs.com/api/publication/facebook' \
   #         --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   # telegram:
@@ -51,5 +51,5 @@ jobs:
   #     - name: Generate a telegram message from an article
   #       run: |
   #         curl --request POST \
-  #         --url 'https://www.tecnobuc.com/api/publication/telegram' \
+  #         --url 'https://tech-news.bocono-labs.com/api/publication/telegram' \
   #         --header 'x-api-key: ${{ secrets.API_KEY }}'

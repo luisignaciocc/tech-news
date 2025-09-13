@@ -8,7 +8,7 @@ export const SITE_AUTHOR = `Bocono Labs`;
 export const SITE_AUTHOR_URL = `https://bocono-labs.com`;
 export const SITE_HANDLER = `@tecnobuc`;
 export const PERSONAL_HANDLER = `@luisignaciocc`;
-export const SITE_URL = `https://www.tecnobuc.com`;
+export const SITE_URL = `https://tech-news.bocono-labs.com`;
 
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(SITE_URL),

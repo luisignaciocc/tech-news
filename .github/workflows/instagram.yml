@@ -12,5 +12,5 @@ jobs:
       - name: Publish to Instagram
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/instagram' \
+          --url 'https://tech-news.bocono-labs.com/api/instagram' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'

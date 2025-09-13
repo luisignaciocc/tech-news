@@ -11,7 +11,7 @@ jobs:
       - name: Pull the News from the Brave Search API
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/pull/brave' \
+          --url 'https://tech-news.bocono-labs.com/api/news/pull/brave' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   parse:
@@ -21,7 +21,7 @@ jobs:
       - name: Parse the News using Readability
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/parse' \
+          --url 'https://tech-news.bocono-labs.com/api/news/parse' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   embed:
@@ -31,7 +31,7 @@ jobs:
       - name: Generate Embedings for the News
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/embed' \
+          --url 'https://tech-news.bocono-labs.com/api/news/embed' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   get_images:
@@ -41,7 +41,7 @@ jobs:
       - name: Get Preview Images for the News
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/get-image' \
+          --url 'https://tech-news.bocono-labs.com/api/news/get-image' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   filter:
@@ -51,7 +51,7 @@ jobs:
       - name: Filter the Unrelevant News
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/filter' \
+          --url 'https://tech-news.bocono-labs.com/api/news/filter' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'
 
   clean:
@@ -60,5 +60,5 @@ jobs:
       - name: Clear the Not Generated News
         run: |
           curl --request POST \
-          --url 'https://www.tecnobuc.com/api/news/clean' \
+          --url 'https://tech-news.bocono-labs.com/api/news/clean' \
           --header 'x-api-key: ${{ secrets.API_KEY }}'

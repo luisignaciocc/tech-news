@@ -45,6 +45,6 @@ jobs:
 
       - name: Run Cypress tests
         env:
-          BASE_URL: "https://www.tecnobuc.com"
+          BASE_URL: "https://tech-news.bocono-labs.com"
         run: |
           npx xvfb-maybe npx cypress run --config baseUrl=$BASE_URL

@@ -157,7 +157,7 @@ export async function GET(request: Request) {
                 marginTop: "-0.1em",
               }}
             />
-            www.tecnobuc.com
+            tech-news.bocono-labs.com
           </span>
         </div>
       </div>
