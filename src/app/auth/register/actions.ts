@@ -1,7 +1,7 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 interface RegisterData {
   username: string;

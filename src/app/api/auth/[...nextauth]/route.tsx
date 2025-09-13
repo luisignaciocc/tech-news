@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextApiHandler } from "next";
 import { NextAuthOptions } from "next-auth";
 import { Session } from "next-auth";
