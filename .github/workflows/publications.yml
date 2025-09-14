@@ -1,0 +1,55 @@
+name: Generate Publication
+
+on:
+  schedule:
+    - cron: "*/15 12-23 * * *"
+
+jobs:
+  blog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate the publication from a new
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/publication/blog' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  twitter:
+    runs-on: ubuntu-latest
+    needs: blog
+    steps:
+      - name: Generate a twitter post from an article
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/publication/twitter' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  linkedin:
+    runs-on: ubuntu-latest
+    needs: blog
+    steps:
+      - name: Generate a linkedin post from an article
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/publication/linkedin' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  # facebook:
+  #   runs-on: ubuntu-latest
+  #   needs: blog
+  #   steps:
+  #     - name: Generate a facebook post from an article
+  #       run: |
+  #         curl --request POST \
+  #         --url 'https://tech-news.bocono-labs.com/api/publication/facebook' \
+  #         --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  # telegram:
+  #   runs-on: ubuntu-latest
+  #   needs: [blog, twitter, linkedin, facebook]
+  #   steps:
+  #     - name: Generate a telegram message from an article
+  #       run: |
+  #         curl --request POST \
+  #         --url 'https://tech-news.bocono-labs.com/api/publication/telegram' \
+  #         --header 'x-api-key: ${{ secrets.API_KEY }}'

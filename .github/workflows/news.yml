@@ -1,0 +1,64 @@
+name: Process News
+
+on:
+  schedule:
+    - cron: "*/24 * * * *"
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull the News from the Brave Search API
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/news/pull/brave' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  parse:
+    runs-on: ubuntu-latest
+    needs: pull
+    steps:
+      - name: Parse the News using Readability
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/news/parse' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  embed:
+    runs-on: ubuntu-latest
+    needs: parse
+    steps:
+      - name: Generate Embedings for the News
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/news/embed' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  get_images:
+    runs-on: ubuntu-latest
+    needs: embed
+    steps:
+      - name: Get Preview Images for the News
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/news/get-image' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  filter:
+    runs-on: ubuntu-latest
+    needs: get_images
+    steps:
+      - name: Filter the Unrelevant News
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/news/filter' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
+
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clear the Not Generated News
+        run: |
+          curl --request POST \
+          --url 'https://tech-news.bocono-labs.com/api/news/clean' \
+          --header 'x-api-key: ${{ secrets.API_KEY }}'
