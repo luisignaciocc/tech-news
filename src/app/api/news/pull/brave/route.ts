@@ -103,12 +103,12 @@ export async function POST(request: Request) {
               });
             }
           } catch (error) {
-            console.error('Error processing news item:', result.url, error);
+            console.error("Error processing news item:", result.url, error);
             continue;
           }
         }
       } catch (error) {
-        console.error('Error processing news result:', error);
+        console.error("Error processing news result:", error);
         continue;
       }
     }

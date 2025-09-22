@@ -71,31 +71,37 @@ export async function POST(request: Request) {
           );
 
           const [completionTitle] = await Promise.all([
-            openai.chat.completions.create({
-              messages: [
-                {
-                  role: "system",
-                  content: `
+            openai.chat.completions
+              .create({
+                messages: [
+                  {
+                    role: "system",
+                    content: `
                 Eres un asistente que crea titulos concisos y atractivos a partir de un artículo.
                 Los titulos deben tener máximo 90 caracteres
                 Solo responde con el titulo del artículo, sin ninguna introducción o comentario adicional.
               `,
-                },
-                {
-                  role: "user",
-                  content: `
+                  },
+                  {
+                    role: "user",
+                    content: `
                 Aquí tienes un artículo sobre tecnología:
                 ${lastPost.content}
 
                 Por favor, proporciona un titulo adecuado.
               `,
-                },
-              ],
-              model: "gpt-4o-mini",
-            }).catch(error => {
-              console.error('Error generating title for Instagram post:', lastPost.id, error);
-              return { choices: [{ message: { content: lastPost.title } }] };
-            }),
+                  },
+                ],
+                model: "gpt-4o-mini",
+              })
+              .catch((error) => {
+                console.error(
+                  "Error generating title for Instagram post:",
+                  lastPost.id,
+                  error,
+                );
+                return { choices: [{ message: { content: lastPost.title } }] };
+              }),
           ]);
 
           const title =
@@ -120,7 +126,11 @@ export async function POST(request: Request) {
           );
 
           if (!res.ok) {
-            console.error('Error creating Instagram media for post:', lastPost.id, await res.text());
+            console.error(
+              "Error creating Instagram media for post:",
+              lastPost.id,
+              await res.text(),
+            );
             return null;
           }
 
@@ -135,7 +145,7 @@ export async function POST(request: Request) {
             article: lastPost.content,
           };
         } catch (error) {
-          console.error('Error processing Instagram post:', lastPost.id, error);
+          console.error("Error processing Instagram post:", lastPost.id, error);
           return null;
         }
       }),
@@ -146,15 +156,18 @@ export async function POST(request: Request) {
     let articles = "";
     responses.forEach((response) => {
       try {
-        if (response.status === 'fulfilled' && response.value) {
+        if (response.status === "fulfilled" && response.value) {
           creationIds.push(response.value.creationId);
           articlesIds.push(response.value.articleId);
           articles += `${response.value.article}\n\n`;
-        } else if (response.status === 'rejected') {
-          console.error('Promise rejected in Instagram processing:', response.reason);
+        } else if (response.status === "rejected") {
+          console.error(
+            "Promise rejected in Instagram processing:",
+            response.reason,
+          );
         }
       } catch (error) {
-        console.error('Error processing Instagram response:', error);
+        console.error("Error processing Instagram response:", error);
       }
     });
 

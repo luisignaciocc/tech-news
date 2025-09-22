@@ -82,7 +82,10 @@ export async function POST(request: Request): Promise<NextResponse> {
           LIMIT 1;
         `;
 
-        if (similarNews[0] && similarNews[0].similarity > _SIMILARITY_THRESHOLD) {
+        if (
+          similarNews[0] &&
+          similarNews[0].similarity > _SIMILARITY_THRESHOLD
+        ) {
           await prisma.news.update({
             data: {
               deletedAt: new Date(),
@@ -94,7 +97,9 @@ export async function POST(request: Request): Promise<NextResponse> {
           });
         } else {
           if (
-            bannedWords.some((word) => article.title.toLowerCase().includes(word))
+            bannedWords.some((word) =>
+              article.title.toLowerCase().includes(word),
+            )
           ) {
             await prisma.news.update({
               data: {
@@ -145,10 +150,15 @@ export async function POST(request: Request): Promise<NextResponse> {
                     temperature: 0,
                   });
                   answer =
-                    completion.choices[0].message.content?.trim().toLowerCase() ||
-                    "yes";
+                    completion.choices[0].message.content
+                      ?.trim()
+                      .toLowerCase() || "yes";
                 } catch (error: unknown) {
-                  console.error('Error classifying news article:', article.id, error);
+                  console.error(
+                    "Error classifying news article:",
+                    article.id,
+                    error,
+                  );
                   answer = "yes"; // Default to yes if classification fails
                 }
               }
@@ -182,7 +192,11 @@ export async function POST(request: Request): Promise<NextResponse> {
                       },
                     );
                   } catch (telegramError) {
-                    console.error('Error sending Telegram message:', article.id, telegramError);
+                    console.error(
+                      "Error sending Telegram message:",
+                      article.id,
+                      telegramError,
+                    );
                   }
                 }
 
@@ -212,7 +226,11 @@ export async function POST(request: Request): Promise<NextResponse> {
           }
         }
       } catch (error) {
-        console.error('Error processing news article for filtering:', article.id, error);
+        console.error(
+          "Error processing news article for filtering:",
+          article.id,
+          error,
+        );
         continue;
       }
     }

@@ -105,7 +105,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
-          console.error('Error processing news image:', item.id, error);
+          console.error("Error processing news image:", item.id, error);
           try {
             await prisma.news.update({
               where: {
@@ -117,7 +117,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               },
             });
           } catch (updateError) {
-            console.error('Error updating news record:', item.id, updateError);
+            console.error("Error updating news record:", item.id, updateError);
           }
           return false;
         }

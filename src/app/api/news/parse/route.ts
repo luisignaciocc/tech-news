@@ -87,7 +87,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
-          console.error('Error parsing news article:', item.url, error);
+          console.error("Error parsing news article:", item.url, error);
           clearTimeout(timeout);
           try {
             await prisma.news.update({
@@ -100,7 +100,7 @@ export async function POST(request: Request): Promise<NextResponse> {
               },
             });
           } catch (updateError) {
-            console.error('Error updating news record:', item.url, updateError);
+            console.error("Error updating news record:", item.url, updateError);
           }
 
           return false;

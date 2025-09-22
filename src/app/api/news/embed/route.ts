@@ -68,7 +68,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           WHERE id = ${parse.id};
         `;
         } catch (error: unknown) {
-          console.error('Error vectorizing news item:', parse.id, error);
+          console.error("Error vectorizing news item:", parse.id, error);
           await prisma.news.update({
             where: {
               id: parse.id,
@@ -81,7 +81,7 @@ export async function POST(request: Request): Promise<NextResponse> {
           continue;
         }
       } catch (error) {
-        console.error('Error processing news for embedding:', parse.id, error);
+        console.error("Error processing news for embedding:", parse.id, error);
         continue;
       }
     }
