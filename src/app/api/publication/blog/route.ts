@@ -96,8 +96,13 @@ export async function POST(request: Request): Promise<NextResponse> {
           .map((tag) => tag.trim().replace(/^-\s*/, "")) // Remove the '-' character at the beginning
           .filter((tag) => tag) // Filter empty values
           .map((tag) => {
-            const [nameEs, nameEn] = tag.split(" - ").map((t) => t.trim()); // Separate tags
-            return { nameEs, nameEn }; // Return an object with both labels
+            try {
+              const [nameEs, nameEn] = tag.split(" - ").map((t) => t.trim()); // Separate tags
+              return { nameEs: nameEs || 'unknown', nameEn: nameEn || 'unknown' }; // Return an object with both labels
+            } catch (error) {
+              console.error('Error parsing tag:', tag, error);
+              return { nameEs: 'unknown', nameEn: 'unknown' };
+            }
           })
       : [];
 
@@ -212,21 +217,36 @@ export async function POST(request: Request): Promise<NextResponse> {
         coverImage: article.coverImage,
         publishedAt: article.publishedAt,
         tags: {
-          connectOrCreate: tags.map((tag) => ({
-            where: {
-              nameEn: tag.nameEn.toLowerCase(), // Use nameEn to search
-            },
-            create: {
-              nameEs: tag.nameEs.toLowerCase(), // Create the name in Spanish
-              nameEn: tag.nameEn.toLowerCase(), // Create the name in English
-            },
-          })),
+          connectOrCreate: tags.map((tag) => {
+            try {
+              return {
+                where: {
+                  nameEn: tag.nameEn.toLowerCase(), // Use nameEn to search
+                },
+                create: {
+                  nameEs: tag.nameEs.toLowerCase(), // Create the name in Spanish
+                  nameEn: tag.nameEn.toLowerCase(), // Create the name in English
+                },
+              };
+            } catch (error) {
+              console.error('Error processing tag:', tag, error);
+              return {
+                where: {
+                  nameEn: 'unknown',
+                },
+                create: {
+                  nameEs: 'unknown',
+                  nameEn: 'unknown',
+                },
+              };
+            }
+          }).filter(Boolean),
         },
       },
     });
 
     // Register translations in the Languages table
-    await Promise.all([
+    await Promise.allSettled([
       prisma.languages.create({
         data: {
           title: titleEs,
@@ -235,6 +255,9 @@ export async function POST(request: Request): Promise<NextResponse> {
           locale: "es",
           postId: post.id,
         },
+      }).catch(error => {
+        console.error('Error creating Spanish language record:', error);
+        throw error;
       }),
       prisma.languages.create({
         data: {
@@ -244,6 +267,9 @@ export async function POST(request: Request): Promise<NextResponse> {
           locale: "en",
           postId: post.id,
         },
+      }).catch(error => {
+        console.error('Error creating English language record:', error);
+        throw error;
       }),
     ]);
 

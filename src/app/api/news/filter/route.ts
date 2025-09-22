@@ -60,150 +60,160 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     for (const article of news) {
-      const similarNews: [
-        {
-          id: string;
-          similarity: number;
-        },
-      ] = await prisma.$queryRaw`
-        WITH comparation AS (
-          SELECT embedding AS comparation_embedding
-          FROM "News"
-          WHERE id = ${article.id}
-        )
-        SELECT n.id,
-              1 - (n.embedding <=> c.comparation_embedding) AS similarity
-        FROM "News" n,
-              comparation c
-        WHERE n.id != ${article.id}
-        AND n.embedding IS NOT NULL
-        ORDER BY similarity DESC
-        LIMIT 1;
-      `;
+      try {
+        const similarNews: [
+          {
+            id: string;
+            similarity: number;
+          },
+        ] = await prisma.$queryRaw`
+          WITH comparation AS (
+            SELECT embedding AS comparation_embedding
+            FROM "News"
+            WHERE id = ${article.id}
+          )
+          SELECT n.id,
+                1 - (n.embedding <=> c.comparation_embedding) AS similarity
+          FROM "News" n,
+                comparation c
+          WHERE n.id != ${article.id}
+          AND n.embedding IS NOT NULL
+          ORDER BY similarity DESC
+          LIMIT 1;
+        `;
 
-      if (similarNews[0].similarity > _SIMILARITY_THRESHOLD) {
-        await prisma.news.update({
-          data: {
-            deletedAt: new Date(),
-            deletionReason: `Similar to ${similarNews[0].id} (${similarNews[0].similarity})`,
-          },
-          where: {
-            id: article.id,
-          },
-        });
-      } else {
-        if (
-          bannedWords.some((word) => article.title.toLowerCase().includes(word))
-        ) {
+        if (similarNews[0] && similarNews[0].similarity > _SIMILARITY_THRESHOLD) {
           await prisma.news.update({
             data: {
               deletedAt: new Date(),
-              deletionReason: `Contains banned word`,
+              deletionReason: `Similar to ${similarNews[0].id} (${similarNews[0].similarity})`,
             },
             where: {
               id: article.id,
             },
           });
         } else {
-          const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-
-          if (!TOKEN) {
+          if (
+            bannedWords.some((word) => article.title.toLowerCase().includes(word))
+          ) {
             await prisma.news.update({
+              data: {
+                deletedAt: new Date(),
+                deletionReason: `Contains banned word`,
+              },
               where: {
                 id: article.id,
               },
-              data: {
-                filtered: true,
-              },
             });
           } else {
-            const autoApprove = !!process.env.AUTO_APPROVE_NEWS;
-            let answer = "yes";
-            if (autoApprove) {
-              try {
-                const completion = await openai.chat.completions.create({
-                  model: "gpt-4o-mini",
-                  messages: [
-                    {
-                      role: "system",
-                      content: `
-                      You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
-                      Respond with "yes" if it is related to technology, otherwise respond with "no" and explain the reasons why it is not considered a technology news.
-                    `,
-                    },
-                    {
-                      role: "user",
-                      content: `
-                      Title: "${article.title}"
-                      
-                      Is this news related to technology?
-                  `,
-                    },
-                  ],
-                  max_tokens: 10,
-                  temperature: 0,
-                });
-                answer =
-                  completion.choices[0].message.content?.trim().toLowerCase() ||
-                  "yes";
-              } catch (error: unknown) {
-                console.error(error);
-              }
-            }
+            const TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
-            if (answer.startsWith("y")) {
-              let message: TelegramBot.Message | undefined;
-              if (!autoApprove) {
-                const bot = new TelegramBot(TOKEN);
-                message = await bot.sendMessage(
-                  TELEGRAM_PERSONAL_CHAT_ID,
-                  `${autoApprove ? "✅" : "❔"} ${article.title}`,
-                  {
-                    parse_mode: "Markdown",
-                    reply_markup: autoApprove
-                      ? undefined
-                      : {
-                          inline_keyboard: [
-                            [
-                              {
-                                text: "Aprovar",
-                                callback_data: `approve:accept:${article.id}`,
-                              },
-                              {
-                                text: "Eliminar",
-                                callback_data: `approve:delete:${article.id}`,
-                              },
-                            ],
-                          ],
-                        },
-                  },
-                );
-              }
-
+            if (!TOKEN) {
               await prisma.news.update({
                 where: {
                   id: article.id,
                 },
                 data: {
-                  sentToApproval: true,
-                  filtered: autoApprove ? true : undefined,
-                  telegramChatId: message?.chat.id.toString(),
-                  telegramMessageId: message?.message_id.toString(),
+                  filtered: true,
                 },
               });
             } else {
-              await prisma.news.update({
-                data: {
-                  deletedAt: new Date(),
-                  deletionReason: `Not detected as related to technology (${answer})`,
-                },
-                where: {
-                  id: article.id,
-                },
-              });
+              const autoApprove = !!process.env.AUTO_APPROVE_NEWS;
+              let answer = "yes";
+              if (autoApprove) {
+                try {
+                  const completion = await openai.chat.completions.create({
+                    model: "gpt-4o-mini",
+                    messages: [
+                      {
+                        role: "system",
+                        content: `
+                        You are an assistant that classifies news. Your task is to determine if a news headline is related to technology.
+                        Respond with "yes" if it is related to technology, otherwise respond with "no" and explain the reasons why it is not considered a technology news.
+                      `,
+                      },
+                      {
+                        role: "user",
+                        content: `
+                        Title: "${article.title}"
+
+                        Is this news related to technology?
+                    `,
+                      },
+                    ],
+                    max_tokens: 10,
+                    temperature: 0,
+                  });
+                  answer =
+                    completion.choices[0].message.content?.trim().toLowerCase() ||
+                    "yes";
+                } catch (error: unknown) {
+                  console.error('Error classifying news article:', article.id, error);
+                  answer = "yes"; // Default to yes if classification fails
+                }
+              }
+
+              if (answer.startsWith("y")) {
+                let message: TelegramBot.Message | undefined;
+                if (!autoApprove) {
+                  try {
+                    const bot = new TelegramBot(TOKEN);
+                    message = await bot.sendMessage(
+                      TELEGRAM_PERSONAL_CHAT_ID,
+                      `${autoApprove ? "✅" : "❔"} ${article.title}`,
+                      {
+                        parse_mode: "Markdown",
+                        reply_markup: autoApprove
+                          ? undefined
+                          : {
+                              inline_keyboard: [
+                                [
+                                  {
+                                    text: "Aprovar",
+                                    callback_data: `approve:accept:${article.id}`,
+                                  },
+                                  {
+                                    text: "Eliminar",
+                                    callback_data: `approve:delete:${article.id}`,
+                                  },
+                                ],
+                              ],
+                            },
+                      },
+                    );
+                  } catch (telegramError) {
+                    console.error('Error sending Telegram message:', article.id, telegramError);
+                  }
+                }
+
+                await prisma.news.update({
+                  where: {
+                    id: article.id,
+                  },
+                  data: {
+                    sentToApproval: true,
+                    filtered: autoApprove ? true : undefined,
+                    telegramChatId: message?.chat.id.toString(),
+                    telegramMessageId: message?.message_id.toString(),
+                  },
+                });
+              } else {
+                await prisma.news.update({
+                  data: {
+                    deletedAt: new Date(),
+                    deletionReason: `Not detected as related to technology (${answer})`,
+                  },
+                  where: {
+                    id: article.id,
+                  },
+                });
+              }
             }
           }
         }
+      } catch (error) {
+        console.error('Error processing news article for filtering:', article.id, error);
+        continue;
       }
     }
 

@@ -63,72 +63,81 @@ export async function POST(request: Request) {
       });
     }
 
-    const responses = await Promise.all(
+    const responses = await Promise.allSettled(
       lastPosts.map(async (lastPost) => {
-        const coverImageUrlEncoded = encodeURIComponent(
-          lastPost.coverImage || `${SITE_URL}/icon.png`,
-        );
+        try {
+          const coverImageUrlEncoded = encodeURIComponent(
+            lastPost.coverImage || `${SITE_URL}/icon.png`,
+          );
 
-        const [completionTitle] = await Promise.all([
-          openai.chat.completions.create({
-            messages: [
-              {
-                role: "system",
-                content: `
-              Eres un asistente que crea titulos concisos y atractivos a partir de un artículo. 
-              Los titulos deben tener máximo 90 caracteres
-              Solo responde con el titulo del artículo, sin ninguna introducción o comentario adicional.
-            `,
-              },
-              {
-                role: "user",
-                content: `
-              Aquí tienes un artículo sobre tecnología:
-              ${lastPost.content}
-              
-              Por favor, proporciona un titulo adecuado.
-            `,
-              },
-            ],
-            model: "gpt-4o-mini",
-          }),
-        ]);
+          const [completionTitle] = await Promise.all([
+            openai.chat.completions.create({
+              messages: [
+                {
+                  role: "system",
+                  content: `
+                Eres un asistente que crea titulos concisos y atractivos a partir de un artículo.
+                Los titulos deben tener máximo 90 caracteres
+                Solo responde con el titulo del artículo, sin ninguna introducción o comentario adicional.
+              `,
+                },
+                {
+                  role: "user",
+                  content: `
+                Aquí tienes un artículo sobre tecnología:
+                ${lastPost.content}
 
-        const title =
-          completionTitle?.choices?.[0]?.message?.content || lastPost.title;
-        const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
-
-        const imageUrl = `${SITE_URL}/api/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
-
-        const res = await fetch(
-          `https://graph.facebook.com/v19.0/${igUserId}/media`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams({
-              image_url: imageUrl,
-              is_carousel_item: "true",
-              access_token,
+                Por favor, proporciona un titulo adecuado.
+              `,
+                },
+              ],
+              model: "gpt-4o-mini",
+            }).catch(error => {
+              console.error('Error generating title for Instagram post:', lastPost.id, error);
+              return { choices: [{ message: { content: lastPost.title } }] };
             }),
-          },
-        );
+          ]);
 
-        if (!res.ok) {
+          const title =
+            completionTitle?.choices?.[0]?.message?.content || lastPost.title;
+          const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
+
+          const imageUrl = `${SITE_URL}/api/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+
+          const res = await fetch(
+            `https://graph.facebook.com/v19.0/${igUserId}/media`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+              },
+              body: new URLSearchParams({
+                image_url: imageUrl,
+                is_carousel_item: "true",
+                access_token,
+              }),
+            },
+          );
+
+          if (!res.ok) {
+            console.error('Error creating Instagram media for post:', lastPost.id, await res.text());
+            return null;
+          }
+
+          const {
+            id,
+          }: {
+            id: string;
+          } = await res.json();
+          return {
+            creationId: id,
+            articleId: lastPost.id,
+            article: lastPost.content,
+          };
+        } catch (error) {
+          console.error('Error processing Instagram post:', lastPost.id, error);
           return null;
         }
-
-        const {
-          id,
-        }: {
-          id: string;
-        } = await res.json();
-        return {
-          creationId: id,
-          articleId: lastPost.id,
-          article: lastPost.content,
-        };
       }),
     );
 
@@ -136,10 +145,16 @@ export async function POST(request: Request) {
     const articlesIds: string[] = [];
     let articles = "";
     responses.forEach((response) => {
-      if (response) {
-        creationIds.push(response.creationId);
-        articlesIds.push(response.articleId);
-        articles += `${response.article}\n\n`;
+      try {
+        if (response.status === 'fulfilled' && response.value) {
+          creationIds.push(response.value.creationId);
+          articlesIds.push(response.value.articleId);
+          articles += `${response.value.article}\n\n`;
+        } else if (response.status === 'rejected') {
+          console.error('Promise rejected in Instagram processing:', response.reason);
+        }
+      } catch (error) {
+        console.error('Error processing Instagram response:', error);
       }
     });
 

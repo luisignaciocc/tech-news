@@ -33,7 +33,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       },
     });
 
-    await Promise.all(
+    await Promise.allSettled(
       news.map(async (item) => {
         const controller = new AbortController();
         const timeout = setTimeout(() => {
@@ -87,15 +87,21 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
-          await prisma.news.update({
-            where: {
-              url: item.url,
-            },
-            data: {
-              deletedAt: new Date(),
-              deletionReason: "Error parsing the article",
-            },
-          });
+          console.error('Error parsing news article:', item.url, error);
+          clearTimeout(timeout);
+          try {
+            await prisma.news.update({
+              where: {
+                url: item.url,
+              },
+              data: {
+                deletedAt: new Date(),
+                deletionReason: "Error parsing the article",
+              },
+            });
+          } catch (updateError) {
+            console.error('Error updating news record:', item.url, updateError);
+          }
 
           return false;
         }

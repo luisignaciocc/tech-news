@@ -37,45 +37,51 @@ export async function POST(request: Request): Promise<NextResponse> {
     });
 
     for (const parse of news) {
-      if (!parse.body) {
-        await prisma.news.update({
-          where: {
-            id: parse.id,
-          },
-          data: {
-            deletedAt: new Date(),
-            deletionReason: "Empty body from the original news fetch",
-          },
-        });
-        continue;
-      }
-
       try {
-        const embeddingsData = await openai.embeddings.create({
-          model: "text-embedding-3-small",
-          input: parse.body,
-          encoding_format: "float",
-        });
+        if (!parse.body) {
+          await prisma.news.update({
+            where: {
+              id: parse.id,
+            },
+            data: {
+              deletedAt: new Date(),
+              deletionReason: "Empty body from the original news fetch",
+            },
+          });
+          continue;
+        }
 
-        const embedding = embeddingsData.data[0].embedding;
+        try {
+          const embeddingsData = await openai.embeddings.create({
+            model: "text-embedding-3-small",
+            input: parse.body,
+            encoding_format: "float",
+          });
 
-        await prisma.$executeRaw`
-        UPDATE "News"
-        SET 
-            embedding = ${embedding}::vector,
-            vectorized = true
-        WHERE id = ${parse.id};
-      `;
-      } catch (error: unknown) {
-        await prisma.news.update({
-          where: {
-            id: parse.id,
-          },
-          data: {
-            deletedAt: new Date(),
-            deletionReason: "Error vectorizing news",
-          },
-        });
+          const embedding = embeddingsData.data[0].embedding;
+
+          await prisma.$executeRaw`
+          UPDATE "News"
+          SET
+              embedding = ${embedding}::vector,
+              vectorized = true
+          WHERE id = ${parse.id};
+        `;
+        } catch (error: unknown) {
+          console.error('Error vectorizing news item:', parse.id, error);
+          await prisma.news.update({
+            where: {
+              id: parse.id,
+            },
+            data: {
+              deletedAt: new Date(),
+              deletionReason: "Error vectorizing news",
+            },
+          });
+          continue;
+        }
+      } catch (error) {
+        console.error('Error processing news for embedding:', parse.id, error);
         continue;
       }
     }

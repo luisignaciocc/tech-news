@@ -78,32 +78,38 @@ export async function POST(request: Request) {
     const oneDaysAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
 
     for (const result of results) {
-      const pageAge = new Date(result.page_age);
+      try {
+        const pageAge = new Date(result.page_age);
 
-      if (pageAge >= oneDaysAgo) {
-        try {
-          const existingNews = await prisma.news.findUnique({
-            where: {
-              url: result.url,
-            },
-          });
-
-          if (!existingNews) {
-            await prisma.news.create({
-              data: {
-                title: result.title,
+        if (pageAge >= oneDaysAgo) {
+          try {
+            const existingNews = await prisma.news.findUnique({
+              where: {
                 url: result.url,
-                sourceUrl: result.meta_url.hostname,
-                thumbnailUrl: result.thumbnail.src,
-                publishedAt: pageAge,
-                sourceId: oldestNewsSource ? oldestNewsSource.id : null,
-                searchQuery: searchQuery,
               },
             });
+
+            if (!existingNews) {
+              await prisma.news.create({
+                data: {
+                  title: result.title,
+                  url: result.url,
+                  sourceUrl: result.meta_url.hostname,
+                  thumbnailUrl: result.thumbnail.src,
+                  publishedAt: pageAge,
+                  sourceId: oldestNewsSource ? oldestNewsSource.id : null,
+                  searchQuery: searchQuery,
+                },
+              });
+            }
+          } catch (error) {
+            console.error('Error processing news item:', result.url, error);
+            continue;
           }
-        } catch (error) {
-          continue;
         }
+      } catch (error) {
+        console.error('Error processing news result:', error);
+        continue;
       }
     }
 

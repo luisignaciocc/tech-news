@@ -32,7 +32,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       },
     });
 
-    await Promise.all(
+    await Promise.allSettled(
       news.map(async (item) => {
         try {
           const response = await fetch(item.url);
@@ -105,15 +105,20 @@ export async function POST(request: Request): Promise<NextResponse> {
 
           return true;
         } catch (error) {
-          await prisma.news.update({
-            where: {
-              id: item.id,
-            },
-            data: {
-              deletedAt: new Date(),
-              deletionReason: "Error fetching the news link to get the image",
-            },
-          });
+          console.error('Error processing news image:', item.id, error);
+          try {
+            await prisma.news.update({
+              where: {
+                id: item.id,
+              },
+              data: {
+                deletedAt: new Date(),
+                deletionReason: "Error fetching the news link to get the image",
+              },
+            });
+          } catch (updateError) {
+            console.error('Error updating news record:', item.id, updateError);
+          }
           return false;
         }
       }),
