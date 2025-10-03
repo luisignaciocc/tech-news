@@ -92,17 +92,19 @@ jobs:
       - name: Add server to known hosts
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to server
         run: |
           # Copiar el build al servidor
           scp -o StrictHostKeyChecking=no \
+            -P ${{ secrets.SSH_PORT }} \
             build.tar.gz \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/
 
           # Ejecutar comandos en el servidor
           ssh -o StrictHostKeyChecking=no \
+            -p ${{ secrets.SSH_PORT }} \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
 
             # Variables
