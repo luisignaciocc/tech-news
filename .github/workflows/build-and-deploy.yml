@@ -1,0 +1,145 @@
+name: Build and Deploy to Server
+
+on:
+  push:
+    branches:
+      - main  # Cambia a tu rama principal si es diferente
+  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Build Next.js application
+        run: NODE_OPTIONS="--max-old-space-size=4096" pnpm build
+        env:
+          # Variables de entorno necesarias para el build
+          # Las configurarás en GitHub Secrets
+          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+          POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+          POSTGRES_URL_NO_SSL: ${{ secrets.POSTGRES_URL_NO_SSL }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          DATABASE_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+          DATABASE_URL_UNPOOLED: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+          BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
+          API_KEY: ${{ secrets.API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+
+      - name: Create deployment package
+        run: |
+          # Crear un tarball solo con lo necesario para producción
+          tar -czf build.tar.gz \
+            .next \
+            public \
+            package.json \
+            pnpm-lock.yaml \
+            next.config.js \
+            schema.prisma \
+            singleton.ts \
+            postcss.config.js \
+            tailwind.config.ts \
+            tsconfig.json
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          # Copiar el build al servidor
+          scp -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            build.tar.gz \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/tmp/
+
+          # Ejecutar comandos en el servidor
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
+
+            # Variables
+            PROJECT_PATH="${{ secrets.PROJECT_PATH }}"
+
+            # Ir al directorio del proyecto
+            cd $PROJECT_PATH
+
+            # Detener PM2 si está corriendo
+            pm2 stop tech-news || true
+
+            # Extraer el nuevo build
+            tar -xzf /tmp/build.tar.gz
+
+            # Limpiar temporal
+            rm /tmp/build.tar.gz
+
+            # Instalar solo dependencias de producción
+            pnpm install --prod --frozen-lockfile
+
+            # Generar Prisma client
+            npx prisma generate
+
+            # Reiniciar PM2 con límites de memoria
+            pm2 start "pnpm start" \
+              --name tech-news \
+              --max-memory-restart 400M \
+              --node-args="--max-old-space-size=384" \
+              --update-env || pm2 restart tech-news --update-env
+
+            # Guardar configuración PM2
+            pm2 save
+
+            echo "Deployment completed successfully!"
+          ENDSSH
+
+      - name: Cleanup
+        if: always()
+        run: |
+          rm -f ~/.ssh/deploy_key
+          rm -f build.tar.gz
