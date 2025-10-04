@@ -113,6 +113,11 @@ jobs:
             # Ir al directorio del proyecto
             cd $PROJECT_PATH
 
+            # Limpiar espacio en disco antes del deployment
+            rm -rf ~/.cache/*
+            rm -rf .next/cache
+            sudo journalctl --vacuum-size=100M || true
+
             # Detener PM2 si está corriendo
             pm2 stop tech-news || true
 
