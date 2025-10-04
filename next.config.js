@@ -14,7 +14,32 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "platform.theverge.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "techcrunch.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "www.digitaltrends.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.mos.cms.futurecdn.net",
+        port: "",
+        pathname: "/**",
+      },
     ],
+    unoptimized: process.env.NODE_ENV === 'production',
   },
   async redirects() {
     return [
