@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 This is an automated tech news blog built with Next.js that fetches, processes, classifies, and publishes tech news articles. The system uses:
+
 - **Brave Search API** for article discovery (2,000 monthly requests in free tier)
 - **Mozilla Readability** for content parsing
 - **OpenAI Embeddings** for content classification and vectorization
@@ -14,6 +15,7 @@ This is an automated tech news blog built with Next.js that fetches, processes, 
 ## Development Commands
 
 ### Core Development
+
 ```bash
 pnpm dev              # Start development server on http://localhost:3000
 pnpm build            # Build production bundle
@@ -21,6 +23,7 @@ pnpm start            # Start production server
 ```
 
 ### Code Quality
+
 ```bash
 pnpm lint             # Run ESLint with auto-fix
 pnpm format           # Format code with Prettier and Prisma
@@ -28,6 +31,7 @@ pnpm type-check       # TypeScript type checking
 ```
 
 ### Testing
+
 ```bash
 pnpm test             # Run Jest tests
 pnpm test:watch       # Run Jest in watch mode
@@ -39,6 +43,7 @@ pnpm cypress:run      # Run Cypress tests headless
 ```
 
 ### Database (Prisma)
+
 ```bash
 pnpm prisma:generate        # Generate Prisma client after schema changes
 pnpm prisma:migrate         # Create and apply migration (dev)
@@ -47,12 +52,14 @@ npx prisma generate         # Apply production migrations
 ```
 
 ### Storybook
+
 ```bash
 pnpm storybook         # Start Storybook on port 6006
 pnpm build-storybook   # Build static Storybook
 ```
 
 ### Production Process Management (PM2)
+
 ```bash
 # Start with memory limits (recommended for low-memory servers)
 pm2 start "pnpm start" --name tech-news --max-memory-restart 400M --node-args="--max-old-space-size=384"
@@ -68,6 +75,7 @@ pm2 startup                              # Generate startup script
 ```
 
 ### Memory Optimization (Low-RAM Server)
+
 ```bash
 # Clear Next.js cache
 rm -rf .next/cache
@@ -94,30 +102,36 @@ See `MEMORY_OPTIMIZATION.md` for detailed memory management strategies.
 The automated news pipeline follows this workflow:
 
 1. **Pull** (`/api/news/pull/brave` or `/api/news/pull/google-news`)
+
    - Fetches news from sources using Brave Search or Google News RSS
    - Stores raw news in `News` table with `parsed: false`
    - Sources managed via `NewsSource` table with rotation based on `lastUpdateAt`
 
 2. **Parse** (`/api/news/parse`)
+
    - Uses Mozilla Readability to extract article content
    - Updates `News` with `body`, `byline`, `excerpt`, etc.
    - Sets `parsed: true`
 
 3. **Embed** (`/api/news/embed`)
+
    - Generates OpenAI embeddings (vector(1536)) for article classification
    - Stores in PostgreSQL using pgvector extension
    - Sets `vectorized: true`
 
 4. **Filter** (`/api/news/filter`)
+
    - Classifies news using vector similarity
    - Marks irrelevant content for deletion
    - Sets `filtered: true`
 
 5. **Get Image** (`/api/news/get-image`)
+
    - Uploads images to Cloudinary
    - Updates `coverImage` field
 
 6. **Approval** (Telegram bot workflow)
+
    - Sends filtered news to Telegram for manual approval
    - Updates `sentToApproval: true`
    - Admin approves/rejects via Telegram callback buttons
@@ -139,10 +153,12 @@ The automated news pipeline follows this workflow:
 ### App Structure
 
 - **`/[locale]`**: Public blog (Spanish/English via next-intl)
+
   - `/posts/[slug]`: Individual post pages
   - `/record`: Post listing/pagination
 
 - **`/admin`**: Protected admin area (NextAuth)
+
   - `/dashboard`: Analytics and stats
   - `/validation`: News approval interface (parallel routes: @notaproved, @deleted)
   - `/posts`: Post management
@@ -179,6 +195,7 @@ The automated news pipeline follows this workflow:
 ## API Authentication
 
 All `/api/news/*` and `/api/publication/*` endpoints require:
+
 ```
 x-api-key: <API_KEY from .env>
 ```
@@ -186,6 +203,7 @@ x-api-key: <API_KEY from .env>
 ## Environment Variables
 
 Key variables (see README for full list):
+
 - Database: `DATABASE_URL`, `DATABASE_URL_UNPOOLED` (PostgreSQL with pgvector)
 - OpenAI: `OPENAI_API_KEY`
 - Cloudinary: `CLOUDINARY_*`
@@ -206,11 +224,13 @@ Key variables (see README for full list):
 This project is deployed using:
 
 - **PM2**: Process manager for Node.js applications
+
   - Manages application lifecycle and auto-restart on crashes
   - Enables zero-downtime deployments
   - Provides log management and monitoring
 
 - **Nginx**: Reverse proxy server
+
   - Handles incoming HTTP/HTTPS requests
   - Proxies traffic to the Next.js application
   - Serves static assets and handles SSL termination
