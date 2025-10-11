@@ -167,9 +167,12 @@ export async function GET(request: Request) {
       status: 200,
       headers: {
         "Cache-Control": "s-maxage=3600",
+        "Content-Type": "image/jpeg",
       },
       width: 1080,
       height: 1080,
+      format: "jpeg",
+      quality: 85,
     },
   );
 }
