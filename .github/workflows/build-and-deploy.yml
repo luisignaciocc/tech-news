@@ -107,6 +107,10 @@ jobs:
             -p ${{ secrets.SSH_PORT }} \
             ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'ENDSSH'
 
+            # Cargar NVM environment
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
             # Variables
             PROJECT_PATH="${{ secrets.PROJECT_PATH }}"
 
