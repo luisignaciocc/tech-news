@@ -33,6 +33,7 @@ export async function GET(request: Request) {
       >
         <img
           alt={title || SITE_SHORT_NAME}
+          width={1080}
           height={Math.floor(1080 * 0.9)}
           src={coverImage || `${SITE_URL}/icon.png`}
           style={{
