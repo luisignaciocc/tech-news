@@ -108,7 +108,17 @@ export async function POST(request: Request) {
             completionTitle?.choices?.[0]?.message?.content || lastPost.title;
           const titleUrlEncoded = encodeURIComponent(title.replaceAll(`"`, ""));
 
-          const imageUrl = `${SITE_URL}/api/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+          const imageUrl = `https://tecnobuc-ignacio-collantes-projects.vercel.app/api/instagram/image?title=${titleUrlEncoded}&cover_image=${coverImageUrlEncoded}&api_key=${process.env.API_KEY}`;
+
+          const prefetchRes = await fetch(imageUrl);
+          if (!prefetchRes.ok) {
+            console.error(
+              "Error prefetching image for post:",
+              lastPost.id,
+              await prefetchRes.text(),
+            );
+            return null;
+          }
 
           const res = await fetch(
             `https://graph.facebook.com/v19.0/${igUserId}/media`,
